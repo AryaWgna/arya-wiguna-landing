@@ -139,48 +139,48 @@
       position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
     }
     .blob {
-      position: absolute; border-radius: 50%; opacity: 0.45;
+      position: absolute; border-radius: 50%; opacity: 0.5;
       will-change: transform;
     }
     .blob-1 {
       width: 58vmax; height: 58vmax; top: -18vmax; left: -12vmax;
       background: radial-gradient(circle at center, var(--blob-1), transparent 68%);
-      animation: aurora-drift-1 30s ease-in-out infinite alternate;
+      animation: aurora-drift-1 14s ease-in-out infinite alternate;
     }
     .blob-2 {
       width: 48vmax; height: 48vmax; top: -10vmax; right: -14vmax;
       background: radial-gradient(circle at center, var(--blob-2), transparent 68%);
-      animation: aurora-drift-2 36s ease-in-out infinite alternate;
+      animation: aurora-drift-2 18s ease-in-out infinite alternate;
     }
     .blob-3 {
       width: 56vmax; height: 56vmax; bottom: -20vmax; left: 6vmax;
       background: radial-gradient(circle at center, var(--blob-3), transparent 68%);
-      animation: aurora-drift-3 42s ease-in-out infinite alternate;
+      animation: aurora-drift-3 22s ease-in-out infinite alternate;
     }
     .blob-4 {
       width: 44vmax; height: 44vmax; bottom: -12vmax; right: 4vmax;
       background: radial-gradient(circle at center, var(--blob-4), transparent 68%);
-      animation: aurora-drift-4 34s ease-in-out infinite alternate;
+      animation: aurora-drift-4 16s ease-in-out infinite alternate;
     }
     @keyframes aurora-drift-1 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(14vmax, 10vmax) scale(1.15); }
-      100% { transform: translate(8vmax, 16vmax) scale(0.95); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(26vmax, 18vmax) scale(1.25) rotate(180deg); }
+      100% { transform: translate(14vmax, 28vmax) scale(0.9) rotate(360deg); }
     }
     @keyframes aurora-drift-2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-12vmax, 12vmax) scale(0.9); }
-      100% { transform: translate(-18vmax, 6vmax) scale(1.1); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(-24vmax, 20vmax) scale(0.85) rotate(-180deg); }
+      100% { transform: translate(-32vmax, 10vmax) scale(1.15) rotate(-360deg); }
     }
     @keyframes aurora-drift-3 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-10vmax, -12vmax) scale(1.12); }
-      100% { transform: translate(6vmax, -18vmax) scale(0.92); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(-20vmax, -22vmax) scale(1.2) rotate(180deg); }
+      100% { transform: translate(12vmax, -32vmax) scale(0.88) rotate(360deg); }
     }
     @keyframes aurora-drift-4 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(10vmax, -8vmax) scale(1.08); }
-      100% { transform: translate(16vmax, -14vmax) scale(1.15); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(22vmax, -16vmax) scale(1.1) rotate(-180deg); }
+      100% { transform: translate(30vmax, -26vmax) scale(1.25) rotate(-360deg); }
     }
     @media (prefers-reduced-motion: reduce) {
       .blob { animation: none !important; }
