@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="StreamEly cover">
+<defs>
+<pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#1C1C22" stroke-width="1"/></pattern>
+<linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5" stop-opacity="0.55"/><stop offset="1" stop-color="#818CF8" stop-opacity="0.12"/></linearGradient>
+<radialGradient id="glow" cx="0.72" cy="0.28" r="0.55"><stop offset="0" stop-color="#4F46E5" stop-opacity="0.35"/><stop offset="1" stop-color="#4F46E5" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1600" height="1000" fill="#0B0B0F"/>
+<rect width="1600" height="1000" fill="url(#g)"/>
+<rect width="1600" height="1000" fill="url(#glow)"/>
+<rect x="250" y="180" width="900" height="520" rx="28" fill="#101014" stroke="#27272A" stroke-width="3"/>
+<rect x="290" y="220" width="820" height="440" rx="16" fill="#0D0D12"/>
+<circle cx="700" cy="440" r="96" fill="#4F46E5" opacity="0.92"/>
+<polygon points="664,394 664,486 758,440" fill="#0B0B0F"/>
+<line x1="370" y1="560" x2="1030" y2="560" stroke="#27272A" stroke-width="10" stroke-linecap="round"/>
+<line x1="370" y1="560" x2="660" y2="560" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/>
+<text x="370" y="600" font-family="JetBrains Mono,monospace" font-size="24" fill="#71717A">00:12:08</text>
+<text x="1030" y="600" font-family="JetBrains Mono,monospace" font-size="24" fill="#71717A" text-anchor="end">02:15:44</text>
+<text x="1050" y="270" font-family="JetBrains Mono,monospace" font-size="24" fill="#34D399">▲ LIVE VOD</text>
+<text x="1050" y="310" font-family="JetBrains Mono,monospace" font-size="24" fill="#71717A">1080p · HDR</text>
+<circle cx="1180" cy="360" r="12" fill="#FBBF24" opacity="0.85"/>
+<circle cx="1210" cy="405" r="7" fill="#34D399" opacity="0.75"/>
+<circle cx="1240" cy="350" r="5" fill="#818CF8" opacity="0.8"/>
+<rect x="260" y="700" width="180" height="54" rx="27" fill="none" stroke="#27272A" stroke-width="2"/>
+<text x="350" y="735" font-family="JetBrains Mono,monospace" font-size="25" fill="#71717A" text-anchor="middle">Svelte</text>
+<rect x="470" y="700" width="180" height="54" rx="27" fill="none" stroke="#27272A" stroke-width="2"/>
+<text x="560" y="735" font-family="JetBrains Mono,monospace" font-size="25" fill="#71717A" text-anchor="middle">Bun</text>
+<rect x="680" y="700" width="180" height="54" rx="27" fill="none" stroke="#27272A" stroke-width="2"/>
+<text x="770" y="735" font-family="JetBrains Mono,monospace" font-size="25" fill="#71717A" text-anchor="middle">TypeScript</text>
+<text x="260" y="880" font-family="JetBrains Mono,monospace" font-size="60" font-weight="700" fill="#E4E4E7" letter-spacing="2">StreamEly</text>
+<text x="262" y="934" font-family="JetBrains Mono,monospace" font-size="27" fill="#71717A" letter-spacing="1">Video-on-Demand · Self-hosted</text>
+</svg>

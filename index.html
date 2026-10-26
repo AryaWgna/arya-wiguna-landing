@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arya Wiguna — Full Stack Developer based in Indonesia. Building clean, scalable, secure web applications.">
+  <title>Arya Wiguna — Full Stack Developer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // Set theme before paint to avoid flash of wrong theme
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.classList.toggle('dark', t === 'dark');
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    :root {
+      --paper: #FAFAF9;
+      --ink: #18181B;
+      --muted: #71717A;
+      --line: #E4E4E7;
+      --accent: #4F46E5;
+      --accent-hover: #4338CA;
+      --accent-soft: rgba(79, 70, 229, 0.10);
+    }
+    .dark {
+      --paper: #09090B;
+      --ink: #F4F4F5;
+      --muted: #A1A1AA;
+      --line: #27272A;
+      --accent: #818CF8;
+      --accent-hover: #A5B4FC;
+      --accent-soft: rgba(129, 140, 248, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    ::selection { background: var(--accent); color: #fff; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: 72rem; margin-inline: auto; padding-inline: 1.5rem; }
+    @media (min-width: 1024px) { .container { padding-inline: 2rem; } }
+    .section { padding-block: 6rem; }
+    @media (min-width: 768px) { .section { padding-block: 7.5rem; } }
+    section[id] { scroll-margin-top: 5.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.8125rem 1.625rem; font-size: 0.875rem; font-weight: 500;
+      border-radius: 999px; border: 1px solid transparent; cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px -12px var(--accent); }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 14px 34px -12px var(--accent); }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .nav-link {
+      position: relative; padding: 0.5rem 0.125rem; font-size: 0.875rem; font-weight: 500;
+      color: var(--muted); transition: color 0.25s; background: none; border: none; cursor: pointer;
+    }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px;
+      background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .card {
+      background: var(--paper); border: 1px solid var(--line); border-radius: 1.5rem;
+      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.35); }
+    .dark .card:hover { box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8); }
+    .chip {
+      display: inline-flex; align-items: center; padding: 0.375rem 0.875rem;
+      font-size: 0.75rem; font-weight: 500; font-family: 'JetBrains Mono', monospace;
+      color: var(--muted); background: var(--accent-soft);
+      border: 1px solid var(--line); border-radius: 999px;
+    }
+    .reveal {
+      opacity: 0; filter: blur(8px); transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+    .stagger-1 { transition-delay: 0.06s; }
+    .stagger-2 { transition-delay: 0.12s; }
+    .stagger-3 { transition-delay: 0.18s; }
+    .stagger-4 { transition-delay: 0.24s; }
+    .stagger-5 { transition-delay: 0.30s; }
+    .stagger-6 { transition-delay: 0.36s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; filter: none; transform: none; transition: none; }
+    }
+    .noise {
+      position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .k { color: var(--accent); }
+    .s { color: #059669; }
+    .dark .s { color: #34D399; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[var(--paper)] text-[var(--ink)] antialiased">
+<div class="noise" aria-hidden="true"></div>
+<nav class="fixed top-0 inset-x-0 z-50 border-b border-[var(--line)] bg-[var(--paper)]/85 backdrop-blur-xl">
+  <div class="container flex h-16 items-center justify-between">
+    <a href="#top" class="font-mono text-sm font-semibold tracking-tight text-[var(--ink)]">arya<span class="text-[var(--accent)]">wigna</span></a>
+    <div class="hidden lg:flex items-center gap-8">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#certifications" class="nav-link">Certifications</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+      <button id="lang-toggle" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300 font-mono text-xs font-semibold" aria-label="Ganti bahasa">ID</button>
+      <button id="theme-toggle" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300" aria-label="Toggle theme">
+        <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        <svg class="hidden w-5 h-5 dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      </button>
+      <button id="menu-toggle" class="lg:hidden p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] transition-colors" aria-label="Menu" aria-expanded="false">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="lg:hidden hidden border-t border-[var(--line)] bg-[var(--paper)]/95 backdrop-blur-xl px-6 py-4 space-y-1">
+    <a href="#about" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">About</a>
+    <a href="#skills" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Skills</a>
+    <a href="#projects" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Projects</a>
+    <a href="#certifications" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Certifications</a>
+    <a href="#contact" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Contact</a>
+  </div>
+</nav>
+
+<header id="top" class="relative isolate overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28">
+  <div class="absolute -top-40 -left-32 h-[30rem] w-[30rem] rounded-full bg-[var(--accent)]/15 blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -bottom-48 -right-28 h-[28rem] w-[28rem] rounded-full bg-[var(--accent)]/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="container relative">
+    <div class="max-w-3xl">
+      <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-6 reveal stagger-1"><span class="text-[var(--accent)]">&gt;_</span> hello, i'm</p>
+      <h1 class="text-5xl md:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.02] reveal stagger-2">Arya <span class="text-[var(--accent)]">Wiguna</span></h1>
+      <div class="mt-5 font-mono text-lg md:text-2xl text-[var(--muted)] h-8 reveal stagger-3"><span id="typewriter"></span><span class="text-[var(--accent)] animate-pulse">▍</span></div>
+      <p class="mt-6 max-w-xl text-base md:text-lg text-[var(--muted)] reveal stagger-4">
+        Full-stack developer based in Indonesia 🇮🇩 crafting clean, scalable, and secure applications.
+        <span class="text-[var(--ink)]">First solve the problem, then write the code.</span>
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4 reveal stagger-5">
+        <a href="#projects" class="btn btn-primary">View Work
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+      <dl class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-[var(--line)] pt-8 reveal stagger-6">
+        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">6</dd><dt class="mt-1 text-xs text-[var(--muted)]">Languages</dt></div>
+        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">5</dd><dt class="mt-1 text-xs text-[var(--muted)]">Frontend</dt></div>
+        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">5</dd><dt class="mt-1 text-xs text-[var(--muted)]">Backend</dt></div>
+        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">3</dd><dt class="mt-1 text-xs text-[var(--muted)]">DevOps</dt></div>
+      </dl>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="about" class="section">
+    <div class="container">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28 reveal stagger-1">
+            <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">01 · About</p>
+            <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight">Developer<br><span class="text-[var(--accent)]">profile</span></h2>
+            <p class="mt-6 text-[var(--muted)]">A snapshot of who I am, what I build, and how I think.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="code-card card reveal stagger-2">
+            <div class="flex items-center gap-2 border-b border-[var(--line)] px-5 py-3.5">
+              <span class="w-3 h-3 rounded-full bg-[#FF5F57]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#FEBC2E]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#28C840]"></span>
+              <span class="ml-3 font-mono text-xs text-[var(--muted)]">operator.js</span>
+            </div>
+            <pre class="p-6 overflow-x-auto text-[13px] leading-[1.8]"><code>const OPERATOR = {
+  <span class="k">name</span>: <span class="s">"Arya Wiguna"</span>,
+  <span class="k">codename</span>: <span class="s">"AryaWgna"</span>,
+  <span class="k">location</span>: <span class="s">"Indonesia 🇮🇩"</span>,
+  <span class="k">role</span>: <span class="s">"Full Stack Developer"</span>,
+  <span class="k">status</span>: <span class="s">"⚡ ACTIVE"</span>,
+
+  <span class="k">skills</span>: {
+    <span class="k">languages</span>: [<span class="s">"TS"</span>, <span class="s">"JS"</span>, <span class="s">"Python"</span>, <span class="s">"Go"</span>, <span class="s">"PHP"</span>, <span class="s">"Dart"</span>],
+    <span class="k">frontend</span>: [<span class="s">"React"</span>, <span class="s">"Vue"</span>, <span class="s">"Next.js"</span>, <span class="s">"Angular"</span>, <span class="s">"Svelte"</span>],
+    <span class="k">backend</span>: [<span class="s">"Node.js"</span>, <span class="s">"Laravel"</span>, <span class="s">"NestJS"</span>, <span class="s">"Flask"</span>, <span class="s">"Gin"</span>],
+    <span class="k">mobile</span>: [<span class="s">"Flutter"</span>, <span class="s">"React Native"</span>],
+    <span class="k">database</span>: [<span class="s">"PostgreSQL"</span>, <span class="s">"MongoDB"</span>, <span class="s">"Redis"</span>, <span class="s">"Firebase"</span>],
+    <span class="k">devOps</span>: [<span class="s">"Docker"</span>, <span class="s">"K8s"</span>, <span class="s">"AWS"</span>]
+  },
+
+  <span class="k">learning</span>: <span class="s">"Cloud Architecture 🚀"</span>,
+  <span class="k">motto</span>: <span class="s">"First solve the problem, then write the code."</span>
+};</code></pre>
+          </div>
+          <div class="mt-8 grid md:grid-cols-2 gap-6 reveal stagger-3">
+            <div class="card p-6">
+              <h3 class="font-medium text-[var(--ink)] mb-2">🔭 Building</h3>
+              <p class="text-sm text-[var(--muted)]">Scalable apps, cloud solutions, and open-source tools.</p>
+            </div>
+            <div class="card p-6">
+              <h3 class="font-medium text-[var(--ink)] mb-2">📚 Learning</h3>
+              <p class="text-sm text-[var(--muted)]">Laravel &amp; PostgreSQL, cloud architecture, and system design.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="skills" class="section border-t border-[var(--line)]">
+    <div class="container">
+      <header class="max-w-2xl mb-14 reveal stagger-1">
+        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">02 · Skills</p>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">The stack I work with</h2>
+      </header>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card p-6 reveal stagger-2">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">Languages</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">06</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span><span class="chip"><img src="https://cdn.simpleicons.org/javascript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">JavaScript</span><span class="chip"><img src="https://cdn.simpleicons.org/python/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Python</span><span class="chip"><img src="https://cdn.simpleicons.org/go/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Go</span><span class="chip"><img src="https://cdn.simpleicons.org/php/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PHP</span><span class="chip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Dart</span>
+          </div>
+        </div>
+        <div class="card p-6 reveal stagger-3">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">Frontend</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">05</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/react/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">React</span><span class="chip"><img src="https://cdn.simpleicons.org/vuedotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Vue</span><span class="chip"><img src="https://cdn.simpleicons.org/nextdotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Next.js</span><span class="chip"><img src="https://cdn.simpleicons.org/angular/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Angular</span><span class="chip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Svelte</span>
+          </div>
+        </div>
+        <div class="card p-6 reveal stagger-4">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">Backend</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">05</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/nodedotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Node.js</span><span class="chip"><img src="https://cdn.simpleicons.org/laravel/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Laravel</span><span class="chip"><img src="https://cdn.simpleicons.org/nestjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">NestJS</span><span class="chip"><img src="https://cdn.simpleicons.org/flask/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flask</span><span class="chip"><img src="https://cdn.simpleicons.org/gin/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Gin</span>
+          </div>
+        </div>
+        <div class="card p-6 reveal stagger-3">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">Mobile</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">02</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flutter</span><span class="chip"><img src="https://cdn.simpleicons.org/react/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">React Native</span>
+          </div>
+        </div>
+        <div class="card p-6 reveal stagger-4">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">Database</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">04</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/postgresql/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PostgreSQL</span><span class="chip"><img src="https://cdn.simpleicons.org/mongodb/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">MongoDB</span><span class="chip"><img src="https://cdn.simpleicons.org/redis/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Redis</span><span class="chip"><img src="https://cdn.simpleicons.org/firebase/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Firebase</span>
+          </div>
+        </div>
+        <div class="card p-6 reveal stagger-5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-medium">DevOps</h3>
+            <span class="font-mono text-xs text-[var(--muted)]">03</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip"><img src="https://cdn.simpleicons.org/docker/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Docker</span><span class="chip"><img src="https://cdn.simpleicons.org/kubernetes/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Kubernetes</span><span class="chip"><img src="https://cdn.simpleicons.org/amazonwebservices/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">AWS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="projects" class="section border-t border-[var(--line)]">
+    <div class="container">
+      <header class="max-w-2xl mb-14 reveal stagger-1">
+        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">03 · Projects</p>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Selected work</h2>
+        <p class="mt-4 text-[var(--muted)]">A few things I've built. More on <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:underline">GitHub</a>.</p>
+      </header>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card group overflow-hidden reveal stagger-2">
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img src="assets/projects/simaru.svg" alt="SIMARU Mobile App preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
+          </div>
+          <div class="p-6">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="chip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flutter</span><span class="chip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Dart</span><span class="chip">Mobile</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">SIMARU Mobile App</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">Aplikasi mobile rumah sakit untuk pendaftaran pasien, jadwal layanan, dan informasi RS — dibangun dengan Flutter untuk Android &amp; iOS.</p>
+            <a href="https://github.com/AryaWgna/SIMARU-Mobile-App" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+        <article class="card group overflow-hidden reveal stagger-3">
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img src="assets/projects/skyboard.svg" alt="Digital Skyboard Announcement preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
+          </div>
+          <div class="p-6">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span><span class="chip"><img src="https://cdn.simpleicons.org/php/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PHP</span><span class="chip">UI</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">Digital Skyboard Announcement</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">Sistem Flight Information Display (FIDS) untuk bandara: gateway API, database, dan UI realtime untuk jadwal penerbangan serta promosi maskapai.</p>
+            <a href="https://github.com/AryaWgna/Digital-Skyboard-Announcement" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+        <article class="card group overflow-hidden reveal stagger-4">
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img src="assets/projects/streamely.svg" alt="StreamEly preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
+          </div>
+          <div class="p-6">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="chip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Svelte</span><span class="chip"><img src="https://cdn.simpleicons.org/bun/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Bun</span><span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span>
+            </div>
+            <h3 class="text-xl font-medium mb-2">StreamEly</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">Platform video-on-demand self-hosted: gateway Bun + API Elysia.js + frontend Svelte, mengagregasi metadata TVmaze &amp; OMDB untuk katalog film, serial, dan anime.</p>
+            <a href="https://github.com/AryaWgna/streamely" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section id="certifications" class="section border-t border-[var(--line)]">
+    <div class="container">
+      <header class="max-w-2xl mb-14 reveal stagger-1">
+        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">04 · Certifications</p>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Credentials</h2>
+      </header>
+      <div class="grid md:grid-cols-3 gap-6">
+        <article class="card overflow-hidden reveal stagger-2">
+          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
+            <img src="assets/sertifikat/ccna-introduction-to-networks.png" alt="CCNA Introduction to Networks certificate" class="w-full h-full object-contain p-4" loading="lazy">
+          </div>
+          <div class="p-6">
+            <h3 class="font-medium mb-1">CCNA — Introduction to Networks</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">Network Architecture &amp; Protocols</p>
+            <a href="assets/sertifikat/ccna-itn.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+        <article class="card overflow-hidden reveal stagger-3">
+          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
+            <img src="assets/sertifikat/english-for-it-1.png" alt="English for IT 1 certificate" class="w-full h-full object-contain p-4" loading="lazy">
+          </div>
+          <div class="p-6">
+            <h3 class="font-medium mb-1">English for IT 1</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">IT Terminology &amp; Communication</p>
+            <a href="assets/sertifikat/english-for-it-1.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+        <article class="card overflow-hidden reveal stagger-4">
+          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
+            <img src="assets/sertifikat/operating-systems-basics.png" alt="Operating Systems Basics certificate" class="w-full h-full object-contain p-4" loading="lazy">
+          </div>
+          <div class="p-6">
+            <h3 class="font-medium mb-1">Operating Systems Basics</h3>
+            <p class="text-sm text-[var(--muted)] mb-4">OS Fundamentals &amp; Architecture</p>
+            <a href="assets/sertifikat/operating-systems-basics.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="section border-t border-[var(--line)]">
+    <div class="container">
+      <div class="max-w-3xl mx-auto">
+        <header class="text-center mb-12 reveal stagger-1">
+          <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">05 · Contact</p>
+          <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Let's build something together</h2>
+          <p class="mt-4 text-[var(--muted)]">Have a project in mind? I usually reply within 24 hours.</p>
+        </header>
+        <form id="contact-form" class="card p-8 md:p-10 space-y-6 reveal stagger-2" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="45d3352d-8005-48a8-b024-5840f0914273">
+            <input type="hidden" name="subject" value="Pesan baru dari Portfolio Arya Wiguna">
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-medium mb-2">Name</label>
+              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200" placeholder="Your name">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium mb-2">Email</label>
+              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200" placeholder="you@example.com">
+            </div>
+          </div>
+          <div>
+            <label for="project" class="block text-sm font-medium mb-2">Project Type</label>
+            <select id="project" name="project" class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200 appearance-none">
+              <option value="">Select one</option>
+              <option value="freelance">Freelance project</option>
+              <option value="fulltime">Full-time role</option>
+              <option value="consulting">Consulting / Advisory</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium mb-2">Message</label>
+            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200 resize-y" placeholder="Tell me about your project..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full md:w-auto">Send Message
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </button>
+          <p class="font-mono text-xs text-[var(--muted)] text-center md:text-left">Or email directly: <a href="mailto:wgnarya123@gmail.com" class="text-[var(--accent)] hover:underline">wgnarya123@gmail.com</a></p>
+          <div id="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-[var(--line)] py-12">
+  <div class="container">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-left">
+        <p class="font-mono text-sm font-semibold">arya<span class="text-[var(--accent)]">wigna</span></p>
+        <p class="text-sm text-[var(--muted)] mt-1">Full Stack Developer · Indonesia</p>
+      </div>
+      <nav class="flex items-center gap-6" aria-label="Social links">
+        <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+        <a href="https://www.linkedin.com/in/arya-wgna" target="_blank" rel="noopener noreferrer" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        
+      </nav>
+    </div>
+    <p class="mt-8 text-center font-mono text-xs text-[var(--muted)]">© <span id="year"></span> Arya Wiguna. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  toggle.addEventListener('click', () => {
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // Mobile menu
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('hidden');
+    menuToggle.setAttribute('aria-expanded', String(!open));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Typewriter roles
+  const roles = ['Full Stack Developer', 'Cyber Architect', 'Open Source Contributor'];
+  const __ROLES = { en: roles, id: ['Pengembang Full Stack', 'Arsitek Siber', 'Kontributor Open Source'] };
+  let rolesCurrent = __ROLES[localStorage.getItem('lang') === 'id' ? 'id' : 'en'];
+  const tw = document.getElementById('typewriter');
+  let roleIndex = 0, charIndex = 0, deleting = false;
+  function type() {
+    const current = rolesCurrent[roleIndex];
+    if (!deleting) {
+      charIndex++;
+      tw.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) { deleting = true; return setTimeout(type, 1600); }
+      setTimeout(type, 70);
+    } else {
+      charIndex--;
+      tw.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) { deleting = false; roleIndex = (roleIndex + 1) % roles.length; }
+      setTimeout(type, 40);
+    }
+  }
+  type();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', this.getAttribute('href'));
+      }
+    });
+  });
+</script>
+
+<script>
+(function () {
+  var PAIRS = [
+    ['About','Tentang'],['Skills','Keahlian'],['Projects','Proyek'],['Certifications','Sertifikasi'],['Contact','Kontak'],
+    ['hello, i\'m','halo, saya'],
+    ['Full-stack developer based in Indonesia 🇮🇩 crafting clean, scalable, and secure applications.','Pengembang full-stack yang berbasis di Indonesia 🇮🇩, membuat aplikasi yang bersih, skalabel, dan aman.'],
+    ['First solve the problem, then write the code.','Pertama selesaikan masalahnya, baru tulis kodenya.'],
+    ['View Work','Lihat Karya'],['Get in Touch','Hubungi Saya'],
+    ['Languages','Bahasa'],['Frontend','Frontend'],['Backend','Backend'],['DevOps','DevOps'],
+    ['01 · About','01 · Tentang'],
+    ['Developer','Pengembang'],['profile','profil'],
+    ['A snapshot of who I am, what I build, and how I think.','Gambaran singkat tentang siapa saya, apa yang saya bangun, dan bagaimana cara berpikir saya.'],
+    ['🔭 Building','🔭 Sedang Membangun'],
+    ['Scalable apps, cloud solutions, and open-source tools.','Aplikasi skalabel, solusi cloud, dan alat open-source.'],
+    ['📚 Learning','📚 Belajar'],
+    ['Laravel & PostgreSQL, cloud architecture, and system design.','Laravel & PostgreSQL, arsitektur cloud, dan desain sistem.'],
+    ['02 · Skills','02 · Keahlian'],['The stack I work with','Stack yang saya gunakan'],
+    ['03 · Projects','03 · Proyek'],['Selected work','Karya Pilihan'],
+    ['A few things I\'ve built. More on ','Beberapa hal yang pernah saya buat. Lainnya di '],
+    ['View source','Lihat sumber'],
+    ['04 · Certifications','04 · Sertifikasi'],['Credentials','Kredensial'],
+    ['CCNA — Introduction to Networks','CCNA — Pengenalan Jaringan'],
+    ['English for IT 1','Bahasa Inggris untuk IT 1'],
+    ['Operating Systems Basics','Dasar Sistem Operasi'],
+    ['Network Architecture & Protocols','Arsitektur & Protokol Jaringan'],
+    ['IT Terminology & Communication','Terminologi & Komunikasi IT'],
+    ['OS Fundamentals & Architecture','Fundamental & Arsitektur OS'],
+    ['View certificate (PDF)','Lihat sertifikat (PDF)'],
+    ['05 · Contact','05 · Kontak'],
+    ['Let\'s build something together','Mari bangun sesuatu bersama'],
+    ['Have a project in mind? I usually reply within 24 hours.','Ada proyek dalam pikiran? Saya biasanya membalas dalam 24 jam.'],
+    ['Name','Nama'],['Email','Email'],['Project Type','Jenis Proyek'],['Message','Pesan'],
+    ['Your name','Nama Anda'],['you@example.com','anda@contoh.com'],
+    ['Select one','Pilih salah satu'],
+    ['Freelance project','Proyek lepas'],['Full-time role','Peran penuh waktu'],
+    ['Consulting / Advisory','Konsultasi / Advisory'],['Other','Lainnya'],
+    ['Send Message','Kirim Pesan'],
+    ['Or email directly: ','Atau email langsung: '],
+    ['Full Stack Developer · Indonesia','Pengembang Full Stack · Indonesia'],
+    ['Aplikasi mobile yang mengubah ruangan apa pun menjadi skyboard digital interaktif.','A mobile app that turns any space into an interactive digital skyboard.'],
+    ['Aplikasi papan pengumuman yang dibangun dengan Kotlin & Firebase untuk pembaruan real-time.','An announcement board app built with Kotlin & Firebase for real-time updates.'],
+    ['Platform streaming real-time untuk acara kampus, dibangun agar berskala.','A real-time streaming platform for campus events, built for scale.'],
+    ['Social links','Tautan sosial'],
+    ['Toggle theme','Ganti tema'],
+    ['Menu','Menu']
+  ];
+  var ATTRS = [
+    ['#name','placeholder','Your name','Nama Anda'],
+    ['#email','placeholder','you@example.com','anda@contoh.com'],
+    ['#message','placeholder','Tell me about your project...','Ceritakan tentang proyek Anda...'],
+    ['meta[name="description"]','content','Arya Wiguna — Full Stack Developer based in Indonesia. Building clean, scalable, secure web applications.','Arya Wiguna — Pengembang Full Stack berbasis di Indonesia. Membangun aplikasi web yang bersih, skalabel, dan aman.'],
+    ['img[alt="CCNA Introduction to Networks certificate"]','alt','CCNA Introduction to Networks certificate','Sertifikat CCNA Pengenalan Jaringan'],
+    ['img[alt="English for IT 1 certificate"]','alt','English for IT 1 certificate','Sertifikat Bahasa Inggris untuk IT 1'],
+    ['img[alt="Operating Systems Basics certificate"]','alt','Operating Systems Basics certificate','Sertifikat Dasar Sistem Operasi']
+  ];
+
+  var nodes = [];
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    var n = walker.currentNode;
+    var t = n.data.trim();
+    if (!t) continue;
+    for (var p = 0; p < PAIRS.length; p++) {
+      if (t === PAIRS[p][0]) {
+        nodes.push({ node: n, en: PAIRS[p][0], id: PAIRS[p][1], pad: n.data.indexOf(t) });
+        break;
+      }
+      if (t === PAIRS[p][1]) {
+        nodes.push({ node: n, en: PAIRS[p][1], id: PAIRS[p][0], pad: n.data.indexOf(t) });
+        break;
+      }
+    }
+  }
+  var attrNodes = [];
+  ATTRS.forEach(function (a) {
+    var el = document.querySelector(a[0]);
+    if (el && el.getAttribute(a[1]) === a[2]) attrNodes.push({ el: el, attr: a[1], en: a[2], id: a[3] });
+  });
+
+  var TITLE_EN = 'Arya Wiguna — Full Stack Developer';
+  var TITLE_ID = 'Arya Wiguna — Pengembang Full Stack';
+
+  function apply(lang) {
+    var idMode = lang === 'id';
+    nodes.forEach(function (r) {
+      var s = idMode ? r.id : r.en;
+      r.node.data = r.node.data.slice(0, r.pad) + s + r.node.data.slice(r.pad + (idMode ? r.id.length : r.en.length));
+    });
+    attrNodes.forEach(function (r) { r.el.setAttribute(r.attr, idMode ? r.id : r.en); });
+    document.documentElement.lang = idMode ? 'id' : 'en';
+    document.title = idMode ? TITLE_ID : TITLE_EN;
+    if (typeof __ROLES !== 'undefined') rolesCurrent = idMode ? __ROLES.id : __ROLES.en;
+    var par = document.getElementById('year');
+    if (par && par.parentNode && par.parentNode.lastChild && par.parentNode.lastChild.nodeType === 3) {
+      par.parentNode.lastChild.data = ' ' + (idMode ? 'Arya Wiguna. Dibuat dengan penuh perhatian.' : 'Arya Wiguna. Built with care.');
+    }
+    var btn = document.getElementById('lang-toggle');
+    if (btn) btn.textContent = idMode ? 'EN' : 'ID';
+  }
+
+  var langBtn = document.getElementById('lang-toggle');
+  if (langBtn) langBtn.addEventListener('click', function () {
+    var next = (localStorage.getItem('lang') === 'id') ? 'en' : 'id';
+    localStorage.setItem('lang', next);
+    apply(next);
+  });
+  apply((localStorage.getItem('lang') === 'id') ? 'id' : 'en');
+})();
+
+(function () {
+  var form = document.getElementById('contact-form');
+  var statusEl = document.getElementById('form-status');
+  if (!form || !statusEl) return;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var idMode = localStorage.getItem('lang') === 'id';
+    var sending = idMode ? 'Mengirim...' : 'Sending...';
+    var ok = idMode ? 'Terima kasih! Pesan Anda sudah terkirim. Saya akan segera membalas.' : 'Thank you! Your message has been sent. I will reply soon.';
+    var fail = idMode ? 'Gagal mengirim. Coba lagi atau email langsung ke wgnarya123@gmail.com.' : 'Failed to send. Please try again or email wgnarya123@gmail.com directly.';
+    var btn = form.querySelector('button[type="submit"]');
+    statusEl.textContent = sending;
+    statusEl.className = 'text-sm text-[var(--muted)] mt-4';
+    btn.disabled = true;
+    try {
+      var res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      var data = await res.json();
+      if (data.success) {
+        statusEl.textContent = ok;
+        statusEl.className = 'text-sm text-emerald-600 dark:text-emerald-400 mt-4';
+        form.reset();
+      } else {
+        statusEl.textContent = fail;
+        statusEl.className = 'text-sm text-red-500 mt-4';
+      }
+    } catch (err) {
+      statusEl.textContent = fail;
+      statusEl.className = 'text-sm text-red-500 mt-4';
+    }
+    btn.disabled = false;
+  });
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

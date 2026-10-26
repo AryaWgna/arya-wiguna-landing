@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Project cover">
+<defs>
+<pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#1C1C22" stroke-width="1"/></pattern>
+<linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5" stop-opacity="0.55"/><stop offset="1" stop-color="#818CF8" stop-opacity="0.12"/></linearGradient>
+<radialGradient id="glow" cx="0.72" cy="0.28" r="0.55"><stop offset="0" stop-color="#4F46E5" stop-opacity="0.35"/><stop offset="1" stop-color="#4F46E5" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1600" height="1000" fill="#0B0B0F"/>
+<rect width="1600" height="1000" fill="url(#g)"/>
+<rect width="1600" height="1000" fill="url(#glow)"/>
+<rect x="190" y="150" width="1220" height="560" rx="26" fill="#101014" stroke="#27272A" stroke-width="3"/>
+<rect x="190" y="150" width="14" height="560" rx="7" fill="url(#ag)"/>
+<text x="250" y="230" font-family="JetBrains Mono,monospace" font-size="26" fill="#52525B">FLIGHT</text>
+<text x="620" y="230" font-family="JetBrains Mono,monospace" font-size="26" fill="#52525B">TO</text>
+<text x="1010" y="230" font-family="JetBrains Mono,monospace" font-size="26" fill="#52525B">STATUS</text>
+<line x1="250" y1="258" x2="1330" y2="258" stroke="#27272A" stroke-width="2"/>
+<circle cx="266" cy="306" r="9" fill="#34D399"/>
+<text x="292" y="330" font-family="JetBrains Mono,monospace" font-size="34" fill="#E4E4E7">GA 216</text>
+<text x="620" y="330" font-family="JetBrains Mono,monospace" font-size="34" fill="#A1A1AA">JAKARTA</text>
+<text x="1010" y="330" font-family="JetBrains Mono,monospace" font-size="34" fill="#34D399">ON TIME</text>
+<line x1="250" y1="386" x2="1330" y2="386" stroke="#1E1E25" stroke-width="2"/>
+<circle cx="266" cy="402" r="9" fill="#FBBF24"/>
+<text x="292" y="426" font-family="JetBrains Mono,monospace" font-size="34" fill="#E4E4E7">SQ 512</text>
+<text x="620" y="426" font-family="JetBrains Mono,monospace" font-size="34" fill="#A1A1AA">SINGAPORE</text>
+<text x="1010" y="426" font-family="JetBrains Mono,monospace" font-size="34" fill="#FBBF24">BOARDING</text>
+<line x1="250" y1="482" x2="1330" y2="482" stroke="#1E1E25" stroke-width="2"/>
+<circle cx="266" cy="498" r="9" fill="#34D399"/>
+<text x="292" y="522" font-family="JetBrains Mono,monospace" font-size="34" fill="#E4E4E7">ID 7120</text>
+<text x="620" y="522" font-family="JetBrains Mono,monospace" font-size="34" fill="#A1A1AA">DENPASAR</text>
+<text x="1010" y="522" font-family="JetBrains Mono,monospace" font-size="34" fill="#34D399">LANDED</text>
+<line x1="250" y1="578" x2="1330" y2="578" stroke="#1E1E25" stroke-width="2"/>
+<circle cx="266" cy="594" r="9" fill="#F87171"/>
+<text x="292" y="618" font-family="JetBrains Mono,monospace" font-size="34" fill="#E4E4E7">EK 358</text>
+<text x="620" y="618" font-family="JetBrains Mono,monospace" font-size="34" fill="#A1A1AA">DUBAI</text>
+<text x="1010" y="618" font-family="JetBrains Mono,monospace" font-size="34" fill="#F87171">DELAYED</text>
+<line x1="250" y1="674" x2="1330" y2="674" stroke="#1E1E25" stroke-width="2"/>
+<path d="M250 840 L520 1000 L1330 1000 L1080 840 Z" fill="#0D0D12" stroke="#27272A" stroke-width="2"/>
+<line x1="250" y1="840" x2="520" y2="1000" stroke="#27272A" stroke-width="2"/>
+<line x1="1330" y1="840" x2="1080" y2="1000" stroke="#27272A" stroke-width="2"/>
+<text x="140" y="612" font-family="JetBrains Mono,monospace" font-size="60" font-weight="700" fill="#E4E4E7" letter-spacing="2">SKYBOARD</text>
+<text x="142" y="666" font-family="JetBrains Mono,monospace" font-size="27" fill="#71717A" letter-spacing="1">Flight Information Display · TypeScript</text>
+</svg>
