@@ -207,8 +207,13 @@
       50% { transform: translateY(-38px) rotate(7deg); }
       100% { transform: translateY(0) rotate(-6deg); }
     }
+    .photo-float { animation: photo-float 7s ease-in-out infinite alternate; }
+    @keyframes photo-float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-14px); }
+    }
     @media (prefers-reduced-motion: reduce) {
-      .blob, .sym { animation: none !important; }
+      .blob, .sym, .photo-float { animation: none !important; }
     }
     .k { color: var(--accent); }
     .s { color: #059669; }
@@ -297,8 +302,8 @@
         <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">3</dd><dt class="mt-1 text-xs text-[var(--muted)]">DevOps</dt></div>
       </dl>
       </div>
-      <div class="hidden md:block lg:col-span-4 reveal stagger-5">
-        <div class="relative mx-auto w-56 h-56 lg:w-64 lg:h-64">
+      <div class="hidden md:flex lg:col-span-4 items-center justify-center lg:justify-end reveal stagger-5">
+        <div class="relative w-56 h-56 lg:w-72 lg:h-72 photo-float">
           <div class="absolute -inset-10 rounded-full bg-[var(--accent)]/10 blur-3xl" aria-hidden="true"></div>
           <img src="https://avatars.githubusercontent.com/u/156288269?s=400" alt="Arya Wiguna — GitHub profile photo" width="256" height="256" class="relative w-full h-full object-cover [-webkit-mask-image:radial-gradient(circle_at_center,black_50%,transparent_75%)] [mask-image:radial-gradient(circle_at_center,black_50%,transparent_75%)]" loading="lazy">
         </div>
