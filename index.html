@@ -275,8 +275,9 @@
   <div class="absolute -top-40 -left-32 h-[30rem] w-[30rem] rounded-full bg-[var(--accent)]/15 blur-3xl pointer-events-none" aria-hidden="true"></div>
   <div class="absolute -bottom-48 -right-28 h-[28rem] w-[28rem] rounded-full bg-[var(--accent)]/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
   <div class="container relative">
-    <div class="max-w-3xl">
-      <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-6 reveal stagger-1"><span class="text-[var(--accent)]">&gt;_</span> hello, i'm</p>
+    <div class="grid items-center gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-8">
+        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-6 reveal stagger-1"><span class="text-[var(--accent)]">&gt;_</span> hello, i'm</p>
       <h1 class="text-5xl md:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.02] reveal stagger-2">Arya <span class="text-[var(--accent)]">Wiguna</span></h1>
       <div class="mt-5 font-mono text-lg md:text-2xl text-[var(--muted)] h-8 reveal stagger-3"><span id="typewriter"></span><span class="text-[var(--accent)] animate-pulse">▍</span></div>
       <p class="mt-6 max-w-xl text-base md:text-lg text-[var(--muted)] reveal stagger-4">
@@ -295,6 +296,13 @@
         <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">5</dd><dt class="mt-1 text-xs text-[var(--muted)]">Backend</dt></div>
         <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">3</dd><dt class="mt-1 text-xs text-[var(--muted)]">DevOps</dt></div>
       </dl>
+      </div>
+      <div class="hidden md:block lg:col-span-4 reveal stagger-5">
+        <div class="relative mx-auto w-56 h-56 lg:w-64 lg:h-64">
+          <div class="absolute -inset-8 rounded-full bg-[var(--accent)]/15 blur-3xl" aria-hidden="true"></div>
+          <img src="https://avatars.githubusercontent.com/u/156288269?s=400" alt="Arya Wiguna — GitHub profile photo" width="256" height="256" class="relative w-full h-full rounded-full object-cover ring-1 ring-[var(--line)] shadow-2xl" loading="lazy">
+        </div>
+      </div>
     </div>
   </div>
 </header>
