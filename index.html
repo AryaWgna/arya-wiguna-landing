@@ -182,8 +182,33 @@
       50% { transform: translate(22vmax, -16vmax) scale(1.1) rotate(-180deg); }
       100% { transform: translate(30vmax, -26vmax) scale(1.25) rotate(-360deg); }
     }
+    /* Floating code symbols */
+    .icons-layer { position: absolute; inset: 0; }
+    .sym {
+      position: absolute; font-family: 'JetBrains Mono', monospace;
+      color: var(--muted); opacity: 0.16; user-select: none;
+      will-change: transform; line-height: 1; pointer-events: none;
+    }
+    .dark .sym { opacity: 0.14; }
+    .sym-1 { top: 14%; left: 8%; font-size: 2.5rem; animation: sym-float 18s ease-in-out infinite alternate; animation-delay: -2s; }
+    .sym-2 { top: 72%; left: 12%; font-size: 1.75rem; animation: sym-float 22s ease-in-out infinite alternate; animation-delay: -7s; }
+    .sym-3 { top: 38%; left: 22%; font-size: 2rem; animation: sym-float 16s ease-in-out infinite alternate; animation-delay: -11s; }
+    .sym-4 { top: 82%; left: 34%; font-size: 1.5rem; animation: sym-float 20s ease-in-out infinite alternate; animation-delay: -4s; }
+    .sym-5 { top: 16%; left: 44%; font-size: 2.25rem; animation: sym-float 24s ease-in-out infinite alternate; animation-delay: -13s; }
+    .sym-6 { top: 88%; left: 52%; font-size: 1.75rem; animation: sym-float 17s ease-in-out infinite alternate; animation-delay: -6s; }
+    .sym-7 { top: 10%; left: 64%; font-size: 2rem; animation: sym-float 21s ease-in-out infinite alternate; animation-delay: -9s; }
+    .sym-8 { top: 58%; left: 73%; font-size: 1.5rem; animation: sym-float 19s ease-in-out infinite alternate; animation-delay: -1s; }
+    .sym-9 { top: 86%; left: 79%; font-size: 1.75rem; animation: sym-float 23s ease-in-out infinite alternate; animation-delay: -15s; }
+    .sym-10 { top: 26%; left: 85%; font-size: 2.25rem; animation: sym-float 15s ease-in-out infinite alternate; animation-delay: -5s; }
+    .sym-11 { top: 66%; left: 91%; font-size: 1.5rem; animation: sym-float 20s ease-in-out infinite alternate; animation-delay: -10s; }
+    .sym-12 { top: 44%; left: 97%; font-size: 1.75rem; animation: sym-float 18s ease-in-out infinite alternate; animation-delay: -3s; }
+    @keyframes sym-float {
+      0% { transform: translateY(0) rotate(-6deg); }
+      50% { transform: translateY(-38px) rotate(7deg); }
+      100% { transform: translateY(0) rotate(-6deg); }
+    }
     @media (prefers-reduced-motion: reduce) {
-      .blob { animation: none !important; }
+      .blob, .sym { animation: none !important; }
     }
     .k { color: var(--accent); }
     .s { color: #059669; }
@@ -197,6 +222,20 @@
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
   <div class="blob blob-4"></div>
+  <div class="icons-layer">
+    <span class="sym sym-1">&lt;/&gt;</span>
+    <span class="sym sym-2">&#123;&#125;</span>
+    <span class="sym sym-3">&#36;&#123;&#125;</span>
+    <span class="sym sym-4">=&gt;</span>
+    <span class="sym sym-5">&#91;&#93;</span>
+    <span class="sym sym-6">&#35;</span>
+    <span class="sym sym-7">&#40;&#41;</span>
+    <span class="sym sym-8">;</span>
+    <span class="sym sym-9">&amp;&amp;</span>
+    <span class="sym sym-10">//</span>
+    <span class="sym sym-11">+</span>
+    <span class="sym sym-12">&lt;&gt;</span>
+  </div>
 </div>
 <div class="noise" aria-hidden="true"></div>
 <nav class="fixed top-0 inset-x-0 z-50 border-b border-[var(--line)] bg-[var(--paper)]/85 backdrop-blur-xl">

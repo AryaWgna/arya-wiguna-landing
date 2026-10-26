@@ -11,7 +11,7 @@ Sebuah halaman portofolio / landing page untuk **Arya Wiguna**, Full Stack Devel
 - **UI dwibahasa** — toggle terjemahan lengkap Inggris/Indonesia melalui kamus sisi klien.
 - **Tailwind CSS** (via CDN) + token desain kustom (font `Space Grotesk` & `JetBrains Mono`).
 - **Aksen dinamis** — efek typewriter untuk peran, animasi scroll-reveal, dan navigasi smooth-scroll.
-- **Background aurora animasi** — gumpalan gradien lembut yang melayang, menyesuaikan mode terang/gelap dan menghormati `prefers-reduced-motion`.
+- **Background animasi** — gumpalan gradien aurora lembut plus simbol kode yang melayang, keduanya menyesuaikan mode terang/gelap dan menghormati `prefers-reduced-motion`.
 - **Aksesibel & responsif** — tata letak mobile-first, gaya fokus keyboard, dukungan `prefers-reduced-motion`, dan HTML semantik.
 - **Formulir kontak** — terhubung ke Web3Forms untuk pengiriman tanpa backend.
 

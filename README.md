@@ -11,7 +11,7 @@ A personal portfolio / landing page for **Arya Wiguna**, a Full Stack Developer 
 - **Bilingual UI** — complete English/Indonesian translation toggle via a client-side dictionary.
 - **Tailwind CSS** (via CDN) + custom design tokens (`Space Grotesk` & `JetBrains Mono` fonts).
 - **Dynamic accents** — typewriter effect for roles, scroll-reveal animations, and a smooth-scroll navigation.
-- **Animated aurora background** — soft drifting gradient blobs that adapt to light/dark mode and respect `prefers-reduced-motion`.
+- **Animated background** — soft aurora gradient blobs plus floating code symbols, both adapting to light/dark mode and respecting `prefers-reduced-motion`.
 - **Accessible & responsive** — mobile-first layout, keyboard focus styles, `prefers-reduced-motion` support, and semantic HTML.
 - **Contact form** — wired to Web3Forms for submissions without a backend.
 
