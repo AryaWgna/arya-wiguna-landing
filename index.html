@@ -433,7 +433,7 @@
               <span class="chip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flutter</span><span class="chip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Dart</span><span class="chip">Mobile</span>
             </div>
             <h3 class="text-xl font-medium mb-2">SIMARU Mobile App</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">Aplikasi mobile pemindaian QR untuk pemeriksaan aset (opname) medis di RS UMMI — pelacakan lokasi &amp; kondisi alat, plus notifikasi push — dibangun dengan Flutter untuk Android &amp; iOS.</p>
+            <p class="text-sm text-[var(--muted)] mb-4">A QR-scanning mobile app for medical asset inspection (opname) at UMMI Hospital — tracking device location &amp; condition, plus push notifications — built with Flutter for Android &amp; iOS.</p>
             <a href="https://github.com/AryaWgna/SIMARU-Mobile-App" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
           </div>
         </article>
@@ -446,7 +446,7 @@
               <span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span><span class="chip"><img src="https://cdn.simpleicons.org/php/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PHP</span><span class="chip">UI</span>
             </div>
             <h3 class="text-xl font-medium mb-2">Digital Skyboard Announcement</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">Sistem Flight Information Display (FIDS) untuk bandara: gateway API, database, dan UI realtime untuk jadwal penerbangan serta promosi maskapai.</p>
+            <p class="text-sm text-[var(--muted)] mb-4">A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules and airline promotions.</p>
             <a href="https://github.com/AryaWgna/Digital-Skyboard-Announcement" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
           </div>
         </article>
@@ -459,7 +459,7 @@
               <span class="chip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Svelte</span><span class="chip"><img src="https://cdn.simpleicons.org/bun/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Bun</span><span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span>
             </div>
             <h3 class="text-xl font-medium mb-2">StreamEly</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">Platform video-on-demand self-hosted: gateway Bun + API Elysia.js + frontend Svelte, mengagregasi metadata TVmaze &amp; OMDB untuk katalog film, serial, dan anime.</p>
+            <p class="text-sm text-[var(--muted)] mb-4">A self-hosted video-on-demand platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze &amp; OMDB metadata for movie, series, and anime catalogs.</p>
             <a href="https://github.com/AryaWgna/streamely" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
           </div>
         </article>
@@ -705,11 +705,11 @@
     if (!t) continue;
     for (var p = 0; p < PAIRS.length; p++) {
       if (t === PAIRS[p][0]) {
-        nodes.push({ node: n, en: PAIRS[p][0], id: PAIRS[p][1], pad: n.data.indexOf(t) });
+        nodes.push({ node: n, en: PAIRS[p][0], id: PAIRS[p][1], pad: n.data.indexOf(t), len: t.length });
         break;
       }
       if (t === PAIRS[p][1]) {
-        nodes.push({ node: n, en: PAIRS[p][1], id: PAIRS[p][0], pad: n.data.indexOf(t) });
+        nodes.push({ node: n, en: PAIRS[p][1], id: PAIRS[p][0], pad: n.data.indexOf(t), len: t.length });
         break;
       }
     }
@@ -727,7 +727,8 @@
     var idMode = lang === 'id';
     nodes.forEach(function (r) {
       var s = idMode ? r.id : r.en;
-      r.node.data = r.node.data.slice(0, r.pad) + s + r.node.data.slice(r.pad + (idMode ? r.id.length : r.en.length));
+      var cur = idMode ? r.en.length : r.id.length;
+      r.node.data = r.node.data.slice(0, r.pad) + s + r.node.data.slice(r.pad + cur);
     });
     attrNodes.forEach(function (r) { r.el.setAttribute(r.attr, idMode ? r.id : r.en); });
     document.documentElement.lang = idMode ? 'id' : 'en';
