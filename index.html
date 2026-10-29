@@ -1,810 +1,910 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Arya Wiguna — Full Stack Developer based in Indonesia. Building clean, scalable, secure web applications.">
+  <meta name="author" content="Arya Wiguna">
+  <meta name="keywords" content="Arya Wiguna,portfolio,developer,full-stack,react,vue,next.js,laravel,software engineer">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aryawiguna.my.id">
+  <meta property="og:title" content="Arya Wiguna | Full Stack Developer Portfolio">
+  <meta property="og:description" content="Full-stack developer crafting clean, scalable, and secure applications.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Arya Wiguna — Full Stack Developer</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C3AED'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
-    // Set theme before paint to avoid flash of wrong theme
-    (function () {
-      try {
-        var t = localStorage.getItem('theme');
-        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.classList.toggle('dark', t === 'dark');
-      } catch (e) {}
-    })();
+    (function(){try{var t=localStorage.getItem('theme');if(!t)t='dark';document.documentElement.classList.toggle('dark',t==='dark');}catch(e){}})();
   </script>
   <style>
     :root {
-      --paper: #FAFAF9;
-      --ink: #18181B;
-      --muted: #71717A;
-      --line: #E4E4E7;
-      --accent: #4F46E5;
-      --accent-hover: #4338CA;
-      --accent-soft: rgba(79, 70, 229, 0.10);
-      --blob-1: rgba(79, 70, 229, 0.50);
-      --blob-2: rgba(168, 85, 247, 0.38);
-      --blob-3: rgba(16, 185, 129, 0.32);
-      --blob-4: rgba(59, 130, 246, 0.38);
+      --bg: #FAFAF9; --bg2: #F4F4F5; --ink: #18181B; --muted: #71717A;
+      --line: #E4E4E7; --accent: #7C3AED; --accent2: #6D28D9; --accent3: #4F46E5;
+      --accent-soft: rgba(124,58,237,0.08); --glow: rgba(124,58,237,0.25);
+      --glass: rgba(250,250,249,0.75); --glass-b: rgba(228,228,231,0.5);
     }
     .dark {
-      --paper: #09090B;
-      --ink: #F4F4F5;
-      --muted: #A1A1AA;
-      --line: #27272A;
-      --accent: #818CF8;
-      --accent-hover: #A5B4FC;
-      --accent-soft: rgba(129, 140, 248, 0.12);
-      --blob-1: rgba(129, 140, 248, 0.45);
-      --blob-2: rgba(167, 139, 250, 0.32);
-      --blob-3: rgba(52, 211, 153, 0.25);
-      --blob-4: rgba(96, 165, 250, 0.32);
+      --bg: #08080C; --bg2: #0F0F15; --ink: #EEEEF0; --muted: #8888A0;
+      --line: #1E1E2A; --accent: #A78BFA; --accent2: #8B5CF6; --accent3: #7C3AED;
+      --accent-soft: rgba(167,139,250,0.08); --glow: rgba(167,139,250,0.2);
+      --glass: rgba(8,8,12,0.75); --glass-b: rgba(30,30,42,0.5);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s,color .5s}
+    .mono{font-family:'JetBrains Mono',monospace}
+    ::selection{background:var(--accent);color:#fff}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+
+    /* Container */
+    .container{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+    @media(min-width:1024px){.container{padding:0 2rem}}
+    section[id]{scroll-margin-top:5rem}
+
+    /* ──────────────────────────────
+       SPLASH — Geometric Morph
+       ────────────────────────────── */
+    #splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem;transition:opacity .8s cubic-bezier(.4,0,.2,1),visibility .8s}
+    #splash.done{opacity:0;visibility:hidden;pointer-events:none}
+    .splash-shapes{position:relative;width:120px;height:120px}
+    .splash-shape{position:absolute;inset:0;border:2px solid var(--accent);border-radius:24px;opacity:.6;animation:morph-spin 3s ease-in-out infinite}
+    .splash-shape:nth-child(2){animation-delay:.5s;border-color:var(--accent2);opacity:.4;transform:rotate(30deg)}
+    .splash-shape:nth-child(3){animation-delay:1s;border-color:var(--accent3);opacity:.25;transform:rotate(60deg)}
+    @keyframes morph-spin{
+      0%{border-radius:24px;transform:rotate(0deg) scale(1)}
+      33%{border-radius:50%;transform:rotate(120deg) scale(.85)}
+      66%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%;transform:rotate(240deg) scale(1.05)}
+      100%{border-radius:24px;transform:rotate(360deg) scale(1)}
     }
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    ::selection { background: var(--accent); color: #fff; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-    .container { max-width: 72rem; margin-inline: auto; padding-inline: 1.5rem; }
-    @media (min-width: 1024px) { .container { padding-inline: 2rem; } }
-    .section { padding-block: 6rem; }
-    @media (min-width: 768px) { .section { padding-block: 7.5rem; } }
-    section[id] { scroll-margin-top: 5.5rem; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-      padding: 0.8125rem 1.625rem; font-size: 0.875rem; font-weight: 500;
-      border-radius: 999px; border: 1px solid transparent; cursor: pointer;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px -12px var(--accent); }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 14px 34px -12px var(--accent); }
-    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-    .nav-link {
-      position: relative; padding: 0.5rem 0.125rem; font-size: 0.875rem; font-weight: 500;
-      color: var(--muted); transition: color 0.25s; background: none; border: none; cursor: pointer;
-    }
-    .nav-link:hover { color: var(--ink); }
-    .nav-link::after {
-      content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px;
-      background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .nav-link:hover::after { transform: scaleX(1); }
-    .card {
-      background: var(--paper); border: 1px solid var(--line); border-radius: 1.5rem;
-      transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.35); }
-    .dark .card:hover { box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8); }
-    .chip {
-      display: inline-flex; align-items: center; padding: 0.375rem 0.875rem;
-      font-size: 0.75rem; font-weight: 500; font-family: 'JetBrains Mono', monospace;
-      color: var(--muted); background: var(--accent-soft);
-      border: 1px solid var(--line); border-radius: 999px;
-    }
-    .reveal {
-      opacity: 0; filter: blur(8px); transform: translateY(28px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                  filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible { opacity: 1; filter: blur(0); transform: translateY(0); }
-    .stagger-1 { transition-delay: 0.06s; }
-    .stagger-2 { transition-delay: 0.12s; }
-    .stagger-3 { transition-delay: 0.18s; }
-    .stagger-4 { transition-delay: 0.24s; }
-    .stagger-5 { transition-delay: 0.30s; }
-    .stagger-6 { transition-delay: 0.36s; }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; filter: none; transform: none; transition: none; }
-    }
-    .noise {
-      position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-    /* Background aurora / gradient blobs */
-    .bg-aurora {
-      position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
-    }
-    .blob {
-      position: absolute; border-radius: 50%; opacity: 0.5;
-      will-change: transform;
-    }
-    .blob-1 {
-      width: 58vmax; height: 58vmax; top: -18vmax; left: -12vmax;
-      background: radial-gradient(circle at center, var(--blob-1), transparent 68%);
-      animation: aurora-drift-1 14s ease-in-out infinite alternate;
-    }
-    .blob-2 {
-      width: 48vmax; height: 48vmax; top: -10vmax; right: -14vmax;
-      background: radial-gradient(circle at center, var(--blob-2), transparent 68%);
-      animation: aurora-drift-2 18s ease-in-out infinite alternate;
-    }
-    .blob-3 {
-      width: 56vmax; height: 56vmax; bottom: -20vmax; left: 6vmax;
-      background: radial-gradient(circle at center, var(--blob-3), transparent 68%);
-      animation: aurora-drift-3 22s ease-in-out infinite alternate;
-    }
-    .blob-4 {
-      width: 44vmax; height: 44vmax; bottom: -12vmax; right: 4vmax;
-      background: radial-gradient(circle at center, var(--blob-4), transparent 68%);
-      animation: aurora-drift-4 16s ease-in-out infinite alternate;
-    }
-    @keyframes aurora-drift-1 {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      50% { transform: translate(26vmax, 18vmax) scale(1.25) rotate(180deg); }
-      100% { transform: translate(14vmax, 28vmax) scale(0.9) rotate(360deg); }
-    }
-    @keyframes aurora-drift-2 {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      50% { transform: translate(-24vmax, 20vmax) scale(0.85) rotate(-180deg); }
-      100% { transform: translate(-32vmax, 10vmax) scale(1.15) rotate(-360deg); }
-    }
-    @keyframes aurora-drift-3 {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      50% { transform: translate(-20vmax, -22vmax) scale(1.2) rotate(180deg); }
-      100% { transform: translate(12vmax, -32vmax) scale(0.88) rotate(360deg); }
-    }
-    @keyframes aurora-drift-4 {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      50% { transform: translate(22vmax, -16vmax) scale(1.1) rotate(-180deg); }
-      100% { transform: translate(30vmax, -26vmax) scale(1.25) rotate(-360deg); }
-    }
-    /* Floating code symbols */
-    .icons-layer { position: absolute; inset: 0; }
-    .sym {
-      position: absolute; font-family: 'JetBrains Mono', monospace;
-      color: var(--muted); opacity: 0.16; user-select: none;
-      will-change: transform; line-height: 1; pointer-events: none;
-    }
-    .dark .sym { opacity: 0.14; }
-    .sym-1 { top: 14%; left: 8%; font-size: 2.5rem; animation: sym-float 18s ease-in-out infinite alternate; animation-delay: -2s; }
-    .sym-2 { top: 72%; left: 12%; font-size: 1.75rem; animation: sym-float 22s ease-in-out infinite alternate; animation-delay: -7s; }
-    .sym-3 { top: 38%; left: 22%; font-size: 2rem; animation: sym-float 16s ease-in-out infinite alternate; animation-delay: -11s; }
-    .sym-4 { top: 82%; left: 34%; font-size: 1.5rem; animation: sym-float 20s ease-in-out infinite alternate; animation-delay: -4s; }
-    .sym-5 { top: 16%; left: 44%; font-size: 2.25rem; animation: sym-float 24s ease-in-out infinite alternate; animation-delay: -13s; }
-    .sym-6 { top: 88%; left: 52%; font-size: 1.75rem; animation: sym-float 17s ease-in-out infinite alternate; animation-delay: -6s; }
-    .sym-7 { top: 10%; left: 64%; font-size: 2rem; animation: sym-float 21s ease-in-out infinite alternate; animation-delay: -9s; }
-    .sym-8 { top: 58%; left: 73%; font-size: 1.5rem; animation: sym-float 19s ease-in-out infinite alternate; animation-delay: -1s; }
-    .sym-9 { top: 86%; left: 79%; font-size: 1.75rem; animation: sym-float 23s ease-in-out infinite alternate; animation-delay: -15s; }
-    .sym-10 { top: 26%; left: 85%; font-size: 2.25rem; animation: sym-float 15s ease-in-out infinite alternate; animation-delay: -5s; }
-    .sym-11 { top: 66%; left: 91%; font-size: 1.5rem; animation: sym-float 20s ease-in-out infinite alternate; animation-delay: -10s; }
-    .sym-12 { top: 44%; left: 97%; font-size: 1.75rem; animation: sym-float 18s ease-in-out infinite alternate; animation-delay: -3s; }
-    @keyframes sym-float {
-      0% { transform: translateY(0) rotate(-6deg); }
-      50% { transform: translateY(-38px) rotate(7deg); }
-      100% { transform: translateY(0) rotate(-6deg); }
-    }
-    .photo-float { animation: photo-float 7s ease-in-out infinite alternate; }
-    @keyframes photo-float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-14px); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .blob, .sym, .photo-float { animation: none !important; }
-    }
-    .k { color: var(--accent); }
-    .s { color: #059669; }
-    .dark .s { color: #34D399; }
+    .splash-letter{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:900;color:var(--accent);text-shadow:0 0 40px var(--glow)}
+    .splash-bar{width:160px;height:3px;border-radius:2px;background:var(--line);overflow:hidden}
+    .splash-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:2px;transition:width .3s ease}
+
+    /* ──────────────────────────────
+       AURORA BG
+       ────────────────────────────── */
+    .aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+    .aurora-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;will-change:transform}
+    .dark .aurora-blob{opacity:.2}
+    .ab1{width:55vmax;height:55vmax;top:-15vmax;left:-10vmax;background:radial-gradient(circle,rgba(124,58,237,.5),transparent 70%);animation:drift1 16s ease-in-out infinite alternate}
+    .ab2{width:45vmax;height:45vmax;top:-8vmax;right:-12vmax;background:radial-gradient(circle,rgba(139,92,246,.4),transparent 70%);animation:drift2 20s ease-in-out infinite alternate}
+    .ab3{width:50vmax;height:50vmax;bottom:-18vmax;left:8vmax;background:radial-gradient(circle,rgba(16,185,129,.3),transparent 70%);animation:drift3 24s ease-in-out infinite alternate}
+    .ab4{width:40vmax;height:40vmax;bottom:-10vmax;right:5vmax;background:radial-gradient(circle,rgba(59,130,246,.3),transparent 70%);animation:drift4 18s ease-in-out infinite alternate}
+    @keyframes drift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(20vmax,15vmax) scale(1.2)}100%{transform:translate(10vmax,25vmax) scale(.9)}}
+    @keyframes drift2{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-20vmax,18vmax) scale(.85)}100%{transform:translate(-28vmax,8vmax) scale(1.1)}}
+    @keyframes drift3{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-15vmax,-20vmax) scale(1.15)}100%{transform:translate(10vmax,-28vmax) scale(.9)}}
+    @keyframes drift4{0%{transform:translate(0,0) scale(1)}50%{transform:translate(18vmax,-14vmax) scale(1.1)}100%{transform:translate(25vmax,-22vmax) scale(1.2)}}
+    .noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    .dot-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.15;background-image:radial-gradient(circle,var(--muted) .5px,transparent .5px);background-size:24px 24px}
+    .dark .dot-grid{opacity:.06}
+
+    /* ──────────────────────────────
+       NAV
+       ────────────────────────────── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100}
+    .nav-bar{background:var(--glass);backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid var(--glass-b);transition:box-shadow .3s}
+    nav.scrolled .nav-bar{box-shadow:0 4px 30px rgba(0,0,0,.08)}.dark nav.scrolled .nav-bar{box-shadow:0 4px 30px rgba(0,0,0,.35)}
+    .nav-inner{max-width:72rem;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .nav-brand{font-weight:800;font-size:1.1rem;letter-spacing:-.03em;transition:transform .3s}
+    .nav-brand:hover{transform:scale(1.04)}
+    .nav-brand b{color:var(--accent)}
+    .nav-links{display:none;gap:2rem;align-items:center}
+    @media(min-width:768px){.nav-links{display:flex}}
+    .nav-links a{font-size:.82rem;font-weight:500;color:var(--muted);position:relative;transition:color .25s}
+    .nav-links a:hover,.nav-links a.on{color:var(--ink)}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);border-radius:1px;transition:width .3s cubic-bezier(.4,0,.2,1)}
+    .nav-links a:hover::after,.nav-links a.on::after{width:100%}
+    .nav-acts{display:flex;gap:.35rem;align-items:center}
+    .ico-btn{width:36px;height:36px;border-radius:10px;border:none;cursor:pointer;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .25s}
+    .ico-btn:hover{color:var(--ink);background:var(--accent-soft)}
+    .ico-btn svg{width:18px;height:18px}
+    .ham-wrap{display:flex}@media(min-width:768px){.ham-wrap{display:none}}
+    .ham{width:18px;height:12px;position:relative}.ham span{position:absolute;left:0;width:18px;height:1.5px;background:var(--accent);transition:all .3s}.ham span:nth-child(1){top:0}.ham span:nth-child(2){top:5px}.ham span:nth-child(3){top:10px}
+    .ham.x span:nth-child(1){transform:translateY(5px) rotate(45deg)}.ham.x span:nth-child(2){opacity:0}.ham.x span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+    .mob-menu{display:none;background:var(--glass);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-b);padding:1rem 1.5rem 1.25rem;flex-direction:column;gap:.25rem}
+    .mob-menu.open{display:flex}@media(min-width:768px){.mob-menu{display:none!important}}
+    .mob-menu a{font-size:.85rem;padding:.6rem 0;color:var(--muted);transition:color .2s}.mob-menu a:hover{color:var(--accent)}
+
+    /* ──────────────────────────────
+       HERO — Asymmetric
+       ────────────────────────────── */
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;z-index:2;overflow:hidden;padding:7rem 0 4rem}
+    .hero-grid{display:grid;gap:3rem;align-items:center}
+    @media(min-width:1024px){.hero-grid{grid-template-columns:1fr 1fr;gap:4rem}}
+    .hero-left{position:relative;z-index:2}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--accent-soft);font-size:.75rem;font-weight:500;color:var(--accent);margin-bottom:1.5rem;opacity:0;animation:fadeIn .8s .3s ease forwards}
+    .hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--glow);animation:pulse-dot 2s ease-in-out infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+    .hero-h1{font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1;letter-spacing:-.04em;margin-bottom:.75rem;opacity:0;animation:fadeIn .8s .5s ease forwards}
+    .hero-h1 span{background:linear-gradient(135deg,var(--accent),var(--accent3),#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.7;max-width:28rem;margin-bottom:2rem;opacity:0;animation:fadeIn .8s .7s ease forwards}
+    .hero-sub strong{color:var(--ink);font-weight:600}
+    .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;opacity:0;animation:fadeIn .8s .9s ease forwards}
+    .hero-right{display:none;position:relative}
+    @media(min-width:768px){.hero-right{display:flex;align-items:center;justify-content:center}}
+    .hero-photo-wrap{position:relative;width:clamp(220px,22vw,320px);aspect-ratio:1;margin:0 auto}
+    .hero-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;position:relative;z-index:2;border:3px solid var(--line);filter:contrast(1.05);opacity:0;animation:fadeScale .8s .6s ease forwards}
+    @keyframes fadeScale{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+    .hero-orbit{position:absolute;inset:-20px;border-radius:50%;border:1px dashed var(--line);animation:orbit-spin 30s linear infinite;opacity:.4}
+    .hero-orbit::after{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--accent);transform:translateX(-50%);box-shadow:0 0 12px var(--glow)}
+    .hero-orbit-2{position:absolute;inset:-50px;border-radius:50%;border:1px dashed var(--line);animation:orbit-spin 45s linear infinite reverse;opacity:.25}
+    .hero-glow{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);z-index:0;filter:blur(30px)}
+    @keyframes orbit-spin{to{transform:rotate(360deg)}}
+    .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);opacity:0;animation:fadeIn .8s 1.2s ease forwards}
+    .scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+    @keyframes scroll-pulse{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.5);opacity:.3}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ──────────────────────────────
+       BUTTONS
+       ────────────────────────────── */
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.5rem;border-radius:12px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .3s cubic-bezier(.4,0,.2,1)}
+    .btn:active{transform:scale(.97)}
+    .btn-fill{background:var(--accent);color:#fff;box-shadow:0 8px 24px -8px var(--glow)}
+    .btn-fill:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 32px -8px var(--glow)}
+    .btn-line{background:transparent;color:var(--ink);border:1px solid var(--line)}
+    .btn-line:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+    /* ──────────────────────────────
+       SECTION HELPERS
+       ────────────────────────────── */
+    .sec{padding:5rem 0}@media(min-width:768px){.sec{padding:7rem 0}}
+    .sec-border{border-top:1px solid var(--line)}
+    .sec-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}
+    .sec-tag i{width:20px;height:2px;background:var(--accent);border-radius:1px}
+    .sec-h{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+    .sec-h em{font-style:normal;color:var(--accent)}
+
+    /* ──────────────────────────────
+       ABOUT — Editorial
+       ────────────────────────────── */
+    .about-grid{display:grid;gap:3rem}
+    @media(min-width:1024px){.about-grid{grid-template-columns:5fr 7fr;gap:5rem;align-items:center}}
+    .about-img-box{position:relative}
+    .about-img{width:100%;aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:1px solid var(--line);position:relative;box-shadow:0 24px 60px -20px rgba(0,0,0,.15)}
+    .dark .about-img{box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
+    .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(.8);transition:filter .8s}
+    .about-img:hover img{filter:grayscale(0)}
+    .about-img-badge{position:absolute;bottom:1rem;left:1rem;padding:.5rem 1rem;border-radius:10px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-b);font-size:.75rem;font-weight:600;color:var(--accent);z-index:2;display:flex;align-items:center;gap:.4rem}
+    .about-img-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.5)}
+    .about-accent-line{position:absolute;top:-16px;right:-16px;width:calc(100% + 8px);height:calc(100% + 8px);border-radius:24px;border:1.5px solid var(--accent);opacity:.12;z-index:-1}
+    .about-body{display:flex;flex-direction:column;gap:1.5rem}
+    .about-text{font-size:1rem;color:var(--muted);line-height:1.8}
+    .about-text strong{color:var(--ink);font-weight:600}
+    .about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    @media(min-width:640px){.about-stats{grid-template-columns:repeat(4,1fr)}}
+    .stat{padding:1rem;border-radius:14px;border:1px solid var(--line);background:var(--bg2);text-align:center;transition:border-color .3s,transform .3s}
+    .stat:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .stat b{font-family:'JetBrains Mono',monospace;font-size:1.5rem;color:var(--accent);display:block}
+    .stat small{font-size:.7rem;color:var(--muted);margin-top:.15rem;display:block}
+
+    /* ──────────────────────────────
+       SKILLS — Bento Grid
+       ────────────────────────────── */
+    .bento{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+    @media(min-width:768px){.bento{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:1024px){.bento{grid-template-columns:repeat(4,1fr)}}
+    .bento-card{padding:1.25rem;border-radius:16px;border:1px solid var(--line);background:var(--bg2);transition:border-color .3s,box-shadow .3s;transform-style:preserve-3d}
+    .bento-card:hover{border-color:var(--accent);box-shadow:0 12px 30px -12px var(--glow)}
+    .bento-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+    .bento-head h3{font-size:.9rem;font-weight:700}
+    .bento-head span{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);padding:.15rem .5rem;border-radius:4px;background:var(--accent-soft)}
+    .bento-chips{display:flex;flex-wrap:wrap;gap:.35rem}
+    .bchip{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;font-size:.7rem;font-weight:500;color:var(--muted);border-radius:6px;background:var(--bg);border:1px solid var(--line);transition:color .2s,border-color .2s}
+    .bchip:hover{color:var(--accent);border-color:var(--accent)}
+    .bchip img{width:13px;height:13px}
+    .bento-wide{grid-column:span 2}
+
+    /* ──────────────────────────────
+       EXPERIENCE — Stacked Cards
+       ────────────────────────────── */
+    .exp-list{display:flex;flex-direction:column;gap:1.5rem}
+    .exp-card{padding:1.5rem 1.75rem;border-radius:16px;border:1px solid var(--line);background:var(--bg2);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+    .exp-card:hover{border-color:var(--accent);transform:translateX(4px)}
+    .exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent3));border-radius:0 2px 2px 0;opacity:0;transition:opacity .3s}
+    .exp-card:hover::before{opacity:1}
+    .exp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
+    .exp-role{font-size:1.05rem;font-weight:700}
+    .exp-co{color:var(--accent);font-weight:500;font-size:.9rem}
+    .exp-date{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);padding:.2rem .6rem;border-radius:6px;background:var(--accent-soft);white-space:nowrap}
+    .exp-desc{font-size:.85rem;color:var(--muted);line-height:1.7}
+
+    /* ──────────────────────────────
+       PROJECTS
+       ────────────────────────────── */
+    .proj-grid{display:grid;gap:1.5rem}
+    @media(min-width:768px){.proj-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.proj-grid{grid-template-columns:repeat(3,1fr)}}
+    .proj{border-radius:16px;border:1px solid var(--line);background:var(--bg2);overflow:hidden;transition:border-color .3s,box-shadow .3s;transform-style:preserve-3d}
+    .proj:hover{border-color:var(--accent);box-shadow:0 20px 50px -20px var(--glow)}
+    .proj-thumb{aspect-ratio:16/10;overflow:hidden;background:var(--accent-soft)}
+    .proj-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s}.proj:hover .proj-thumb img{transform:scale(1.04)}
+    .proj-body{padding:1.25rem}
+    .proj-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.6rem}
+    .proj h3{font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+    .proj p{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:.8rem}
+    .proj-link{font-size:.78rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:.4rem;transition:gap .3s}
+    .proj-link:hover{gap:.6rem}
+    .proj-link svg{width:14px;height:14px}
+
+    /* ──────────────────────────────
+       CERTS
+       ────────────────────────────── */
+    .cert{border-radius:16px;border:1px solid var(--line);background:var(--bg2);overflow:hidden;transition:border-color .3s,transform .3s}
+    .cert:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .cert-thumb{aspect-ratio:4/3;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .cert-thumb img{width:100%;height:100%;object-fit:contain;padding:1rem}
+    .cert-body{padding:1.25rem}
+    .cert h3{font-size:.95rem;font-weight:700;margin-bottom:.2rem}
+    .cert p{font-size:.8rem;color:var(--muted);margin-bottom:.75rem}
+
+    /* ──────────────────────────────
+       CONTACT
+       ────────────────────────────── */
+    .contact-card{border-radius:20px;border:1px solid var(--line);background:var(--bg2);padding:2rem;position:relative;overflow:hidden}
+    .contact-card::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);border-radius:1px}
+    .field{margin-bottom:1rem}
+    .field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.4rem}
+    .field input,.field select,.field textarea{width:100%;padding:.7rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-family:inherit;font-size:.88rem;transition:border-color .25s,box-shadow .25s}
+    .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+    .field select{appearance:none}
+    .field textarea{resize:vertical}
+    .field-row{display:grid;gap:1rem}@media(min-width:640px){.field-row{grid-template-columns:1fr 1fr}}
+
+    /* ──────────────────────────────
+       FOOTER
+       ────────────────────────────── */
+    footer{border-top:1px solid var(--line);padding:3rem 0}
+    .ft-grid{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+    @media(min-width:768px){.ft-grid{flex-direction:row;justify-content:space-between;text-align:left}}
+    .ft-social{display:flex;gap:.75rem;align-items:center}.ft-social a{color:var(--muted);transition:color .2s;display:flex;align-items:center}.ft-social a:hover{color:var(--accent)}.ft-social a svg{width:18px;height:18px;flex-shrink:0}
+
+    /* ──────────────────────────────
+       SCROLL REVEAL — Blur Fade In
+       ────────────────────────────── */
+    .rv{opacity:0;transform:translateY(24px);filter:blur(8px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1),filter .8s cubic-bezier(.4,0,.2,1)}
+    .rv.v{opacity:1;transform:translateY(0);filter:blur(0)}
+    .d1{transition-delay:.05s}.d2{transition-delay:.1s}.d3{transition-delay:.15s}.d4{transition-delay:.2s}.d5{transition-delay:.25s}.d6{transition-delay:.3s}
+
+    /* Scroll top */
+    .to-top{position:fixed;bottom:1.5rem;right:1.5rem;z-index:90;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .3s,transform .3s,background .2s}
+    .to-top.show{opacity:1;transform:translateY(0);pointer-events:all}.to-top:hover{background:var(--accent-soft)}
+    .to-top svg{width:16px;height:16px}
+
+    /* Theme icon toggle */
+    .dark .sun-ico{display:block}.dark .moon-ico{display:none}html:not(.dark) .sun-ico{display:none}html:not(.dark) .moon-ico{display:block}
+
+    /* ──────────────────────────────
+       CURSOR SPOTLIGHT
+       ────────────────────────────── */
+    .cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:opacity .4s ease;background:radial-gradient(circle,var(--glow),transparent 70%);transform:translate(-50%,-50%);mix-blend-mode:screen}
+    .dark .cursor-glow{opacity:.5}
+    html:not(.dark) .cursor-glow{opacity:.25}
+
+    /* ──────────────────────────────
+       METEOR SHOWER
+       ────────────────────────────── */
+    .meteor-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+    /* ──────────────────────────────
+       MARQUEE STRIP
+       ────────────────────────────── */
+    .marquee-strip{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.6rem 0;position:relative;z-index:2}
+    .marquee-track{display:flex;gap:2rem;animation:marquee-scroll 30s linear infinite;width:max-content}
+    @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .marquee-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:500;color:var(--muted);white-space:nowrap;flex-shrink:0}
+    .marquee-item img{width:16px;height:16px}
+    .marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.5;flex-shrink:0}
+
+    /* ──────────────────────────────
+       SHIMMER BORDER
+       ────────────────────────────── */
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;inset:-1px;z-index:-1;border-radius:inherit;background:conic-gradient(from var(--shimmer-angle,0deg),transparent 60%,var(--accent) 80%,transparent 100%);opacity:0;transition:opacity .4s ease;animation:shimmer-rotate 3s linear infinite}
+    .shimmer:hover::after{opacity:1}
+    @keyframes shimmer-rotate{to{--shimmer-angle:360deg}}
+    @property --shimmer-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+    /* ──────────────────────────────
+       TILT 3D
+       ────────────────────────────── */
+    .tilt{transform-style:preserve-3d;transition:transform .15s ease}
+
+    /* ──────────────────────────────
+       TEXT REVEAL
+       ────────────────────────────── */
+    .text-reveal .word{display:inline-block;opacity:0;transform:translateY(12px);filter:blur(4px);transition:all .5s cubic-bezier(.4,0,.2,1)}
+    .text-reveal.revealed .word{opacity:1;transform:translateY(0);filter:blur(0)}
+
+    /* ──────────────────────────────
+       MAGNETIC BUTTON
+       ────────────────────────────── */
+    .magnetic{transition:transform .2s cubic-bezier(.4,0,.2,1)}
   </style>
 </head>
+<body>
 
-<body class="min-h-screen bg-[var(--paper)] text-[var(--ink)] antialiased">
-<div class="bg-aurora" aria-hidden="true">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-  <div class="blob blob-4"></div>
-  <div class="icons-layer">
-    <span class="sym sym-1">&lt;/&gt;</span>
-    <span class="sym sym-2">&#123;&#125;</span>
-    <span class="sym sym-3">&#36;&#123;&#125;</span>
-    <span class="sym sym-4">=&gt;</span>
-    <span class="sym sym-5">&#91;&#93;</span>
-    <span class="sym sym-6">&#35;</span>
-    <span class="sym sym-7">&#40;&#41;</span>
-    <span class="sym sym-8">;</span>
-    <span class="sym sym-9">&amp;&amp;</span>
-    <span class="sym sym-10">//</span>
-    <span class="sym sym-11">+</span>
-    <span class="sym sym-12">&lt;&gt;</span>
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-shapes">
+    <div class="splash-shape"></div>
+    <div class="splash-shape"></div>
+    <div class="splash-shape"></div>
+    <div class="splash-letter">A</div>
   </div>
+  <div class="splash-bar"><div class="splash-fill" id="sp-fill"></div></div>
 </div>
+
+<!-- BG -->
+<div class="aurora" aria-hidden="true">
+  <div class="aurora-blob ab1"></div><div class="aurora-blob ab2"></div>
+  <div class="aurora-blob ab3"></div><div class="aurora-blob ab4"></div>
+</div>
+<div class="dot-grid" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
-<nav class="fixed top-0 inset-x-0 z-50 border-b border-[var(--line)] bg-[var(--paper)]/85 backdrop-blur-xl">
-  <div class="container flex h-16 items-center justify-between">
-    <a href="#top" class="font-mono text-sm font-semibold tracking-tight text-[var(--ink)]">arya<span class="text-[var(--accent)]">wigna</span></a>
-    <div class="hidden lg:flex items-center gap-8">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#certifications" class="nav-link">Certifications</a>
-      <a href="#contact" class="nav-link">Contact</a>
+<canvas class="meteor-canvas" id="meteor-canvas" aria-hidden="true"></canvas>
+<div class="cursor-glow" id="cursor-glow"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand">arya<b>wigna</b></a>
+      <div class="nav-links">
+        <a href="#hero" class="on" data-i18n="nav-home">Home</a>
+        <a href="#about" data-i18n="nav-about">About</a>
+        <a href="#skills" data-i18n="nav-skills">Skills</a>
+        <a href="#experience" data-i18n="nav-exp">Experience</a>
+        <a href="#projects" data-i18n="nav-proj">Projects</a>
+        <a href="#certs" data-i18n="nav-certs">Certs</a>
+        <a href="#contact" data-i18n="nav-contact">Contact</a>
+      </div>
+      <div class="nav-acts">
+        <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" class="ico-btn" aria-label="GitHub"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+        <a href="https://www.linkedin.com/in/arya-wgna" target="_blank" rel="noopener noreferrer" class="ico-btn" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <button id="lang-btn" class="ico-btn mono" style="font-size:.65rem;font-weight:700" aria-label="Change language">ID</button>
+        <button id="theme-btn" class="ico-btn" aria-label="Toggle theme">
+          <svg class="moon-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="sun-ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+        <div class="ham-wrap">
+          <button id="ham-btn" class="ico-btn" aria-label="Menu" aria-expanded="false"><span class="ham" id="ham"><span></span><span></span><span></span></span></button>
+        </div>
+      </div>
     </div>
-    <div class="flex items-center gap-2">
-      <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-      </a>
-      <button id="lang-toggle" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300 font-mono text-xs font-semibold" aria-label="Ganti bahasa">ID</button>
-      <button id="theme-toggle" class="p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--accent-soft)] transition-all duration-300" aria-label="Toggle theme">
-        <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-        <svg class="hidden w-5 h-5 dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-      </button>
-      <button id="menu-toggle" class="lg:hidden p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] transition-colors" aria-label="Menu" aria-expanded="false">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+    <div class="mob-menu" id="mob-menu">
+      <a href="#hero" data-i18n="nav-home">Home</a><a href="#about" data-i18n="nav-about">About</a><a href="#skills" data-i18n="nav-skills">Skills</a>
+      <a href="#experience" data-i18n="nav-exp">Experience</a><a href="#projects" data-i18n="nav-proj">Projects</a><a href="#certs" data-i18n="nav-certs">Certs</a><a href="#contact" data-i18n="nav-contact">Contact</a>
     </div>
-  </div>
-  <div id="mobile-menu" class="lg:hidden hidden border-t border-[var(--line)] bg-[var(--paper)]/95 backdrop-blur-xl px-6 py-4 space-y-1">
-    <a href="#about" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">About</a>
-    <a href="#skills" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Skills</a>
-    <a href="#projects" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Projects</a>
-    <a href="#certifications" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Certifications</a>
-    <a href="#contact" class="block py-2 text-sm text-[var(--muted)] hover:text-[var(--ink)] transition-colors">Contact</a>
   </div>
 </nav>
 
-<header id="top" class="relative isolate overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28">
-  <div class="absolute -top-40 -left-32 h-[30rem] w-[30rem] rounded-full bg-[var(--accent)]/15 blur-3xl pointer-events-none" aria-hidden="true"></div>
-  <div class="absolute -bottom-48 -right-28 h-[28rem] w-[28rem] rounded-full bg-[var(--accent)]/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
-  <div class="container relative">
-    <div class="grid items-center gap-12 lg:grid-cols-12">
-      <div class="lg:col-span-8">
-        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-6 reveal stagger-1"><span class="text-[var(--accent)]">&gt;_</span> hello, i'm</p>
-      <h1 class="text-5xl md:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.02] reveal stagger-2">Arya <span class="text-[var(--accent)]">Wiguna</span></h1>
-      <div class="mt-5 font-mono text-lg md:text-2xl text-[var(--muted)] h-8 reveal stagger-3"><span id="typewriter"></span><span class="text-[var(--accent)] animate-pulse">▍</span></div>
-      <p class="mt-6 max-w-xl text-base md:text-lg text-[var(--muted)] reveal stagger-4">
-        Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications.
-        <span class="text-[var(--ink)]">First solve the problem, then write the code.</span>
-      </p>
-      <div class="mt-10 flex flex-wrap items-center gap-4 reveal stagger-5">
-        <a href="#projects" class="btn btn-primary">View Work
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
-        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+<!-- HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-tag" data-i18n="hero-tag">Available for work</div>
+        <h1 class="hero-h1">Arya<br><span>Wiguna</span></h1>
+        <p class="hero-sub"><span data-i18n="hero-bio">Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications. </span><strong data-i18n="hero-motto">First solve the problem, then write the code.</strong></p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-fill">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 14 1.5-2.9A2 2 0 019.24 10H20a2 2 0 011.94 2.5l-1.54 6a2 2 0 01-1.95 1.5H4a2 2 0 01-2-2V5a2 2 0 012-2h3.9a2 2 0 011.69.9l.81 1.2a2 2 0 001.67.9H18a2 2 0 012 2v2"/></svg>
+            View Work
+          </a>
+          <a href="#contact" class="btn btn-line" data-i18n="hero-cta2">Get in Touch</a>
+        </div>
       </div>
-      <dl class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-[var(--line)] pt-8 reveal stagger-6">
-        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">6</dd><dt class="mt-1 text-xs text-[var(--muted)]">Languages</dt></div>
-        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">5</dd><dt class="mt-1 text-xs text-[var(--muted)]">Frontend</dt></div>
-        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">5</dd><dt class="mt-1 text-xs text-[var(--muted)]">Backend</dt></div>
-        <div class="flex flex-col"><dd class="font-mono text-2xl font-semibold text-[var(--accent)]">3</dd><dt class="mt-1 text-xs text-[var(--muted)]">DevOps</dt></div>
-      </dl>
-      </div>
-      <div class="hidden md:flex lg:col-span-4 items-center justify-center reveal stagger-5">
-        <div class="relative w-64 h-64 lg:w-72 lg:h-72 photo-float">
-          <div class="absolute -inset-12 rounded-full bg-[var(--accent)]/15 blur-3xl" aria-hidden="true"></div>
-          <div class="absolute inset-[16%] rounded-full ring-1 ring-[var(--accent)]/25" aria-hidden="true"></div>
-          <img src="https://avatars.githubusercontent.com/u/156288269?s=400" alt="Arya Wiguna — GitHub profile photo" width="256" height="256" class="relative w-full h-full object-cover [-webkit-mask-image:radial-gradient(circle_at_center,black_50%,transparent_75%)] [mask-image:radial-gradient(circle_at_center,black_50%,transparent_75%)]" loading="lazy">
+      <div class="hero-right">
+        <div class="hero-photo-wrap">
+          <div class="hero-glow" aria-hidden="true"></div>
+          <div class="hero-orbit" aria-hidden="true"></div>
+          <div class="hero-orbit-2" aria-hidden="true"></div>
+          <img src="https://avatars.githubusercontent.com/u/156288269?s=400" alt="Arya Wiguna" class="hero-photo" loading="eager">
         </div>
       </div>
     </div>
   </div>
-</header>
+  <a href="#about" class="hero-scroll" aria-label="Scroll down">
+    <span class="scroll-line"></span>
+    <span data-i18n="hero-scroll">scroll</span>
+  </a>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/react/A1A1AA" alt="" loading="lazy">React</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/vuedotjs/A1A1AA" alt="" loading="lazy">Vue.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/nextdotjs/A1A1AA" alt="" loading="lazy">Next.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" alt="" loading="lazy">TypeScript</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/nodedotjs/A1A1AA" alt="" loading="lazy">Node.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/laravel/A1A1AA" alt="" loading="lazy">Laravel</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/go/A1A1AA" alt="" loading="lazy">Go</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" alt="" loading="lazy">Flutter</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/docker/A1A1AA" alt="" loading="lazy">Docker</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/postgresql/A1A1AA" alt="" loading="lazy">PostgreSQL</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/python/A1A1AA" alt="" loading="lazy">Python</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" alt="" loading="lazy">Svelte</span><span class="marquee-dot"></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/react/A1A1AA" alt="" loading="lazy">React</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/vuedotjs/A1A1AA" alt="" loading="lazy">Vue.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/nextdotjs/A1A1AA" alt="" loading="lazy">Next.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" alt="" loading="lazy">TypeScript</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/nodedotjs/A1A1AA" alt="" loading="lazy">Node.js</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/laravel/A1A1AA" alt="" loading="lazy">Laravel</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/go/A1A1AA" alt="" loading="lazy">Go</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" alt="" loading="lazy">Flutter</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/docker/A1A1AA" alt="" loading="lazy">Docker</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/postgresql/A1A1AA" alt="" loading="lazy">PostgreSQL</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/python/A1A1AA" alt="" loading="lazy">Python</span><span class="marquee-dot"></span>
+    <span class="marquee-item"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" alt="" loading="lazy">Svelte</span><span class="marquee-dot"></span>
+  </div>
+</div>
 
 <main>
-  <section id="about" class="section">
-    <div class="container">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        <div class="lg:col-span-5">
-          <div class="lg:sticky lg:top-28 reveal stagger-1">
-            <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">01 · About</p>
-            <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight">Developer<br><span class="text-[var(--accent)]">profile</span></h2>
-            <p class="mt-6 text-[var(--muted)]">A snapshot of who I am, what I build, and how I think.</p>
-          </div>
+<!-- ABOUT -->
+<section id="about" class="sec sec-border">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-box rv d1">
+        <div class="about-accent-line"></div>
+        <div class="about-img">
+          <img src="https://avatars.githubusercontent.com/u/156288269?s=400" alt="Arya Wiguna" loading="lazy">
+          <div class="about-img-badge">Available for hire</div>
         </div>
-        <div class="lg:col-span-7">
-          <div class="code-card card reveal stagger-2">
-            <div class="flex items-center gap-2 border-b border-[var(--line)] px-5 py-3.5">
-              <span class="w-3 h-3 rounded-full bg-[#FF5F57]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#FEBC2E]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#28C840]"></span>
-              <span class="ml-3 font-mono text-xs text-[var(--muted)]">operator.js</span>
-            </div>
-            <pre class="p-6 overflow-x-auto text-[13px] leading-[1.8]"><code>const OPERATOR = {
-  <span class="k">name</span>: <span class="s">"Arya Wiguna"</span>,
-  <span class="k">codename</span>: <span class="s">"AryaWgna"</span>,
-  <span class="k">location</span>: <span class="s">"Indonesia"</span>,
-  <span class="k">role</span>: <span class="s">"Full Stack Developer"</span>,
-  <span class="k">status</span>: <span class="s">"ACTIVE"</span>,
+      </div>
+      <div class="about-body">
+        <div class="rv d1">
+          <div class="sec-tag"><i></i>About</div>
+          <h2 class="sec-h text-reveal">I build things for<br>the <em>web & mobile</em></h2>
+        </div>
+        <p class="about-text rv d2">
+          I'm <strong>Arya Wiguna</strong>, a full-stack developer from Indonesia. I love turning complex problems into simple, beautiful, and intuitive solutions. My toolkit spans from <strong>React</strong> and <strong>Vue</strong> on the frontend to <strong>Node.js</strong>, <strong>Laravel</strong>, and <strong>Go</strong> on the backend.
+        </p>
+        <p class="about-text rv d3">
+          Currently exploring <strong>cloud architecture</strong> and contributing to open-source projects. When I'm not coding, I'm probably learning something new or refining my craft.
+        </p>
+        <div class="about-stats rv d4">
+          <div class="stat"><b>6</b><small>Languages</small></div>
+          <div class="stat"><b>5</b><small>Frontend</small></div>
+          <div class="stat"><b>5</b><small>Backend</small></div>
+          <div class="stat"><b>3</b><small>DevOps</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <span class="k">skills</span>: {
-    <span class="k">languages</span>: [<span class="s">"TS"</span>, <span class="s">"JS"</span>, <span class="s">"Python"</span>, <span class="s">"Go"</span>, <span class="s">"PHP"</span>, <span class="s">"Dart"</span>],
-    <span class="k">frontend</span>: [<span class="s">"React"</span>, <span class="s">"Vue"</span>, <span class="s">"Next.js"</span>, <span class="s">"Angular"</span>, <span class="s">"Svelte"</span>],
-    <span class="k">backend</span>: [<span class="s">"Node.js"</span>, <span class="s">"Laravel"</span>, <span class="s">"NestJS"</span>, <span class="s">"Flask"</span>, <span class="s">"Gin"</span>],
-    <span class="k">mobile</span>: [<span class="s">"Flutter"</span>, <span class="s">"React Native"</span>],
-    <span class="k">database</span>: [<span class="s">"PostgreSQL"</span>, <span class="s">"MongoDB"</span>, <span class="s">"Redis"</span>, <span class="s">"Firebase"</span>],
-    <span class="k">devOps</span>: [<span class="s">"Docker"</span>, <span class="s">"K8s"</span>, <span class="s">"AWS"</span>]
-  },
+<!-- SKILLS -->
+<section id="skills" class="sec sec-border">
+  <div class="container">
+    <div class="rv d1" style="text-align:center;margin-bottom:2.5rem">
+      <div class="sec-tag" style="justify-content:center"><i></i>Skills<i></i></div>
+      <h2 class="sec-h">The stack I <em>work with</em></h2>
+    </div>
+    <div class="bento">
+      <div class="bento-card tilt shimmer rv d1">
+        <div class="bento-head"><h3>Languages</h3><span>06</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" alt="" loading="lazy">TypeScript</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/javascript/A1A1AA" alt="" loading="lazy">JavaScript</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/python/A1A1AA" alt="" loading="lazy">Python</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/go/A1A1AA" alt="" loading="lazy">Go</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/php/A1A1AA" alt="" loading="lazy">PHP</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" alt="" loading="lazy">Dart</span>
+        </div>
+      </div>
+      <div class="bento-card tilt shimmer rv d2">
+        <div class="bento-head"><h3>Frontend</h3><span>05</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/react/A1A1AA" alt="" loading="lazy">React</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/vuedotjs/A1A1AA" alt="" loading="lazy">Vue</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/nextdotjs/A1A1AA" alt="" loading="lazy">Next.js</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/angular/A1A1AA" alt="" loading="lazy">Angular</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" alt="" loading="lazy">Svelte</span>
+        </div>
+      </div>
+      <div class="bento-card tilt shimmer rv d3">
+        <div class="bento-head"><h3>Backend</h3><span>05</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/nodedotjs/A1A1AA" alt="" loading="lazy">Node.js</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/laravel/A1A1AA" alt="" loading="lazy">Laravel</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/nestjs/A1A1AA" alt="" loading="lazy">NestJS</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/flask/A1A1AA" alt="" loading="lazy">Flask</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/gin/A1A1AA" alt="" loading="lazy">Gin</span>
+        </div>
+      </div>
+      <div class="bento-card tilt shimmer rv d2">
+        <div class="bento-head"><h3>Mobile</h3><span>02</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" alt="" loading="lazy">Flutter</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/react/A1A1AA" alt="" loading="lazy">React Native</span>
+        </div>
+      </div>
+      <div class="bento-card tilt shimmer rv d3">
+        <div class="bento-head"><h3>Database</h3><span>04</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/postgresql/A1A1AA" alt="" loading="lazy">PostgreSQL</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/mongodb/A1A1AA" alt="" loading="lazy">MongoDB</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/redis/A1A1AA" alt="" loading="lazy">Redis</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/firebase/A1A1AA" alt="" loading="lazy">Firebase</span>
+        </div>
+      </div>
+      <div class="bento-card tilt shimmer rv d4">
+        <div class="bento-head"><h3>DevOps</h3><span>03</span></div>
+        <div class="bento-chips">
+          <span class="bchip"><img src="https://cdn.simpleicons.org/docker/A1A1AA" alt="" loading="lazy">Docker</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/kubernetes/A1A1AA" alt="" loading="lazy">K8s</span>
+          <span class="bchip"><img src="https://cdn.simpleicons.org/amazonwebservices/A1A1AA" alt="" loading="lazy">AWS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <span class="k">learning</span>: <span class="s">"Cloud Architecture"</span>,
-  <span class="k">motto</span>: <span class="s">"First solve the problem, then write the code."</span>
-};</code></pre>
+<!-- EXPERIENCE -->
+<section id="experience" class="sec sec-border">
+  <div class="container">
+    <div style="display:grid;gap:3rem" class="exp-layout">
+      <div class="rv d1">
+        <div class="sec-tag"><i></i>Experience</div>
+        <h2 class="sec-h">My professional <em>journey</em></h2>
+      </div>
+      <div class="exp-list">
+        <div class="exp-card rv d2">
+          <div class="exp-top">
+            <div><div class="exp-role">Full Stack Developer</div><div class="exp-co">Freelance & Open Source</div></div>
+            <div class="exp-date">2024 — Present</div>
           </div>
-          <div class="mt-8 grid md:grid-cols-2 gap-6 reveal stagger-3">
-            <div class="card p-6">
-              <h3 class="font-medium text-[var(--ink)] mb-2">Building</h3>
-              <p class="text-sm text-[var(--muted)]">Scalable apps, cloud solutions, and open-source tools.</p>
-            </div>
-            <div class="card p-6">
-              <h3 class="font-medium text-[var(--ink)] mb-2">Learning</h3>
-              <p class="text-sm text-[var(--muted)]">Laravel &amp; PostgreSQL, cloud architecture, and system design.</p>
-            </div>
+          <div class="exp-desc">Building scalable applications, contributing to open-source projects, and exploring cloud architecture. Working with diverse tech stacks from React/Next.js to Laravel/NestJS.</div>
+        </div>
+        <div class="exp-card rv d3">
+          <div class="exp-top">
+            <div><div class="exp-role">Student</div><div class="exp-co">Universitas Binaniaga Indonesia</div></div>
+            <div class="exp-date">2021 — Present</div>
           </div>
+          <div class="exp-desc">Studying Information Technology, building foundations in algorithms, data structures, networking, and software engineering best practices.</div>
+        </div>
+        <div class="exp-card rv d4">
+          <div class="exp-top">
+            <div><div class="exp-role">Self-taught Developer</div><div class="exp-co">Personal Projects</div></div>
+            <div class="exp-date">2020 — 2021</div>
+          </div>
+          <div class="exp-desc">Started learning web development through personal projects, online courses, and Cisco networking certifications. Built foundational skills in HTML, CSS, JavaScript, and PHP.</div>
         </div>
       </div>
     </div>
-  </section>
-  <section id="skills" class="section border-t border-[var(--line)]">
-    <div class="container">
-      <header class="max-w-2xl mb-14 reveal stagger-1">
-        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">02 · Skills</p>
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">The stack I work with</h2>
-      </header>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="card p-6 reveal stagger-2">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">Languages</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">06</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span><span class="chip"><img src="https://cdn.simpleicons.org/javascript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">JavaScript</span><span class="chip"><img src="https://cdn.simpleicons.org/python/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Python</span><span class="chip"><img src="https://cdn.simpleicons.org/go/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Go</span><span class="chip"><img src="https://cdn.simpleicons.org/php/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PHP</span><span class="chip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Dart</span>
-          </div>
-        </div>
-        <div class="card p-6 reveal stagger-3">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">Frontend</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">05</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/react/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">React</span><span class="chip"><img src="https://cdn.simpleicons.org/vuedotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Vue</span><span class="chip"><img src="https://cdn.simpleicons.org/nextdotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Next.js</span><span class="chip"><img src="https://cdn.simpleicons.org/angular/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Angular</span><span class="chip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Svelte</span>
-          </div>
-        </div>
-        <div class="card p-6 reveal stagger-4">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">Backend</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">05</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/nodedotjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Node.js</span><span class="chip"><img src="https://cdn.simpleicons.org/laravel/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Laravel</span><span class="chip"><img src="https://cdn.simpleicons.org/nestjs/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">NestJS</span><span class="chip"><img src="https://cdn.simpleicons.org/flask/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flask</span><span class="chip"><img src="https://cdn.simpleicons.org/gin/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Gin</span>
-          </div>
-        </div>
-        <div class="card p-6 reveal stagger-3">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">Mobile</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">02</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flutter</span><span class="chip"><img src="https://cdn.simpleicons.org/react/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">React Native</span>
-          </div>
-        </div>
-        <div class="card p-6 reveal stagger-4">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">Database</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">04</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/postgresql/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PostgreSQL</span><span class="chip"><img src="https://cdn.simpleicons.org/mongodb/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">MongoDB</span><span class="chip"><img src="https://cdn.simpleicons.org/redis/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Redis</span><span class="chip"><img src="https://cdn.simpleicons.org/firebase/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Firebase</span>
-          </div>
-        </div>
-        <div class="card p-6 reveal stagger-5">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium">DevOps</h3>
-            <span class="font-mono text-xs text-[var(--muted)]">03</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip"><img src="https://cdn.simpleicons.org/docker/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Docker</span><span class="chip"><img src="https://cdn.simpleicons.org/kubernetes/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Kubernetes</span><span class="chip"><img src="https://cdn.simpleicons.org/amazonwebservices/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">AWS</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="projects" class="section border-t border-[var(--line)]">
-    <div class="container">
-      <header class="max-w-2xl mb-14 reveal stagger-1">
-        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">03 · Projects</p>
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Selected work</h2>
-        <p class="mt-4 text-[var(--muted)]">A few things I've built. More on <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:underline">GitHub</a>.</p>
-      </header>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article class="card group overflow-hidden reveal stagger-2">
-          <div class="relative aspect-[16/10] overflow-hidden">
-            <img src="assets/projects/simaru.svg" alt="SIMARU Mobile App preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
-          </div>
-          <div class="p-6">
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="chip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Flutter</span><span class="chip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Dart</span><span class="chip">Mobile</span>
-            </div>
-            <h3 class="text-xl font-medium mb-2">SIMARU Mobile App</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">A QR-scanning mobile app for medical asset inspection (opname) at UMMI Hospital — tracking device location &amp; condition, plus push notifications — built with Flutter for Android &amp; iOS.</p>
-            <a href="https://github.com/AryaWgna/SIMARU-Mobile-App" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-        <article class="card group overflow-hidden reveal stagger-3">
-          <div class="relative aspect-[16/10] overflow-hidden">
-            <img src="assets/projects/skyboard.svg" alt="Digital Skyboard Announcement preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
-          </div>
-          <div class="p-6">
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span><span class="chip"><img src="https://cdn.simpleicons.org/php/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">PHP</span><span class="chip">UI</span>
-            </div>
-            <h3 class="text-xl font-medium mb-2">Digital Skyboard Announcement</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules and airline promotions.</p>
-            <a href="https://github.com/AryaWgna/Digital-Skyboard-Announcement" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-        <article class="card group overflow-hidden reveal stagger-4">
-          <div class="relative aspect-[16/10] overflow-hidden">
-            <img src="assets/projects/streamely.svg" alt="StreamEly preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy">
-          </div>
-          <div class="p-6">
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="chip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Svelte</span><span class="chip"><img src="https://cdn.simpleicons.org/bun/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">Bun</span><span class="chip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" width="14" height="14" alt="" loading="lazy" class="w-4 h-4 -ml-1 mr-1.5 inline-block">TypeScript</span>
-            </div>
-            <h3 class="text-xl font-medium mb-2">StreamEly</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">A self-hosted video-on-demand platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze &amp; OMDB metadata for movie, series, and anime catalogs.</p>
-            <a href="https://github.com/AryaWgna/streamely" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View source <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-  <section id="certifications" class="section border-t border-[var(--line)]">
-    <div class="container">
-      <header class="max-w-2xl mb-14 reveal stagger-1">
-        <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">04 · Certifications</p>
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Credentials</h2>
-      </header>
-      <div class="grid md:grid-cols-3 gap-6">
-        <article class="card overflow-hidden reveal stagger-2">
-          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
-            <img src="assets/sertifikat/ccna-introduction-to-networks.png" alt="CCNA Introduction to Networks certificate" class="w-full h-full object-contain p-4" loading="lazy">
-          </div>
-          <div class="p-6">
-            <h3 class="font-medium mb-1">CCNA — Introduction to Networks</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">Network Architecture &amp; Protocols</p>
-            <a href="assets/sertifikat/ccna-itn.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-        <article class="card overflow-hidden reveal stagger-3">
-          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
-            <img src="assets/sertifikat/english-for-it-1.png" alt="English for IT 1 certificate" class="w-full h-full object-contain p-4" loading="lazy">
-          </div>
-          <div class="p-6">
-            <h3 class="font-medium mb-1">English for IT 1</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">IT Terminology &amp; Communication</p>
-            <a href="assets/sertifikat/english-for-it-1.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-        <article class="card overflow-hidden reveal stagger-4">
-          <div class="aspect-[4/3] bg-[var(--accent-soft)] flex items-center justify-center">
-            <img src="assets/sertifikat/operating-systems-basics.png" alt="Operating Systems Basics certificate" class="w-full h-full object-contain p-4" loading="lazy">
-          </div>
-          <div class="p-6">
-            <h3 class="font-medium mb-1">Operating Systems Basics</h3>
-            <p class="text-sm text-[var(--muted)] mb-4">OS Fundamentals &amp; Architecture</p>
-            <a href="assets/sertifikat/operating-systems-basics.pdf" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-[var(--accent)] hover:underline inline-flex items-center gap-1">View certificate (PDF) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-  <section id="contact" class="section border-t border-[var(--line)]">
-    <div class="container">
-      <div class="max-w-3xl mx-auto">
-        <header class="text-center mb-12 reveal stagger-1">
-          <p class="font-mono text-xs uppercase tracking-[0.35em] text-[var(--muted)] mb-3">05 · Contact</p>
-          <h2 class="text-3xl md:text-5xl font-medium tracking-tight">Let's build something together</h2>
-          <p class="mt-4 text-[var(--muted)]">Have a project in mind? I usually reply within 24 hours.</p>
-        </header>
-        <form id="contact-form" class="card p-8 md:p-10 space-y-6 reveal stagger-2" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="45d3352d-8005-48a8-b024-5840f0914273">
-            <input type="hidden" name="subject" value="Pesan baru dari Portfolio Arya Wiguna">
-            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
+  </div>
+</section>
 
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <label for="name" class="block text-sm font-medium mb-2">Name</label>
-              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200" placeholder="Your name">
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-medium mb-2">Email</label>
-              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200" placeholder="you@example.com">
-            </div>
-          </div>
-          <div>
-            <label for="project" class="block text-sm font-medium mb-2">Project Type</label>
-            <select id="project" name="project" class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200 appearance-none">
-              <option value="">Select one</option>
-              <option value="freelance">Freelance project</option>
-              <option value="fulltime">Full-time role</option>
-              <option value="consulting">Consulting / Advisory</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label for="message" class="block text-sm font-medium mb-2">Message</label>
-            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-xl border border-[var(--line)] bg-[var(--paper)] text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all duration-200 resize-y" placeholder="Tell me about your project..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary w-full md:w-auto">Send Message
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </button>
-          <p class="font-mono text-xs text-[var(--muted)] text-center md:text-left">Or email directly: <a href="mailto:wgnarya123@gmail.com" class="text-[var(--accent)] hover:underline">wgnarya123@gmail.com</a></p>
-          <div id="form-status"></div>
-        </form>
-      </div>
+<!-- PROJECTS -->
+<section id="projects" class="sec sec-border">
+  <div class="container">
+    <div class="rv d1" style="max-width:36rem;margin-bottom:2.5rem">
+      <div class="sec-tag"><i></i>Projects</div>
+      <h2 class="sec-h">Selected <em>work</em></h2>
+      <p style="color:var(--muted);margin-top:.5rem;font-size:.9rem">A few things I've built. More on <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">GitHub</a>.</p>
     </div>
-  </section>
+    <div class="proj-grid">
+      <article class="proj tilt shimmer rv d2">
+        <div class="proj-thumb"><img src="assets/projects/simaru.svg" alt="SIMARU Mobile App" loading="lazy"></div>
+        <div class="proj-body">
+          <div class="proj-chips">
+            <span class="bchip"><img src="https://cdn.simpleicons.org/flutter/A1A1AA" alt="" loading="lazy">Flutter</span>
+            <span class="bchip"><img src="https://cdn.simpleicons.org/dart/A1A1AA" alt="" loading="lazy">Dart</span>
+            <span class="bchip">Mobile</span>
+          </div>
+          <h3>SIMARU Mobile App</h3>
+          <p>A QR-scanning mobile app for medical asset inspection at UMMI Hospital — tracking device location & condition, plus push notifications.</p>
+          <a href="https://github.com/AryaWgna/SIMARU-Mobile-App" target="_blank" rel="noopener noreferrer" class="proj-link">View source <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+      <article class="proj tilt shimmer rv d3">
+        <div class="proj-thumb"><img src="assets/projects/skyboard.svg" alt="Digital Skyboard" loading="lazy"></div>
+        <div class="proj-body">
+          <div class="proj-chips">
+            <span class="bchip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" alt="" loading="lazy">TypeScript</span>
+            <span class="bchip"><img src="https://cdn.simpleicons.org/php/A1A1AA" alt="" loading="lazy">PHP</span>
+            <span class="bchip">UI</span>
+          </div>
+          <h3>Digital Skyboard Announcement</h3>
+          <p>A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules.</p>
+          <a href="https://github.com/AryaWgna/Digital-Skyboard-Announcement" target="_blank" rel="noopener noreferrer" class="proj-link">View source <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+      <article class="proj tilt shimmer rv d4">
+        <div class="proj-thumb"><img src="assets/projects/streamely.svg" alt="StreamEly" loading="lazy"></div>
+        <div class="proj-body">
+          <div class="proj-chips">
+            <span class="bchip"><img src="https://cdn.simpleicons.org/svelte/A1A1AA" alt="" loading="lazy">Svelte</span>
+            <span class="bchip"><img src="https://cdn.simpleicons.org/bun/A1A1AA" alt="" loading="lazy">Bun</span>
+            <span class="bchip"><img src="https://cdn.simpleicons.org/typescript/A1A1AA" alt="" loading="lazy">TS</span>
+          </div>
+          <h3>StreamEly</h3>
+          <p>A self-hosted VOD platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze & OMDB metadata.</p>
+          <a href="https://github.com/AryaWgna/streamely" target="_blank" rel="noopener noreferrer" class="proj-link">View source <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" class="sec sec-border">
+  <div class="container">
+    <div class="rv d1" style="max-width:36rem;margin-bottom:2.5rem">
+      <div class="sec-tag"><i></i>Certifications</div>
+      <h2 class="sec-h"><em>Credentials</em></h2>
+    </div>
+    <div class="proj-grid">
+      <article class="cert rv d2">
+        <div class="cert-thumb"><img src="assets/sertifikat/ccna-introduction-to-networks.png" alt="CCNA Introduction to Networks" loading="lazy"></div>
+        <div class="cert-body">
+          <h3>CCNA — Introduction to Networks</h3>
+          <p>Network Architecture & Protocols</p>
+          <a href="assets/sertifikat/ccna-itn.pdf" target="_blank" rel="noopener noreferrer" class="proj-link">View certificate <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+      <article class="cert rv d3">
+        <div class="cert-thumb"><img src="assets/sertifikat/english-for-it-1.png" alt="English for IT 1" loading="lazy"></div>
+        <div class="cert-body">
+          <h3>English for IT 1</h3>
+          <p>IT Terminology & Communication</p>
+          <a href="assets/sertifikat/english-for-it-1.pdf" target="_blank" rel="noopener noreferrer" class="proj-link">View certificate <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+      <article class="cert rv d4">
+        <div class="cert-thumb"><img src="assets/sertifikat/operating-systems-basics.png" alt="Operating Systems Basics" loading="lazy"></div>
+        <div class="cert-body">
+          <h3>Operating Systems Basics</h3>
+          <p>OS Fundamentals & Architecture</p>
+          <a href="assets/sertifikat/operating-systems-basics.pdf" target="_blank" rel="noopener noreferrer" class="proj-link">View certificate <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec sec-border">
+  <div class="container">
+    <div style="max-width:42rem;margin:0 auto">
+      <div class="rv d1" style="text-align:center;margin-bottom:2rem">
+        <div class="sec-tag" style="justify-content:center"><i></i>Contact<i></i></div>
+        <h2 class="sec-h">Let's build something <em>together</em></h2>
+        <p style="color:var(--muted);margin-top:.5rem;font-size:.9rem">Have a project in mind? I usually reply within 24 hours.</p>
+      </div>
+      <form id="contact-form" class="contact-card rv d2" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="45d3352d-8005-48a8-b024-5840f0914273">
+        <input type="hidden" name="subject" value="Pesan baru dari Portfolio Arya Wiguna">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="field-row field">
+          <div><label for="name">Name</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
+          <div><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="you@example.com"></div>
+        </div>
+        <div class="field"><label for="project">Project Type</label>
+          <select id="project" name="project"><option value="">Select one</option><option value="freelance">Freelance project</option><option value="fulltime">Full-time role</option><option value="consulting">Consulting / Advisory</option><option value="other">Other</option></select>
+        </div>
+        <div class="field"><label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-fill" style="width:100%">Send Message <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></button>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);text-align:center;margin-top:.75rem">Or email directly: <a href="mailto:wgnarya123@gmail.com" style="color:var(--accent)">wgnarya123@gmail.com</a></p>
+        <div id="form-status"></div>
+      </form>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer class="border-t border-[var(--line)] py-12">
+<!-- FOOTER -->
+<footer>
   <div class="container">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="text-center md:text-left">
-        <p class="font-mono text-sm font-semibold">arya<span class="text-[var(--accent)]">wigna</span></p>
-        <p class="text-sm text-[var(--muted)] mt-1">Full Stack Developer · Indonesia</p>
+    <div class="ft-grid">
+      <div>
+        <p class="nav-brand" style="margin-bottom:.2rem">arya<b>wigna</b></p>
+        <p style="font-size:.82rem;color:var(--muted)">Full Stack Developer · Indonesia</p>
       </div>
-      <nav class="flex items-center gap-6" aria-label="Social links">
-        <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
-        <a href="https://www.linkedin.com/in/arya-wgna" target="_blank" rel="noopener noreferrer" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        
-      </nav>
+      <div class="ft-social">
+        <a href="https://github.com/AryaWgna" target="_blank" rel="noopener noreferrer" style="color:var(--muted);font-size:.82rem;font-weight:500;transition:color .2s">GitHub</a>
+        <span style="color:var(--line)">·</span>
+        <a href="https://www.linkedin.com/in/arya-wgna" target="_blank" rel="noopener noreferrer" style="color:var(--muted);font-size:.82rem;font-weight:500;transition:color .2s">LinkedIn</a>
+      </div>
     </div>
-    <p class="mt-8 text-center font-mono text-xs text-[var(--muted)]">© <span id="year"></span> Arya Wiguna. Built with care.</p>
+    <p style="margin-top:1.5rem;text-align:center;font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace">© <span id="yr"></span> Arya Wiguna. Built with care.</p>
   </div>
 </footer>
 
-<script>
-  // Theme toggle
-  const toggle = document.getElementById('theme-toggle');
-  const root = document.documentElement;
-  toggle.addEventListener('click', () => {
-    root.classList.toggle('dark');
-    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
-  });
-
-  // Mobile menu
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  menuToggle.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('hidden');
-    menuToggle.setAttribute('aria-expanded', String(!open));
-  });
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  }));
-
-  // Typewriter roles
-  const roles = ['Full Stack Developer', 'Cyber Architect', 'Open Source Contributor'];
-  const __ROLES = { en: roles, id: ['Pengembang Full Stack', 'Arsitek Siber', 'Kontributor Open Source'] };
-  let rolesCurrent = __ROLES[localStorage.getItem('lang') === 'id' ? 'id' : 'en'];
-  const tw = document.getElementById('typewriter');
-  let roleIndex = 0, charIndex = 0, deleting = false;
-  function type() {
-    const current = rolesCurrent[roleIndex];
-    if (!deleting) {
-      charIndex++;
-      tw.textContent = current.slice(0, charIndex);
-      if (charIndex === current.length) { deleting = true; return setTimeout(type, 1600); }
-      setTimeout(type, 70);
-    } else {
-      charIndex--;
-      tw.textContent = current.slice(0, charIndex);
-      if (charIndex === 0) { deleting = false; roleIndex = (roleIndex + 1) % roles.length; }
-      setTimeout(type, 40);
-    }
-  }
-  type();
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Smooth scroll for anchors
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, '', this.getAttribute('href'));
-      }
-    });
-  });
-</script>
+<button class="to-top" id="to-top" aria-label="Scroll to top"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l7-7 7 7"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5"/></svg></button>
 
 <script>
-(function () {
-  var PAIRS = [
-    ['About','Tentang'],['Skills','Keahlian'],['Projects','Proyek'],['Certifications','Sertifikasi'],['Contact','Kontak'],
-    ['hello, i\'m','Halo, saya'],
-    ['Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications.','Pengembang full-stack yang berbasis di Indonesia, membuat aplikasi yang bersih, skalabel, dan aman.'],
-    ['First solve the problem, then write the code.','Pertama selesaikan masalahnya, baru tulis kodenya.'],
-    ['View Work','Lihat Karya'],['Get in Touch','Hubungi Saya'],
-    ['Languages','Bahasa'],['Frontend','Frontend'],['Backend','Backend'],['DevOps','DevOps'],
-    ['01 · About','01 · Tentang'],
-    ['Developer','Pengembang'],['profile','profil'],
-    ['A snapshot of who I am, what I build, and how I think.','Gambaran singkat tentang siapa saya, apa yang saya bangun, dan bagaimana cara berpikir saya.'],
-    ['Building','Sedang Membangun'],
-    ['Scalable apps, cloud solutions, and open-source tools.','Aplikasi skalabel, solusi cloud, dan alat open-source.'],
-    ['Learning','Belajar'],
-    ['Laravel & PostgreSQL, cloud architecture, and system design.','Laravel & PostgreSQL, arsitektur cloud, dan desain sistem.'],
-    ['02 · Skills','02 · Keahlian'],['The stack I work with','Stack yang saya gunakan'],
-    ['03 · Projects','03 · Proyek'],['Selected work','Karya Pilihan'],
-    ['A few things I\'ve built. More on ','Beberapa hal yang pernah saya buat. Lainnya di '],
-    ['View source','Lihat sumber'],
-    ['04 · Certifications','04 · Sertifikasi'],['Credentials','Kredensial'],
-    ['CCNA — Introduction to Networks','CCNA — Pengenalan Jaringan'],
-    ['English for IT 1','Bahasa Inggris untuk IT 1'],
-    ['Operating Systems Basics','Dasar Sistem Operasi'],
-    ['Network Architecture & Protocols','Arsitektur & Protokol Jaringan'],
-    ['IT Terminology & Communication','Terminologi & Komunikasi IT'],
-    ['OS Fundamentals & Architecture','Fundamental & Arsitektur OS'],
-    ['View certificate (PDF)','Lihat sertifikat (PDF)'],
-    ['05 · Contact','05 · Kontak'],
-    ['Let\'s build something together','Mari bangun sesuatu bersama'],
-    ['Have a project in mind? I usually reply within 24 hours.','Punya proyek dalam pikiran? Saya biasanya membalas dalam 24 jam.'],
-    ['Name','Nama'],['Email','Email'],['Project Type','Jenis Proyek'],['Message','Pesan'],
-    ['Your name','Nama Anda'],['you@example.com','anda@contoh.com'],
-    ['Select one','Pilih salah satu'],
-    ['Freelance project','Proyek lepas'],['Full-time role','Posisi penuh waktu'],
-    ['Consulting / Advisory','Konsultasi / Advisory'],['Other','Lainnya'],
-    ['Send Message','Kirim Pesan'],
-    ['Or email directly: ','Atau kirim email langsung ke: '],
-    ['Full Stack Developer · Indonesia','Pengembang Full Stack · Indonesia'],
-    ['A QR-scanning mobile app for medical asset inspection (opname) at UMMI Hospital — tracking device location & condition, plus push notifications — built with Flutter for Android & iOS.','Aplikasi mobile pemindaian QR untuk pemeriksaan aset (opname) medis di RS UMMI — pelacakan lokasi & kondisi alat, plus notifikasi push — dibangun dengan Flutter untuk Android & iOS.'],
-    ['A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules and airline promotions.','Sistem Flight Information Display (FIDS) untuk bandara: gateway API, database, dan UI realtime untuk jadwal penerbangan serta promosi maskapai.'],
-    ['A self-hosted video-on-demand platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze & OMDB metadata for movie, series, and anime catalogs.','Platform video-on-demand self-hosted: gateway Bun + API Elysia.js + frontend Svelte, mengagregasi metadata TVmaze & OMDB untuk katalog film, serial, dan anime.'],
-    ['Social links','Tautan sosial'],
-    ['Toggle theme','Ganti tema'],
-    ['Menu','Menu']
-  ];
-  var ATTRS = [
-    ['#name','placeholder','Your name','Nama Anda'],
-    ['#email','placeholder','you@example.com','anda@contoh.com'],
-    ['#message','placeholder','Tell me about your project...','Ceritakan tentang proyek Anda...'],
-    ['meta[name="description"]','content','Arya Wiguna — Full Stack Developer based in Indonesia. Building clean, scalable, secure web applications.','Arya Wiguna — Pengembang Full Stack berbasis di Indonesia. Membangun aplikasi web yang bersih, skalabel, dan aman.'],
-    ['img[alt="CCNA Introduction to Networks certificate"]','alt','CCNA Introduction to Networks certificate','Sertifikat CCNA Pengenalan Jaringan'],
-    ['img[alt="English for IT 1 certificate"]','alt','English for IT 1 certificate','Sertifikat Bahasa Inggris untuk IT 1'],
-    ['img[alt="Operating Systems Basics certificate"]','alt','Operating Systems Basics certificate','Sertifikat Dasar Sistem Operasi']
-  ];
+/* SPLASH */
+!function(){var f=document.getElementById('sp-fill'),s=document.getElementById('splash'),p=0;
+function go(){p+=Math.random()*25+10;if(p>100)p=100;f.style.width=p+'%';
+if(p<100)setTimeout(go,200+Math.random()*150);
+else setTimeout(function(){s.classList.add('done');document.body.style.overflow=''},400)}
+document.body.style.overflow='hidden';setTimeout(go,300)}();
 
-  var nodes = [];
-  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-  while (walker.nextNode()) {
-    var n = walker.currentNode;
-    var t = n.data.trim();
-    if (!t) continue;
-    for (var p = 0; p < PAIRS.length; p++) {
-      if (t === PAIRS[p][0]) {
-        nodes.push({ node: n, en: PAIRS[p][0], id: PAIRS[p][1], pad: n.data.indexOf(t), len: t.length });
-        break;
-      }
-      if (t === PAIRS[p][1]) {
-        nodes.push({ node: n, en: PAIRS[p][1], id: PAIRS[p][0], pad: n.data.indexOf(t), len: t.length });
-        break;
-      }
-    }
-  }
-  var attrNodes = [];
-  ATTRS.forEach(function (a) {
-    var el = document.querySelector(a[0]);
-    if (el && el.getAttribute(a[1]) === a[2]) attrNodes.push({ el: el, attr: a[1], en: a[2], id: a[3] });
-  });
+/* THEME */
+!function(){var b=document.getElementById('theme-btn'),r=document.documentElement;
+b.addEventListener('click',function(){r.classList.toggle('dark');localStorage.setItem('theme',r.classList.contains('dark')?'dark':'light')})}();
 
-  var TITLE_EN = 'Arya Wiguna — Full Stack Developer';
-  var TITLE_ID = 'Arya Wiguna — Pengembang Full Stack';
+/* MOBILE MENU */
+!function(){var b=document.getElementById('ham-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham');
+b.addEventListener('click',function(){m.classList.toggle('open');h.classList.toggle('x');b.setAttribute('aria-expanded',m.classList.contains('open'))});
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');h.classList.remove('x');b.setAttribute('aria-expanded','false')})})}();
 
-  function apply(lang) {
-    var idMode = lang === 'id';
-    nodes.forEach(function (r) {
-      var s = idMode ? r.id : r.en;
-      var cur = idMode ? r.en.length : r.id.length;
-      r.node.data = r.node.data.slice(0, r.pad) + s + r.node.data.slice(r.pad + cur);
-    });
-    attrNodes.forEach(function (r) { r.el.setAttribute(r.attr, idMode ? r.id : r.en); });
-    document.documentElement.lang = idMode ? 'id' : 'en';
-    document.title = idMode ? TITLE_ID : TITLE_EN;
-    if (typeof __ROLES !== 'undefined') rolesCurrent = idMode ? __ROLES.id : __ROLES.en;
-    var par = document.getElementById('year');
-    if (par && par.parentNode && par.parentNode.lastChild && par.parentNode.lastChild.nodeType === 3) {
-      par.parentNode.lastChild.data = ' ' + (idMode ? 'Arya Wiguna. Dibuat dengan penuh perhatian.' : 'Arya Wiguna. Built with care.');
-    }
-    var btn = document.getElementById('lang-toggle');
-    if (btn) btn.textContent = idMode ? 'EN' : 'ID';
-  }
+/* NAV SCROLL */
+!function(){var n=document.getElementById('nav');window.addEventListener('scroll',function(){n.classList.toggle('scrolled',window.scrollY>40)})}();
 
-  var langBtn = document.getElementById('lang-toggle');
-  if (langBtn) langBtn.addEventListener('click', function () {
-    var next = (localStorage.getItem('lang') === 'id') ? 'en' : 'id';
-    localStorage.setItem('lang', next);
-    apply(next);
-  });
-  apply((localStorage.getItem('lang') === 'id') ? 'id' : 'en');
-})();
+/* ACTIVE LINK */
+!function(){var ls=document.querySelectorAll('.nav-links a'),ss=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',function(){var y=window.scrollY+100;
+ss.forEach(function(s){if(y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){ls.forEach(function(l){l.classList.remove('on')});
+var a=document.querySelector('.nav-links a[href="#'+s.id+'"]');if(a)a.classList.add('on')}})})}();
 
-(function () {
-  var form = document.getElementById('contact-form');
-  var statusEl = document.getElementById('form-status');
-  if (!form || !statusEl) return;
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    var idMode = localStorage.getItem('lang') === 'id';
-    var sending = idMode ? 'Mengirim...' : 'Sending...';
-    var ok = idMode ? 'Terima kasih! Pesan Anda sudah terkirim. Saya akan segera membalas.' : 'Thank you! Your message has been sent. I will reply soon.';
-    var fail = idMode ? 'Gagal mengirim. Coba lagi atau email langsung ke wgnarya123@gmail.com.' : 'Failed to send. Please try again or email wgnarya123@gmail.com directly.';
-    var btn = form.querySelector('button[type="submit"]');
-    statusEl.textContent = sending;
-    statusEl.className = 'text-sm text-[var(--muted)] mt-4';
-    btn.disabled = true;
-    try {
-      var res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      var data = await res.json();
-      if (data.success) {
-        statusEl.textContent = ok;
-        statusEl.className = 'text-sm text-emerald-600 dark:text-emerald-400 mt-4';
-        form.reset();
-      } else {
-        statusEl.textContent = fail;
-        statusEl.className = 'text-sm text-red-500 mt-4';
-      }
-    } catch (err) {
-      statusEl.textContent = fail;
-      statusEl.className = 'text-sm text-red-500 mt-4';
-    }
-    btn.disabled = false;
-  });
-})();
+/* SCROLL REVEAL */
+!function(){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('v');o.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){o.observe(el)})}();
+
+/* SCROLL TOP */
+!function(){var b=document.getElementById('to-top');
+window.addEventListener('scroll',function(){b.classList.toggle('show',window.scrollY>400)});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})}();
+
+/* YEAR */
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});history.pushState(null,'',this.getAttribute('href'))}})});
+
+/* CONTACT FORM */
+!function(){var f=document.getElementById('contact-form'),st=document.getElementById('form-status');if(!f||!st)return;
+f.addEventListener('submit',async function(e){e.preventDefault();var id=localStorage.getItem('lang')==='id';
+var btn=f.querySelector('button[type="submit"]');st.textContent=id?'Mengirim...':'Sending...';st.style.cssText='font-size:.78rem;color:var(--muted);margin-top:.75rem;text-align:center';btn.disabled=true;
+try{var r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}});var d=await r.json();
+if(d.success){st.textContent=id?'Terima kasih! Pesan terkirim.':'Thank you! Message sent.';st.style.color='#22c55e';f.reset()}
+else{st.textContent=id?'Gagal mengirim.':'Failed to send.';st.style.color='#ef4444'}}
+catch(err){st.textContent=id?'Gagal mengirim.':'Failed to send.';st.style.color='#ef4444'}btn.disabled=false})}();
+
+/* ═══════════════ PREMIUM EFFECTS ═══════════════ */
+
+/* CURSOR SPOTLIGHT */
+!function(){var g=document.getElementById('cursor-glow');if(!g)return;
+var isTouchDevice='ontouchstart' in window;
+if(isTouchDevice){g.style.display='none';return;}
+document.addEventListener('mousemove',function(e){g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'})}();
+
+/* METEOR SHOWER */
+!function(){var c=document.getElementById('meteor-canvas');if(!c)return;
+var ctx=c.getContext('2d');var meteors=[];
+function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+function Meteor(){this.reset()}
+Meteor.prototype.reset=function(){this.x=Math.random()*c.width*1.5;this.y=-10-Math.random()*200;
+this.len=60+Math.random()*80;this.speed=4+Math.random()*4;
+this.opacity=.15+Math.random()*.25;this.life=0;this.maxLife=80+Math.random()*60};
+Meteor.prototype.update=function(){this.x-=this.speed;this.y+=this.speed*1.2;this.life++;
+if(this.life>this.maxLife||this.y>c.height+100)this.reset()};
+Meteor.prototype.draw=function(){var fade=1-this.life/this.maxLife;
+var r=document.documentElement.classList.contains('dark');
+var col=r?'167,139,250':'124,58,237';
+ctx.beginPath();ctx.moveTo(this.x,this.y);
+ctx.lineTo(this.x+this.len*.7,this.y-this.len*.85);
+ctx.strokeStyle='rgba('+col+','+(this.opacity*fade)+')';
+ctx.lineWidth=1;ctx.stroke()};
+for(var i=0;i<6;i++){var m=new Meteor();m.life=Math.random()*m.maxLife;meteors.push(m)}
+function loop(){ctx.clearRect(0,0,c.width,c.height);
+meteors.forEach(function(m){m.update();m.draw()});
+requestAnimationFrame(loop)}loop()}();
+
+/* 3D TILT */
+!function(){var cards=document.querySelectorAll('.tilt');if(!cards.length)return;
+cards.forEach(function(card){
+card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect();
+var x=(e.clientX-r.left)/r.width-.5;var y=(e.clientY-r.top)/r.height-.5;
+card.style.transform='perspective(800px) rotateY('+x*8+'deg) rotateX('+(-y*8)+'deg) scale3d(1.02,1.02,1.02)'});
+card.addEventListener('mouseleave',function(){card.style.transform='perspective(800px) rotateY(0) rotateX(0) scale3d(1,1,1)'})})}();
+
+/* MAGNETIC BUTTONS */
+!function(){var btns=document.querySelectorAll('.magnetic');if(!btns.length)return;
+btns.forEach(function(btn){
+btn.addEventListener('mousemove',function(e){var r=btn.getBoundingClientRect();
+var x=e.clientX-r.left-r.width/2;var y=e.clientY-r.top-r.height/2;
+btn.style.transform='translate('+x*.2+'px,'+y*.2+'px)'});
+btn.addEventListener('mouseleave',function(){btn.style.transform='translate(0,0)'})})}();
+
+/* TEXT REVEAL */
+!function(){var els=document.querySelectorAll('.text-reveal');if(!els.length)return;
+els.forEach(function(el){
+var html=el.innerHTML;
+var parts=html.split(/(<[^>]+>)/g);
+var result=parts.map(function(part){
+if(part.match(/^</)|| !part.trim())return part;
+return part.split(/\s+/).map(function(w,i){return '<span class="word" style="transition-delay:'+(.03*i)+'s">'+w+'</span>'}).join(' ')}).join('');
+el.innerHTML=result});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){
+if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target)}})},{threshold:.2});
+els.forEach(function(el){obs.observe(el)})}();
+
+/* i18n — attribute-based */
+!function(){
+var MAP={
+// nav
+'nav-home':['Home','Beranda'],'nav-about':['About','Tentang'],'nav-skills':['Skills','Keahlian'],
+'nav-exp':['Experience','Pengalaman'],'nav-proj':['Projects','Proyek'],'nav-certs':['Certs','Sertifikat'],'nav-contact':['Contact','Kontak'],
+// hero
+'hero-tag':['Available for work','Tersedia untuk bekerja'],
+'hero-bio':['Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications. ','Pengembang full-stack dari Indonesia, membuat aplikasi bersih, skalabel, dan aman. '],
+'hero-motto':['First solve the problem, then write the code.','Pertama selesaikan masalahnya, baru tulis kodenya.'],
+'hero-cta1':['View Work','Lihat Karya'],'hero-cta2':['Get in Touch','Hubungi Saya'],
+'hero-scroll':['scroll','gulir'],
+// about
+'about-tag':['About','Tentang'],
+'about-h1':['I build things for','Saya membangun untuk'],'about-h2':['web & mobile','web & mobile'],
+'about-p1':["I'm Arya Wiguna, a full-stack developer from Indonesia. I love turning complex problems into simple, beautiful, and intuitive solutions. My toolkit spans from React and Vue on the frontend to Node.js, Laravel, and Go on the backend.",'Saya Arya Wiguna, pengembang full-stack dari Indonesia. Saya suka mengubah masalah kompleks menjadi solusi yang simpel dan intuitif. Toolkit saya mulai dari React dan Vue di frontend hingga Node.js, Laravel, dan Go di backend.'],
+'about-p2':["Currently exploring cloud architecture and contributing to open-source projects. When I'm not coding, I'm probably learning something new or refining my craft.",'Saat ini mempelajari arsitektur cloud dan berkontribusi ke proyek open-source.'],
+'about-badge':['Available for hire','Tersedia untuk proyek'],
+'stat-l1':['Languages','Bahasa'],'stat-l2':['Frontend','Frontend'],'stat-l3':['Backend','Backend'],'stat-l4':['DevOps','DevOps'],
+// skills
+'skills-tag':['Skills','Keahlian'],'skills-h1':['The stack I ','Stack yang saya '],'skills-h2':['work with','gunakan'],
+'sk-languages':['Languages','Bahasa'],'sk-frontend':['Frontend','Frontend'],'sk-backend':['Backend','Backend'],
+'sk-mobile':['Mobile','Mobile'],'sk-database':['Database','Database'],'sk-devops':['DevOps','DevOps'],
+// experience
+'exp-tag':['Experience','Pengalaman'],'exp-h1':['My professional ','Perjalanan '],'exp-h2':['journey','profesional saya'],
+'exp-r1':['Full Stack Developer','Pengembang Full Stack'],'exp-c1':['Freelance & Open Source','Freelance & Open Source'],
+'exp-d1':['Building scalable applications, contributing to open-source projects, and exploring cloud architecture. Working with diverse tech stacks from React/Next.js to Laravel/NestJS.','Membangun aplikasi skalabel, berkontribusi ke proyek open-source, dan mengeksplorasi arsitektur cloud.'],
+'exp-r2':['Student','Mahasiswa'],'exp-c2':['Universitas Binaniaga Indonesia','Universitas Binaniaga Indonesia'],
+'exp-d2':['Studying Information Technology, building foundations in algorithms, data structures, networking, and software engineering best practices.','Mempelajari Teknologi Informasi, membangun fondasi dalam algoritma, struktur data, jaringan, dan praktik terbaik.'],
+'exp-r3':['Self-taught Developer','Pengembang Otodidak'],'exp-c3':['Personal Projects','Proyek Pribadi'],
+'exp-d3':['Started learning web development through personal projects, online courses, and Cisco networking certifications. Built foundational skills in HTML, CSS, JavaScript, and PHP.','Mulai belajar pengembangan web melalui proyek pribadi, kursus online, dan sertifikasi Cisco.'],
+// projects
+'proj-tag':['Projects','Proyek'],'proj-h1':['Selected ','Karya '],'proj-h2':['work','pilihan'],
+'proj-more':["A few things I've built. More on ",'Beberapa hal yang pernah saya buat. Lainnya di '],
+'p1-title':['SIMARU Mobile App','SIMARU Mobile App'],
+'p1-desc':['A QR-scanning mobile app for medical asset inspection at UMMI Hospital \u2014 tracking device location & condition, plus push notifications.','Aplikasi QR-scanning untuk inspeksi aset medis di RS UMMI \u2014 pelacakan lokasi & kondisi perangkat.'],
+'p2-title':['Digital Skyboard Announcement','Digital Skyboard Announcement'],
+'p2-desc':['A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules.','Sistem FIDS untuk bandara: gateway API, database, dan UI realtime untuk jadwal penerbangan.'],
+'p3-title':['StreamEly','StreamEly'],
+'p3-desc':['A self-hosted VOD platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze & OMDB metadata.','Platform VOD self-hosted: Bun + Elysia.js + Svelte, mengagregasi metadata TVmaze & OMDB.'],
+'view-src':['View source','Lihat sumber'],
+// certs
+'cert-tag':['Certifications','Sertifikasi'],'cert-h':['Credentials','Kredensial'],
+'c1-title':['CCNA \u2014 Introduction to Networks','CCNA \u2014 Pengenalan Jaringan'],
+'c1-desc':['Network Architecture & Protocols','Arsitektur & Protokol Jaringan'],
+'c2-title':['English for IT 1','Bahasa Inggris untuk IT 1'],
+'c2-desc':['IT Terminology & Communication','Terminologi & Komunikasi IT'],
+'c3-title':['Operating Systems Basics','Dasar Sistem Operasi'],
+'c3-desc':['OS Fundamentals & Architecture','Fundamental & Arsitektur OS'],
+'view-cert':['View certificate','Lihat sertifikat'],
+// contact
+'ct-tag':['Contact','Kontak'],'ct-h1':["Let's build something ",'Mari bangun sesuatu '],'ct-h2':['together','bersama'],
+'ct-sub':['Have a project in mind? I usually reply within 24 hours.','Punya proyek? Saya biasanya membalas dalam 24 jam.'],
+'ct-name':['Name','Nama'],'ct-email':['Email','Email'],'ct-type':['Project Type','Jenis Proyek'],'ct-msg':['Message','Pesan'],
+'ct-opt0':['Select one','Pilih salah satu'],'ct-opt1':['Freelance project','Proyek lepas'],'ct-opt2':['Full-time role','Posisi tetap'],'ct-opt3':['Consulting / Advisory','Konsultasi'],'ct-opt4':['Other','Lainnya'],
+'ct-send':['Send Message','Kirim Pesan'],'ct-or':['Or email directly: ','Atau email langsung: '],
+// footer
+'ft-role':['Full Stack Developer \u00b7 Indonesia','Pengembang Full Stack \u00b7 Indonesia']
+};
+var PLACEHOLDERS=[['#name','Your name','Nama Anda'],['#email','you@example.com','anda@contoh.com'],['#message','Tell me about your project...','Ceritakan proyek Anda...']];
+function apply(l){var id=l==='id';
+document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(MAP[k])el.textContent=id?MAP[k][1]:MAP[k][0]});
+PLACEHOLDERS.forEach(function(p){var el=document.querySelector(p[0]);if(el)el.placeholder=id?p[2]:p[1]});
+document.documentElement.lang=id?'id':'en';
+document.title=id?'Arya Wiguna \u2014 Pengembang Full Stack':'Arya Wiguna \u2014 Full Stack Developer';
+var b=document.getElementById('lang-btn');if(b)b.textContent=id?'EN':'ID';
+var yr=document.getElementById('yr');if(yr&&yr.parentNode){var sib=yr.nextSibling;if(sib&&sib.nodeType===3)sib.data=' '+(id?'Arya Wiguna. Dibuat dengan penuh perhatian.':'Arya Wiguna. Built with care.')}}
+document.getElementById('lang-btn').addEventListener('click',function(){var nx=localStorage.getItem('lang')==='id'?'en':'id';localStorage.setItem('lang',nx);apply(nx)});
+apply(localStorage.getItem('lang')==='id'?'id':'en')}();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
