@@ -233,6 +233,8 @@
     .exp-co{color:var(--accent);font-weight:500;font-size:.9rem}
     .exp-date{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);padding:.2rem .6rem;border-radius:6px;background:var(--accent-soft);white-space:nowrap}
     .exp-desc{font-size:.85rem;color:var(--muted);line-height:1.7}
+    .exp-loc{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+    .exp-loc::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--accent);opacity:.65;flex-shrink:0}
 
     /* ──────────────────────────────
        PROJECTS
@@ -602,24 +604,27 @@
       <div class="exp-list">
         <div class="exp-card rv d2">
           <div class="exp-top">
-            <div><div class="exp-role">Full Stack Developer</div><div class="exp-co">Freelance & Open Source</div></div>
-            <div class="exp-date">2024 — Present</div>
+            <div><div class="exp-role">Mobile Developer</div><div class="exp-co">Rumah Sakit UMMI Bogor</div></div>
+            <div class="exp-date">Feb 2025 — Jul 2025</div>
           </div>
-          <div class="exp-desc">Building scalable applications, contributing to open-source projects, and exploring cloud architecture. Working with diverse tech stacks from React/Next.js to Laravel/NestJS.</div>
+          <div class="exp-loc">Empang, Bogor Selatan, Bogor, West Java</div>
+          <div class="exp-desc">Developed the SIMARU mobile app for medical asset inspection and supported hospital IT operations at UMMI Hospital.</div>
         </div>
         <div class="exp-card rv d3">
           <div class="exp-top">
-            <div><div class="exp-role">Student</div><div class="exp-co">Universitas Binaniaga Indonesia</div></div>
-            <div class="exp-date">2021 — Present</div>
+            <div><div class="exp-role">Data Entry Specialist</div><div class="exp-co">PT Batavia Tatasarana Jaya</div></div>
+            <div class="exp-date">Dec 2020 — Feb 2021</div>
           </div>
-          <div class="exp-desc">Studying Information Technology, building foundations in algorithms, data structures, networking, and software engineering best practices.</div>
+          <div class="exp-loc">Kebon Sirih, Menteng, Central Jakarta, DKI Jakarta</div>
+          <div class="exp-desc">Performed accurate data entry, validation, and document management for administrative workflows.</div>
         </div>
         <div class="exp-card rv d4">
           <div class="exp-top">
-            <div><div class="exp-role">Self-taught Developer</div><div class="exp-co">Personal Projects</div></div>
-            <div class="exp-date">2020 — 2021</div>
+            <div><div class="exp-role">Crew Lighting</div><div class="exp-co">Film Geosinema — SMK Geo Informatika</div></div>
+            <div class="exp-date">Sep 2019 — Dec 2022</div>
           </div>
-          <div class="exp-desc">Started learning web development through personal projects, online courses, and Cisco networking certifications. Built foundational skills in HTML, CSS, JavaScript, and PHP.</div>
+          <div class="exp-loc">Cihideunghilir, Ciampea, Bogor Regency, West Java</div>
+          <div class="exp-desc">Managed lighting setup for school film productions as part of the Geosinema extracurricular.</div>
         </div>
       </div>
     </div>
@@ -1086,12 +1091,15 @@ var MAP={
 'sk-mobile':['Mobile','Mobile'],'sk-database':['Database','Database'],'sk-devops':['DevOps','DevOps'],
 // experience
 'exp-tag':['Experience','Pengalaman'],'exp-h1':['My professional ','Perjalanan '],'exp-h2':['journey','profesional saya'],
-'exp-r1':['Full Stack Developer','Pengembang Full Stack'],'exp-c1':['Freelance & Open Source','Freelance & Open Source'],
-'exp-d1':['Building scalable applications, contributing to open-source projects, and exploring cloud architecture. Working with diverse tech stacks from React/Next.js to Laravel/NestJS.','Membangun aplikasi skalabel, berkontribusi ke proyek open-source, dan mengeksplorasi arsitektur cloud.'],
-'exp-r2':['Student','Mahasiswa'],'exp-c2':['Universitas Binaniaga Indonesia','Universitas Binaniaga Indonesia'],
-'exp-d2':['Studying Information Technology, building foundations in algorithms, data structures, networking, and software engineering best practices.','Mempelajari Teknologi Informasi, membangun fondasi dalam algoritma, struktur data, jaringan, dan praktik terbaik.'],
-'exp-r3':['Self-taught Developer','Pengembang Otodidak'],'exp-c3':['Personal Projects','Proyek Pribadi'],
-'exp-d3':['Started learning web development through personal projects, online courses, and Cisco networking certifications. Built foundational skills in HTML, CSS, JavaScript, and PHP.','Mulai belajar pengembangan web melalui proyek pribadi, kursus online, dan sertifikasi Cisco.'],
+'exp-r1':['Mobile Developer','Mobile Developer'],'exp-c1':['Rumah Sakit UMMI Bogor','Rumah Sakit UMMI Bogor'],
+'exp-l1':['Empang, Bogor Selatan, Bogor, West Java','Empang, Bogor Selatan, Bogor, Jawa Barat'],
+'exp-d1':['Developed the SIMARU mobile app for medical asset inspection and supported hospital IT operations at UMMI Hospital.','Mengembangkan aplikasi mobile SIMARU untuk inspeksi aset medis dan mendukung operasional IT RS UMMI.'],
+'exp-r2':['Data Entry Specialist','Data Entry Specialist'],'exp-c2':['PT Batavia Tatasarana Jaya','PT Batavia Tatasarana Jaya'],
+'exp-l2':['Kebon Sirih, Menteng, Central Jakarta, DKI Jakarta','Kebon Sirih, Menteng, Jakarta Pusat, DKI Jakarta'],
+'exp-d2':['Performed accurate data entry, validation, and document management for administrative workflows.','Melakukan input data yang akurat, validasi, dan manajemen dokumen untuk alur kerja administrasi.'],
+'exp-r3':['Crew Lighting','Crew Lighting'],'exp-c3':['Film Geosinema — SMK Geo Informatika','Film Geosinema — SMK Geo Informatika'],
+'exp-l3':['Cihideunghilir, Ciampea, Bogor Regency, West Java','Cihideunghilir, Ciampea, Kab. Bogor, Jawa Barat'],
+'exp-d3':['Managed lighting setup for school film productions as part of the Geosinema extracurricular.','Mengelola tata cahaya produksi film sekolah sebagai bagian ekstrakurikuler Geosinema.'],
 // projects
 'proj-tag':['Projects','Proyek'],'proj-h1':['Selected ','Karya '],'proj-h2':['work','pilihan'],
 'proj-more':["A few things I've built. More on ",'Beberapa hal yang pernah saya buat. Lainnya di '],
