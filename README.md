@@ -32,7 +32,8 @@ A personal portfolio / landing page for **Arya Wiguna**, a Full Stack Developer 
 ├── index.html                    # The entire landing page (markup + CSS + JS)
 ├── assets/
 │   ├── projects/                 # Project logos / previews (SVG)
-│   └── sertifikat/               # Certification PDFs + preview images
+│   ├── sertifikat/               # Certification PDFs + preview images
+│   └── cv/                       # Resume/CV PDFs (ATS + creative)
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml            # CI/CD: deploy to Vercel on push to main
