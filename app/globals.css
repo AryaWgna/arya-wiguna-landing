@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────
+   Design tokens — "Modern Editorial + Subtle 3D"
+   (dari arya-portfolio-agent-kit)
+   ────────────────────────────────────────────── */
+:root {
+  --background: #f5f4ef;
+  --foreground: #20252c;
+  --surface: #e9e8e2;
+  --navy: #172a45;
+  --navy-light: #24466f;
+  --blue: #4778a9;
+  --blue-soft: #e6edf5;
+  --muted: #777d85;
+  --border: #dcddd7;
+}
+
+.dark {
+  --background: #10161c;
+  --foreground: #e9e8e2;
+  --surface: #1a222b;
+  --navy: #9fb6d6;
+  --navy-light: #b6c9e4;
+  --blue: #7fa8d0;
+  --blue-soft: #1d2a3a;
+  --muted: #98a0a8;
+  --border: #2a333d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-muted: var(--muted);
+  --color-border-line: var(--border);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ── Base ────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: var(--navy);
+  color: var(--background);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Reusable editorial primitives ───────────── */
+.container-x {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .container-x {
+    padding-inline: 64px;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.rule {
+  height: 1px;
+  background: var(--border);
+  border: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--foreground);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.btn:hover {
+  border-color: var(--navy);
+}
+.btn-primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--background);
+}
+.btn-primary:hover {
+  background: var(--navy-light);
+  border-color: var(--navy-light);
+}

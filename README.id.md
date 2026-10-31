@@ -1,88 +1,55 @@
-# Arya Wiguna — Halaman Landing Portofolio
+# Arya Wiguna — Portfolio
 
-**Baca versi Inggris: [English](README.md)**
+**Tersedia juga dalam [Bahasa Inggris](README.md).**
 
-Sebuah halaman portofolio / landing page untuk **Arya Wiguna**, Full Stack Developer yang berbasis di Indonesia. Halaman ini menampilkan profil, keahlian, proyek pilihan, sertifikasi, dan informasi kontak — dengan dukungan mode gelap dan toggle terjemahan lengkap Inggris/Indonesia (EN/ID).
+Portfolio software engineering pribadi **Arya Wiguna**, didesain ulang dengan arah **Modern Editorial + Subtle 3D** dari `arya-portfolio-agent-kit`.
+
+## Stack
+
+| Lapisan | Teknologi |
+| --- | --- |
+| Framework | Next.js 15 (App Router) |
+| Bahasa | TypeScript (strict) |
+| Styling | Tailwind CSS v4 (design tokens editorial) |
+| Font | Geist / Geist Mono (next/font, self-hosted) |
+| 3D | Three.js — aksen hero opsional, dimuat dinamis, ada fallback + reduced-motion |
+| Hosting | Vercel (auto-deploy via GitHub Actions) |
+
+## Struktur
+
+```
+app/                  # layout, homepage, /work, /work/[slug], sitemap, robots
+components/           # Header, Hero (+3D), sections, ContactForm, Footer, providers
+lib/
+  data/               # konten typed: profile, projects, certifications, experience, education, expertise
+  i18n/messages.ts    # kamus EN/ID (hasil ekstraksi dari situs lama)
+public/assets/        # cv/, projects/, sertifikat/
+docs/                 # audit, content-inventory, product brief, implementation plan
+scripts/              # extract-content.mjs (regenerasi data dari sumber lama)
+AGENTS.md             # instruksi agent (dari agent kit)
+```
+
+## Perintah
+
+```bash
+npm run dev          # development
+npm run build        # production build
+npm start            # jalankan hasil build
+npm run lint         # eslint
+npm run typecheck    # tsc --noEmit
+npm run extract:content  # regenerasi lib/data + messages dari index.html lama
+```
 
 ## Fitur
 
-- **Aplikasi satu file** — semua markup, gaya, dan JavaScript ada langsung di dalam `index.html` (tanpa langkah build).
-- **Mode gelap / terang** — mengikuti preferensi sistem secara default, dapat diganti dan diingat di `localStorage`.
-- **UI dwibahasa** — toggle terjemahan lengkap Inggris/Indonesia melalui kamus sisi klien.
-- **Tailwind CSS** (via CDN) + token desain kustom (font `Space Grotesk` & `JetBrains Mono`).
-- **Aksen dinamis** — efek typewriter untuk peran, animasi scroll-reveal, dan navigasi smooth-scroll.
-- **Background animasi** — gumpalan gradien aurora lembut plus simbol kode yang melayang, keduanya menyesuaikan mode terang/gelap dan menghormati `prefers-reduced-motion`.
-- **Aksesibel & responsif** — tata letak mobile-first, gaya fokus keyboard, dukungan `prefers-reduced-motion`, dan HTML semantik.
-- **Formulir kontak** — terhubung ke Web3Forms untuk pengiriman tanpa backend.
+- **Bilingual EN/ID** — toggle di header, kamus terpusat (`lib/i18n/messages.ts`).
+- **Dark/light mode** — mengikuti sistem, bisa di-toggle, tersimpan di `localStorage`.
+- **Design system editorial** — off-white `#F5F4EF`, navy `#172A45`, aksen `#4778A9`, Geist, whitespace, borders tipis.
+- **Subtle 3D hero** — skulptur geometris procedural; fallback CSS statis; berhenti saat tab/elemen tak terlihat; menghormati `prefers-reduced-motion`; DPR dibatasi 1.5.
+- **Case studies** — `/work/[slug]` per proyek; bagian yang belum terverifikasi ditandai TODO (tidak dikarang).
+- **Contact form** — Web3Forms.
+- **SEO** — metadata, OG, canonical, sitemap, robots.
 
-## Teknologi
+## Deploy
 
-| Lapisan | Teknologi |
-| ------- | --------- |
-| Markup | HTML5 |
-| Styling | CSS3 + Tailwind CSS (CDN) |
-| Logika | Vanilla JavaScript (ES6+) |
-| Font | Google Fonts — Space Grotesk, JetBrains Mono |
-| Hosting | Vercel (auto-deploy via GitHub Actions) |
-
-## Struktur Proyek
-
-```
-.
-├── index.html                    # Seluruh halaman landing (markup + CSS + JS)
-├── assets/
-│   ├── projects/                 # Logo / pratinjau proyek (SVG)
-│   └── sertifikat/               # PDF sertifikasi + gambar pratinjau
-├── .github/
-│   └── workflows/
-│       └── deploy.yml            # CI/CD: deploy ke Vercel saat push ke main
-├── .vercel/                      # Konfigurasi proyek Vercel
-├── .vercelignore                 # File yang dikecualikan dari deployment Vercel
-└── .gitignore
-```
-
-## Memulai
-
-Ini adalah situs statis murni — tanpa dependensi yang perlu diinstal dan tanpa langkah build.
-
-### Prasyarat
-
-- Peramban web modern apa pun (Chrome, Edge, Firefox, Safari).
-
-### Menjalankan secara lokal
-
-**Opsi A — buka file langsung:**
-
-```bash
-# Windows
-start index.html
-
-# macOS
-open index.html
-
-# Linux
-xdg-open index.html
-```
-
-**Opsi B — jalankan dengan server statis lokal (disarankan untuk pratinjau sungguhan):**
-
-```bash
-# Menggunakan npx (membutuhkan Node.js)
-npx serve .
-
-# Atau dengan Python
-python -m http.server 8000
-# lalu kunjungi http://localhost:8000
-```
-
-## Deployment
-
-Situs ini di-deploy di **Vercel** (proyek: `arya-wiguna`).
-
-- **Produksi** — setiap push ke `main` memicu workflow GitHub Actions [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), yang menjalankan `npx vercel --prod`.
-- **Secret** — workflow membutuhkan secret repositori `VERCEL_TOKEN`; tambahkan di **Settings > Secrets > Actions**.
-- **Env / konfigurasi** — ID proyek dan org Vercel ada di `.vercel/project.json`; `.vercelignore` memastikan log lokal dan file cadangan tidak ikut ter-deploy.
-
-## Lisensi
-
-Tidak ada lisensi yang dinyatakan untuk repositori ini; semua hak dilindungi oleh pemilik. Hubungi Arya untuk penggunaan ulang atau kolaborasi.
+Sama seperti sebelumnya: push ke `main` memicu GitHub Actions → `vercel --prod` (project `arya-wiguna`, domain `aryawiguna.my.id`). Tidak ada perubahan konfigurasi deployment.

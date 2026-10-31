@@ -1,90 +1,55 @@
-# Arya Wiguna — Portfolio Landing Page
+# Arya Wiguna — Portfolio
 
 **Also available in [Bahasa Indonesia](README.id.md).**
 
-A personal portfolio / landing page for **Arya Wiguna**, a Full Stack Developer based in Indonesia. The page showcases his profile, skills, selected projects, certifications, and contact information — with support for dark mode and a full English/Indonesian (EN/ID) translation toggle.
-
-## Features
-
-- **Single-file app** — all markup, styles, and JavaScript are inline in `index.html` (no build step).
-- **Dark / light mode** — follows the system preference by default, toggleable and remembered in `localStorage`.
-- **Bilingual UI** — complete English/Indonesian translation toggle via a client-side dictionary.
-- **Tailwind CSS** (via CDN) + custom design tokens (`Space Grotesk` & `JetBrains Mono` fonts).
-- **Dynamic accents** — typewriter effect for roles, scroll-reveal animations, and a smooth-scroll navigation.
-- **Animated background** — soft aurora gradient blobs plus floating code symbols, both adapting to light/dark mode and respecting `prefers-reduced-motion`.
-- **Accessible & responsive** — mobile-first layout, keyboard focus styles, `prefers-reduced-motion` support, and semantic HTML.
-- **Contact form** — wired to Web3Forms for submissions without a backend.
+Personal software-engineering portfolio for **Arya Wiguna**, redesigned with the **Modern Editorial + Subtle 3D** direction from the `arya-portfolio-agent-kit`.
 
 ## Tech Stack
 
-| Layer      | Technology |
-| ---------- | ---------- |
-| Markup     | HTML5 |
-| Styling    | CSS3 + Tailwind CSS (CDN) |
-| Logic      | Vanilla JavaScript (ES6+) |
-| Fonts      | Google Fonts — Space Grotesk, JetBrains Mono |
-| Hosting    | Vercel (auto-deploy via GitHub Actions) |
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS v4 (design tokens editorial) |
+| Fonts | Geist / Geist Mono (next/font, self-hosted) |
+| 3D | Three.js — aksen hero opsional, dimuat dinamis, fallback + reduced-motion |
+| Hosting | Vercel (auto-deploy via GitHub Actions) |
 
-## Project Structure
+## Structure
 
 ```
-.
-├── index.html                    # The entire landing page (markup + CSS + JS)
-├── assets/
-│   ├── projects/                 # Project logos / previews (SVG)
-│   ├── sertifikat/               # Certification PDFs + preview images
-│   └── cv/                       # Resume/CV PDFs (ATS + creative)
-├── .github/
-│   └── workflows/
-│       └── deploy.yml            # CI/CD: deploy to Vercel on push to main
-├── .vercel/                      # Vercel project configuration
-├── .vercelignore                 # Files excluded from Vercel deployments
-└── .gitignore
+app/                  # layout, homepage, /work, /work/[slug], sitemap, robots
+components/           # Header, Hero (+3D), sections, ContactForm, Footer, providers
+lib/
+  data/               # konten typed: profile, projects, certifications, experience, education, expertise
+  i18n/messages.ts    # kamus EN/ID (hasil ekstraksi dari situs lama)
+public/assets/        # cv/, projects/, sertifikat/
+docs/                 # audit, content-inventory, product brief, implementation plan
+scripts/              # extract-content.mjs (regenerasi data dari sumber lama)
+AGENTS.md             # instruksi agent (dari agent kit)
 ```
 
-## Getting Started
-
-This is a pure static site — no dependencies to install and no build step required.
-
-### Prerequisites
-
-- Any modern web browser (Chrome, Edge, Firefox, Safari).
-
-### Run locally
-
-**Option A — open the file directly:**
+## Scripts
 
 ```bash
-# Windows
-start index.html
-
-# macOS
-open index.html
-
-# Linux
-xdg-open index.html
+npm run dev          # development
+npm run build        # production build
+npm start            # jalankan hasil build
+npm run lint         # eslint
+npm run typecheck    # tsc --noEmit
+npm run extract:content  # regenerasi lib/data + messages dari index.html lama
 ```
 
-**Option B — serve with a local static server (recommended for a real preview):**
+## Fitur
 
-```bash
-# Using npx (requires Node.js)
-npx serve .
+- **Bilingual EN/ID** — toggle di header, kamus terpusat (`lib/i18n/messages.ts`).
+- **Dark/light mode** — mengikuti sistem, bisa di-toggle, tersimpan di `localStorage`.
+- **Editorial design system** — off-white `#F5F4EF`, navy `#172A45`, aksen `#4778A9`, Geist, whitespace, borders tipis.
+- **Subtle 3D hero** — skulptur geometris procedural; fallback CSS statis; berhenti saat tab/elemen tak terlihat; menghormati `prefers-reduced-motion`; DPR dibatasi 1.5.
+- **Case studies** — `/work/[slug]` per proyek; bagian yang belum terverifikasi ditandai TODO (tidak dikarang).
+- **Contact form** — Web3Forms.
+- **SEO** — metadata, OG, canonical, sitemap, robots.
 
-# Or with Python
-python -m http.server 8000
-# then visit http://localhost:8000
-```
+## Deploy
 
-## Deployment
-
-The site is deployed on **Vercel** (project: `arya-wiguna`).
-
-- **Production** — every push to `main` triggers the GitHub Actions workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs `npx vercel --prod`.
-- **Secret** — the workflow requires a `VERCEL_TOKEN` repository secret; add it in **Settings > Secrets > Actions**.
-- **Env / config** — the Vercel project ID and org ID live in `.vercel/project.json`; `.vercelignore` keeps local logs and backup files out of deployments.
-
-## License
-
-No license is specified for this repository; all rights are reserved by the owner. Contact Arya for reuse or collaboration.
-
+Sama seperti sebelumnya: push ke `main` pada repo ini memicu GitHub Actions → `vercel --prod` (project `arya-wiguna`, domain `aryawiguna.my.id`). Tidak ada perubahan konfigurasi deployment.
