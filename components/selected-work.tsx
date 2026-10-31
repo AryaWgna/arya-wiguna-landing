@@ -45,7 +45,7 @@ export function SelectedWork() {
                 <div className="overflow-hidden rounded-xl border border-border-line bg-surface">
                   <img
                     src={`/${project.thumb}`}
-                    alt={project.title}
+                    alt={t(project.titleKey)}
                     loading="lazy"
                     className="aspect-[16/10] w-full object-cover"
                   />
@@ -64,9 +64,11 @@ export function SelectedWork() {
                   ))}
                 </div>
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground">
-                  {project.title}
+                  {t(project.titleKey)}
                 </h3>
-                <p className="mt-3 max-w-2xl leading-relaxed text-muted">{project.desc}</p>
+                <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+                  {t(project.summaryKey)}
+                </p>
                 <div className="mt-6 flex flex-wrap items-center gap-5">
                   <Link
                     href={`/work/${project.slug}`}

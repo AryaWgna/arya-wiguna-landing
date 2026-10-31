@@ -16,9 +16,9 @@ Status: ✅ terverifikasi dari repo/situs lama · ⏳ TODO (butuh konfirmasi pem
 ## Proyek (candidate → verifikasi)
 | Proyek | Status |
 | --- | --- |
-| SIMARU Mobile App | ✅ deskripsi & repo; ⏳ tanggal, peran, kontribusi, screenshot |
-| Digital Skyboard Announcement | ✅ deskripsi & repo; ⏳ tanggal, peran, kontribusi, screenshot |
-| StreamEly | ✅ deskripsi & repo; ⏳ tanggal, peran, kontribusi, screenshot |
+| SIMARU Mobile App | ✅ deskripsi & repo + fitur (j README); ⏳ screenshot aplikasi |
+| Digital Skyboard Announcement | ✅ deskripsi, repo, tahun 2026 (changelog), fitur, stack microservices; ⏳ screenshot |
+| StreamEly | ✅ deskripsi, repo, live demo Vercel, fitur, stack; ⏳ screenshot |
 
 ## Pengalaman
 - ✅ RS UMMI Bogor (Mobile Developer, Feb 2025–Jul 2025)
@@ -34,4 +34,10 @@ Status: ✅ terverifikasi dari repo/situs lama · ⏳ TODO (butuh konfirmasi pem
 
 ## Sertifikat
 - ✅ 22 sertifikat (judul + PDF/PNG) diambil otomatis dari situs lama
-- ⏳ Issuer, tanggal terbit, tautan verifikasi (tidak pernah ada di situs lama)
+- ✅ Diverifikasi lewat isi PDF (`scripts/pdfscan.py`):
+  - Dicoding (7): ID + URL verifikasi dicoding.com/certificates/...
+  - Cisco Networking Academy (3): CCNA ITN, English for IT 1, OS Basics (Sep 2025)
+  - IDwebTalks webinars (5): Jan–Jun 2025
+  - Akademik (2): SKL UNBIN (lulus 31 Agu 2026) & webinar UIN Jakarta MTI (Jun 2025)
+  - Lainnya (5): RevoU (Mei 2024), MAC Training (Agu 2026), magang UMMI, seminar APBN & asuransi (⏳ tanggal/penerbit — PDF berbasis gambar)
+- ⏳ Tautan verifikasi non-Dicoding (jika ada)
