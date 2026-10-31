@@ -2,6 +2,7 @@
 
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { expertiseGroups } from "@/lib/data/expertise";
 
 export function ExpertiseSection() {
@@ -19,9 +20,13 @@ export function ExpertiseSection() {
             </>
           }
         />
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border-line bg-border-line sm:grid-cols-2 lg:grid-cols-3">
+        <GsapReveal
+          className="grid gap-px overflow-hidden rounded-2xl border border-border-line bg-border-line sm:grid-cols-2 lg:grid-cols-3"
+          stagger={0.08}
+          y={20}
+        >
           {expertiseGroups.map((group) => (
-            <div key={group.key} className="bg-background p-7">
+            <div key={group.key} data-reveal-item className="bg-background p-7">
               <div className="flex items-baseline justify-between">
                 <h3 className="font-mono text-sm font-semibold text-navy">{t(group.key)}</h3>
                 <span className="font-mono text-xs text-muted">
@@ -40,7 +45,7 @@ export function ExpertiseSection() {
               </div>
             </div>
           ))}
-        </div>
+        </GsapReveal>
         <p className="mt-6 max-w-2xl text-sm text-muted" lang={lang}>
           {lang === "id"
             ? "Dikelompokkan per disiplin. Tidak ada persentase/bintang — keahlian ditunjukkan lewat proyek nyata."

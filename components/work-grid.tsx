@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { useLang } from "@/components/providers";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { projects } from "@/lib/data/projects";
 
 export function WorkGrid() {
   const { t } = useLang();
 
   return (
-    <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <GsapReveal
+      className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+      stagger={0.09}
+      y={24}
+    >
       {projects.map((project) => (
         <Link
           key={project.slug}
+          data-reveal-item
           href={`/work/${project.slug}`}
           className="group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-colors hover:border-navy/60"
         >
@@ -41,6 +47,6 @@ export function WorkGrid() {
           </div>
         </Link>
       ))}
-    </div>
+    </GsapReveal>
   );
 }

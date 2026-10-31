@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { gsap } from "@/lib/gsap";
 
 /**
  * Aksen 3D subtle untuk hero (opsional).
@@ -85,7 +86,45 @@ export default function Hero3D() {
     ring.rotation.z = 0.4;
     group.add(ring);
 
-    scene.add(group);
+    // Pointer parallax (GSAP quickTo) — hanya pointer halus
+    const tiltGroup = new THREE.Group();
+    tiltGroup.add(group);
+    scene.add(tiltGroup);
+
+    let qX: gsap.QuickToFunc | null = null;
+    let qY: gsap.QuickToFunc | null = null;
+    const finePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+
+    if (finePointer && !reducedMotion) {
+      qX = gsap.quickTo(tiltGroup.rotation, "y", {
+        duration: 0.8,
+        ease: "power3.out",
+      });
+      qY = gsap.quickTo(tiltGroup.rotation, "x", {
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!qX || !qY) return;
+      const rect = mount.getBoundingClientRect();
+      const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const ny = ((e.clientY - rect.top) / rect.height - 0.5) * -2;
+      qX(nx * 0.35);
+      qY(ny * 0.25);
+    };
+    const onPointerLeave = () => {
+      qX?.(0);
+      qY?.(0);
+    };
+
+    if (finePointer && !reducedMotion) {
+      mount.addEventListener("pointermove", onPointerMove);
+      mount.addEventListener("pointerleave", onPointerLeave);
+    }
 
     const animate = () => {
       if (!reducedMotion) {
@@ -133,6 +172,9 @@ export default function Hero3D() {
       document.removeEventListener("visibilitychange", onVisibility);
       observer.disconnect();
       resizeObserver.disconnect();
+      mount.removeEventListener("pointermove", onPointerMove);
+      mount.removeEventListener("pointerleave", onPointerLeave);
+      if (qX || qY) gsap.killTweensOf(tiltGroup.rotation);
       renderer.dispose();
       if (renderer.domElement.parentNode === mount) {
         mount.removeChild(renderer.domElement);

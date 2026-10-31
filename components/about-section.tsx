@@ -1,8 +1,11 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { useLang } from "@/components/providers";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { profile } from "@/lib/data/profile";
+import { gsap, isReducedMotion } from "@/lib/gsap";
 
 const bios = {
   en: [
@@ -56,6 +59,31 @@ const stats = {
 
 export function AboutSection() {
   const { lang } = useLang();
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // Count-up angka statistik saat masuk layar
+  useLayoutEffect(() => {
+    const el = statsRef.current;
+    if (!el || isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      el.querySelectorAll<HTMLElement>("[data-count]").forEach((num) => {
+        const target = Number(num.dataset.count || "0");
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 1.4,
+          ease: "power2.out",
+          scrollTrigger: { trigger: num, start: "top 90%", once: true },
+          onUpdate: () => {
+            num.textContent = String(Math.round(obj.val));
+          },
+        });
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section id="about" className="border-t border-border-line">
@@ -84,21 +112,30 @@ export function AboutSection() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5">
+              <GsapReveal className="flex flex-col gap-5" stagger={0.08} y={18}>
                 {bios[lang].map((p, i) => (
-                  <p key={i} className="leading-relaxed text-foreground/90">
+                  <p key={i} data-reveal-item className="leading-relaxed text-foreground/90">
                     {p}
                   </p>
                 ))}
-                <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div
+                  ref={statsRef}
+                  data-reveal-item
+                  className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4"
+                >
                   {stats[lang].map((s) => (
                     <div key={s.label} className="border-l border-border-line pl-3">
-                      <div className="font-mono text-2xl font-semibold text-navy">{s.value}</div>
+                      <div
+                        data-count={s.value}
+                        className="font-mono text-2xl font-semibold text-navy"
+                      >
+                        {s.value}
+                      </div>
                       <div className="mt-1 text-xs text-muted">{s.label}</div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </GsapReveal>
             </div>
           </div>
         </div>

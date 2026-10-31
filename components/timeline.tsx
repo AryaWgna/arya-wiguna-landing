@@ -2,6 +2,7 @@
 
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { education, experience, type TimelineEntry } from "@/lib/data/experience";
 
 export function TimelineSection({
@@ -37,9 +38,14 @@ export function TimelineSection({
     <section id={kind} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <SectionHeading eyebrow={heading.eyebrow} title={heading.title} />
-        <ol className="relative border-l border-border-line pl-8">
+        <GsapReveal
+          as="ol"
+          className="relative border-l border-border-line pl-8"
+          stagger={0.12}
+          y={20}
+        >
           {items.map((item) => (
-            <li key={item.id} className="relative pb-12 last:pb-0">
+            <li key={item.id} data-reveal-item className="relative pb-12 last:pb-0">
               <span
                 className="absolute -left-[41px] top-1.5 h-3 w-3 rounded-full border-2 border-blue bg-background"
                 aria-hidden="true"
@@ -56,7 +62,7 @@ export function TimelineSection({
               </div>
             </li>
           ))}
-        </ol>
+        </GsapReveal>
       </div>
     </section>
   );

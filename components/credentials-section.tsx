@@ -2,6 +2,7 @@
 
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { certifications, type CertificationCategory } from "@/lib/data/certifications";
 
 const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> = {
@@ -51,10 +52,15 @@ export function CredentialsSection() {
                     {items.length} · {id ? "diverifikasi" : "verified"}
                   </span>
                 </h3>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <GsapReveal
+                  className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                  stagger={0.06}
+                  y={20}
+                >
                   {items.map((cert) => (
                     <article
                       key={cert.slug}
+                      data-reveal-item
                       className="group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-colors hover:border-navy/60"
                     >
                       <div className="aspect-[16/10] overflow-hidden bg-surface">
@@ -106,7 +112,7 @@ export function CredentialsSection() {
                       </div>
                     </article>
                   ))}
-                </div>
+                </GsapReveal>
               </section>
             )
           )}

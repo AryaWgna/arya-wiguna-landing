@@ -43,11 +43,31 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  const [active, setActive] = useState("");
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const ids = ["about", "skills", "experience", "education", "certs", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   const links = [
-    { href: "/work", label: t("nav-proj") },
-    { href: "/#about", label: t("nav-about") },
-    { href: "/#experience", label: t("nav-exp") },
-    { href: "/#contact", label: t("nav-contact") },
+    { href: "/work", hash: "", label: t("nav-proj") },
+    { href: "/#about", hash: "about", label: t("nav-about") },
+    { href: "/#experience", hash: "experience", label: t("nav-exp") },
+    { href: "/#contact", hash: "contact", label: t("nav-contact") },
   ];
 
   const isDark = theme === "dark";
@@ -74,7 +94,12 @@ export function Header() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-muted transition-colors hover:text-foreground"
+              aria-current={l.hash && active === l.hash ? "true" : undefined}
+              className={`text-sm font-medium transition-colors ${
+                l.hash && active === l.hash
+                  ? "text-foreground underline decoration-blue decoration-2 underline-offset-8"
+                  : "text-muted hover:text-foreground"
+              }`}
             >
               {l.label}
             </Link>

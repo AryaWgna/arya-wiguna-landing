@@ -1,4 +1,7 @@
+"use client";
+
 import { useLang } from "@/components/providers";
+import { GsapReveal } from "@/components/gsap-reveal";
 
 export function SectionHeading({
   eyebrow,
@@ -11,7 +14,7 @@ export function SectionHeading({
 }) {
   const { lang } = useLang();
   return (
-    <div className="mb-12 max-w-2xl md:mb-16">
+    <GsapReveal className="mb-12 max-w-2xl md:mb-16" y={16} once>
       {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
       <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
         {title}
@@ -21,6 +24,6 @@ export function SectionHeading({
           {intro}
         </p>
       ) : null}
-    </div>
+    </GsapReveal>
   );
 }

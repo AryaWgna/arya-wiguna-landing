@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
+import { GsapReveal } from "@/components/gsap-reveal";
 import { projects } from "@/lib/data/projects";
 
 export function SelectedWork() {
@@ -35,10 +36,11 @@ export function SelectedWork() {
           }
         />
 
-        <div className="flex flex-col">
+        <GsapReveal className="flex flex-col" stagger={0.1} y={22}>
           {projects.map((project) => (
             <article
               key={project.slug}
+              data-reveal-item
               className="grid gap-6 border-t border-border-line py-10 first:border-t-0 first:pt-0 md:grid-cols-12 md:gap-10"
             >
               <div className="md:col-span-5">
@@ -90,7 +92,7 @@ export function SelectedWork() {
               </div>
             </article>
           ))}
-        </div>
+        </GsapReveal>
       </div>
     </section>
   );
