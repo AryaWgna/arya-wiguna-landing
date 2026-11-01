@@ -36,7 +36,7 @@ export function SelectedWork() {
           });
 
           // Stagger cards: parallax + reveal as they enter
-          const cards = track.querySelectorAll<HTMLElement>(".horizontal-card");
+          const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
           cards.forEach((card) => {
             gsap.fromTo(
               card,
@@ -59,7 +59,7 @@ export function SelectedWork() {
         },
         // Mobile: stagger reveal (vertical)
         "(max-width: 1023px)": () => {
-          const cards = track.querySelectorAll<HTMLElement>(".horizontal-card");
+          const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
           gsap.fromTo(
             cards,
             { autoAlpha: 0, y: 30 },
@@ -120,12 +120,13 @@ export function SelectedWork() {
         {/* Desktop: horizontal track controlled by GSAP */}
         <div
           ref={trackRef}
-          className="container-x flex flex-col gap-10 pb-24 md:pb-32 lg:container-none lg:pb-0"
+          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-24 md:gap-6 md:px-8 md:pb-32 lg:snap-none lg:overflow-visible lg:gap-8 lg:px-16 lg:pb-0"
         >
           {projects.map((project) => (
             <article
               key={project.slug}
-              className="horizontal-card flex flex-col rounded-2xl border border-border-line bg-background overflow-hidden transition-shadow hover:shadow-lg"
+              data-project-card
+              className="flex w-[82vw] max-w-[420px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg lg:w-[480px] lg:max-w-none"
             >
               <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
                 <img

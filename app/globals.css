@@ -180,22 +180,13 @@ section[id] {
 .horizontal-section {
   overflow: hidden;
 }
-.horizontal-track {
-  will-change: transform;
+/* Sembunyikan scrollbar horizontal (swipe tetap berjalan) */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-.horizontal-card {
-  flex-shrink: 0;
-}
-@media (min-width: 1024px) {
-  .horizontal-track {
-    display: flex;
-    gap: 2rem;
-    padding-left: 64px;
-    padding-right: 64px;
-  }
-  .horizontal-card {
-    width: 480px;
-  }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* ── Parallax image wrapper ─────────────────── */
