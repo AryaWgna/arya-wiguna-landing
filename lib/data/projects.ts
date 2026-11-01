@@ -9,6 +9,7 @@
 export type Screenshot = {
   src: string;
   caption: { en: string; id: string };
+  description: { en: string; id: string };
 };
 
 export type Project = {
@@ -67,22 +68,42 @@ export const projects: Project[] = [
       {
         src: "assets/projects/simaru-home.jpg",
         caption: { en: "Main dashboard", id: "Dashboard utama" },
+        description: {
+          en: "Home dashboard showing the latest asset inspection status and quick actions for daily medical equipment checks.",
+          id: "Dashboard utama yang menampilkan status inspeksi aset terbaru dan aksi cepat untuk pemeriksaan alat medis harian.",
+        },
       },
       {
         src: "assets/projects/simaru-stock.jpg",
-        caption: { en: "Medical asset stock opname", id: "Stock opname aset medis" },
+        caption: { en: "Stock opname", id: "Stock opname" },
+        description: {
+          en: "Stock opname flow where officers record the physical condition of medical assets via QR scan.",
+          id: "Alur stock opname tempat petugas mencatat kondisi fisik aset medis melalui pemindaian QR.",
+        },
       },
       {
         src: "assets/projects/simaru-complain.jpg",
         caption: { en: "Complaint reporting", id: "Pelaporan keluhan" },
+        description: {
+          en: "Complaint screen for reporting damaged or problematic equipment directly from the field.",
+          id: "Layar keluhan untuk melaporkan peralatan rusak atau bermasalah langsung dari lapangan.",
+        },
       },
       {
         src: "assets/projects/simaru-notif.jpg",
-        caption: { en: "Push notifications & settings", id: "Notifikasi push & pengaturan" },
+        caption: { en: "Push notifications", id: "Notifikasi push" },
+        description: {
+          en: "Push notification list and in-app settings for controlling which alerts arrive.",
+          id: "Daftar notifikasi push dan pengaturan dalam aplikasi untuk mengontrol pemberitahuan yang masuk.",
+        },
       },
       {
         src: "assets/projects/simaru-login.jpg",
         caption: { en: "Login screen", id: "Halaman masuk" },
+        description: {
+          en: "Login screen (phone demo) — the entry point to the system.",
+          id: "Halaman masuk (demo HP) — pintu masuk ke sistem.",
+        },
       },
     ],
   },
@@ -136,22 +157,42 @@ export const projects: Project[] = [
       {
         src: "assets/projects/skyboard-main.jpg",
         caption: { en: "Public flight board", id: "Papan penerbangan publik" },
+        description: {
+          en: "Public flight board displaying live flight statuses with auto-refresh every 30 seconds.",
+          id: "Papan penerbangan publik menampilkan status penerbangan langsung dengan auto-refresh tiap 30 detik.",
+        },
       },
       {
         src: "assets/projects/skyboard-boarding.jpg",
-        caption: { en: "Boarding status filter", id: "Filter status boarding" },
+        caption: { en: "Boarding filter", id: "Filter boarding" },
+        description: {
+          en: "Filter by boarding status — highlights flights that are currently boarding.",
+          id: "Filter status boarding — menyorot penerbangan yang sedang naik pesawat.",
+        },
       },
       {
         src: "assets/projects/skyboard-promo.jpg",
         caption: { en: "Promo slider", id: "Slider promo" },
+        description: {
+          en: "Promo slider banner area surfaced on the board and admin-manageable.",
+          id: "Area banner slider promo yang tampil di papan dan dapat dikelola admin.",
+        },
       },
       {
         src: "assets/projects/skyboard-admin.jpg",
         caption: { en: "Admin dashboard", id: "Dashboard admin" },
+        description: {
+          en: "Admin dashboard with CRUD controls for flights, airlines, assets and promos.",
+          id: "Dashboard admin dengan kontrol CRUD untuk penerbangan, maskapai, aset, dan promo.",
+        },
       },
       {
         src: "assets/projects/skyboard-addflight.jpg",
         caption: { en: "Add flight modal", id: "Modal tambah penerbangan" },
+        description: {
+          en: "Modal for adding/editing a flight record with schedule and status fields.",
+          id: "Modal untuk menambah/mengedit data penerbangan beserta jadwal dan status.",
+        },
       },
     ],
   },
@@ -205,22 +246,42 @@ export const projects: Project[] = [
       {
         src: "assets/projects/streamely-home.jpg",
         caption: { en: "Home & trending", id: "Beranda & trending" },
+        description: {
+          en: "Home page featuring trending titles and genre rows, personalized by the Jaccard recommendation index.",
+          id: "Beranda menampilkan judul trending dan baris genre, dipersonalisasi indeks rekomendasi Jaccard.",
+        },
       },
       {
         src: "assets/projects/streamely-explore.jpg",
         caption: { en: "Explore grid", id: "Jelajahi grid" },
+        description: {
+          en: "Explore page: dense grid browsing with sorting/filtering controls.",
+          id: "Halaman jelajahi: grid rapat dengan kontrol urutkan/saring.",
+        },
       },
       {
         src: "assets/projects/streamely-search.jpg",
         caption: { en: "Search results", id: "Hasil pencarian" },
+        description: {
+          en: "Search with smart suggestions and instant result updates.",
+          id: "Pencarian dengan saran cerdas dan hasil yang diperbarui instan.",
+        },
       },
       {
         src: "assets/projects/streamely-detail.jpg",
         caption: { en: "Watch detail", id: "Detail tontonan" },
+        description: {
+          en: "Detail page with overview, metadata from TVmaze/OMDB, and similar titles.",
+          id: "Halaman detail berisi ikhtisar, metadata dari TVmaze/OMDB, dan judul serupa.",
+        },
       },
       {
         src: "assets/projects/streamely-player.jpg",
         caption: { en: "Video player", id: "Pemutar video" },
+        description: {
+          en: "Multi-server video player in action with server fallback support.",
+          id: "Pemutar video multi-server sedang memutar dengan dukungan fallback server.",
+        },
       },
     ],
   },

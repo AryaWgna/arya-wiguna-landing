@@ -127,8 +127,13 @@ export function CaseStudyContent({ project }: { project: Project }) {
                   loading="lazy"
                   className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
                 />
-                <figcaption className="px-4 py-3 text-sm text-muted">
-                  {shot.caption[lang]}
+                <figcaption className="px-4 py-3">
+                  <p className="text-sm font-medium text-foreground">
+                    {shot.caption[lang]}
+                  </p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-muted">
+                    {shot.description[lang]}
+                  </p>
                 </figcaption>
               </figure>
             ))}
