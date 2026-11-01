@@ -5,6 +5,7 @@ import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { BootSequence } from "@/components/boot-sequence";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,6 +87,7 @@ export default function RootLayout({
       <body>
         <div id="scroll-progress" aria-hidden="true" />
         <Providers>
+          <BootSequence />
           <SmoothScroll />
           <Header />
           {children}
