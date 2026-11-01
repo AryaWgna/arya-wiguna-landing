@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { projects } from "@/lib/data/projects";
+import { TechIcon } from "@/components/tech-icon";
 import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
 export function SelectedWork() {
@@ -100,8 +101,9 @@ export function SelectedWork() {
                   {project.chips.map((chip) => (
                     <span
                       key={chip}
-                      className="rounded-full border border-border-line px-3 py-0.5 font-mono text-[11px] text-muted"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-0.5 font-mono text-[11px] text-muted"
                     >
+                      <TechIcon name={chip} />
                       {chip}
                     </span>
                   ))}

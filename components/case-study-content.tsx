@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import type { Project } from "@/lib/data/projects";
+import { TechIcon } from "@/components/tech-icon";
 
 export function CaseStudyContent({ project }: { project: Project }) {
   const { t, lang } = useLang();
@@ -22,8 +23,9 @@ export function CaseStudyContent({ project }: { project: Project }) {
           {project.chips.map((chip) => (
             <span
               key={chip}
-              className="rounded-full border border-border-line px-3 py-0.5 font-mono text-[11px] text-muted"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-0.5 font-mono text-[11px] text-muted"
             >
+              <TechIcon name={chip} />
               {chip}
             </span>
           ))}
@@ -75,8 +77,9 @@ export function CaseStudyContent({ project }: { project: Project }) {
             {project.stack.map((s) => (
               <span
                 key={s}
-                className="rounded-full border border-border-line px-3 py-1 text-[13px] text-muted"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-1 text-[13px] text-muted"
               >
+                <TechIcon name={s} />
                 {s}
               </span>
             ))}
