@@ -334,8 +334,8 @@ export function ContactSection() {
 
           <p className="mt-6 text-center text-sm text-muted">
             {lang === "id"
-              ? "Indonesia (WIB) · Biasanya membalas dalam 1–2 hari kerja."
-              : "Indonesia (WIB) · Usually replies within 1–2 business days."}
+              ? "Bogor, Indonesia (WIB) · Biasanya membalas dalam 1–2 hari kerja."
+              : "Bogor, Indonesia (WIB) · Usually replies within 1–2 business days."}
           </p>
         </div>
       </div>

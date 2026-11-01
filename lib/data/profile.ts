@@ -6,12 +6,13 @@ export const profile = {
   name: "Arya Wiguna",
   firstName: "Arya",
   role: {
-    en: "Full Stack Developer · Indonesia",
-    id: "Pengembang Full Stack · Indonesia",
+    en: "Full Stack Developer · Bogor, Indonesia",
+    id: "Pengembang Full Stack · Bogor, Indonesia",
   },
+  location: "Bogor, Indonesia",
   heroLine: {
-    en: "Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications.",
-    id: "Pengembang full stack berbasis di Indonesia, membuat aplikasi bersih, skalabel, dan aman.",
+    en: "Full-stack developer based in Bogor, Indonesia, crafting clean, scalable, and secure applications.",
+    id: "Pengembang full stack berbasis di Bogor, Indonesia, membuat aplikasi bersih, skalabel, dan aman.",
   },
   motto: {
     en: "First solve the problem, then write the code.",

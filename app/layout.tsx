@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Arya Wiguna",
   },
   description:
-    "Arya Wiguna — Full Stack Developer based in Indonesia. Building clean, scalable, secure web & mobile applications.",
+    "Arya Wiguna — Full Stack Developer based in Bogor, Indonesia. Building clean, scalable, secure web & mobile applications.",
   keywords: [
     "Arya Wiguna",
     "portfolio",
@@ -49,12 +49,12 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Arya Wiguna",
     title: "Arya Wiguna | Full Stack Developer Portfolio",
-    description: "Full-stack developer crafting clean, scalable, and secure applications.",
+    description: "Full-stack developer based in Bogor, Indonesia, crafting clean, scalable, and secure applications.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Arya Wiguna | Full Stack Developer Portfolio",
-    description: "Full-stack developer crafting clean, scalable, and secure applications.",
+    description: "Full-stack developer based in Bogor, Indonesia, crafting clean, scalable, and secure applications.",
   },
   robots: {
     index: true,
