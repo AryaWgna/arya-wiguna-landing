@@ -16,9 +16,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     const tween = gsap.fromTo(
       el,
-      { autoAlpha: 0, y: 10 },
-      { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
     );
+
+    // Pastikan pindah halaman selalu mulai dari atas (hindari posisi scroll tersisa)
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+    }
 
     return () => {
       tween.kill();
