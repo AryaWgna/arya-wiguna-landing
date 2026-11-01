@@ -6,6 +6,7 @@ import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { projects } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
+import { profile } from "@/lib/data/profile";
 import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
 export function SelectedWork() {
@@ -63,7 +64,7 @@ export function SelectedWork() {
               <>
                 {t("proj-more")}
                 <a
-                  href="https://github.com/AryaWgna"
+                  href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-blue underline-offset-4 hover:underline"
