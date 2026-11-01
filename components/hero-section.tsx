@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLang } from "@/components/providers";
+import { OnlineVisitors } from "@/components/online-visitors";
 import { CvDropdown } from "@/components/cv-dropdown";
 import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
@@ -123,9 +124,12 @@ export function HeroSection() {
       <div className="relative z-10 container-x flex min-h-[92svh] items-center py-28 md:py-32">
         <div className="grid w-full items-center gap-14 lg:grid-cols-12">
           <div data-hero-text className="lg:col-span-7">
-            <p data-hero-eyebrow className="eyebrow mb-5">
-              {profile.role[lang]}
-            </p>
+            <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+              <p data-hero-eyebrow className="eyebrow">
+                {profile.role[lang]}
+              </p>
+              <OnlineVisitors variant="hero" />
+            </div>
             <h1 className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
               <span className="block overflow-hidden pb-1">
                 <span data-hero-line className="block will-change-transform">

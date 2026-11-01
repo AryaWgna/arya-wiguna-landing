@@ -6,10 +6,15 @@ import { useLang } from "@/components/providers";
 /**
  * Counter "orang online" — mengirim heartbeat ke /api/presence secara
  * berkala dan menampilkan jumlah pengunjung unik yang aktif.
+ *
+ * Desain mengikuti bahasa visual situs (editorial, mono, aksen biru),
+ * bukan badge template generik. Dua varian:
+ * - "hero":   status line kecil sejajar eyebrow hero (uppercase, biru).
+ * - "footer": baris status senyap di footer (muted).
  */
 
-const HEARTBEAT_INTERVAL_MS = 30_000;
-const POLL_INTERVAL_MS = 15_000;
+const HEARTBEAT_INTERVAL_MS = 10_000; // heartbeat lebih rapat → lebih peka
+const POLL_INTERVAL_MS = 5_000; // refresh angka lebih cepat
 const STORAGE_KEY = "aw_visitor_id";
 const VISITOR_ID_RE = /^[a-zA-Z0-9_-]{8,64}$/;
 
@@ -57,7 +62,11 @@ async function fetchOnline(): Promise<number | null> {
   }
 }
 
-export function OnlineVisitors() {
+export function OnlineVisitors({
+  variant = "hero",
+}: {
+  variant?: "hero" | "footer";
+}) {
   const { lang } = useLang();
   const [online, setOnline] = useState<number | null>(null);
   const visitorIdRef = useRef<string | null>(null);
@@ -98,7 +107,9 @@ export function OnlineVisitors() {
 
   if (online === null || online <= 0) return null;
 
-  const label =
+  const shortLabel = `${online} online`;
+
+  const fullLabel =
     lang === "id"
       ? online === 1
         ? "1 orang sedang online"
@@ -107,13 +118,16 @@ export function OnlineVisitors() {
         ? "1 person online right now"
         : `${online} people online right now`;
 
+  const base =
+    "inline-flex items-center gap-[7px] font-mono text-[11px] uppercase tracking-[0.14em] tabular-nums";
+  const cls = variant === "hero" ? `${base} text-blue` : `${base} text-muted`;
+
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-border-line bg-surface px-3 py-1 font-mono text-xs text-muted">
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+    <span className={cls} role="status" aria-label={fullLabel} title={fullLabel}>
+      <span className="led-dot" aria-hidden="true">
+        <span />
       </span>
-      {label}
+      {shortLabel}
     </span>
   );
 }

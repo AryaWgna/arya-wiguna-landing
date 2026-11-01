@@ -48,7 +48,7 @@ npm run extract:content  # regenerasi lib/data + messages dari index.html lama
 - **Subtle 3D hero** — skulptur geometris procedural; fallback CSS statis; berhenti saat tab/elemen tak terlihat; menghormati `prefers-reduced-motion`; DPR dibatasi 1.5.
 - **Case studies** — `/work/[slug]` per proyek; bagian yang belum terverifikasi ditandai TODO (tidak dikarang).
 - **Contact form** — Web3Forms.
-- **Counter orang online** — `/api/presence` + komponen `OnlineVisitors` di footer; heartbeat browser tiap 30 dtk, jendela aktif 3 menit. Store default in-memory; untuk Vercel/serverless set `UPSTASH_REDIS_REST_URL` & `UPSTASH_REDIS_REST_TOKEN` (lihat `.env.example`).
+- **Counter orang online** — `/api/presence` + komponen `OnlineVisitors` (hero & footer); heartbeat browser tiap 10 dtk, polling 5 dtk, jendela aktif 60 dtk. Store default in-memory; untuk Vercel/serverless set `UPSTASH_REDIS_REST_URL` & `UPSTASH_REDIS_REST_TOKEN` (lihat `.env.example`).
 - **SEO** — metadata, OG, canonical, sitemap, robots.
 
 ## Deploy

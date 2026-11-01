@@ -11,8 +11,8 @@
  * menggunakan `fetch` native Node 18+.
  */
 
-export const DEFAULT_ONLINE_WINDOW_MS = 3 * 60 * 1000; // 3 menit
-const HEARTBEAT_TTL_SECONDS = 15 * 60; // 15 menit (refresh TTL kunci)
+export const DEFAULT_ONLINE_WINDOW_MS = 60 * 1000; // 60 detik (lebih peka)
+const HEARTBEAT_TTL_SECONDS = 10 * 60; // 10 menit (refresh TTL kunci)
 
 export interface PresenceStore {
   /** Catat denyut nadi pengunjung (visitorId) pada waktu sekarang. */

@@ -212,4 +212,32 @@ html.lenis body {
 /* ── Stagger card animations ────────────────── */
 .stagger-card {
   will-change: transform, opacity;
+
+/* ── LED status halus (online visitors) ────────── */
+@keyframes led-blink {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+.led-dot {
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--blue);
+}
+.led-dot > span {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: led-blink 2.8s ease-in-out infinite;
+}
+
 }

@@ -26,7 +26,7 @@ export function Footer() {
             © {year} {profile.name}.{" "}
             {lang === "id" ? "Dibuat dengan penuh perhatian." : "Built with care."}
           </p>
-          <OnlineVisitors />
+          <OnlineVisitors variant="footer" />
         </div>
       </div>
     </footer>
