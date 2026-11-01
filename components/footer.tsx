@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/components/providers";
+import { OnlineVisitors } from "@/components/online-visitors";
 import { profile } from "@/lib/data/profile";
 
 export function Footer() {
@@ -20,10 +21,13 @@ export function Footer() {
             <p className="mt-2 text-sm text-muted">{role}</p>
           </div>
         </div>
-        <p className="mt-10 font-mono text-xs text-muted">
-          © {year} {profile.name}.{" "}
-          {lang === "id" ? "Dibuat dengan penuh perhatian." : "Built with care."}
-        </p>
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <p className="font-mono text-xs text-muted">
+            © {year} {profile.name}.{" "}
+            {lang === "id" ? "Dibuat dengan penuh perhatian." : "Built with care."}
+          </p>
+          <OnlineVisitors />
+        </div>
       </div>
     </footer>
   );
