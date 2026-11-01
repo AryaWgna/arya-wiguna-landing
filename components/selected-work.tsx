@@ -22,12 +22,13 @@ export function SelectedWork() {
       const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
       gsap.fromTo(
         cards,
-        { autoAlpha: 0, y: 30 },
+        { autoAlpha: 0, y: 24, scale: 0.97 },
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.7,
-          stagger: 0.12,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.15,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sec,
