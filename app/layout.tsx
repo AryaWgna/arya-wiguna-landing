@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://aryawiguna.my.id";
+const SITE_URL = "https://arya-wiguna.my.id";
 
 export const metadata: Metadata = {
   title: {

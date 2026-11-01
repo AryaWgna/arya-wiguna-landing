@@ -53,4 +53,4 @@ npm run extract:content  # regenerasi lib/data + messages dari index.html lama
 
 ## Deploy
 
-Sama seperti sebelumnya: push ke `main` pada repo ini memicu GitHub Actions → `vercel --prod` (project `arya-wiguna`, domain `aryawiguna.my.id`). Tidak ada perubahan konfigurasi deployment.
+Sama seperti sebelumnya: push ke `main` pada repo ini memicu GitHub Actions → `vercel --prod` (project `arya-wiguna`, domain `arya-wiguna.my.id`). Tidak ada perubahan konfigurasi deployment.

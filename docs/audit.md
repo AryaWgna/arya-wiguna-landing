@@ -8,7 +8,7 @@ Tanggal: 2026-10-31 · Agent: Cline · Sumber: `index.html` lama (single-file, 1
 | --- | --- |
 | Stack | HTML + CSS + JS vanilla, Tailwind CDN, font Outfit + JetBrains Mono. Tanpa build step. |
 | Struktur | 1 file `index.html` + `assets/` (cv, projects, sertifikat). |
-| Deployment | Vercel (project `arya-wiguna`), GH Actions `deploy.yml` (push ke `main` → `vercel --prod`), domain `aryawiguna.my.id`. |
+| Deployment | Vercel (project `arya-wiguna`), GH Actions `deploy.yml` (push ke `main` → `vercel --prod`), domain `arya-wiguna.my.id`. |
 | Fitur | Dark/light mode (localStorage), toggle EN/ID (kamus 146+ key), splash boot, aurora blobs, meteor canvas, cursor glow, typewriter, contact form Web3Forms, CV dropdown (ATS + Kreatif). |
 | Konten | Hero, about (bio + stats), skills (6 grup, 34 chip), experience (3 entri), education (2 entri), projects (SIMARU, Digital Skyboard, StreamEly), 22 sertifikat (PDF+PNG), footer. |
 
