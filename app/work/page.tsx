@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <main className="pt-16">
-      <div className="container-x py-24 md:py-32">
+      <div className="container-x py-16 pb-24 md:py-20 md:pb-28">
         <p className="eyebrow mb-3">Work</p>
         <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           Selected <span className="text-navy">work</span>
