@@ -99,7 +99,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
             <img
               src={`/${project.thumb}`}
               alt={t(project.titleKey)}
-              className="aspect-video w-full object-cover"
+              className="w-full h-auto"
             />
           </div>
           {project.evidenceNote ? (
@@ -125,7 +125,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
                   src={`/${shot.src}`}
                   alt={shot.caption[lang]}
                   loading="lazy"
-                  className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
                 />
                 <figcaption className="px-4 py-3 text-sm text-muted">
                   {shot.caption[lang]}
