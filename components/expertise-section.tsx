@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { expertiseGroups } from "@/lib/data/expertise";
+import { TechIcon } from "@/components/tech-icon";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
 export function ExpertiseSection() {
@@ -95,8 +96,9 @@ export function ExpertiseSection() {
                   <span
                     key={item}
                     data-skill-chip
-                    className="rounded-full border border-border-line px-3 py-1 text-[13px] text-foreground/85 transition-colors hover:border-navy/60 hover:text-navy"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-1 text-[13px] text-foreground/85 transition-colors hover:border-navy/60 hover:text-navy"
                   >
+                    <TechIcon name={item} />
                     {item}
                   </span>
                 ))}
