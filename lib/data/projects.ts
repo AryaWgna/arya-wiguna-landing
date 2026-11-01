@@ -22,7 +22,7 @@ export type Project = {
   year?: string;
   chips: string[];
   stack: string[];
-  highlights: string[];
+  highlights: { en: string; id: string }[];
   roleNote?: { en: string; id: string };
   evidenceNote?: { en: string; id: string };
   screenshots: Screenshot[];
@@ -38,10 +38,22 @@ export const projects: Project[] = [
     chips: ["Flutter", "Dart", "Mobile"],
     stack: ["Flutter", "Dart", "Firebase Cloud Messaging (FCM)", "REST API"],
     highlights: [
-      "Pemindaian QR untuk inspeksi aset medis",
-      "Notifikasi push FCM — penanganan background & foreground custom",
-      "Manajemen token FCM otomatis (refresh & sinkronisasi server)",
-      "Halaman pengaturan notifikasi di dalam aplikasi",
+      {
+        en: "QR scanning to inspect medical assets",
+        id: "Pemindaian QR untuk inspeksi aset medis",
+      },
+      {
+        en: "FCM push notifications — custom background & in-app handling",
+        id: "Notifikasi push FCM — penanganan background & foreground custom",
+      },
+      {
+        en: "Automatic FCM token management (refresh & server sync)",
+        id: "Manajemen token FCM otomatis (refresh & sinkronisasi server)",
+      },
+      {
+        en: "In-app notification settings page",
+        id: "Halaman pengaturan notifikasi di dalam aplikasi",
+      },
     ],
     roleNote: {
       en: "Personal project — the implementation is visible across Arya's public commit history (71 commits).",
@@ -91,11 +103,26 @@ export const projects: Project[] = [
       "SweetAlert2",
     ],
     highlights: [
-      "Flight board real-time dengan auto-refresh setiap 30 detik",
-      "Status penerbangan: On Time, Delayed, Boarding, Gate Closed, Departed",
-      "Admin dashboard lengkap: CRUD penerbangan, maskapai, aset/promo",
-      "Promo slider 10 banner + audio announcement untuk boarding",
-      "Arsitektur microservices + reverse proxy Nginx via Docker",
+      {
+        en: "Real-time flight board with auto-refresh every 30 seconds",
+        id: "Flight board real-time dengan auto-refresh setiap 30 detik",
+      },
+      {
+        en: "Flight statuses: On Time, Delayed, Boarding, Gate Closed, Departed",
+        id: "Status penerbangan: On Time, Delayed, Boarding, Gate Closed, Departed",
+      },
+      {
+        en: "Full admin dashboard: CRUD flights, airlines, assets/promos",
+        id: "Admin dashboard lengkap: CRUD penerbangan, maskapai, aset/promo",
+      },
+      {
+        en: "Promo slider (10 banners) + audio announcement for boarding",
+        id: "Promo slider 10 banner + audio announcement untuk boarding",
+      },
+      {
+        en: "Microservices architecture + Nginx reverse proxy via Docker",
+        id: "Arsitektur microservices + reverse proxy Nginx via Docker",
+      },
     ],
     roleNote: {
       en: "Built as final coursework (UAS) for the Web Software Tools subject, per the repository README.",
@@ -145,11 +172,26 @@ export const projects: Project[] = [
       "PM2",
     ],
     highlights: [
-      "Bootstraps 15.000+ entri metadata saat startup (in-memory cache)",
-      "Fallback heuristik: metadata cast/crew TVmaze diproxy ke OMDB",
-      "Rekomendasi berbasis indeks Jaccard di sisi klien",
-      "Multi-server player: VidSrc, MultiEmbed, 2Embed",
-      "Watch history & bookmarks sinkron via localStorage",
+      {
+        en: "Bootstraps 15,000+ metadata entries at startup (in-memory cache)",
+        id: "Bootstraps 15.000+ entri metadata saat startup (in-memory cache)",
+      },
+      {
+        en: "Heuristic fallback: TVmaze cast/crew metadata proxied to OMDB",
+        id: "Fallback heuristik: metadata cast/crew TVmaze diproxy ke OMDB",
+      },
+      {
+        en: "Jaccard-index recommendations computed client-side",
+        id: "Rekomendasi berbasis indeks Jaccard di sisi klien",
+      },
+      {
+        en: "Multi-server player: VidSrc, MultiEmbed, 2Embed",
+        id: "Multi-server player: VidSrc, MultiEmbed, 2Embed",
+      },
+      {
+        en: "Watch history & bookmarks synced via localStorage",
+        id: "Watch history & bookmarks sinkron via localStorage",
+      },
     ],
     roleNote: {
       en: "Personal, self-hosted project — licensed for personal and educational use.",

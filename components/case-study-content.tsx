@@ -62,8 +62,8 @@ export function CaseStudyContent({ project }: { project: Project }) {
           </h2>
           <ul className="flex flex-col gap-3">
             {project.highlights.map((h) => (
-              <li key={h} className="flex gap-3 border-l border-blue pl-4 text-[15px] leading-relaxed text-foreground/90">
-                {h}
+              <li key={h.id} className="flex gap-3 border-l border-blue pl-4 text-[15px] leading-relaxed text-foreground/90">
+                {h[lang]}
               </li>
             ))}
           </ul>
