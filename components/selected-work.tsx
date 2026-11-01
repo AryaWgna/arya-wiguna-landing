@@ -18,66 +18,24 @@ export function SelectedWork() {
     if (!sec || !track || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Desktop: horizontal pinned scroll
-      ScrollTrigger.matchMedia({
-        "(min-width: 1024px)": () => {
-          const scrollAmount = track.scrollWidth - window.innerWidth;
-
-          gsap.to(track, {
-            x: -scrollAmount,
-            ease: "none",
-            scrollTrigger: {
-              trigger: sec,
-              pin: true,
-              scrub: 1,
-              end: () => `+=${scrollAmount}`,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          // Stagger cards: parallax + reveal as they enter
-          const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
-          cards.forEach((card) => {
-            gsap.fromTo(
-              card,
-              { autoAlpha: 0.3, scale: 0.92 },
-              {
-                autoAlpha: 1,
-                scale: 1,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: card,
-                  containerAnimation: gsap.getById?.("hScroll") || undefined,
-                  start: "left 85%",
-                  end: "left 40%",
-                  scrub: true,
-                  toggleActions: "play none none reverse",
-                },
-              }
-            );
-          });
-        },
-        // Mobile: stagger reveal (vertical)
-        "(max-width: 1023px)": () => {
-          const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
-          gsap.fromTo(
-            cards,
-            { autoAlpha: 0, y: 30 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.7,
-              stagger: 0.12,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: sec,
-                start: "top 80%",
-                once: true,
-              },
-            }
-          );
-        },
-      });
+      // Reveal + stagger kartu saat section masuk viewport (sekali main).
+      const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
+      gsap.fromTo(
+        cards,
+        { autoAlpha: 0, y: 30 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
     }, sec);
 
     return () => ctx.revert();
@@ -116,17 +74,16 @@ export function SelectedWork() {
           />
         </div>
 
-        {/* Mobile: vertical stack inside container */}
-        {/* Desktop: horizontal track controlled by GSAP */}
+        {/* Track horizontal native: swipe/geser di semua ukuran layar */}
         <div
           ref={trackRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-24 md:gap-6 md:px-8 md:pb-32 lg:snap-none lg:overflow-visible lg:gap-8 lg:px-16 lg:pb-0"
+          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-24 md:gap-6 md:px-8 md:pb-32 lg:gap-8 lg:px-16 lg:pb-28"
         >
           {projects.map((project) => (
             <article
               key={project.slug}
               data-project-card
-              className="flex w-[82vw] max-w-[420px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg lg:w-[480px] lg:max-w-none"
+              className="flex w-[min(430px,78vw)] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
             >
               <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
                 <img
