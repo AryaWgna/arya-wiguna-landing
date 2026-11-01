@@ -48,7 +48,7 @@ export function Header() {
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
-    const ids = ["about", "skills", "experience", "education", "certs", "contact"];
+    const ids = ["projects", "about", "skills", "experience", "education", "certs", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -65,7 +65,7 @@ export function Header() {
   }, []);
 
   const links = [
-    { href: "/work", hash: "", label: t("nav-proj") },
+    { href: "/#projects", hash: "projects", label: t("nav-proj") },
     { href: "/#about", hash: "about", label: t("nav-about") },
     { href: "/#experience", hash: "experience", label: t("nav-exp") },
     { href: "/#contact", hash: "contact", label: t("nav-contact") },

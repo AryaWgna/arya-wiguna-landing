@@ -12,7 +12,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
   return (
     <div className="container-x py-20 md:py-28">
       <Link
-        href="/work"
+        href="/#projects"
         className="font-mono text-sm text-muted transition-colors hover:text-foreground"
       >
         ← {id ? "Kembali ke karya" : "Back to work"}
