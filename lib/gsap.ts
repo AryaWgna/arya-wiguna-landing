@@ -2,6 +2,7 @@
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,8 +11,42 @@ export const isReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Refresh posisi trigger sekali setelah halaman selesai dimuat
-// (font/asset bisa menggeser layout).
+/* ── Lenis smooth scroll ────────────────────── */
+let lenisInstance: Lenis | null = null;
+
+export function initLenis(): Lenis | null {
+  if (typeof window === "undefined" || isReducedMotion()) return null;
+  if (lenisInstance) return lenisInstance;
+
+  lenisInstance = new Lenis({
+    lerp: 0.1,
+    smoothWheel: true,
+    wheelMultiplier: 1,
+  });
+
+  // Bridge Lenis → ScrollTrigger
+  lenisInstance.on("scroll", ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenisInstance?.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+
+  return lenisInstance;
+}
+
+export function destroyLenis() {
+  if (lenisInstance) {
+    lenisInstance.destroy();
+    lenisInstance = null;
+  }
+}
+
+export function getLenis(): Lenis | null {
+  return lenisInstance;
+}
+
+/* ── Refresh positions on load ──────────────── */
 if (typeof window !== "undefined") {
   window.addEventListener(
     "load",
@@ -20,6 +55,72 @@ if (typeof window !== "undefined") {
     },
     { once: true }
   );
+}
+
+/* ── Text splitting utility ─────────────────── */
+export function splitTextIntoSpans(
+  element: HTMLElement,
+  mode: "words" | "chars" = "words"
+): HTMLSpanElement[] {
+  const text = element.textContent || "";
+  element.textContent = "";
+  element.setAttribute("aria-label", text);
+
+  const units = mode === "chars" ? text.split("") : text.split(/(\s+)/);
+  const spans: HTMLSpanElement[] = [];
+
+  units.forEach((unit) => {
+    if (/^\s+$/.test(unit)) {
+      element.appendChild(document.createTextNode(unit));
+      return;
+    }
+
+    const wrapper = document.createElement("span");
+    wrapper.style.display = "inline-block";
+    wrapper.style.overflow = "hidden";
+    wrapper.style.verticalAlign = "top";
+
+    const inner = document.createElement("span");
+    inner.textContent = unit;
+    inner.style.display = "inline-block";
+    inner.style.willChange = "transform";
+    inner.setAttribute("aria-hidden", "true");
+
+    wrapper.appendChild(inner);
+    element.appendChild(wrapper);
+    spans.push(inner);
+  });
+
+  return spans;
+}
+
+/* ── Magnetic effect utility ────────────────── */
+export function createMagneticEffect(
+  el: HTMLElement,
+  strength: number = 0.3
+): () => void {
+  if (isReducedMotion()) return () => {};
+
+  const onMove = (e: MouseEvent) => {
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) * strength;
+    const dy = (e.clientY - cy) * strength;
+    gsap.to(el, { x: dx, y: dy, duration: 0.4, ease: "power3.out" });
+  };
+
+  const onLeave = () => {
+    gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
+  };
+
+  el.addEventListener("mousemove", onMove);
+  el.addEventListener("mouseleave", onLeave);
+
+  return () => {
+    el.removeEventListener("mousemove", onMove);
+    el.removeEventListener("mouseleave", onLeave);
+  };
 }
 
 export { gsap, ScrollTrigger };

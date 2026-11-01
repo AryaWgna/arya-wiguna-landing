@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang, useTheme } from "@/components/providers";
+import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
 
 function GitHubIcon() {
@@ -107,24 +108,28 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded p-2 text-muted transition-colors hover:text-foreground"
-            aria-label="GitHub"
-          >
-            <GitHubIcon />
-          </a>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded p-2 text-muted transition-colors hover:text-foreground"
-            aria-label="LinkedIn"
-          >
-            <LinkedInIcon />
-          </a>
+          <MagneticWrap strength={0.4}>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded p-2 text-muted transition-colors hover:text-foreground"
+              aria-label="GitHub"
+            >
+              <GitHubIcon />
+            </a>
+          </MagneticWrap>
+          <MagneticWrap strength={0.4}>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded p-2 text-muted transition-colors hover:text-foreground"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon />
+            </a>
+          </MagneticWrap>
 
           <button
             type="button"

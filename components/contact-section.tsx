@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useLayoutEffect, useRef, useState } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
+import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
+import { gsap, isReducedMotion } from "@/lib/gsap";
 
 const WEB3FORMS_KEY = "45d3352d-8005-48a8-b024-5840f0914273";
 
@@ -12,6 +14,56 @@ type Status = "idle" | "loading" | "success" | "error";
 export function ContactSection() {
   const { t, lang } = useLang();
   const [status, setStatus] = useState<Status>("idle");
+  const sectionRef = useRef<HTMLElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useLayoutEffect(() => {
+    const sec = sectionRef.current;
+    const form = formRef.current;
+    if (!sec || !form || isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Form reveal — slides up with a subtle scale
+      gsap.fromTo(
+        form,
+        { autoAlpha: 0, y: 40, scale: 0.97 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: form,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+
+      // Stagger form fields
+      const fields = form.querySelectorAll<HTMLElement>("[data-form-field]");
+      gsap.fromTo(
+        fields,
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: form,
+            start: "top 80%",
+            once: true,
+          },
+          delay: 0.3,
+        }
+      );
+    }, sec);
+
+    return () => ctx.revert();
+  }, []);
 
   const labels = {
     name: t("ct-name"),
@@ -56,7 +108,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="border-t border-border-line">
+    <section id="contact" ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <div className="mx-auto max-w-2xl">
           <SectionHeading
@@ -71,6 +123,7 @@ export function ContactSection() {
           />
 
           <form
+            ref={formRef}
             onSubmit={onSubmit}
             className="flex flex-col gap-5 rounded-2xl border border-border-line bg-background p-6 md:p-8"
           >
@@ -88,7 +141,7 @@ export function ContactSection() {
               autoComplete="off"
             />
 
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div data-form-field className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
                   {labels.name}
@@ -117,7 +170,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div>
+            <div data-form-field>
               <label htmlFor="project" className="mb-2 block text-sm font-medium text-foreground">
                 {labels.type}
               </label>
@@ -134,7 +187,7 @@ export function ContactSection() {
               </select>
             </div>
 
-            <div>
+            <div data-form-field>
               <label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
                 {labels.message}
               </label>
@@ -148,13 +201,15 @@ export function ContactSection() {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary justify-center" disabled={status === "loading"}>
-              {status === "loading"
-                ? lang === "id"
-                  ? "Mengirim…"
-                  : "Sending…"
-                : labels.send}
-            </button>
+            <MagneticWrap strength={0.2} className="w-full">
+              <button data-form-field type="submit" className="btn btn-primary w-full justify-center" disabled={status === "loading"}>
+                {status === "loading"
+                  ? lang === "id"
+                    ? "Mengirim…"
+                    : "Sending…"
+                  : labels.send}
+              </button>
+            </MagneticWrap>
 
             {status === "success" ? (
               <p

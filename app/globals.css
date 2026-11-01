@@ -160,3 +160,70 @@ section[id] {
   background: var(--navy-light);
   border-color: var(--navy-light);
 }
+
+/* ── Scroll progress bar ────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--navy));
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 100;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── Horizontal scroll section ──────────────── */
+.horizontal-section {
+  overflow: hidden;
+}
+.horizontal-track {
+  will-change: transform;
+}
+.horizontal-card {
+  flex-shrink: 0;
+}
+@media (min-width: 1024px) {
+  .horizontal-track {
+    display: flex;
+    gap: 2rem;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+  .horizontal-card {
+    width: 480px;
+  }
+}
+
+/* ── Parallax image wrapper ─────────────────── */
+.parallax-img-wrap {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+}
+.parallax-img-wrap img {
+  will-change: transform;
+}
+
+/* ── Lenis overrides ────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Stagger card animations ────────────────── */
+.stagger-card {
+  will-change: transform, opacity;
+}

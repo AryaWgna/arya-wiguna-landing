@@ -1,9 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { GsapReveal } from "@/components/gsap-reveal";
 import { education, experience, type TimelineEntry } from "@/lib/data/experience";
+import { gsap, isReducedMotion } from "@/lib/gsap";
 
 export function TimelineSection({
   kind,
@@ -12,6 +13,8 @@ export function TimelineSection({
 }) {
   const { t } = useLang();
   const items: TimelineEntry[] = kind === "experience" ? experience : education;
+  const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   const heading =
     kind === "experience"
@@ -34,19 +37,86 @@ export function TimelineSection({
           ),
         };
 
+  useLayoutEffect(() => {
+    const sec = sectionRef.current;
+    const line = lineRef.current;
+    if (!sec || !line || isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Animate the timeline line drawing
+      gsap.fromTo(
+        line,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: line,
+            start: "top 85%",
+            end: "bottom 30%",
+            scrub: 0.5,
+          },
+        }
+      );
+
+      // Stagger each timeline entry
+      const entries = sec.querySelectorAll<HTMLElement>("[data-timeline-item]");
+      gsap.fromTo(
+        entries,
+        { autoAlpha: 0, x: -30 },
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.7,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top 75%",
+            once: true,
+          },
+        }
+      );
+
+      // Animate dots
+      const dots = sec.querySelectorAll<HTMLElement>("[data-timeline-dot]");
+      gsap.fromTo(
+        dots,
+        { scale: 0, autoAlpha: 0 },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.4,
+          stagger: 0.15,
+          ease: "back.out(3)",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top 75%",
+            once: true,
+          },
+          delay: 0.2,
+        }
+      );
+    }, sec);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id={kind} className="border-t border-border-line">
+    <section id={kind} ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <SectionHeading eyebrow={heading.eyebrow} title={heading.title} />
-        <GsapReveal
-          as="ol"
-          className="relative border-l border-border-line pl-8"
-          stagger={0.12}
-          y={20}
-        >
+        <ol className="relative pl-8">
+          {/* Animated line */}
+          <div
+            ref={lineRef}
+            className="absolute left-0 top-0 bottom-0 w-px bg-border-line origin-top"
+            aria-hidden="true"
+          />
           {items.map((item) => (
-            <li key={item.id} data-reveal-item className="relative pb-12 last:pb-0">
+            <li key={item.id} data-timeline-item className="relative pb-12 last:pb-0">
               <span
+                data-timeline-dot
                 className="absolute -left-[41px] top-1.5 h-3 w-3 rounded-full border-2 border-blue bg-background"
                 aria-hidden="true"
               />
@@ -62,7 +132,7 @@ export function TimelineSection({
               </div>
             </li>
           ))}
-        </GsapReveal>
+        </ol>
       </div>
     </section>
   );

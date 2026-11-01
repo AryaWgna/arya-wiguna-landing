@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLang } from "@/components/providers";
 import { GsapReveal } from "@/components/gsap-reveal";
 import { profile } from "@/lib/data/profile";
-import { gsap, isReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
 const bios = {
   en: [
@@ -59,14 +59,17 @@ const stats = {
 
 export function AboutSection() {
   const { lang } = useLang();
+  const sectionRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
 
-  // Count-up angka statistik saat masuk layar
   useLayoutEffect(() => {
     const el = statsRef.current;
-    if (!el || isReducedMotion()) return;
+    const sec = sectionRef.current;
+    if (!el || !sec || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      // Count-up angka statistik
       el.querySelectorAll<HTMLElement>("[data-count]").forEach((num) => {
         const target = Number(num.dataset.count || "0");
         const obj = { val: 0 };
@@ -80,16 +83,55 @@ export function AboutSection() {
           },
         });
       });
-    }, el);
+
+      // Parallax pada portrait image
+      const imgWrap = imgRef.current;
+      if (imgWrap) {
+        const img = imgWrap.querySelector("img");
+        if (img) {
+          gsap.fromTo(
+            img,
+            { yPercent: -8, scale: 1.15 },
+            {
+              yPercent: 8,
+              scale: 1.15,
+              ease: "none",
+              scrollTrigger: {
+                trigger: imgWrap,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.5,
+              },
+            }
+          );
+        }
+      }
+
+      // Section heading slide in from left
+      const heading = sec.querySelector("[data-about-heading]");
+      if (heading) {
+        gsap.fromTo(
+          heading,
+          { autoAlpha: 0, x: -40 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: heading, start: "top 85%", once: true },
+          }
+        );
+      }
+    }, sec);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="about" className="border-t border-border-line">
+    <section id="about" ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <div className="grid gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+          <div data-about-heading className="lg:col-span-4">
             <p className="eyebrow mb-3">About</p>
             <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
               I build things for the{" "}
@@ -99,13 +141,13 @@ export function AboutSection() {
 
           <div className="lg:col-span-8">
             <div className="grid gap-10 md:grid-cols-[200px_1fr]">
-              <div className="relative">
+              <div ref={imgRef} className="parallax-img-wrap relative">
                 <Image
                   src={profile.portrait}
                   alt="Arya Wiguna"
                   width={200}
                   height={200}
-                  className="rounded-xl border border-border-line object-cover"
+                  className="w-full object-cover"
                 />
                 <div className="absolute -bottom-3 left-4 rounded-full border border-border-line bg-background px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-blue">
                   {lang === "id" ? "Tersedia untuk proyek" : "Available for hire"}

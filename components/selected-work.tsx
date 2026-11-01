@@ -1,60 +1,142 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { GsapReveal } from "@/components/gsap-reveal";
 import { projects } from "@/lib/data/projects";
+import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
 export function SelectedWork() {
   const { t, lang } = useLang();
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const sec = sectionRef.current;
+    const track = trackRef.current;
+    if (!sec || !track || isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Desktop: horizontal pinned scroll
+      ScrollTrigger.matchMedia({
+        "(min-width: 1024px)": () => {
+          const scrollAmount = track.scrollWidth - window.innerWidth;
+
+          gsap.to(track, {
+            x: -scrollAmount,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sec,
+              pin: true,
+              scrub: 1,
+              end: () => `+=${scrollAmount}`,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          // Stagger cards: parallax + reveal as they enter
+          const cards = track.querySelectorAll<HTMLElement>(".horizontal-card");
+          cards.forEach((card) => {
+            gsap.fromTo(
+              card,
+              { autoAlpha: 0.3, scale: 0.92 },
+              {
+                autoAlpha: 1,
+                scale: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: card,
+                  containerAnimation: gsap.getById?.("hScroll") || undefined,
+                  start: "left 85%",
+                  end: "left 40%",
+                  scrub: true,
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          });
+        },
+        // Mobile: stagger reveal (vertical)
+        "(max-width: 1023px)": () => {
+          const cards = track.querySelectorAll<HTMLElement>(".horizontal-card");
+          gsap.fromTo(
+            cards,
+            { autoAlpha: 0, y: 30 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: sec,
+                start: "top 80%",
+                once: true,
+              },
+            }
+          );
+        },
+      });
+    }, sec);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="projects" className="border-t border-border-line">
-      <div className="container-x py-24 md:py-32">
-        <SectionHeading
-          eyebrow={t("proj-tag")}
-          title={
-            <>
-              {t("proj-h1")}
-              <em className="not-italic text-navy">{t("proj-h2")}</em>
-            </>
-          }
-          intro={
-            <>
-              {t("proj-more")}
-              <a
-                href="https://github.com/AryaWgna"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-blue underline-offset-4 hover:underline"
-              >
-                GitHub
-              </a>
-              .
-            </>
-          }
-        />
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="horizontal-section border-t border-border-line"
+    >
+      <div className="lg:flex lg:h-screen lg:flex-col lg:justify-center">
+        <div className="container-x pt-24 pb-10 md:pt-32 lg:pt-0 lg:pb-10">
+          <SectionHeading
+            eyebrow={t("proj-tag")}
+            title={
+              <>
+                {t("proj-h1")}
+                <em className="not-italic text-navy">{t("proj-h2")}</em>
+              </>
+            }
+            intro={
+              <>
+                {t("proj-more")}
+                <a
+                  href="https://github.com/AryaWgna"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-blue underline-offset-4 hover:underline"
+                >
+                  GitHub
+                </a>
+                .
+              </>
+            }
+          />
+        </div>
 
-        <GsapReveal className="flex flex-col" stagger={0.1} y={22}>
+        {/* Mobile: vertical stack inside container */}
+        {/* Desktop: horizontal track controlled by GSAP */}
+        <div
+          ref={trackRef}
+          className="container-x flex flex-col gap-10 pb-24 md:pb-32 lg:container-none lg:pb-0"
+        >
           {projects.map((project) => (
             <article
               key={project.slug}
-              data-reveal-item
-              className="grid gap-6 border-t border-border-line py-10 first:border-t-0 first:pt-0 md:grid-cols-12 md:gap-10"
+              className="horizontal-card flex flex-col rounded-2xl border border-border-line bg-background overflow-hidden transition-shadow hover:shadow-lg"
             >
-              <div className="md:col-span-5">
-                <div className="overflow-hidden rounded-xl border border-border-line bg-surface">
-                  <img
-                    src={`/${project.thumb}`}
-                    alt={t(project.titleKey)}
-                    loading="lazy"
-                    className="aspect-[16/10] w-full object-cover"
-                  />
-                </div>
+              <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
+                <img
+                  src={`/${project.thumb}`}
+                  alt={t(project.titleKey)}
+                  loading="lazy"
+                  className="aspect-[16/10] w-full object-cover transition-transform duration-500 hover:scale-105"
+                />
               </div>
 
-              <div className="flex flex-col md:col-span-7">
+              <div className="flex flex-1 flex-col p-6">
                 <div className="flex flex-wrap gap-2">
                   {project.chips.map((chip) => (
                     <span
@@ -68,10 +150,10 @@ export function SelectedWork() {
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground">
                   {t(project.titleKey)}
                 </h3>
-                <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+                <p className="mt-3 max-w-2xl leading-relaxed text-muted line-clamp-3">
                   {t(project.summaryKey)}
                 </p>
-                <div className="mt-6 flex flex-wrap items-center gap-5">
+                <div className="mt-auto flex flex-wrap items-center gap-5 pt-6">
                   <Link
                     href={`/work/${project.slug}`}
                     className="font-mono text-sm font-medium text-blue transition-colors hover:text-navy-light"
@@ -92,7 +174,7 @@ export function SelectedWork() {
               </div>
             </article>
           ))}
-        </GsapReveal>
+        </div>
       </div>
     </section>
   );

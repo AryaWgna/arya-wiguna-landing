@@ -1,9 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { GsapReveal } from "@/components/gsap-reveal";
 import { certifications, type CertificationCategory } from "@/lib/data/certifications";
+import { gsap, isReducedMotion } from "@/lib/gsap";
 
 const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> = {
   dicoding: { en: "Dicoding Indonesia", id: "Dicoding Indonesia" },
@@ -16,14 +17,70 @@ const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> 
 export function CredentialsSection() {
   const { t, lang } = useLang();
   const id = lang === "id";
+  const sectionRef = useRef<HTMLElement>(null);
 
   const groups = (Object.keys(CATEGORY_LABEL) as CertificationCategory[]).map((category) => ({
     category,
     items: certifications.filter((c) => c.category === category),
   }));
 
+  useLayoutEffect(() => {
+    const sec = sectionRef.current;
+    if (!sec || isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Stagger each group's cards with 3D perspective tilt
+      const grids = sec.querySelectorAll<HTMLElement>("[data-cert-grid]");
+      grids.forEach((grid) => {
+        const cards = grid.querySelectorAll<HTMLElement>(".stagger-card");
+        gsap.fromTo(
+          cards,
+          { autoAlpha: 0, y: 50, rotateX: 10, scale: 0.9 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 0.65,
+            stagger: {
+              each: 0.08,
+              from: "start",
+            },
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: grid,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      });
+
+      // Animate category headings
+      const headings = sec.querySelectorAll<HTMLElement>("[data-cert-heading]");
+      gsap.fromTo(
+        headings,
+        { autoAlpha: 0, x: -20 },
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top 80%",
+            once: true,
+          },
+        }
+      );
+    }, sec);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="certs" className="border-t border-border-line">
+    <section id="certs" ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <SectionHeading
           eyebrow={id ? "Kredensial" : "Credentials"}
@@ -46,29 +103,31 @@ export function CredentialsSection() {
           {groups.map(({ category, items }) =>
             items.length === 0 ? null : (
               <section key={category}>
-                <h3 className="mb-6 flex items-baseline gap-3 font-mono text-sm font-semibold uppercase tracking-wider text-navy">
+                <h3
+                  data-cert-heading
+                  className="mb-6 flex items-baseline gap-3 font-mono text-sm font-semibold uppercase tracking-wider text-navy"
+                >
                   {CATEGORY_LABEL[category][lang]}
                   <span className="text-xs font-normal normal-case text-muted">
                     {items.length} · {id ? "diverifikasi" : "verified"}
                   </span>
                 </h3>
-                <GsapReveal
+                <div
+                  data-cert-grid
                   className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-                  stagger={0.06}
-                  y={20}
+                  style={{ perspective: "800px" }}
                 >
                   {items.map((cert) => (
                     <article
                       key={cert.slug}
-                      data-reveal-item
-                      className="group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-colors hover:border-navy/60"
+                      className="stagger-card group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-all duration-300 hover:border-navy/60 hover:shadow-lg"
                     >
                       <div className="aspect-[16/10] overflow-hidden bg-surface">
                         <img
                           src={`/${cert.img}`}
                           alt={cert.alt}
                           loading="lazy"
-                          className="h-full w-full object-cover object-top"
+                          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                       <div className="flex flex-1 flex-col gap-2 p-5">
@@ -112,7 +171,7 @@ export function CredentialsSection() {
                       </div>
                     </article>
                   ))}
-                </GsapReveal>
+                </div>
               </section>
             )
           )}
