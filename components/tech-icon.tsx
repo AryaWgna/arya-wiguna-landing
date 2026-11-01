@@ -73,7 +73,7 @@ export function normalizeTech(label: string): string {
   return "default";
 }
 
-const brand: Record<string, (props: IconProps) => React.ReactElement> = {
+const brand: Record<string, React.ElementType> = {
   flutter: SiFlutter,
   dart: SiDart,
   ts: SiTypescript,
@@ -104,7 +104,7 @@ const brand: Record<string, (props: IconProps) => React.ReactElement> = {
   pm2: SiPm2,
 };
 
-const fallback: Record<string, (props: IconProps) => React.ReactElement> = {
+const fallback: Record<string, React.ElementType> = {
   rn: ({ size = 13, ...p }) => (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
       <rect x="6.5" y="3" width="11" height="18" rx="2.2" />
