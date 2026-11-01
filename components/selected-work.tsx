@@ -74,16 +74,16 @@ export function SelectedWork() {
           />
         </div>
 
-        {/* Track horizontal native: swipe/geser di semua ukuran layar */}
+        {/* Grid maksimal 2 kolom; proyek berikutnya di bawah */}
         <div
           ref={trackRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-24 md:gap-6 md:px-8 md:pb-32 lg:gap-8 lg:px-16 lg:pb-28"
+          className="container-x grid gap-6 pb-24 md:gap-8 md:pb-32 sm:grid-cols-2"
         >
           {projects.map((project) => (
             <article
               key={project.slug}
               data-project-card
-              className="flex w-[min(430px,78vw)] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
+              className="flex flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
             >
               <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
                 <img
