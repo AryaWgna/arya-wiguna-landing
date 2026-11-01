@@ -129,8 +129,8 @@ export function AboutSection() {
 
   return (
     <section id="about" ref={sectionRef} className="border-t border-border-line">
-      <div className="container-x py-24 md:py-32">
-        <div className="grid gap-14 lg:grid-cols-12">
+      <div className="container-x py-16 md:py-24">
+        <div className="grid gap-12 md:gap-14 lg:grid-cols-12 lg:gap-8">
           <div data-about-heading className="lg:col-span-4">
             <p className="eyebrow mb-3">About</p>
             <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
@@ -139,47 +139,51 @@ export function AboutSection() {
             </h2>
           </div>
 
-          <div className="lg:col-span-8">
-            <div className="grid gap-10 md:grid-cols-[200px_1fr]">
-              <div ref={imgRef} className="parallax-img-wrap relative">
-                <Image
-                  src={profile.portrait}
-                  alt="Arya Wiguna"
-                  width={200}
-                  height={200}
-                  className="w-full object-cover"
-                />
-                <div className="absolute -bottom-3 left-4 rounded-full border border-border-line bg-background px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-blue">
-                  {lang === "id" ? "Tersedia untuk proyek" : "Available for hire"}
-                </div>
+          <div className="max-md:max-w-[280px] lg:col-span-3">
+            <div ref={imgRef} className="parallax-img-wrap relative aspect-[3/4] w-full">
+              <Image
+                src={profile.portrait}
+                alt="Arya Wiguna"
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 40vw, 80vw"
+                className="object-cover"
+              />
+              <div className="absolute bottom-4 left-4 z-10 rounded-full border border-border-line bg-background/95 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-blue backdrop-blur-sm">
+                {lang === "id" ? "Tersedia untuk proyek" : "Available for hire"}
               </div>
-
-              <GsapReveal className="flex flex-col gap-5" stagger={0.08} y={18}>
-                {bios[lang].map((p, i) => (
-                  <p key={i} data-reveal-item className="leading-relaxed text-foreground/90">
-                    {p}
-                  </p>
-                ))}
-                <div
-                  ref={statsRef}
-                  data-reveal-item
-                  className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4"
-                >
-                  {stats[lang].map((s) => (
-                    <div key={s.label} className="border-l border-border-line pl-3">
-                      <div
-                        data-count={s.value}
-                        className="font-mono text-2xl font-semibold text-navy"
-                      >
-                        {s.value}
-                      </div>
-                      <div className="mt-1 text-xs text-muted">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </GsapReveal>
             </div>
           </div>
+
+          <GsapReveal
+            className="flex flex-col gap-5 lg:col-span-5"
+            stagger={0.08}
+            y={18}
+          >
+            {bios[lang].map((p, i) => (
+              <p key={i} data-reveal-item className="leading-relaxed text-foreground/90">
+                {p}
+              </p>
+            ))}
+            <div
+              ref={statsRef}
+              data-reveal-item
+              className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 lg:grid-cols-2"
+            >
+              {stats[lang].map((s) => (
+                <div key={s.label} className="border-l border-border-line pl-4">
+                  <div
+                    data-count={s.value}
+                    className="font-mono text-3xl font-semibold leading-none text-navy"
+                  >
+                    {s.value}
+                  </div>
+                  <div className="mt-2 text-[11px] uppercase tracking-wide text-muted">
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GsapReveal>
         </div>
       </div>
     </section>
