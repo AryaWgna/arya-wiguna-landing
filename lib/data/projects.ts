@@ -44,12 +44,12 @@ export const projects: Project[] = [
       "Halaman pengaturan notifikasi di dalam aplikasi",
     ],
     roleNote: {
-      en: "Personal repository project — implementation is in Arya's public commit history (71 commits).",
-      id: "Proyek repo pribadi — implementasi ada di riwayat commit publik Arya (71 commit).",
+      en: "Personal project — the implementation is visible across Arya's public commit history (71 commits).",
+      id: "Proyek pribadi — implementasinya dapat dilihat di riwayat commit publik Arya (71 commit).",
     },
     evidenceNote: {
-      en: "Source code with the full Android/iOS/web scaffolding is public on GitHub. Screenshots of the running app are pending.",
-      id: "Kode sumber dengan scaffolding Android/iOS/web lengkap terbuka di GitHub. Screenshot aplikasi berjalan menyusul.",
+      en: "This project is fully open-source: the complete Flutter codebase (Android/iOS/web scaffolding) is available on GitHub, showing consistent progress on QR inspection, FCM push handling, and token management.",
+      id: "Proyek ini sepenuhnya open-source: codebase Flutter lengkap (scaffolding Android/iOS/web) tersedia di GitHub, menunjukkan progres konsisten pada inspeksi QR, penanganan notifikasi push FCM, dan manajemen token.",
     },
     screenshots: [
       {
@@ -98,12 +98,12 @@ export const projects: Project[] = [
       "Arsitektur microservices + reverse proxy Nginx via Docker",
     ],
     roleNote: {
-      en: "Built as coursework (UAS) for the Web Software Tools subject — per the repository README.",
-      id: "Dibuat untuk tugas UAS mata kuliah Web Software Tools — sesuai README repository.",
+      en: "Built as final coursework (UAS) for the Web Software Tools subject, per the repository README.",
+      id: "Dibuat sebagai tugas akhir (UAS) mata kuliah Web Software Tools, sesuai README repository.",
     },
     evidenceNote: {
-      en: "Changelog in the repo (v1.0.0 2026; v2.0.0 2026-01-12) documents the feature history.",
-      id: "Changelog di repo (v1.0.0 2026; v2.0.0 2026-01-12) mendokumentasikan riwayat fitur.",
+      en: "The repository includes a changelog documenting the release history (v1.0.0 in 2026; v2.0.0 on 2026-01-12), with feature milestones recorded across commits.",
+      id: "Repository mencakup changelog yang mendokumentasikan riwayat rilis (v1.0.0 tahun 2026; v2.0.0 pada 2026-01-12), dengan tonggak fitur tercatat di seluruh commit.",
     },
     screenshots: [
       {
@@ -152,12 +152,12 @@ export const projects: Project[] = [
       "Watch history & bookmarks sinkron via localStorage",
     ],
     roleNote: {
-      en: "Personal, self-hosted project — licensed for personal/educational use.",
-      id: "Proyek pribadi self-hosted — lisensi untuk penggunaan personal/edukasi.",
+      en: "Personal, self-hosted project — licensed for personal and educational use.",
+      id: "Proyek pribadi self-hosted — dilisensikan untuk penggunaan pribadi dan edukasi.",
     },
     evidenceNote: {
-      en: "Public demo is deployed to Vercel; full architecture is documented in the repo README.",
-      id: "Demo publik ter-deploy di Vercel; arsitektur lengkap terdokumentasi di README repo.",
+      en: "A live demo is deployed on Vercel, and the repository README documents the full architecture — Bun gateway, Elysia API, Svelte client, and the proxying strategy.",
+      id: "Demo live ter-deploy di Vercel, dan README repository mendokumentasikan arsitektur lengkap — gateway Bun, API Elysia, klien Svelte, serta strategi proxy.",
     },
     screenshots: [
       {
