@@ -15,8 +15,24 @@ type Status = "idle" | "loading" | "success" | "error";
 export function ContactSection() {
   const { t, lang } = useLang();
   const [status, setStatus] = useState<Status>("idle");
+  const [copied, setCopied] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = profile.email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
 
   useLayoutEffect(() => {
     const sec = sectionRef.current;
@@ -236,22 +252,24 @@ export function ContactSection() {
 
           <p className="mt-6 text-center font-mono text-xs text-muted">
             {labels.or}
-            <a
-              href={`mailto:${profile.email}?subject=${encodeURIComponent(
-                lang === "id" ? "Halo Arya — [proyek]" : "Hi Arya — [project]"
-              )}`}
+            <button
+              type="button"
+              onClick={copyEmail}
               className="text-blue underline-offset-4 hover:underline"
             >
-              {profile.email}
-            </a>
+              {copied
+                ? lang === "id"
+                  ? "Tersalin!"
+                  : "Copied!"
+                : profile.email}
+            </button>
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <a
-              href={`mailto:${profile.email}?subject=${encodeURIComponent(
-                lang === "id" ? "Halo Arya — [proyek]" : "Hi Arya — [project]"
-              )}`}
-              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+            <button
+              type="button"
+              onClick={copyEmail}
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 text-left transition-colors hover:border-navy/60"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -269,10 +287,16 @@ export function ContactSection() {
                 <path d="M3 7l9 6 9-6" />
               </svg>
               <span className="text-sm font-medium text-foreground">
-                {lang === "id" ? "Email" : "Email"}
+                {copied
+                  ? lang === "id"
+                    ? "Email tersalin ✓"
+                    : "Email copied ✓"
+                  : lang === "id"
+                    ? "Salin email"
+                    : "Copy email"}
               </span>
               <span className="text-[13px] text-muted">{profile.email}</span>
-            </a>
+            </button>
 
             <a
               href={profile.github}
