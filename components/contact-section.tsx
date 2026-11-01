@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
 import { gsap, isReducedMotion } from "@/lib/gsap";
+import { SiGithub } from "react-icons/si";
 
 const WEB3FORMS_KEY = "45d3352d-8005-48a8-b024-5840f0914273";
 
@@ -236,11 +237,81 @@ export function ContactSection() {
           <p className="mt-6 text-center font-mono text-xs text-muted">
             {labels.or}
             <a
-              href={`mailto:${profile.email}`}
+              href={`mailto:${profile.email}?subject=${encodeURIComponent(
+                lang === "id" ? "Halo Arya — [proyek]" : "Hi Arya — [project]"
+              )}`}
               className="text-blue underline-offset-4 hover:underline"
             >
               {profile.email}
             </a>
+          </p>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <a
+              href={`mailto:${profile.email}?subject=${encodeURIComponent(
+                lang === "id" ? "Halo Arya — [proyek]" : "Hi Arya — [project]"
+              )}`}
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-blue"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" />
+              </svg>
+              <span className="text-sm font-medium text-foreground">
+                {lang === "id" ? "Email" : "Email"}
+              </span>
+              <span className="text-[13px] text-muted">{profile.email}</span>
+            </a>
+
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+            >
+              <SiGithub size={18} className="text-blue" />
+              <span className="text-sm font-medium text-foreground">GitHub</span>
+              <span className="text-[13px] text-muted">github.com/AryaWgna</span>
+            </a>
+
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="currentColor"
+                className="text-blue"
+                aria-hidden="true"
+              >
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+              <span className="text-sm font-medium text-foreground">LinkedIn</span>
+              <span className="text-[13px] text-muted">
+                {lang === "id" ? "Profil profesional" : "Professional profile"}
+              </span>
+            </a>
+          </div>
+
+          <p className="mt-6 text-center text-sm text-muted">
+            {lang === "id"
+              ? "Indonesia (WIB) · Biasanya membalas dalam 1–2 hari kerja."
+              : "Indonesia (WIB) · Usually replies within 1–2 business days."}
           </p>
         </div>
       </div>

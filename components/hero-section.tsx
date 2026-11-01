@@ -170,9 +170,9 @@ export function HeroSection() {
                 <CvDropdown />
               </span>
               <MagneticWrap strength={0.25}>
-                <a data-hero-cta href={`mailto:${profile.email}`} className="btn">
+                <Link data-hero-cta href="/#contact" className="btn">
                   {getInTouch}
-                </a>
+                </Link>
               </MagneticWrap>
             </div>
           </div>
