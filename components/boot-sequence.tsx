@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import Hero3D from "@/components/hero-3d";
+import { useLang } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
   { en: "aryawgna v2.0.0", id: "aryawgna v2.0.0" },
@@ -13,19 +14,24 @@ const BOOT_LINES: { en: string; id: string }[] = [
 ];
 
 export function BootSequence() {
+  const { lang } = useLang();
+  // Tangkap bahasa saat mount pertama — boot hanya berjalan sekali per load penuh
+  const langRef = useRef(lang);
   const [phase, setPhase] = useState<"mounting" | "boot" | "done">("mounting");
   const [lines, setLines] = useState<string[]>([]);
 
   useEffect(() => {
-    // Skip: reduced-motion, atau sudah pernah boot di sesi ini
-    if (isReducedMotion() || sessionStorage.getItem("aw-booted")) {
+    // Hormati prefers-reduced-motion (aksesibilitas). Boot selalu tampil saat refresh.
+    if (isReducedMotion()) {
       setPhase("done");
       return;
     }
     setPhase("boot");
 
+    const locale = langRef.current === "id" ? "id" : "en";
+    const activeLines = BOOT_LINES.map((l) => (locale === "id" ? l.id : l.en));
+
     const finished = () => {
-      sessionStorage.setItem("aw-booted", "1");
       setPhase("done");
     };
 
@@ -37,9 +43,19 @@ export function BootSequence() {
       overlay = document.getElementById("boot-sequence");
       if (!overlay) return;
 
-      const idLines = BOOT_LINES.map((l) => l.id);
+      const idLines = activeLines;
       ctx = gsap.context(() => {
         setLines(idLines.slice(0, 1));
+        gsap.fromTo(
+          "#boot-3d",
+          { scale: 0.85, autoAlpha: 0, y: 12 },
+          { scale: 1, autoAlpha: 1, y: 0, duration: 0.9, ease: "power2.out" }
+        );
+        gsap.fromTo(
+          "#boot-scanline",
+          { yPercent: -120 },
+          { yPercent: 320, duration: 2.4, ease: "none", repeat: -1 }
+        );
         gsap.fromTo(
           "#boot-progress",
           { scaleX: 0 },
@@ -79,8 +95,17 @@ export function BootSequence() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
       aria-hidden="true"
     >
-      <div className="h-40 w-40">
+      <div id="boot-3d" className="relative h-40 w-40 opacity-0">
         <Hero3D />
+        {/* Scanline ala terminal boot */}
+        <div
+          id="boot-scanline"
+          className="pointer-events-none absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-blue/10 to-transparent"
+        />
+      </div>
+
+      <div className="absolute right-6 top-6 font-mono text-xs tracking-widest text-muted">
+        [{langRef.current === "id" ? "ID" : "EN"}]
       </div>
 
       <div className="mt-6 flex items-baseline gap-2 font-mono text-xl font-bold tracking-tight text-foreground">
@@ -102,10 +127,7 @@ export function BootSequence() {
 
       <button
         type="button"
-        onClick={() => {
-          sessionStorage.setItem("aw-booted", "1");
-          setPhase("done");
-        }}
+        onClick={() => setPhase("done")}
         className="absolute bottom-6 right-6 font-mono text-xs text-muted transition-colors hover:text-foreground"
       >
         skip →
