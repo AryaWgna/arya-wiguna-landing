@@ -58,7 +58,12 @@ export function GsapReveal({
       }
     );
 
-    const play = () => tween.play();
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      tween.play();
+    };
 
     const trigger = ScrollTrigger.create({
       trigger: el,
@@ -74,7 +79,12 @@ export function GsapReveal({
       requestAnimationFrame(play);
     }
 
+    // Jaring pengaman: jangan biarkan konten tetap tersembunyi
+    // (mis. font/asset bergeser setelah trigger gagal menyala).
+    const fallback = window.setTimeout(play, 1500);
+
     return () => {
+      window.clearTimeout(fallback);
       trigger.kill();
       tween.kill();
     };

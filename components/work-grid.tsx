@@ -35,12 +35,12 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
       data-reveal-item
       className="group grid overflow-hidden rounded-2xl border border-border-line bg-background transition-colors hover:border-navy/60 md:grid-cols-12"
     >
-      <div className="overflow-hidden bg-surface md:col-span-6">
+      <div className="overflow-hidden bg-surface md:col-span-6 md:min-h-[380px]">
         <img
           src={`/${project.thumb}`}
           alt={t(project.titleKey)}
           loading="lazy"
-          className="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] md:aspect-auto"
+          className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] md:aspect-[4/3] md:h-full"
         />
       </div>
 
