@@ -6,6 +6,11 @@
  * Hanya data yang terbukti dari repo yang dicantumkan. Tidak ada metrik
  * dibuat-buat (jumlah user, dampak, dll).
  */
+export type Screenshot = {
+  src: string;
+  caption: { en: string; id: string };
+};
+
 export type Project = {
   slug: string;
   titleKey: string;
@@ -20,6 +25,7 @@ export type Project = {
   highlights: string[];
   roleNote?: { en: string; id: string };
   evidenceNote?: { en: string; id: string };
+  screenshots: Screenshot[];
 };
 
 export const projects: Project[] = [
@@ -45,6 +51,28 @@ export const projects: Project[] = [
       en: "Source code with the full Android/iOS/web scaffolding is public on GitHub. Screenshots of the running app are pending.",
       id: "Kode sumber dengan scaffolding Android/iOS/web lengkap terbuka di GitHub. Screenshot aplikasi berjalan menyusul.",
     },
+    screenshots: [
+      {
+        src: "assets/projects/simaru-home.jpg",
+        caption: { en: "Main dashboard", id: "Dashboard utama" },
+      },
+      {
+        src: "assets/projects/simaru-stock.jpg",
+        caption: { en: "Medical asset stock opname", id: "Stock opname aset medis" },
+      },
+      {
+        src: "assets/projects/simaru-complain.jpg",
+        caption: { en: "Complaint reporting", id: "Pelaporan keluhan" },
+      },
+      {
+        src: "assets/projects/simaru-notif.jpg",
+        caption: { en: "Push notifications & settings", id: "Notifikasi push & pengaturan" },
+      },
+      {
+        src: "assets/projects/simaru-login.jpg",
+        caption: { en: "Login screen", id: "Halaman masuk" },
+      },
+    ],
   },
   {
     slug: "digital-skyboard-announcement",
@@ -77,6 +105,28 @@ export const projects: Project[] = [
       en: "Changelog in the repo (v1.0.0 2026; v2.0.0 2026-01-12) documents the feature history.",
       id: "Changelog di repo (v1.0.0 2026; v2.0.0 2026-01-12) mendokumentasikan riwayat fitur.",
     },
+    screenshots: [
+      {
+        src: "assets/projects/skyboard-main.jpg",
+        caption: { en: "Public flight board", id: "Papan penerbangan publik" },
+      },
+      {
+        src: "assets/projects/skyboard-boarding.jpg",
+        caption: { en: "Boarding status filter", id: "Filter status boarding" },
+      },
+      {
+        src: "assets/projects/skyboard-promo.jpg",
+        caption: { en: "Promo slider", id: "Slider promo" },
+      },
+      {
+        src: "assets/projects/skyboard-admin.jpg",
+        caption: { en: "Admin dashboard", id: "Dashboard admin" },
+      },
+      {
+        src: "assets/projects/skyboard-addflight.jpg",
+        caption: { en: "Add flight modal", id: "Modal tambah penerbangan" },
+      },
+    ],
   },
   {
     slug: "streamely",
@@ -109,5 +159,27 @@ export const projects: Project[] = [
       en: "Public demo is deployed to Vercel; full architecture is documented in the repo README.",
       id: "Demo publik ter-deploy di Vercel; arsitektur lengkap terdokumentasi di README repo.",
     },
+    screenshots: [
+      {
+        src: "assets/projects/streamely-home.jpg",
+        caption: { en: "Home & trending", id: "Beranda & trending" },
+      },
+      {
+        src: "assets/projects/streamely-explore.jpg",
+        caption: { en: "Explore grid", id: "Jelajahi grid" },
+      },
+      {
+        src: "assets/projects/streamely-search.jpg",
+        caption: { en: "Search results", id: "Hasil pencarian" },
+      },
+      {
+        src: "assets/projects/streamely-detail.jpg",
+        caption: { en: "Watch detail", id: "Detail tontonan" },
+      },
+      {
+        src: "assets/projects/streamely-player.jpg",
+        caption: { en: "Video player", id: "Pemutar video" },
+      },
+    ],
   },
 ];

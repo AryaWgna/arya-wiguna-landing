@@ -109,6 +109,32 @@ export function CaseStudyContent({ project }: { project: Project }) {
           ) : null}
         </div>
       </div>
+
+      {project.screenshots.length > 0 ? (
+        <div className="mt-16">
+          <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
+            {id ? "Tangkapan layar" : "Screenshots"}
+          </h2>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {project.screenshots.map((shot) => (
+              <figure
+                key={shot.src}
+                className="group overflow-hidden rounded-xl border border-border-line bg-surface"
+              >
+                <img
+                  src={`/${shot.src}`}
+                  alt={shot.caption[lang]}
+                  loading="lazy"
+                  className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+                <figcaption className="px-4 py-3 text-sm text-muted">
+                  {shot.caption[lang]}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
