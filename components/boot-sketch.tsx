@@ -15,8 +15,6 @@ import { isReducedMotion } from "@/lib/gsap";
  */
 
 const TEXT = "ARYA WIGUNA";
-const LETTER_DELAY = 0.16;
-const LETTER_DURATION = 0.7;
 const GAP = 0.22;
 const SPACE_ADV = 0.62;
 
@@ -64,6 +62,7 @@ export function BootSketch() {
       group: THREE.Group;
       front: THREE.MeshStandardMaterial;
       back: THREE.MeshStandardMaterial;
+      targetX: number;
     };
     const letters: Letter[] = [];
 
@@ -114,13 +113,16 @@ export function BootSketch() {
         g.add(frontMesh, backMesh);
         g.position.x = cursor + w / 2;
         cursor += w + GAP;
-        letters.push({ group: g, front, back });
+        letters.push({ group: g, front, back, targetX: 0 });
         lettersRoot.add(g);
       }
 
       if (letters.length > 0) {
         const mid = (cursor - GAP) / 2;
-        for (const l of letters) l.group.position.x -= mid;
+        for (const l of letters) {
+          l.targetX = l.group.position.x - mid;
+          l.group.position.x = 0; // semua mulai dari tengah
+        }
       }
 
       const fit = () => {
@@ -152,18 +154,19 @@ export function BootSketch() {
 
       const renderFrame = (t: number) => {
         letters.forEach((l, i) => {
-          const start = i * LETTER_DELAY;
-          const k = Math.min(Math.max((t - start) / LETTER_DURATION, 0), 1);
-          const e = k * k * (3 - 2 * k); // smoothstep
-          l.front.opacity = e;
-          l.back.opacity = 0.5 * e;
-          l.group.position.y = (1 - e) * 0.35;
+          // Fase 1 — muncul dulu mengumpul di tengah
+          const aK = Math.min(Math.max((t - 0.05) / 0.5, 0), 1);
+          const aE = aK * aK * (3 - 2 * aK);
+          l.front.opacity = aE;
+          l.back.opacity = 0.5 * aE;
+          // Fase 2 — masing-masing bergerak ke samping
+          const mStart = 0.55 + i * 0.09;
+          const mK = Math.min(Math.max((t - mStart) / 0.9, 0), 1);
+          const mE = 1 - Math.pow(1 - mK, 3); // power3.out
+          l.group.position.x = l.targetX * mE;
+          l.group.scale.setScalar(0.85 + 0.15 * mE);
+          l.group.rotation.y = (1 - mE) * 0.5;
         });
-        // Push-in sinematik: kamera mendekat pelan, sekali jalan
-        const push = Math.min(Math.max(t / 3, 0), 1);
-        const easePush = push * push * (3 - 2 * push);
-        camera.position.z = 8 - easePush * 1.2;
-        camera.lookAt(0, 0, 0);
         // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
         lettersRoot.rotation.y = (mx - 0.5) * 0.6;
         lettersRoot.rotation.x = 0.22 + (my - 0.5) * 0.35;
