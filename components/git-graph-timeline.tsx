@@ -90,6 +90,7 @@ export function GitGraphTimeline() {
                     setActiveIdx(idx);
                     playGlitch("click");
                   }}
+                  onPointerEnter={() => setActiveIdx(idx)}
                   className={`flex items-start gap-3 rounded-lg border p-3 text-left transition-all ${
                     isSelected
                       ? "border-navy bg-navy text-white shadow-md"
