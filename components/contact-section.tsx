@@ -291,9 +291,7 @@ export function ContactSection() {
                   ? lang === "id"
                     ? "Email tersalin ✓"
                     : "Email copied ✓"
-                  : lang === "id"
-                    ? "Salin email"
-                    : "Copy email"}
+                  : "Email"}
               </span>
               <span className="text-[13px] text-muted">{profile.email}</span>
             </button>
@@ -327,7 +325,7 @@ export function ContactSection() {
               </svg>
               <span className="text-sm font-medium text-foreground">LinkedIn</span>
               <span className="text-[13px] text-muted">
-                {lang === "id" ? "Profil profesional" : "Professional profile"}
+                {lang === "id" ? "Tautan LinkedIn" : "LinkedIn link"}
               </span>
             </a>
           </div>
