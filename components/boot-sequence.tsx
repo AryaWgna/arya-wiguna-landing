@@ -25,7 +25,7 @@ export function BootSequence() {
 
     let overlay: HTMLElement | null = null;
     let ctx: gsap.Context | null = null;
-    const total = 2600;
+    const total = 3500;
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
@@ -78,7 +78,7 @@ export function BootSequence() {
     >
       <div
         id="boot-visual"
-        className="relative aspect-square w-[min(62vw,420px)] opacity-0"
+        className="relative h-32 w-[min(94vw,760px)] opacity-0 md:h-40"
       >
         <BootSketch />
       </div>
