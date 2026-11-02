@@ -185,7 +185,7 @@ export function HeroSection() {
           <div data-hero-visual className="lg:col-span-5">
             <HeroArt paused={bootActive} />
             <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
-              {lang === "id" ? "hening, dalam orbit." : "stillness, in orbit."}
+              {lang === "id" ? "tata surya kecil." : "a small solar system."}
             </p>
           </div>
         </div>

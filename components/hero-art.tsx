@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { isReducedMotion } from "@/lib/gsap";
 
 /**
- * Sketsa tangan asli (native Canvas 2D) — goresan orbit pendek yang tidak
- * sempurna, seperti doodle pena di tepi kertas. Bukan geometri presisi:
- * setiap goresan punya jitter sudut, sag radial, dan tekanan garis yang
- * bervariasi. Seed acak per load → setiap kunjungan unik.
+ * Solar system mini yang tenang (native Canvas 2D) — matahari kecil di
+ * pusat dengan lingkaran orbit tipis, planet-planet mengorbit pelan.
+ * Unik per kunjungan: jumlah planet, ukuran, fase awal, dan laju orbit
+ * diacak dengan seed per load.
  */
 export default function HeroArt({ paused = false }: { paused?: boolean }) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -35,11 +35,21 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
 
-    // Komposisi minimalis — unik per kunjungan
-    const ringCount = 2 + Math.floor(rng() * 2); // 2–3 cincin
+    // Tata surya mini — unik per kunjungan
+    const planetCount = 3 + Math.floor(rng() * 2); // 3–4 planet
     const paletteShift = (rng() - 0.5) * 0.06;
-    const drift = rng() * Math.PI * 2;
-    const dotRadius = 3 + rng() * 1.5;
+    const sunRadius = 4 + rng() * 1.5;
+    const planets = Array.from({ length: planetCount }, (_, i) => {
+      const orbit = 0.2 + i * 0.19 + rng() * 0.03;
+      return {
+        orbit, // pecahan dari R
+        size: 0.035 + rng() * 0.03, // pecahan dari R
+        speed: (0.28 + rng() * 0.22) / Math.sqrt(orbit),
+        phase: rng() * Math.PI * 2,
+        blue: i === planetCount - 1,
+        ringed: i === 1 && rng() > 0.5, // satu planet boleh bercincin
+      };
+    });
 
     const NAVY = "rgba(23, 42, 69, ALPHA)";
     const BLUE = "rgba(71, 120, 169, ALPHA)";
@@ -70,42 +80,55 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       const oy = (ty - 0.5) * 24;
       const cx = w / 2 + ox;
       const cy = h / 2 + oy;
-      const R = Math.min(w, h) * 0.4;
-      const rot = t * 0.025 + drift;
+      const R = Math.min(w, h) * 0.42;
 
       ctx.lineCap = "round";
 
-      // Cincin tipis sempurna — minimalis
-      ctx.lineWidth = 1.1;
-      for (let i = 0; i < ringCount; i++) {
-        const rr = R * (0.34 + i * 0.22) * (1 + paletteShift);
-        const col =
-          i === ringCount - 1 ? BLUE.replace("ALPHA", "52") : NAVY.replace("ALPHA", "38");
-        ctx.strokeStyle = col;
+      // Matahari — inti navy + halo biru lembut
+      ctx.fillStyle = NAVY.replace("ALPHA", "230");
+      ctx.beginPath();
+      ctx.arc(cx, cy, sunRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = BLUE.replace("ALPHA", "60");
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, sunRadius * 2.2, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Orbit tipis + planet
+      for (let i = 0; i < planets.length; i++) {
+        const p = planets[i];
+        const rr = R * p.orbit * (1 + paletteShift);
+
+        ctx.strokeStyle = p.blue
+          ? BLUE.replace("ALPHA", "46")
+          : NAVY.replace("ALPHA", "34");
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(cx, cy, rr, 0, Math.PI * 2);
         ctx.stroke();
+
+        const th = p.phase + t * p.speed;
+        const px = cx + Math.cos(th) * rr;
+        const py = cy + Math.sin(th) * rr;
+        const size = Math.max(2, R * p.size);
+
+        if (p.ringed) {
+          ctx.strokeStyle = NAVY.replace("ALPHA", "150");
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.ellipse(px, py, size * 2.1, size * 0.7, th + 0.4, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        ctx.fillStyle = p.blue
+          ? BLUE.replace("ALPHA", "200")
+          : NAVY.replace("ALPHA", "210");
+        ctx.beginPath();
+        ctx.arc(px, py, size, 0, Math.PI * 2);
+        ctx.fill();
       }
-
-      // Titik aksen — mengorbit pelan di cincin terluar
-      const outerR = R * (0.34 + (ringCount - 1) * 0.22) * (1 + paletteShift);
-      ctx.fillStyle = NAVY.replace("ALPHA", "210");
-      ctx.beginPath();
-      ctx.arc(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR, dotRadius, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Titik kecil kedua di cincin dalam (aksen biru)
-      const innerR = R * 0.34 * (1 + paletteShift);
-      ctx.fillStyle = BLUE.replace("ALPHA", "120");
-      ctx.beginPath();
-      ctx.arc(
-        cx + Math.cos(rot + 2.1) * innerR,
-        cy + Math.sin(rot + 2.1) * innerR,
-        dotRadius * 0.65,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
     };
 
     const loop = () => {
