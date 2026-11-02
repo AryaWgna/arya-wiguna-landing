@@ -117,10 +117,6 @@ export function BootSequence() {
         [{langRef.current === "id" ? "ID" : "EN"}]
       </div>
 
-      <div className="mt-6 flex items-baseline gap-2 font-mono text-xl font-bold tracking-tight text-foreground">
-        AW<span className="text-blue">.</span>
-      </div>
-
       <div className="mt-5 flex min-h-[96px] flex-col items-center gap-1.5 font-mono text-xs text-muted">
         {lines.map((line, i) => (
           <div key={i} className="flex items-center gap-2">
