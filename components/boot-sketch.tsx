@@ -59,12 +59,12 @@ const LETTERS: Record<string, Seg[]> = {
 const SPELLING = "ARYA WIGUNA";
 const SX = 46; // lebar 1 unit huruf (px)
 const SY = 108; // tinggi 1 unit huruf (px)
-const X0 = 48; // margin kiri agar komposisi di tengah
+const X0 = 54; // margin kiri agar komposisi di tengah
 const Y0 = 6; // margin atas
-const ADV = 54; // jarak antar huruf (> SX agar huruf tidak nyatu)
-const SPACE_ADV = 76; // jarak antar kata
+const ADV = 57; // jarak antar huruf (> SX agar huruf tidak nyatu)
+const SPACE_ADV = 80; // jarak antar kata
 
-/** Susun path absolut "ARYA WIGUNA" dalam viewBox 660×120. */
+/** Susun path absolut "ARYA WIGUNA" dalam viewBox 700×120. */
 const DRAW_PATHS: string[] = (() => {
   const paths: string[] = [];
   let x = X0;
@@ -134,7 +134,7 @@ export function BootSketch() {
   return (
     <svg
       ref={svgRef}
-      viewBox="0 0 660 120"
+      viewBox="0 0 700 120"
       className="h-full w-full"
       aria-hidden="true"
       fill="none"
