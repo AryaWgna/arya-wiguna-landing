@@ -6,7 +6,7 @@ import Hero3D from "@/components/hero-3d";
 import { useLang, useBoot } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
-  { en: "aryawgna v2.0.0", id: "aryawgna v2.0.0" },
+  { en: "aryawgna", id: "aryawgna" },
   { en: "initializing portfolio…", id: "menginisialisasi portfolio…" },
   { en: "loading geometries…", id: "memuat geometri…" },
   { en: "mounting 3D scene…", id: "memasang scene 3D…" },
