@@ -7,9 +7,9 @@ import { useLang, useBoot } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
   { en: "arya wiguna", id: "arya wiguna" },
-  { en: "dipping pen in ink…", id: "mencelupkan pena ke tinta…" },
-  { en: "sketching name by hand…", id: "menggoreskan nama dengan tangan…" },
-  { en: "letting ink dry…", id: "menunggu tinta kering…" },
+  { en: "stillness…", id: "hening…" },
+  { en: "balance…", id: "keseimbangan…" },
+  { en: "space…", id: "ruang…" },
   { en: "ready.", id: "siap." },
 ];
 
@@ -106,11 +106,6 @@ export function BootSequence() {
     >
       <div id="boot-3d" className="relative h-20 w-64 opacity-0 md:h-24 md:w-[400px]">
         <BootSketch />
-        {/* Scanline ala terminal boot */}
-        <div
-          id="boot-scanline"
-          className="pointer-events-none absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-blue/10 to-transparent"
-        />
       </div>
 
       <div className="absolute right-6 top-6 font-mono text-xs tracking-widest text-muted">

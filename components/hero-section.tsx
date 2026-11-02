@@ -185,7 +185,7 @@ export function HeroSection() {
           <div data-hero-visual className="lg:col-span-5" style={{ perspective: "800px" }}>
             <HeroArt paused={bootActive} />
             <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
-              {lang === "id" ? "sketsa tangan — unik setiap kunjungan" : "hand-drawn sketch — unique per visit"}
+              {lang === "id" ? "studi minimalis — unik setiap kunjungan" : "minimal study — unique per visit"}
             </p>
           </div>
         </div>

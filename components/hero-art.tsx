@@ -35,12 +35,11 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
 
-    // Parameter "tangan" unik per kunjungan
-    const ringCount = 3 + Math.floor(rng() * 2);
-    const strokeCount = 20 + Math.floor(rng() * 12);
+    // Komposisi minimalis — unik per kunjungan
+    const ringCount = 2 + Math.floor(rng() * 2); // 2–3 cincin
+    const paletteShift = (rng() - 0.5) * 0.06;
     const drift = rng() * Math.PI * 2;
-    const breath = 0.012 + rng() * 0.02;
-    const skew = (rng() - 0.5) * 0.08;
+    const dotRadius = 3 + rng() * 1.5;
 
     const NAVY = "rgba(23, 42, 69, ALPHA)";
     const BLUE = "rgba(71, 120, 169, ALPHA)";
@@ -67,60 +66,46 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       ctx.clearRect(0, 0, w, h);
 
       const t = reduced ? 0 : performance.now() / 1000;
-      const ox = (tx - 0.5) * 36;
-      const oy = (ty - 0.5) * 36;
+      const ox = (tx - 0.5) * 24;
+      const oy = (ty - 0.5) * 24;
       const cx = w / 2 + ox;
       const cy = h / 2 + oy;
-      const R = Math.min(w, h) * 0.44;
-      const rot = t * 0.02 + drift;
-      const scale = 1 + Math.sin(t * 0.5) * breath;
+      const R = Math.min(w, h) * 0.4;
+      const rot = t * 0.025 + drift;
 
       ctx.lineCap = "round";
-      ctx.lineJoin = "round";
 
-      // Doodle orbit: goresan pendek yang saling tumpang tindih
-      for (let i = 0; i < strokeCount; i++) {
-        const ring = i % ringCount;
-        const radius = R * (0.55 + (ring / Math.max(ringCount - 1, 1)) * 0.32);
-        const a0 = rng() * Math.PI * 2;
-        const span = 0.5 + rng() * 1.1;
-        const sag = 0.018 + rng() * 0.03;
-        const alpha = 26 + rng() * 34;
-        const col = rng() > 0.5 ? NAVY : BLUE;
-        const lw = 0.9 + rng() * 0.9;
-        const wob = (rng() - 0.5) * 4;
-
-        ctx.strokeStyle = col.replace("ALPHA", String(alpha));
-        ctx.lineWidth = lw;
+      // Cincin tipis sempurna — minimalis
+      ctx.lineWidth = 1.1;
+      for (let i = 0; i < ringCount; i++) {
+        const rr = R * (0.34 + i * 0.22) * (1 + paletteShift);
+        const col =
+          i === ringCount - 1 ? BLUE.replace("ALPHA", "52") : NAVY.replace("ALPHA", "38");
+        ctx.strokeStyle = col;
         ctx.beginPath();
-        const steps = 9;
-        for (let k = 0; k <= steps; k++) {
-          const a = a0 + (k / steps) * span + rot;
-          const rr = radius + Math.sin(a * 2.2 + i) * sag * radius + wob;
-          const px = cx + Math.cos(a) * rr * scale + Math.sin(a * 3 + i) * skew * R * 0.2;
-          const py = cy + Math.sin(a) * rr * scale;
-          if (k === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        }
+        ctx.arc(cx, cy, rr, 0, Math.PI * 2);
         ctx.stroke();
       }
 
-      // Serpihan pena: goresan pendek acak di sekitar gambar
-      const ticks = 5 + Math.floor(rng() * 5);
-      for (let i = 0; i < ticks; i++) {
-        const a = rng() * Math.PI * 2 + rot;
-        const rr = R * (0.98 + rng() * 0.3);
-        const px = cx + Math.cos(a) * rr;
-        const py = cy + Math.sin(a) * rr;
-        const len = 5 + rng() * 9;
-        const tang = a + Math.PI / 2 + (rng() - 0.5) * 0.5;
-        ctx.strokeStyle = BLUE.replace("ALPHA", String(24 + rng() * 26));
-        ctx.lineWidth = 0.8 + rng() * 0.6;
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(px + Math.cos(tang) * len, py + Math.sin(tang) * len);
-        ctx.stroke();
-      }
+      // Titik aksen — mengorbit pelan di cincin terluar
+      const outerR = R * (0.34 + (ringCount - 1) * 0.22) * (1 + paletteShift);
+      ctx.fillStyle = NAVY.replace("ALPHA", "210");
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR, dotRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Titik kecil kedua di cincin dalam (aksen biru)
+      const innerR = R * 0.34 * (1 + paletteShift);
+      ctx.fillStyle = BLUE.replace("ALPHA", "120");
+      ctx.beginPath();
+      ctx.arc(
+        cx + Math.cos(rot + 2.1) * innerR,
+        cy + Math.sin(rot + 2.1) * innerR,
+        dotRadius * 0.65,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
     };
 
     const loop = () => {
