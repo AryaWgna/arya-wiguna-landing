@@ -35,9 +35,13 @@ function getVisitorId(): string {
   }
 }
 
+const PRESENCE_API = "/api/presence";
+// Cache-busting: pastikan tiap permintaan sampai ke origin (bukan cache lama).
+const bustCache = () => `?_ts=${Date.now()}`;
+
 async function sendHeartbeat(visitorId: string): Promise<number | null> {
   try {
-    const res = await fetch("/api/presence", {
+    const res = await fetch(`${PRESENCE_API}${bustCache()}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ visitorId }),
@@ -53,7 +57,7 @@ async function sendHeartbeat(visitorId: string): Promise<number | null> {
 
 async function fetchOnline(): Promise<number | null> {
   try {
-    const res = await fetch("/api/presence", { cache: "no-store" });
+    const res = await fetch(`${PRESENCE_API}${bustCache()}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     return typeof data.online === "number" ? data.online : null;

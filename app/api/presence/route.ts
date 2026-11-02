@@ -17,12 +17,14 @@ async function currentOnline(): Promise<number> {
   return getPresenceStore().countActive();
 }
 
+const NO_STORE_HEADERS = { "Cache-Control": "no-store, max-age=0" };
+
 export async function GET() {
   try {
     const online = await currentOnline();
-    return NextResponse.json({ online });
+    return NextResponse.json({ online }, { headers: NO_STORE_HEADERS });
   } catch {
-    return NextResponse.json({ online: 0 }, { status: 503 });
+    return NextResponse.json({ online: 0 }, { status: 503, headers: NO_STORE_HEADERS });
   }
 }
 
@@ -41,8 +43,8 @@ export async function POST(request: Request) {
     }
 
     await getPresenceStore().heartbeat(visitorId);
-    return NextResponse.json({ online: await currentOnline() });
+    return NextResponse.json({ online: await currentOnline() }, { headers: NO_STORE_HEADERS });
   } catch {
-    return NextResponse.json({ online: 0 }, { status: 503 });
+    return NextResponse.json({ online: 0 }, { status: 503, headers: NO_STORE_HEADERS });
   }
 }
