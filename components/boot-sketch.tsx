@@ -4,32 +4,24 @@ import { useEffect, useRef } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
 /**
- * Boot sketch — monogram "AW." (Arya Wiguna) digambar tangan (SVG + GSAP).
- * Setiap garis digambar dua kali dengan offset tipis (efek tinta/pensil),
- * goresan punya ritme stagger sehingga terasa dibuat manusia, bukan render 3D.
+ * Boot sketch — monogram "AW." (Arya Wiguna), satu garis bersih per tarikan,
+ * dikomposisi di tengah kanvas (SVG + GSAP draw-on).
  */
 const DRAW_PATHS = [
   // ── Huruf "A" ───────────────────────────────────────────
   // Kaki kiri
-  "M42 112 L70 44",
-  "M43.2 111.2 L69.2 45.2",
+  "M26 114 L52 46",
   // Kaki kanan
-  "M70 44 L98 112",
-  "M68.8 45.2 L96.8 111.2",
+  "M52 46 L78 114",
   // Palang tengah
-  "M54 90 L86 90",
-  "M54.8 91 L85.2 91",
+  "M38 92 L66 92",
   // ── Huruf "W" ───────────────────────────────────────────
-  "M104 44 L116 112",
-  "M104.8 44.8 L115.2 111.2",
-  "M116 112 L128 44",
-  "M117.2 111.2 L127.2 45.2",
-  "M128 44 L140 112",
-  "M126.8 45.2 L138.8 111.2",
-  "M140 112 L152 44",
-  "M140.8 111.2 L151.2 45.2",
-  // ── Titik kecil di akhir (hand-drawn dot) ────────────────
-  "M154 105 Q157 108 154 111 Q151 108 154 105",
+  "M84 46 L94 114",
+  "M94 114 L104 46",
+  "M104 46 L114 114",
+  "M114 114 L124 46",
+  // ── Titik kecil di akhir ─────────────────────────────────
+  "M132 107.5 Q135 110 132 112.5 Q129 110 132 107.5",
 ];
 
 export function BootSketch() {
@@ -91,9 +83,9 @@ export function BootSketch() {
         <path
           key={i}
           d={d}
-          stroke={i % 2 === 1 ? "var(--blue)" : "var(--navy)"}
-          strokeWidth={i % 2 === 1 ? 1.1 : 1.6}
-          opacity={i % 2 === 1 ? 0.55 : 1}
+          stroke={i === DRAW_PATHS.length - 1 ? "var(--blue)" : "var(--navy)"}
+          strokeWidth={i === DRAW_PATHS.length - 1 ? 1.4 : 1.8}
+          opacity={1}
         />
       ))}
     </svg>
