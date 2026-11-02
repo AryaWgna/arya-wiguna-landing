@@ -34,7 +34,7 @@ const PLANETS: PlanetDef[] = [
     color: "#8a8f98",
     accent: "#5b616b",
     size: 0.13,
-    orbit: 1.35,
+    orbit: 1.1,
     speed: 0.5,
     phase: 0.4,
     tilt: 0.03,
@@ -47,7 +47,7 @@ const PLANETS: PlanetDef[] = [
     color: "#d8b78a",
     accent: "#b28a5c",
     size: 0.16,
-    orbit: 1.75,
+    orbit: 1.4,
     speed: 0.36,
     phase: 1.9,
     tilt: 0.06,
@@ -61,7 +61,7 @@ const PLANETS: PlanetDef[] = [
     accent: "#4f7d4f",
     clouds: true,
     size: 0.17,
-    orbit: 2.15,
+    orbit: 1.7,
     speed: 0.28,
     phase: 4.1,
     tilt: 0.41,
@@ -75,7 +75,7 @@ const PLANETS: PlanetDef[] = [
     color: "#b0563c",
     accent: "#7a3426",
     size: 0.14,
-    orbit: 2.55,
+    orbit: 2.0,
     speed: 0.22,
     phase: 0.9,
     tilt: 0.15,
@@ -89,7 +89,7 @@ const PLANETS: PlanetDef[] = [
     accent: "#8c5f3f",
     stripes: true,
     size: 0.34,
-    orbit: 2.95,
+    orbit: 2.35,
     speed: 0.16,
     phase: 2.6,
     tilt: 0.05,
@@ -103,12 +103,38 @@ const PLANETS: PlanetDef[] = [
     accent: "#a8814e",
     stripes: true,
     size: 0.3,
-    orbit: 3.35,
+    orbit: 2.7,
     speed: 0.12,
     phase: 5.2,
     tilt: 0.47,
     rotSpeed: 0.5,
     ring: true,
+  },
+  {
+    id: "uranus",
+    name: { en: "Uranus", id: "Uranus" },
+    tagline: { en: "the sideways planet", id: "planet yang miring" },
+    color: "#9cc6cf",
+    accent: "#6fa3b0",
+    size: 0.26,
+    orbit: 3.0,
+    speed: 0.09,
+    phase: 3.3,
+    tilt: 1.65,
+    rotSpeed: 0.3,
+  },
+  {
+    id: "neptune",
+    name: { en: "Neptune", id: "Neptunus" },
+    tagline: { en: "the windy blue giant", id: "raksasa biru berangin" },
+    color: "#4368a8",
+    accent: "#2f4e80",
+    size: 0.25,
+    orbit: 3.3,
+    speed: 0.075,
+    phase: 0.6,
+    tilt: 0.25,
+    rotSpeed: 0.45,
   },
 ];
 
@@ -269,7 +295,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    camera.position.set(0, 1.4, 7);
+    camera.position.set(0, 1.8, 9);
     camera.lookAt(0, 0, 0);
 
     const group = new THREE.Group();
@@ -339,7 +365,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
         group.add(moon);
         moons.push({
           mesh: moon,
-          orbit: def.orbit + 0.34,
+          orbit: def.orbit + 0.26,
           speed: 1.4,
           phase: rng() * Math.PI * 2,
         });
