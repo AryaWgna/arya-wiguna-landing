@@ -3,26 +3,88 @@
 import { useEffect, useRef } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
+type Seg = [[number, number], [number, number]];
+
 /**
- * Boot sketch — monogram "AW." (Arya Wiguna), satu garis bersih per tarikan,
- * dikomposisi di tengah kanvas (SVG + GSAP draw-on).
+ * Alfabet monoline (unit 0–1, y mengarah ke bawah) — huruf blok bersih
+ * ala coretan tangan, dipakai untuk mengeja "ARYA WIGUNA".
  */
-const DRAW_PATHS = [
-  // ── Huruf "A" ───────────────────────────────────────────
-  // Kaki kiri
-  "M26 114 L52 46",
-  // Kaki kanan
-  "M52 46 L78 114",
-  // Palang tengah
-  "M38 92 L66 92",
-  // ── Huruf "W" ───────────────────────────────────────────
-  "M84 46 L94 114",
-  "M94 114 L104 46",
-  "M104 46 L114 114",
-  "M114 114 L124 46",
-  // ── Titik kecil di akhir ─────────────────────────────────
-  "M132 107.5 Q135 110 132 112.5 Q129 110 132 107.5",
-];
+const LETTERS: Record<string, Seg[]> = {
+  A: [
+    [[0.5, 0], [0, 1]],
+    [[0.5, 0], [1, 1]],
+    [[0.15, 0.66], [0.85, 0.66]],
+  ],
+  R: [
+    [[0, 0], [0, 1]],
+    [[0, 0], [0.62, 0]],
+    [[0.62, 0], [0.74, 0.2]],
+    [[0.74, 0.2], [0.74, 0.4]],
+    [[0.74, 0.4], [0.62, 0.58]],
+    [[0.62, 0.58], [0, 0.58]],
+    [[0.62, 0.58], [1, 1]],
+  ],
+  Y: [
+    [[0, 0], [0.5, 0.5]],
+    [[1, 0], [0.5, 0.5]],
+    [[0.5, 0.5], [0.5, 1]],
+  ],
+  W: [
+    [[0, 0], [0.33, 1]],
+    [[0.33, 1], [0.5, 0]],
+    [[0.5, 0], [0.67, 1]],
+    [[0.67, 1], [1, 0]],
+  ],
+  I: [[[0.5, 0], [0.5, 1]]],
+  G: [
+    [[0.35, 0], [1, 0]],
+    [[1, 0], [1, 1]],
+    [[1, 1], [0.35, 1]],
+    [[0.35, 1], [0.2, 0.5]],
+    [[0.2, 0.5], [0.35, 0]],
+    [[0.4, 0.55], [1, 0.55]],
+  ],
+  U: [
+    [[0, 0], [0, 1]],
+    [[1, 0], [1, 1]],
+    [[0, 1], [1, 1]],
+  ],
+  N: [
+    [[0, 0], [0, 1]],
+    [[0, 0], [1, 1]],
+    [[1, 0], [1, 1]],
+  ],
+};
+
+const SPELLING = "ARYA WIGUNA";
+const SX = 46; // lebar 1 unit huruf (px)
+const SY = 108; // tinggi 1 unit huruf (px)
+const X0 = 39; // margin kiri agar komposisi di tengah
+const Y0 = 6; // margin atas
+const ADV = 45; // jarak antar huruf
+const SPACE_ADV = 62; // jarak antar kata
+
+/** Susun path absolut "ARYA WIGUNA" dalam viewBox 560×120. */
+const DRAW_PATHS: string[] = (() => {
+  const paths: string[] = [];
+  let x = X0;
+  for (const ch of SPELLING) {
+    if (ch === " ") {
+      x += SPACE_ADV;
+      continue;
+    }
+    const segs = LETTERS[ch];
+    if (!segs) continue;
+    for (const [[x1, y1], [x2, y2]] of segs) {
+      paths.push(
+        `M${(x + x1 * SX).toFixed(1)} ${(Y0 + y1 * SY).toFixed(1)}` +
+          `L${(x + x2 * SX).toFixed(1)} ${(Y0 + y2 * SY).toFixed(1)}`
+      );
+    }
+    x += ADV;
+  }
+  return paths;
+})();
 
 export function BootSketch() {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -71,7 +133,7 @@ export function BootSketch() {
   return (
     <svg
       ref={svgRef}
-      viewBox="0 0 160 160"
+      viewBox="0 0 560 120"
       className="h-full w-full"
       aria-hidden="true"
       fill="none"
