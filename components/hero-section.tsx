@@ -78,11 +78,11 @@ export function HeroSection() {
         0.7
       );
 
-      // 3D visual — scale up with slight rotation
+      // Visual — fade up datar (tanpa 3D/rotasi)
       tl.fromTo(
         "[data-hero-visual]",
-        { autoAlpha: 0, scale: 0.9, rotateY: -5 },
-        { autoAlpha: 1, scale: 1, rotateY: 0, duration: 0.9, ease: "power2.out" },
+        { autoAlpha: 0, y: 18 },
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" },
         0.5
       );
 
@@ -182,7 +182,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div data-hero-visual className="lg:col-span-5" style={{ perspective: "800px" }}>
+          <div data-hero-visual className="lg:col-span-5">
             <HeroArt paused={bootActive} />
             <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
               {lang === "id" ? "hening, dalam orbit." : "stillness, in orbit."}

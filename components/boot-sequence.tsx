@@ -54,14 +54,9 @@ export function BootSequence() {
       ctx = gsap.context(() => {
         setLines(idLines.slice(0, 1));
         gsap.fromTo(
-          "#boot-3d",
-          { scale: 0.85, autoAlpha: 0, y: 12 },
-          { scale: 1, autoAlpha: 1, y: 0, duration: 0.9, ease: "power2.out" }
-        );
-        gsap.fromTo(
-          "#boot-scanline",
-          { yPercent: -120 },
-          { yPercent: 320, duration: 2.4, ease: "none", repeat: -1 }
+          "#boot-visual",
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" }
         );
         gsap.fromTo(
           "#boot-progress",
@@ -104,7 +99,7 @@ export function BootSequence() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
       aria-hidden="true"
     >
-      <div id="boot-3d" className="relative h-20 w-64 opacity-0 md:h-24 md:w-[400px]">
+      <div id="boot-visual" className="relative h-20 w-64 opacity-0 md:h-24 md:w-[400px]">
         <BootSketch />
       </div>
 
