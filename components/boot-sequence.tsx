@@ -1,25 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import { BootSketch } from "@/components/boot-sketch";
-import { useLang, useBoot } from "@/components/providers";
-
-const BOOT_LINES: { en: string; id: string }[] = [
-  { en: "arya wiguna", id: "arya wiguna" },
-  { en: "stillness…", id: "hening…" },
-  { en: "balance…", id: "keseimbangan…" },
-  { en: "space…", id: "ruang…" },
-  { en: "ready.", id: "siap." },
-];
+import { useBoot } from "@/components/providers";
 
 export function BootSequence() {
-  const { lang } = useLang();
   const { setBootActive } = useBoot();
-  // Tangkap bahasa saat mount pertama — boot hanya berjalan sekali per load penuh
-  const langRef = useRef(lang);
   const [phase, setPhase] = useState<"mounting" | "boot" | "done">("mounting");
-  const [lines, setLines] = useState<string[]>([]);
 
   useEffect(() => {
     // Hormati prefers-reduced-motion (aksesibilitas). Boot selalu tampil saat refresh.
@@ -30,9 +18,6 @@ export function BootSequence() {
     }
     setPhase("boot");
 
-    const locale = langRef.current === "id" ? "id" : "en";
-    const activeLines = BOOT_LINES.map((l) => (locale === "id" ? l.id : l.en));
-
     const finished = () => {
       setBootActive(false);
       setPhase("done");
@@ -40,7 +25,7 @@ export function BootSequence() {
 
     let overlay: HTMLElement | null = null;
     let ctx: gsap.Context | null = null;
-    const total = 350 + BOOT_LINES.length * 420 + 500;
+    const total = 2600;
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
@@ -50,9 +35,7 @@ export function BootSequence() {
       overlay = document.getElementById("boot-sequence");
       if (!overlay) return;
 
-      const idLines = activeLines;
       ctx = gsap.context(() => {
-        setLines(idLines.slice(0, 1));
         gsap.fromTo(
           "#boot-visual",
           { autoAlpha: 0, y: 12 },
@@ -64,12 +47,6 @@ export function BootSequence() {
           { scaleX: 1, duration: total / 1000, ease: "power1.inOut" }
         );
       }, overlay);
-
-      idLines.forEach((_, idx) => {
-        later(() => {
-          setLines(idLines.slice(0, idx + 1));
-        }, 350 + idx * 420);
-      });
 
       later(() => {
         const el = overlay;
@@ -99,24 +76,14 @@ export function BootSequence() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
       aria-hidden="true"
     >
-      <div id="boot-visual" className="relative h-20 w-64 opacity-0 md:h-24 md:w-[400px]">
+      <div
+        id="boot-visual"
+        className="relative aspect-square w-[min(62vw,420px)] opacity-0"
+      >
         <BootSketch />
       </div>
 
-      <div className="absolute right-6 top-6 font-mono text-xs tracking-widest text-muted">
-        [{langRef.current === "id" ? "ID" : "EN"}]
-      </div>
-
-      <div className="mt-8 flex min-h-[96px] flex-col items-center gap-1.5 font-mono text-xs text-muted">
-        {lines.map((line, i) => (
-          <div key={i} className="flex items-center gap-2">
-            <span className="text-blue">▸</span>
-            <span>{line}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 h-px w-48 overflow-hidden bg-border-line">
+      <div className="mt-12 h-px w-52 overflow-hidden bg-border-line">
         <div className="h-full w-full origin-left bg-blue" id="boot-progress" />
       </div>
 
