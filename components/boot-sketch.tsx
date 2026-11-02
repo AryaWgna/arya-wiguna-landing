@@ -145,14 +145,12 @@ export function BootSketch() {
           const start = i * LETTER_DELAY;
           const k = Math.min(Math.max((t - start) / LETTER_DURATION, 0), 1);
           const e = k * k * (3 - 2 * k); // smoothstep
-          l.group.position.y = -1.8 * (1 - e);
-          l.group.rotation.y = (1 - e) * 1.4;
-          l.group.scale.setScalar(0.55 + 0.45 * e);
           l.front.opacity = e;
           l.back.opacity = 0.5 * e;
+          l.group.position.y = (1 - e) * 0.35;
         });
-        const idle = Math.max(0, t - (letters.length - 1) * LETTER_DELAY - LETTER_DURATION);
-        lettersRoot.rotation.y = Math.sin(idle * 0.3) * 0.08;
+        // 3D tenang: seluruh nama berputar sangat pelan di sumbu vertikal
+        lettersRoot.rotation.y = t * 0.12;
         renderer!.render(scene, camera);
       };
 

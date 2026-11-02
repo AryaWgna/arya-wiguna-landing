@@ -25,7 +25,7 @@ export function BootSequence() {
 
     let overlay: HTMLElement | null = null;
     let ctx: gsap.Context | null = null;
-    const total = 3500;
+    const total = 3200;
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
@@ -40,11 +40,6 @@ export function BootSequence() {
           "#boot-visual",
           { autoAlpha: 0, y: 12 },
           { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" }
-        );
-        gsap.fromTo(
-          "#boot-progress",
-          { scaleX: 0 },
-          { scaleX: 1, duration: total / 1000, ease: "power1.inOut" }
         );
       }, overlay);
 
@@ -81,10 +76,6 @@ export function BootSequence() {
         className="relative h-32 w-[min(94vw,760px)] opacity-0 md:h-40"
       >
         <BootSketch />
-      </div>
-
-      <div className="mt-12 h-px w-52 overflow-hidden bg-border-line">
-        <div className="h-full w-full origin-left bg-blue" id="boot-progress" />
       </div>
 
       <button
