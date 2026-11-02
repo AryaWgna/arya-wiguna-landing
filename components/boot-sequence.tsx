@@ -6,10 +6,10 @@ import { BootSketch } from "@/components/boot-sketch";
 import { useLang, useBoot } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
-  { en: "aryawgna", id: "aryawgna" },
-  { en: "initializing portfolio…", id: "menginisialisasi portfolio…" },
-  { en: "loading geometries…", id: "memuat geometri…" },
-  { en: "mounting 3D scene…", id: "memasang scene 3D…" },
+  { en: "arya wiguna", id: "arya wiguna" },
+  { en: "dipping pen in ink…", id: "mencelupkan pena ke tinta…" },
+  { en: "sketching name by hand…", id: "menggoreskan nama dengan tangan…" },
+  { en: "letting ink dry…", id: "menunggu tinta kering…" },
   { en: "ready.", id: "siap." },
 ];
 

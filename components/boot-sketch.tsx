@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
 type Seg = [[number, number], [number, number]];
 
 /**
- * Alfabet monoline (unit 0–1, y mengarah ke bawah) — huruf blok bersih
- * ala coretan tangan, dipakai untuk mengeja "ARYA WIGUNA".
+ * Alfabet monoline (unit 0–1, y mengarah ke bawah) — kerangka huruf blok.
+ * Di atasnya dibangun "tangan": goresan Q melengkung, overshoot,
+ * jitter acak per kunjungan, tekanan garis bervariasi.
  */
 const LETTERS: Record<string, Seg[]> = {
   A: [
@@ -64,30 +65,110 @@ const Y0 = 6; // margin atas
 const ADV = 57; // jarak antar huruf (> SX agar huruf tidak nyatu)
 const SPACE_ADV = 80; // jarak antar kata
 
-/** Susun path absolut "ARYA WIGUNA" dalam viewBox 700×120. */
-const DRAW_PATHS: string[] = (() => {
-  const paths: string[] = [];
+type Stroke = { d: string; w: number; c: string };
+
+let seedCounter = 0;
+
+/** PRNG kecil ber-seed — deterministik per kunjungan, unik antar kunjungan. */
+function makeRng(seed: number) {
+  let s = seed >>> 0;
+  return () => {
+    s += 0x6d2b79f5;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Susun goresan tangan "ARYA WIGUNA" dalam viewBox 700×120.
+ * Setiap segmen jadi kurva Q dengan offset tegak-lurus acak + overshoot
+ * kecil; tiap huruf dapat drift vertikal halus; urutan goresan diacak
+ * (seperti tangan yang tidak pernah menggambar dua kali sama persis).
+ */
+function buildHandStrokes(): Stroke[] {
+  const rng = makeRng((seedCounter++ * 7919 + Date.now()) >>> 0);
+  const strokes: Stroke[] = [];
   let x = X0;
+  let letterIdx = 0;
+
+  const addSeg = (x1: number, y1: number, x2: number, y2: number, w: number) => {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const len = Math.hypot(dx, dy) || 1;
+    // overshoot ~3–6% agar ujung goresan "melewati" seperti tangan cepat
+    const ov = 1 + 0.03 + rng() * 0.03;
+    const sx = x1 - (dx / len) * (ov - 1) * len * 0.5;
+    const sy = y1 - (dy / len) * (ov - 1) * len * 0.5;
+    const ex = x2 + (dx / len) * (ov - 1) * len * 0.5;
+    const ey = y2 + (dy / len) * (ov - 1) * len * 0.5;
+    const mx = (sx + ex) / 2;
+    const my = (sy + ey) / 2;
+    const jitter = (rng() - 0.5) * 5.2;
+    const nx = -dy / len;
+    const ny = dx / len;
+    const cx = mx + nx * jitter;
+    const cy = my + ny * jitter;
+    strokes.push({
+      d: `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`,
+      w,
+      c: "var(--navy)",
+    });
+  };
+
   for (const ch of SPELLING) {
     if (ch === " ") {
       x += SPACE_ADV;
+      letterIdx += 0.5;
       continue;
     }
     const segs = LETTERS[ch];
     if (!segs) continue;
+    // drift vertikal halus per huruf — seperti tangan tidak lurus sempurna
+    const yDrift = Math.sin(letterIdx * 1.7) * 2.4;
     for (const [[x1, y1], [x2, y2]] of segs) {
-      paths.push(
-        `M${(x + x1 * SX).toFixed(1)} ${(Y0 + y1 * SY).toFixed(1)}` +
-          `L${(x + x2 * SX).toFixed(1)} ${(Y0 + y2 * SY).toFixed(1)}`
+      addSeg(
+        x + x1 * SX,
+        Y0 + y1 * SY + yDrift,
+        x + x2 * SX,
+        Y0 + y2 * SY + yDrift,
+        1.5 + rng() * 0.7
       );
     }
     x += ADV;
+    letterIdx++;
   }
-  return paths;
-})();
+
+  // Akhiran: goresan bawah seperti garis bawah tangan + 2 titik tinta
+  const baseY = 104 + (rng() - 0.5) * 4;
+  strokes.push({
+    d: `M40 ${baseY.toFixed(1)} Q${(350 + (rng() - 0.5) * 16).toFixed(1)} ${(baseY - 5 - rng() * 6).toFixed(1)} 660 ${baseY.toFixed(1)}`,
+    w: 1.2,
+    c: "var(--blue)",
+  });
+  for (let i = 0; i < 2; i++) {
+    const dx = 640 + rng() * 24;
+    const dy = baseY + 2 + rng() * 5;
+    strokes.push({
+      d: `M${dx.toFixed(1)} ${dy.toFixed(1)} l0.001 0.001`,
+      w: 2.4 + rng() * 1.6,
+      c: "var(--blue)",
+    });
+  }
+
+  // Acak urutan goresan utama (tetap sisakan akhiran di akhir)
+  const main = strokes.slice(0, strokes.length - 3);
+  for (let i = main.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [main[i], main[j]] = [main[j], main[i]];
+  }
+  return [...main, ...strokes.slice(-3)];
+}
 
 export function BootSketch() {
   const svgRef = useRef<SVGSVGElement>(null);
+  const strokes = useMemo(buildHandStrokes, []);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -105,14 +186,13 @@ export function BootSketch() {
 
     const ctx = gsap.context(() => {
       const lens = paths.map((p) => p.getTotalLength());
-      // Ritme cepat: 36 garis selesai ±2.4s — sebelum boot fade-out (2.95s).
       gsap.fromTo(
         paths,
         { strokeDasharray: (i: number) => lens[i], strokeDashoffset: (i: number) => lens[i] },
         {
           strokeDashoffset: 0,
-          duration: 0.4,
-          stagger: 0.055,
+          duration: 0.42,
+          stagger: 0.05,
           ease: "power2.inOut",
           delay: 0.1,
         }
@@ -142,14 +222,15 @@ export function BootSketch() {
       strokeLinejoin="round"
       style={{ transformOrigin: "50% 50%" }}
     >
-      {DRAW_PATHS.map((d, i) => (
-        <path
-          key={i}
-          d={d}
-          stroke={i === DRAW_PATHS.length - 1 ? "var(--blue)" : "var(--navy)"}
-          strokeWidth={i === DRAW_PATHS.length - 1 ? 1.4 : 1.8}
-          opacity={1}
-        />
+      <defs>
+        <filter id="boot-grain" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.3 0 0 0 0 0.35 0 0 0 0 0.4 0 0 0 0.05 0" />
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="700" height="120" filter="url(#boot-grain)" opacity="0.5" />
+      {strokes.map((s, i) => (
+        <path key={i} d={s.d} stroke={s.c} strokeWidth={s.w} />
       ))}
     </svg>
   );
