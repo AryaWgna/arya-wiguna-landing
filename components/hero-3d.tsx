@@ -5,9 +5,11 @@ import * as THREE from "three";
 import { gsap } from "@/lib/gsap";
 
 /**
- * Aksen 3D subtle untuk hero (opsional).
+ * Aksen 3D subtle untuk hero — skulptur minimal anti AI-slop.
+ * - Satu inti poligon matte navy + garis tepi biru + satu cincin tipis.
+ * - Rotasi sangat lambat, tanpa partikel/wireframe sphere/float acak.
  * - Dimuat hanya di client (dynamic import ssr:false).
- * - Fallback: komposisi CSS statis di bawah canvas.
+ * - Fallback: komposisi CSS statis (hanya saat WebGL gagal).
  * - Menghormati prefers-reduced-motion; berhenti saat tab/elemen tak terlihat.
  * - DPR dibatasi 1.5.
  */
@@ -47,69 +49,53 @@ export default function Hero3D({ paused = false }: { paused?: boolean }) {
     mount.appendChild(renderer.domElement);
     setWebglOk(true);
 
-    // Cahaya
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    // Cahaya — kunci utama + rim light biru lembut
+    const ambient = new THREE.AmbientLight(0xffffff, 0.55);
     scene.add(ambient);
-    const dir = new THREE.DirectionalLight(0xffffff, 1.25);
-    dir.position.set(3, 4, 5);
+    const dir = new THREE.DirectionalLight(0xffffff, 1.15);
+    dir.position.set(4, 3, 4);
     scene.add(dir);
-    const rim = new THREE.PointLight(0x4778a9, 1.2, 20);
-    rim.position.set(-3, -2, 3);
+    const rim = new THREE.PointLight(0x4778a9, 1.0, 20);
+    rim.position.set(-3, -1, 3);
     scene.add(rim);
 
-    // Objek: skulptur geometris navy
+    // Skulptur minimal: satu inti poligon datar + garis tepi + satu cincin tipis
     const group = new THREE.Group();
 
-    const icosa = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(2.0, 1),
+    const core = new THREE.Mesh(
+      new THREE.OctahedronGeometry(1.35, 0),
       new THREE.MeshStandardMaterial({
         color: 0x172a45,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.55,
+        flatShading: true,
+        metalness: 0.2,
+        roughness: 0.35,
       })
     );
-    group.add(icosa);
-
-    const core = new THREE.Mesh(
-      new THREE.OctahedronGeometry(1.05, 0),
-      new THREE.MeshStandardMaterial({
-        color: 0x4778a9,
-        metalness: 0.85,
-        roughness: 0.25,
-      })
-    );
+    core.scale.set(1, 1.25, 1);
     group.add(core);
 
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.6, 0.035, 16, 96),
-      new THREE.MeshStandardMaterial({ color: 0x4778a9, metalness: 0.6, roughness: 0.35 })
+    const edges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.OctahedronGeometry(1.35, 0)),
+      new THREE.LineBasicMaterial({ color: 0x4778a9, transparent: true, opacity: 0.5 })
     );
-    ring.rotation.x = Math.PI / 2.4;
-    ring.rotation.z = 0.4;
-    group.add(ring);
+    edges.scale.set(1, 1.25, 1);
+    group.add(edges);
 
-    const ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(1.95, 0.018, 12, 96),
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.95, 0.012, 8, 72),
       new THREE.MeshStandardMaterial({
-        color: 0x24466f,
+        color: 0x9fb6d6,
         transparent: true,
-        opacity: 0.6,
-        metalness: 0.5,
-        roughness: 0.4,
+        opacity: 0.45,
+        metalness: 0.1,
+        roughness: 0.5,
       })
     );
-    ring2.rotation.x = Math.PI / 3;
-    ring2.rotation.y = 0.5;
-    group.add(ring2);
+    ring.rotation.x = Math.PI / 2.3;
+    ring.rotation.z = 0.45;
+    group.add(ring);
 
-    const orb = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.2, 0),
-      new THREE.MeshStandardMaterial({ color: 0x9fb6d6, metalness: 0.7, roughness: 0.3 })
-    );
-    group.add(orb);
-
-    // Pointer parallax (GSAP quickTo) — hanya pointer halus
+    // Pointer parallax (GSAP quickTo) — gerakan sangat halus
     const tiltGroup = new THREE.Group();
     tiltGroup.add(group);
     scene.add(tiltGroup);
@@ -136,8 +122,8 @@ export default function Hero3D({ paused = false }: { paused?: boolean }) {
       const rect = mount.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
       const ny = ((e.clientY - rect.top) / rect.height - 0.5) * -2;
-      qX(nx * 0.6);
-      qY(ny * 0.45);
+      qX(nx * 0.22);
+      qY(ny * 0.16);
     };
     const onPointerLeave = () => {
       qX?.(0);
@@ -152,15 +138,10 @@ export default function Hero3D({ paused = false }: { paused?: boolean }) {
     const animate = () => {
       if (!reducedMotion) {
         const t = performance.now() / 1000;
-        group.rotation.y += 0.008;
-        group.position.y = Math.sin(t * 0.8) * 0.08;
-        ring.rotation.z += 0.003;
-        ring2.rotation.z -= 0.002;
-        orb.position.set(
-          Math.cos(t * 0.6) * 2.5,
-          0.55 + Math.sin(t * 1.4) * 0.35,
-          Math.sin(t * 0.6) * 2.5
-        );
+        // Rotasi sangat lambat & tenang — bukan animasi frekuensi tinggi
+        group.rotation.y += 0.0025;
+        group.position.y = Math.sin(t * 0.6) * 0.06;
+        ring.rotation.z = 0.45 + Math.sin(t * 0.25) * 0.025;
       }
       renderer.render(scene, camera);
     };
