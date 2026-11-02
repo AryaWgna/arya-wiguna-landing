@@ -485,6 +485,14 @@ export const messages = {
     "C programming fundamentals",
     "Dasar pemrograman C"
   ],
+  "c23-title": [
+    "BNSP — Junior Coder (Pemrogram Junior)",
+    "BNSP — Pemrogram Junior (Junior Coder)"
+  ],
+  "c23-desc": [
+    "Software Development – Programming competency certification by the Indonesian Professional Certification Authority (BNSP)",
+    "Sertifikasi kompetensi Pengembangan Perangkat Lunak – Pemrograman oleh Badan Nasional Sertifikasi Profesi (BNSP)"
+  ],
   "ct-tag": [
     "Contact",
     "Kontak"

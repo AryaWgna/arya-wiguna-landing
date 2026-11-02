@@ -7,6 +7,7 @@ import { certifications, type CertificationCategory } from "@/lib/data/certifica
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
 const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> = {
+  bnsp: { en: "BNSP — National Professional Certification", id: "BNSP — Sertifikasi Profesi Nasional" },
   dicoding: { en: "Dicoding Indonesia", id: "Dicoding Indonesia" },
   cisco: { en: "Cisco Networking Academy", id: "Cisco Networking Academy" },
   webinar: { en: "Webinars — IDwebTalks", id: "Webinar — IDwebTalks" },

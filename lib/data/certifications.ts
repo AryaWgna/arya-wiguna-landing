@@ -1,6 +1,7 @@
 // GENERATED oleh scripts/extract-content.mjs — jangan edit manual.
 // Sumber: index.html lama + verifikasi PDF (scripts/pdfscan.py).
 export type CertificationCategory =
+  | "bnsp"
   | "dicoding"
   | "cisco"
   | "webinar"
@@ -23,6 +24,21 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
+
+  {
+    "slug": "c23",
+    "titleKey": "c23-title",
+    "descKey": "c23-desc",
+    "img": "assets/sertifikat/bnsp-junior-coder.jpg",
+    "pdf": "assets/sertifikat/bnsp-junior-coder.pdf",
+    "alt": "BNSP — Junior Coder (Pemrogram Junior)",
+    "category": "bnsp",
+    "issuer": "BNSP — Badan Nasional Sertifikasi Profesi",
+    "date": "22 September 2026",
+    "credentialId": "62019 2514 2 03151 1900",
+    "verifyUrl": null,
+    "note": "No. Reg. TIK 2977 03151 1900 — berlaku 3 tahun — LSP Entrepreneur Digital Indonesia"
+  },
   {
     "slug": "c1",
     "titleKey": "c1-title",
