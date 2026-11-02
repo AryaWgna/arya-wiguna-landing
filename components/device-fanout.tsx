@@ -50,13 +50,13 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
   const { left, center, right } = devices;
 
   return (
-    <div className="group relative flex h-48 items-center justify-center gap-2 overflow-hidden bg-surface px-4 py-4 [perspective:1000px] sm:h-64">
+    <div className="group relative flex items-center justify-center gap-2 overflow-hidden bg-surface px-4 py-4 [perspective:1000px] sm:gap-3">
       {/* Kiri — phone/laptop kecil, miring */}
       <DeviceShell
         device={left}
         widthClass={
           left.frame === "phone"
-            ? "hidden w-20 aspect-[9/19] -rotate-[8deg] translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:-rotate-3 group-hover:-translate-x-1 sm:block md:w-24"
+            ? "hidden w-24 aspect-[9/19] -rotate-[8deg] translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:-rotate-3 group-hover:-translate-x-1 sm:block md:w-28"
             : "hidden w-32 aspect-[16/10] -rotate-[8deg] translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:-rotate-3 group-hover:-translate-x-1 sm:block md:w-40"
         }
       />
@@ -66,7 +66,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         device={center}
         widthClass={
           center.frame === "phone"
-            ? "relative z-10 w-32 aspect-[9/19] transition-all duration-500 group-hover:scale-[1.04] md:w-40"
+            ? "relative z-10 w-36 aspect-[9/19] transition-all duration-500 group-hover:scale-[1.04] md:w-44"
             : "relative z-10 w-48 aspect-[16/10] transition-all duration-500 group-hover:scale-[1.04] md:w-64"
         }
       />
@@ -76,7 +76,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         device={right}
         widthClass={
           right.frame === "phone"
-            ? "hidden w-20 aspect-[9/19] rotate-[8deg] -translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:rotate-3 group-hover:translate-x-1 sm:block md:w-24"
+            ? "hidden w-24 aspect-[9/19] rotate-[8deg] -translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:rotate-3 group-hover:translate-x-1 sm:block md:w-28"
             : "hidden w-32 aspect-[16/10] rotate-[8deg] -translate-x-3 translate-y-2 opacity-90 transition-all duration-500 group-hover:rotate-3 group-hover:translate-x-1 sm:block md:w-40"
         }
       />
