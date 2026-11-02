@@ -4,26 +4,32 @@ import { useEffect, useRef } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
 /**
- * Boot sketch — doodle digambar tangan (SVG + GSAP).
+ * Boot sketch — monogram "AW." (Arya Wiguna) digambar tangan (SVG + GSAP).
  * Setiap garis digambar dua kali dengan offset tipis (efek tinta/pensil),
  * goresan punya ritme stagger sehingga terasa dibuat manusia, bukan render 3D.
  */
 const DRAW_PATHS = [
-  // Diagonal 1 (double-stroke)
-  "M42 42 L118 118",
-  "M43.4 42.6 L117.4 117.4",
-  // Diagonal 2
-  "M118 42 L42 118",
-  "M117.4 43.4 L42.6 117.4",
-  // Garis tengah vertikal
-  "M80 36 L80 124",
-  "M80.8 37 L79.2 123",
-  // Lingkaran luar (dua busur saling susul — kesan coretan)
-  "M80 34 A46 46 0 1 1 79.9 34",
-  "M80 35.6 A44.4 44.4 0 1 0 80 35.6",
-  // Belah ketupat kecil di pusat
-  "M80 68 L96 80 L80 92 L64 80 Z",
-  "M80 70.2 L93.8 80 L80 89.8 L66.2 80 Z",
+  // ── Huruf "A" ───────────────────────────────────────────
+  // Kaki kiri
+  "M42 112 L70 44",
+  "M43.2 111.2 L69.2 45.2",
+  // Kaki kanan
+  "M70 44 L98 112",
+  "M68.8 45.2 L96.8 111.2",
+  // Palang tengah
+  "M54 90 L86 90",
+  "M54.8 91 L85.2 91",
+  // ── Huruf "W" ───────────────────────────────────────────
+  "M104 44 L116 112",
+  "M104.8 44.8 L115.2 111.2",
+  "M116 112 L128 44",
+  "M117.2 111.2 L127.2 45.2",
+  "M128 44 L140 112",
+  "M126.8 45.2 L138.8 111.2",
+  "M140 112 L152 44",
+  "M140.8 111.2 L151.2 45.2",
+  // ── Titik kecil di akhir (hand-drawn dot) ────────────────
+  "M154 105 Q157 108 154 111 Q151 108 154 105",
 ];
 
 export function BootSketch() {
