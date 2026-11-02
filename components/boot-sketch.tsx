@@ -121,7 +121,7 @@ export function BootSketch() {
         const mid = (cursor - GAP) / 2;
         for (const l of letters) {
           l.targetX = l.group.position.x - mid;
-          l.group.position.x = 0; // semua mulai dari tengah
+          l.group.position.x = l.targetX; // langsung di slot-nya
         }
       }
 
@@ -154,18 +154,14 @@ export function BootSketch() {
 
       const renderFrame = (t: number) => {
         letters.forEach((l, i) => {
-          // Fase 1 — muncul dulu mengumpul di tengah
-          const aK = Math.min(Math.max((t - 0.05) / 0.5, 0), 1);
-          const aE = aK * aK * (3 - 2 * aK);
-          l.front.opacity = aE;
-          l.back.opacity = 0.5 * aE;
-          // Fase 2 — masing-masing bergerak ke samping
-          const mStart = 0.55 + i * 0.09;
-          const mK = Math.min(Math.max((t - mStart) / 0.9, 0), 1);
-          const mE = 1 - Math.pow(1 - mK, 3); // power3.out
-          l.group.position.x = l.targetX * mE;
-          l.group.scale.setScalar(0.85 + 0.15 * mE);
-          l.group.rotation.y = (1 - mE) * 0.5;
+          // Flip kartu: 180° di tempat — sisi biru belakang dulu, lalu berputar
+          // penuh ke sisi navy depan (0 → π)
+          const start = i * 0.12;
+          const k = Math.min(Math.max((t - start) / 0.8, 0), 1);
+          const e = k * k * (3 - 2 * k); // smoothstep
+          l.group.rotation.y = Math.PI * (1 - e);
+          l.front.opacity = e;
+          l.back.opacity = 0.5 * (1 - e);
         });
         // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
         lettersRoot.rotation.y = (mx - 0.5) * 0.6;
