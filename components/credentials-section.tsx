@@ -5,6 +5,7 @@ import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { certifications, type CertificationCategory } from "@/lib/data/certifications";
 import { gsap, isReducedMotion } from "@/lib/gsap";
+import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 
 const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> = {
   bnsp: { en: "BNSP — National Professional Certification", id: "BNSP — Sertifikasi Profesi Nasional" },
@@ -19,6 +20,7 @@ export function CredentialsSection() {
   const { t, lang } = useLang();
   const id = lang === "id";
   const sectionRef = useRef<HTMLElement>(null);
+  const { playGlitch } = useWebAudioGlitch();
 
   const groups = (Object.keys(CATEGORY_LABEL) as CertificationCategory[]).map((category) => ({
     category,
@@ -153,6 +155,7 @@ export function CredentialsSection() {
                               href={`/${cert.pdf}`}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => playGlitch("click")}
                               className="font-mono text-xs font-medium text-blue transition-colors hover:text-navy-light"
                             >
                               {id ? "Lihat sertifikat →" : "View certificate →"}
@@ -163,6 +166,7 @@ export function CredentialsSection() {
                               href={cert.verifyUrl}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => playGlitch("click")}
                               className="font-mono text-xs text-muted transition-colors hover:text-foreground"
                             >
                               {id ? "Verifikasi ↗" : "Verify ↗"}

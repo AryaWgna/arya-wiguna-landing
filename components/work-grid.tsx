@@ -6,6 +6,8 @@ import { GsapReveal } from "@/components/gsap-reveal";
 import { projects, type Project } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
 import { TiltCard } from "@/components/tilt-card";
+import { DeviceFanOutMockup } from "@/components/device-fanout";
+import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 
 function ArrowIcon() {
   return (
@@ -30,21 +32,27 @@ function ArrowIcon() {
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { t, lang } = useLang();
   const id = lang === "id";
+  const { playGlitch } = useWebAudioGlitch();
 
   return (
     <TiltCard className="group h-full">
       <Link
         href={`/work/${project.slug}`}
         data-reveal-item
+        onClick={() => playGlitch("click")}
         className="flex h-full flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-colors hover:border-navy/60"
       >
-      <div className="relative aspect-[16/10] overflow-hidden bg-surface">
-        <img
-          src={`/${project.thumb}`}
-          alt={t(project.titleKey)}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-        />
+      <div className="relative overflow-hidden bg-surface">
+        {project.fanout ? (
+          <DeviceFanOutMockup devices={project.fanout} />
+        ) : (
+          <img
+            src={`/${project.thumb}`}
+            alt={t(project.titleKey)}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+          />
+        )}
         <span className="absolute left-4 top-4 rounded-full border border-border-line bg-background/90 px-3 py-1 font-mono text-[11px] tracking-[0.2em] text-muted backdrop-blur-sm">
           {String(index + 1).padStart(2, "0")}
         </span>

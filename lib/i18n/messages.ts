@@ -556,6 +556,154 @@ export const messages = {
   "ft-role": [
     "Full Stack Developer · Indonesia",
     "Pengembang Full Stack · Indonesia"
+  ],
+  "ggt-eyebrow": [
+    "Telemetry",
+    "Telemetri"
+  ],
+  "ggt-h1": [
+    "Interactive commit ",
+    "Riwayat commit "
+  ],
+  "ggt-h2": [
+    "history",
+    "interaktif"
+  ],
+  "ggt-telemetry": [
+    "TELEMETRY INSPECTOR",
+    "INSPEKTOR TELEMETRI"
+  ],
+  "ggt-branch": [
+    "BRANCH",
+    "CABANG"
+  ],
+  "ggt-arch": [
+    "Architecture & Operational Context",
+    "Konteks Arsitektur & Operasional"
+  ],
+  "ggt-resp": [
+    "Key Responsibilities & Scope",
+    "Tanggung Jawab Utama & Ruang Lingkup"
+  ],
+  "ggt-deliv": [
+    "Deliverables & Artifacts",
+    "Hasil Kerja & Artefak"
+  ],
+  "ggt-none": [
+    "No deliverables recorded",
+    "Tidak ada hasil kerja tercatat"
+  ],
+  "ggt-d-skl": [
+    "Study Completion Letter (PDF)",
+    "Surat Keterangan Lulus (PDF)"
+  ],
+  "ggt-d-bnsp": [
+    "BNSP Certificate (PDF)",
+    "Sertifikat BNSP (PDF)"
+  ],
+  "ggt-d-repo": [
+    "Source code (GitHub)",
+    "Kode sumber (GitHub)"
+  ],
+  "ggt-d-magang": [
+    "Internship certificate",
+    "Sertifikat magang"
+  ],
+  "ggt-d-ccna": [
+    "CCNA certificate (PDF)",
+    "Sertifikat CCNA (PDF)"
+  ],
+  "ggt-d-python": [
+    "Python certificate (PDF)",
+    "Sertifikat Python (PDF)"
+  ],
+  "ggt-d-aws": [
+    "Cloud & Gen AI certificate (PDF)",
+    "Sertifikat Cloud & Gen AI (PDF)"
+  ],
+  "mm-ubigrad-title": [
+    "Undergraduate — Universitas Binaniaga Indonesia",
+    "Sarjana — Universitas Binaniaga Indonesia"
+  ],
+  "mm-ubigrad-context": [
+    "Completed the S1 Information Technology program (GPA 3.77) and closed the chapter with an official Study Completion Letter (SKL) plus the BNSP Junior Coder professional certification.",
+    "Menyelesaikan program S1 Teknologi Informasi (IPK 3,77) dan menutupnya dengan Surat Keterangan Lulus (SKL) resmi serta sertifikasi profesi BNSP Pemrogram Junior."
+  ],
+  "mm-ubigrad-r1": [
+    "Graduated with GPA 3.77",
+    "Lulus dengan IPK 3,77"
+  ],
+  "mm-ubigrad-r2": [
+    "Passed BNSP Junior Coder competency certification",
+    "Lulus sertifikasi kompetensi BNSP Pemrogram Junior"
+  ],
+  "mm-ummi-context": [
+    "Developed SIMARU — a QR-scanning mobile application for medical asset inspection — and supported hospital IT operations. Built with Flutter, FCM push notifications, and REST API integration.",
+    "Mengembangkan SIMARU — aplikasi mobile pemindaian QR untuk inspeksi aset medis — serta mendukung operasional IT rumah sakit. Dibangun dengan Flutter, notifikasi push FCM, dan integrasi REST API."
+  ],
+  "mm-ummi-r1": [
+    "Designed QR-based medical asset inspection flow",
+    "Merancang alur inspeksi aset medis berbasis QR"
+  ],
+  "mm-ummi-r2": [
+    "Implemented FCM push with automatic token management",
+    "Mengimplementasikan push FCM dengan manajemen token otomatis"
+  ],
+  "mm-ummi-r3": [
+    "Supported hospital IT operations",
+    "Mendukung operasional IT rumah sakit"
+  ],
+  "mm-batavia-context": [
+    "Performed accurate data entry, validation, and document management supporting administrative workflows.",
+    "Melakukan input data yang akurat, validasi, dan manajemen dokumen untuk mendukung alur kerja administrasi."
+  ],
+  "mm-batavia-r1": [
+    "Accurate, timely data entry",
+    "Input data akurat dan tepat waktu"
+  ],
+  "mm-batavia-r2": [
+    "Document validation & management",
+    "Validasi & manajemen dokumen"
+  ],
+  "mm-geosinema-context": [
+    "Managed the lighting setup for school film productions as part of the Geosinema extracurricular at SMK Geo Informatika.",
+    "Mengelola tata cahaya produksi film sekolah sebagai bagian ekstrakurikuler Geosinema di SMK Geo Informatika."
+  ],
+  "mm-geosinema-r1": [
+    "Lighting design & field operation",
+    "Desain & pengoperasian tata cahaya"
+  ],
+  "mm-certs-title": [
+    "Certifications — Cisco · Dicoding · Cloud",
+    "Sertifikasi — Cisco · Dicoding · Cloud"
+  ],
+  "mm-certs-context": [
+    "Professional certifications earned across 2024–2025: Cisco Networking Academy (CCNA Introduction to Networks, English for IT, Operating Systems Basics), Dicoding (Python, SOLID, Cloud & Gen AI), plus vendor cloud programs.",
+    "Sertifikasi profesional yang diraih sepanjang 2024–2025: Cisco Networking Academy (CCNA Pengenalan Jaringan, English for IT, Dasar Sistem Operasi), Dicoding (Python, SOLID, Cloud & Gen AI), plus program cloud vendor."
+  ],
+  "mm-certs-r1": [
+    "Networking, OS, Python, and cloud fundamentals",
+    "Dasar jaringan, OS, Python, dan cloud"
+  ],
+  "mm-smk-context": [
+    "Vocational high school — informatics study program at SMK Geo Informatika.",
+    "Sekolah menengah kejuruan — program keahlian informatika di SMK Geo Informatika."
+  ],
+  "mm-smk-r1": [
+    "Average grade 81",
+    "Rata-rata nilai 81"
+  ],
+  "proj-rationale": [
+    "Architectural Trade-Offs & Rationale",
+    "Trade-Off Arsitektur & Alasan"
+  ],
+  "proj-why": [
+    "Why:",
+    "Kenapa:"
+  ],
+  "proj-tradeoff": [
+    "Trade-off:",
+    "Trade-off:"
   ]
 } as const;
 

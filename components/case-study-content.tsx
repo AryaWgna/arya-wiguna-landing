@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/components/providers";
 import type { Project } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
+import { ProjectRationaleBox } from "@/components/project-rationale-box";
 
 export function CaseStudyContent({ project }: { project: Project }) {
   const { t, lang } = useLang();
@@ -84,6 +85,12 @@ export function CaseStudyContent({ project }: { project: Project }) {
               </span>
             ))}
           </div>
+
+          {project.rationale && project.rationale.length > 0 ? (
+            <div className="mt-10">
+              <ProjectRationaleBox rationale={project.rationale} />
+            </div>
+          ) : null}
 
           {project.roleNote ? (
             <div className="mt-10 rounded-xl border border-border-line p-5">

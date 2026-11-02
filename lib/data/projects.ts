@@ -12,6 +12,26 @@ export type Screenshot = {
   description: { en: string; id: string };
 };
 
+export type DeviceFrame = "phone" | "laptop";
+
+export type FanOutDevice = {
+  src: string;
+  frame: DeviceFrame;
+  alt?: string;
+};
+
+export type FanOutDevices = {
+  left: FanOutDevice;
+  center: FanOutDevice;
+  right: FanOutDevice;
+};
+
+export type RationaleItem = {
+  technology: string;
+  reason: { en: string; id: string };
+  tradeoff: { en: string; id: string };
+};
+
 export type Project = {
   slug: string;
   titleKey: string;
@@ -26,6 +46,14 @@ export type Project = {
   highlights: { en: string; id: string }[];
   roleNote?: { en: string; id: string };
   evidenceNote?: { en: string; id: string };
+  /**
+   * Pattern 3 — perangkat fan-out (left/center/right) untuk banner kartu.
+   */
+  fanout?: FanOutDevices;
+  /**
+   * Pattern 2 — trade-off arsitektur ("Why this tech stack").
+   */
+  rationale?: RationaleItem[];
   screenshots: Screenshot[];
 };
 
@@ -64,6 +92,46 @@ export const projects: Project[] = [
       en: "This project is fully open-source: the complete Flutter codebase (Android/iOS/web scaffolding) is available on GitHub, showing consistent progress on QR inspection, FCM push handling, and token management.",
       id: "Proyek ini sepenuhnya open-source: codebase Flutter lengkap (scaffolding Android/iOS/web) tersedia di GitHub, menunjukkan progres konsisten pada inspeksi QR, penanganan notifikasi push FCM, dan manajemen token.",
     },
+    fanout: {
+      left: { src: "assets/projects/simaru-login.jpg", frame: "phone", alt: "SIMARU login screen" },
+      center: { src: "assets/projects/simaru-home.jpg", frame: "phone", alt: "SIMARU main dashboard" },
+      right: { src: "assets/projects/simaru-stock.jpg", frame: "phone", alt: "SIMARU stock opname" },
+    },
+    rationale: [
+      {
+        technology: "Flutter",
+        reason: {
+          en: "One Dart codebase ships Android & iOS with consistent behavior — critical for a field tool used by hospital officers on varied devices.",
+          id: "Satu codebase Dart merilis Android & iOS dengan perilaku konsisten — penting untuk alat lapangan yang dipakai petugas rumah sakit di berbagai perangkat.",
+        },
+        tradeoff: {
+          en: "Native runtime is heavier than a web view; APK size grows, acceptable for internal tooling.",
+          id: "Runtime native lebih berat daripada web view; ukuran APK membesar, masih wajar untuk alat internal.",
+        },
+      },
+      {
+        technology: "Firebase Cloud Messaging (FCM)",
+        reason: {
+          en: "Push notifications reach officers even when the app is backgrounded — essential for inspection alerts while staff are on duty.",
+          id: "Notifikasi push tetap sampai meski aplikasi di background — penting untuk pengingat inspeksi saat petugas bertugas.",
+        },
+        tradeoff: {
+          en: "Depends on Google services; token refresh requires server sync.",
+          id: "Bergantung pada layanan Google; refresh token perlu sinkronisasi server.",
+        },
+      },
+      {
+        technology: "REST API",
+        reason: {
+          en: "Keeps the mobile client decoupled from the backend, so the hospital system can evolve its API independently.",
+          id: "Memisahkan klien mobile dari backend, sehingga sistem rumah sakit dapat mengembangkan API secara independen.",
+        },
+        tradeoff: {
+          en: "Every action needs network round-trips; no offline queue yet.",
+          id: "Setiap aksi butuh koneksi jaringan; belum ada antrean offline.",
+        },
+      },
+    ],
     screenshots: [
       {
         src: "assets/projects/simaru-home.jpg",
@@ -153,6 +221,68 @@ export const projects: Project[] = [
       en: "The repository includes a changelog documenting the release history (v1.0.0 in 2026; v2.0.0 on 2026-01-12), with feature milestones recorded across commits.",
       id: "Repository mencakup changelog yang mendokumentasikan riwayat rilis (v1.0.0 tahun 2026; v2.0.0 pada 2026-01-12), dengan tonggak fitur tercatat di seluruh commit.",
     },
+    fanout: {
+      left: { src: "assets/projects/skyboard-boarding.jpg", frame: "phone", alt: "Skyboard boarding filter" },
+      center: { src: "assets/projects/skyboard-main.jpg", frame: "laptop", alt: "Skyboard public flight board" },
+      right: { src: "assets/projects/skyboard-addflight.jpg", frame: "phone", alt: "Skyboard add flight modal" },
+    },
+    rationale: [
+      {
+        technology: "Laravel (PHP)",
+        reason: {
+          en: "Batteries-included CRUD, auth, and validation fit the Web Software Tools course scope while keeping the admin panel robust.",
+          id: "CRUD, autentikasi, dan validasi bawaan cocok dengan cakupan mata kuliah Web Software Tools sekaligus membuat panel admin kokoh.",
+        },
+        tradeoff: {
+          en: "PHP request model is less suited to real-time push; solved with 30-second auto-refresh instead of websockets.",
+          id: "Model request PHP kurang cocok untuk push real-time; disiasati dengan auto-refresh 30 detik alih-alih websocket.",
+        },
+      },
+      {
+        technology: "MySQL",
+        reason: {
+          en: "Relational model matches flight/airline/asset entities and keeps administrative data consistent.",
+          id: "Model relasional cocok untuk entitas penerbangan/maskapai/aset dan menjaga konsistensi data administrasi.",
+        },
+        tradeoff: {
+          en: "Schema migrations and joins add overhead at scale; fine for this board.",
+          id: "Migrasi skema dan join menambah beban saat skalabilitas besar; masih aman untuk papan ini.",
+        },
+      },
+      {
+        technology: "Docker Compose + Nginx",
+        reason: {
+          en: "Microservices topology with Nginx reverse proxy is reproducible anywhere for grading or demoing.",
+          id: "Topologi microservices dengan reverse proxy Nginx dapat direproduksi di mana saja untuk penilaian atau demo.",
+        },
+        tradeoff: {
+          en: "More moving parts than a single service; requires Docker knowledge to operate.",
+          id: "Lebih banyak komponen daripada satu layanan; butuh pengetahuan Docker untuk mengoperasikannya.",
+        },
+      },
+      {
+        technology: "Next.js 15 (UI)",
+        reason: {
+          en: "React server components render the public board efficiently while sharing type-safe calls with the Laravel API.",
+          id: "Server component React merender papan publik secara efisien sekaligus berbagi panggilan type-safe dengan API Laravel.",
+        },
+        tradeoff: {
+          en: "Node runtime adds a second service beside PHP.",
+          id: "Runtime Node menambah layanan kedua di samping PHP.",
+        },
+      },
+      {
+        technology: "SweetAlert2",
+        reason: {
+          en: "Polished modal feedback for admin CRUD without dragging in a heavy UI kit.",
+          id: "Feedback modal yang rapi untuk CRUD admin tanpa menarik pustaka UI yang berat.",
+        },
+        tradeoff: {
+          en: "Less flexible than a bespoke dialog system.",
+          id: "Kurang fleksibel dibanding sistem dialog khusus.",
+        },
+      },
+    ],
     screenshots: [
       {
         src: "assets/projects/skyboard-main.jpg",
@@ -242,6 +372,68 @@ export const projects: Project[] = [
       en: "A live demo is deployed on Vercel, and the repository README documents the full architecture — Bun gateway, Elysia API, Svelte client, and the proxying strategy.",
       id: "Demo live ter-deploy di Vercel, dan README repository mendokumentasikan arsitektur lengkap — gateway Bun, API Elysia, klien Svelte, serta strategi proxy.",
     },
+    fanout: {
+      left: { src: "assets/projects/streamely-explore.jpg", frame: "phone", alt: "StreamEly explore grid" },
+      center: { src: "assets/projects/streamely-home.jpg", frame: "laptop", alt: "StreamEly home page" },
+      right: { src: "assets/projects/streamely-player.jpg", frame: "phone", alt: "StreamEly video player" },
+    },
+    rationale: [
+      {
+        technology: "Bun (gateway + reverse proxy)",
+        reason: {
+          en: "Bootstraps 15,000+ metadata entries at startup and serves as gateway/proxy with a small memory footprint.",
+          id: "Men-bootstrap 15.000+ entri metadata saat startup dan berperan sebagai gateway/proxy dengan jejak memori kecil.",
+        },
+        tradeoff: {
+          en: "Newer runtime — some npm packages assume Node behavior.",
+          id: "Runtime relatif baru — beberapa paket npm berasumsi perilaku Node.",
+        },
+      },
+      {
+        technology: "Elysia.js (API)",
+        reason: {
+          en: "End-to-end typed API with schema inference reduces runtime errors at the edge.",
+          id: "API type-safe ujung-ke-ujung dengan inferensi skema mengurangi error runtime di sisi tepi.",
+        },
+        tradeoff: {
+          en: "Smaller ecosystem than Express; team should embrace TypeScript-first patterns.",
+          id: "Ekosistem lebih kecil daripada Express; tim perlu nyaman dengan pola TypeScript-first.",
+        },
+      },
+      {
+        technology: "Svelte + Vite (client)",
+        reason: {
+          en: "Compiled, lightweight client matches a streaming UI that must feel instant on slower connections.",
+          id: "Klien terkompilasi dan ringan cocok untuk UI streaming yang harus terasa instan di koneksi lambat.",
+        },
+        tradeoff: {
+          en: "Less mainstream than React; community and hiring pool are smaller.",
+          id: "Kurang populer daripada React; komunitas dan kandidat lebih sedikit.",
+        },
+      },
+      {
+        technology: "TVmaze & OMDB API",
+        reason: {
+          en: "Proxying cast/crew metadata with heuristic fallback avoids maintaining an internal scraper.",
+          id: "Proxy metadata cast/crew dengan fallback heuristik menghindari perawatan scraper internal.",
+        },
+        tradeoff: {
+          en: "External APIs impose rate limits and availability risk.",
+          id: "API eksternal memberlakukan batas laju dan risiko ketersediaan.",
+        },
+      },
+      {
+        technology: "Cloudflare Tunnel + PM2",
+        reason: {
+          en: "Zero-config public exposure plus process supervision make self-hosting simple.",
+          id: "Eksposur publik tanpa konfigurasi plus supervisi proses membuat self-hosting sederhana.",
+        },
+        tradeoff: {
+          en: "Tunnel adds a hop; PM2 runs a single node (no cluster yet).",
+          id: "Tunnel menambah satu hop; PM2 menjalankan satu node (belum cluster).",
+        },
+      },
+    ],
     screenshots: [
       {
         src: "assets/projects/streamely-home.jpg",

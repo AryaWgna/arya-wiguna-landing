@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang, useTheme } from "@/components/providers";
 import { MagneticWrap } from "@/components/magnetic-wrap";
+import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import { profile } from "@/lib/data/profile";
 
 function GitHubIcon() {
@@ -25,6 +26,7 @@ function LinkedInIcon() {
 export function Header() {
   const { t, lang, setLang } = useLang();
   const { theme, toggleTheme } = useTheme();
+  const { playGlitch } = useWebAudioGlitch();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -142,7 +144,10 @@ export function Header() {
 
           <button
             type="button"
-            onClick={toggleTheme}
+            onClick={() => {
+              toggleTheme();
+              playGlitch("switch");
+            }}
             className="rounded border border-border-line p-2 text-muted transition-colors hover:border-navy hover:text-foreground"
             aria-label={isDark ? "Mode terang" : "Mode gelap"}
           >

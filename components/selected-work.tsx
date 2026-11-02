@@ -7,6 +7,8 @@ import { SectionHeading } from "@/components/section-heading";
 import { projects } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
 import { TiltCard } from "@/components/tilt-card";
+import { DeviceFanOutMockup } from "@/components/device-fanout";
+import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import { profile } from "@/lib/data/profile";
 import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
@@ -14,6 +16,7 @@ export function SelectedWork() {
   const { t, lang } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const { playGlitch } = useWebAudioGlitch();
 
   useLayoutEffect(() => {
     const sec = sectionRef.current;
@@ -90,12 +93,16 @@ export function SelectedWork() {
                 className="flex h-full flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
               >
               <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
-                <img
-                  src={`/${project.thumb}`}
-                  alt={t(project.titleKey)}
-                  loading="lazy"
-                  className="aspect-[16/10] w-full object-cover transition-transform duration-500 hover:scale-105"
-                />
+                {project.fanout ? (
+                  <DeviceFanOutMockup devices={project.fanout} />
+                ) : (
+                  <img
+                    src={`/${project.thumb}`}
+                    alt={t(project.titleKey)}
+                    loading="lazy"
+                    className="aspect-[16/10] w-full object-cover"
+                  />
+                )}
               </div>
 
               <div className="flex flex-1 flex-col p-6">
@@ -119,6 +126,7 @@ export function SelectedWork() {
                 <div className="mt-auto flex flex-wrap items-center gap-5 pt-6">
                   <Link
                     href={`/work/${project.slug}`}
+                    onClick={() => playGlitch("click")}
                     className="font-mono text-sm font-medium text-blue transition-colors hover:text-navy-light"
                   >
                     {lang === "id" ? "Studi kasus →" : "Case study →"}
