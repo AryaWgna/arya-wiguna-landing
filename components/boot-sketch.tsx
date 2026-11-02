@@ -131,8 +131,12 @@ export function BootSketch() {
         const box = new THREE.Box3().setFromObject(lettersRoot);
         const size = new THREE.Vector3();
         box.getSize(size);
-        const target = w * 0.92;
-        lettersRoot.scale.setScalar(size.x > 0 ? Math.min(target / size.x, 3) : 1);
+        // px per world unit pada jarak kamera z=8 & fov 45°
+        // (2 * tan(22.5°) * 8 = 6.627) — skala dihitung agar seluruh nama
+        // selebar ≤92% lebar container, tanpa clip di layar mana pun.
+        const pxPerUnit = h / 6.627;
+        const scale = size.x > 0 ? (w * 0.92) / (size.x * pxPerUnit) : 1;
+        lettersRoot.scale.setScalar(Math.min(scale, 4));
         renderer!.setSize(w, h, false);
         renderer!.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         camera.aspect = w / Math.max(h, 1);
@@ -154,14 +158,14 @@ export function BootSketch() {
 
       const renderFrame = (t: number) => {
         letters.forEach((l, i) => {
-          // Flip kartu: 180° di tempat — sisi biru belakang dulu, lalu berputar
-          // penuh ke sisi navy depan (0 → π)
+          // Flip kartu: 180° di tempat — sisi biru belakang dulu (jelas terlihat),
+          // lalu berputar penuh ke sisi navy depan (0 → π)
           const start = i * 0.12;
           const k = Math.min(Math.max((t - start) / 0.8, 0), 1);
           const e = k * k * (3 - 2 * k); // smoothstep
           l.group.rotation.y = Math.PI * (1 - e);
           l.front.opacity = e;
-          l.back.opacity = 0.5 * (1 - e);
+          l.back.opacity = 0.85 * (1 - e);
         });
         // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
         lettersRoot.rotation.y = (mx - 0.5) * 0.6;
