@@ -5,6 +5,7 @@ import { useLang } from "@/components/providers";
 import { GsapReveal } from "@/components/gsap-reveal";
 import { projects, type Project } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
+import { TiltCard } from "@/components/tilt-card";
 
 function ArrowIcon() {
   return (
@@ -31,11 +32,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const id = lang === "id";
 
   return (
-    <Link
-      href={`/work/${project.slug}`}
-      data-reveal-item
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-colors hover:border-navy/60"
-    >
+    <TiltCard className="group h-full">
+      <Link
+        href={`/work/${project.slug}`}
+        data-reveal-item
+        className="flex h-full flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-colors hover:border-navy/60"
+      >
       <div className="relative aspect-[16/10] overflow-hidden bg-surface">
         <img
           src={`/${project.thumb}`}
@@ -78,7 +80,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <span className="font-mono text-sm text-muted">{t("view-src")} ↗</span>
         </div>
       </div>
-    </Link>
+      </Link>
+    </TiltCard>
   );
 }
 

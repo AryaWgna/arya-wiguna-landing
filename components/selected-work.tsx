@@ -6,6 +6,7 @@ import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { projects } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
+import { TiltCard } from "@/components/tilt-card";
 import { profile } from "@/lib/data/profile";
 import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
@@ -83,11 +84,11 @@ export function SelectedWork() {
           className="container-x grid gap-6 pb-24 md:gap-8 md:pb-32 sm:grid-cols-2"
         >
           {projects.map((project) => (
-            <article
-              key={project.slug}
-              data-project-card
-              className="flex flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
-            >
+            <TiltCard key={project.slug} className="group">
+              <article
+                data-project-card
+                className="flex h-full flex-col overflow-hidden rounded-2xl border border-border-line bg-background transition-shadow hover:shadow-lg"
+              >
               <div className="parallax-img-wrap rounded-none border-0 border-b border-border-line">
                 <img
                   src={`/${project.thumb}`}
@@ -134,7 +135,8 @@ export function SelectedWork() {
                   ) : null}
                 </div>
               </div>
-            </article>
+              </article>
+            </TiltCard>
           ))}
         </div>
       </div>

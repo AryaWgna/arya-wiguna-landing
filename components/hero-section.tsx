@@ -10,7 +10,7 @@ import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
 import { gsap, isReducedMotion, splitTextIntoSpans } from "@/lib/gsap";
 
-const Hero3D = dynamic(() => import("@/components/hero-3d"), { ssr: false });
+const HeroArt = dynamic(() => import("@/components/hero-art"), { ssr: false });
 
 export function HeroSection() {
   const { lang } = useLang();
@@ -183,9 +183,9 @@ export function HeroSection() {
           </div>
 
           <div data-hero-visual className="lg:col-span-5" style={{ perspective: "800px" }}>
-            <Hero3D paused={bootActive} />
+            <HeroArt paused={bootActive} />
             <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
-              procedural 3D hero accent — WebGL optional
+              generative art accent — p5.js · unique per visit
             </p>
           </div>
         </div>

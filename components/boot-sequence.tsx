@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
-import Hero3D from "@/components/hero-3d";
+import { BootSketch } from "@/components/boot-sketch";
 import { useLang, useBoot } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
@@ -105,7 +105,7 @@ export function BootSequence() {
       aria-hidden="true"
     >
       <div id="boot-3d" className="relative h-40 w-40 opacity-0">
-        <Hero3D />
+        <BootSketch />
         {/* Scanline ala terminal boot */}
         <div
           id="boot-scanline"
