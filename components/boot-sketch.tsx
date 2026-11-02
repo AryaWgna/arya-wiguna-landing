@@ -105,15 +105,16 @@ export function BootSketch() {
 
     const ctx = gsap.context(() => {
       const lens = paths.map((p) => p.getTotalLength());
+      // Ritme cepat: 36 garis selesai ±2.4s — sebelum boot fade-out (2.95s).
       gsap.fromTo(
         paths,
         { strokeDasharray: (i: number) => lens[i], strokeDashoffset: (i: number) => lens[i] },
         {
           strokeDashoffset: 0,
-          duration: 0.7,
-          stagger: 0.14,
+          duration: 0.4,
+          stagger: 0.055,
           ease: "power2.inOut",
-          delay: 0.15,
+          delay: 0.1,
         }
       );
       // Kertas goyang — rotasi sangat halus, siklus panjang
