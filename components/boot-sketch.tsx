@@ -57,6 +57,7 @@ export function BootSketch() {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     let mx = 0.5;
     let my = 0.5;
+    let fitScale = 1;
 
     type Letter = {
       group: THREE.Group;
@@ -136,7 +137,8 @@ export function BootSketch() {
         // selebar ≤92% lebar container, tanpa clip di layar mana pun.
         const pxPerUnit = h / 6.627;
         const scale = size.x > 0 ? (w * 0.92) / (size.x * pxPerUnit) : 1;
-        lettersRoot.scale.setScalar(Math.min(scale, 4));
+        fitScale = Math.min(scale, 4);
+        lettersRoot.scale.setScalar(fitScale);
         renderer!.setSize(w, h, false);
         renderer!.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         camera.aspect = w / Math.max(h, 1);
@@ -160,13 +162,20 @@ export function BootSketch() {
         letters.forEach((l, i) => {
           // Flip kartu: 180° di tempat — sisi biru belakang dulu (jelas terlihat),
           // lalu berputar penuh ke sisi navy depan (0 → π)
-          const start = i * 0.12;
-          const k = Math.min(Math.max((t - start) / 0.8, 0), 1);
+          const start = i * 0.1;
+          const k = Math.min(Math.max((t - start) / 0.7, 0), 1);
           const e = k * k * (3 - 2 * k); // smoothstep
           l.group.rotation.y = Math.PI * (1 - e);
           l.front.opacity = e;
           l.back.opacity = 0.85 * (1 - e);
         });
+        // Fase zoom: nama membesar ke depan (masuk ke website)
+        const flipEnd = (letters.length - 1) * 0.1 + 0.7; // ≈1.7s
+        const zoomStart = flipEnd + 0.2; // ≈1.9s
+        const zK = Math.min(Math.max((t - zoomStart) / 1.1, 0), 1);
+        const zE = zK * zK * (3 - 2 * zK);
+        const zoomMul = 1 + 2.2 * zE; // 1× → 3.2×
+        lettersRoot.scale.setScalar(fitScale * zoomMul);
         // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
         lettersRoot.rotation.y = (mx - 0.5) * 0.6;
         lettersRoot.rotation.x = 0.22 + (my - 0.5) * 0.35;
