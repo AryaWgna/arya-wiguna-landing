@@ -56,6 +56,9 @@ export function BootSketch() {
     let disposed = false;
     let raf = 0;
     let cleanupRef: (() => void) | null = null;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    let mx = 0.5;
+    let my = 0.5;
 
     type Letter = {
       group: THREE.Group;
@@ -140,6 +143,13 @@ export function BootSketch() {
       renderer.domElement.style.width = "100%";
       renderer.domElement.style.height = "100%";
 
+      const onPointer = (e: PointerEvent) => {
+        const rect = mount.getBoundingClientRect();
+        mx = (e.clientX - rect.left) / Math.max(rect.width, 1);
+        my = (e.clientY - rect.top) / Math.max(rect.height, 1);
+      };
+      if (finePointer && !reduced) mount.addEventListener("pointermove", onPointer);
+
       const renderFrame = (t: number) => {
         letters.forEach((l, i) => {
           const start = i * LETTER_DELAY;
@@ -149,8 +159,14 @@ export function BootSketch() {
           l.back.opacity = 0.5 * e;
           l.group.position.y = (1 - e) * 0.35;
         });
-        // 3D tenang: seluruh nama berputar sangat pelan di sumbu vertikal
-        lettersRoot.rotation.y = t * 0.12;
+        // Push-in sinematik: kamera mendekat pelan, sekali jalan
+        const push = Math.min(Math.max(t / 3, 0), 1);
+        const easePush = push * push * (3 - 2 * push);
+        camera.position.z = 8 - easePush * 1.2;
+        camera.lookAt(0, 0, 0);
+        // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
+        lettersRoot.rotation.y = (mx - 0.5) * 0.6;
+        lettersRoot.rotation.x = 0.22 + (my - 0.5) * 0.35;
         renderer!.render(scene, camera);
       };
 
@@ -192,6 +208,7 @@ export function BootSketch() {
       cleanupRef = () => {
         disposed = true;
         stopLoop();
+        if (finePointer && !reduced) mount.removeEventListener("pointermove", onPointer);
         document.removeEventListener("visibilitychange", onVis);
         ro.disconnect();
         lettersRoot.traverse((obj) => {
