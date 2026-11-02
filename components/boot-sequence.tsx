@@ -64,6 +64,11 @@ export function BootSequence() {
           { yPercent: 320, duration: 2.4, ease: "none", repeat: -1 }
         );
         gsap.fromTo(
+          "#boot-name",
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.75 }
+        );
+        gsap.fromTo(
           "#boot-progress",
           { scaleX: 0 },
           { scaleX: 1, duration: total / 1000, ease: "power1.inOut" }
@@ -104,7 +109,7 @@ export function BootSequence() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
       aria-hidden="true"
     >
-      <div id="boot-3d" className="relative h-40 w-40 opacity-0">
+      <div id="boot-3d" className="relative h-36 w-36 opacity-0">
         <BootSketch />
         {/* Scanline ala terminal boot */}
         <div
@@ -113,11 +118,18 @@ export function BootSequence() {
         />
       </div>
 
+      <p
+        id="boot-name"
+        className="mt-8 select-none font-mono text-base font-semibold uppercase tracking-[0.28em] text-foreground opacity-0 md:text-lg"
+      >
+        Arya&nbsp;Wiguna
+      </p>
+
       <div className="absolute right-6 top-6 font-mono text-xs tracking-widest text-muted">
         [{langRef.current === "id" ? "ID" : "EN"}]
       </div>
 
-      <div className="mt-5 flex min-h-[96px] flex-col items-center gap-1.5 font-mono text-xs text-muted">
+      <div className="mt-8 flex min-h-[96px] flex-col items-center gap-1.5 font-mono text-xs text-muted">
         {lines.map((line, i) => (
           <div key={i} className="flex items-center gap-2">
             <span className="text-blue">▸</span>
