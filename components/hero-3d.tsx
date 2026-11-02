@@ -11,11 +11,13 @@ import { gsap } from "@/lib/gsap";
  * - Menghormati prefers-reduced-motion; berhenti saat tab/elemen tak terlihat.
  * - DPR dibatasi 1.5.
  */
-export default function Hero3D() {
+export default function Hero3D({ paused = false }: { paused?: boolean }) {
   const mountRef = useRef<HTMLDivElement>(null);
-  const [webgl, setWebgl] = useState(true);
+  const [webglOk, setWebglOk] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // Saat paused (mis. boot sequence aktif), jangan buat scene/context WebGL dulu.
+    if (paused) return;
     const mount = mountRef.current;
     if (!mount) return;
 
@@ -24,11 +26,11 @@ export default function Hero3D() {
       const test = document.createElement("canvas");
       const gl = test.getContext("webgl") || test.getContext("experimental-webgl");
       if (!gl) {
-        setWebgl(false);
+        setWebglOk(false);
         return;
       }
     } catch {
-      setWebgl(false);
+      setWebglOk(false);
       return;
     }
 
@@ -43,6 +45,7 @@ export default function Hero3D() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
+    setWebglOk(true);
 
     // Cahaya
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
@@ -187,6 +190,7 @@ export default function Hero3D() {
     const onResize = () => {
       const w = mount.clientWidth;
       const h = mount.clientHeight;
+      if (!w || !h) return;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
@@ -208,17 +212,20 @@ export default function Hero3D() {
         mount.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [paused]);
 
   return (
     <div className="relative aspect-square w-full max-w-[420px]" aria-hidden="true">
-      {/* Fallback statis (terlihat jika WebGL gagal / sebelum load) */}
-      <div className="absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border-line bg-surface" />
-        <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-xl bg-blue-soft" />
-        <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-lg bg-navy" />
-      </div>
-      {webgl ? <div ref={mountRef} className="absolute inset-0" /> : null}
+      {/* Fallback statis — hanya tampil saat WebGL belum/tidak tersedia,
+          TIDAK ditumpuk di belakang canvas (mencegah visual dobel saat boot). */}
+      {webglOk !== true && (
+        <div className="absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border-line bg-surface" />
+          <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-xl bg-blue-soft" />
+          <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-lg bg-navy" />
+        </div>
+      )}
+      <div ref={mountRef} className="absolute inset-0" />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useLang } from "@/components/providers";
+import { useLang, useBoot } from "@/components/providers";
 import { OnlineVisitors } from "@/components/online-visitors";
 import { CvDropdown } from "@/components/cv-dropdown";
 import { MagneticWrap } from "@/components/magnetic-wrap";
@@ -14,6 +14,7 @@ const Hero3D = dynamic(() => import("@/components/hero-3d"), { ssr: false });
 
 export function HeroSection() {
   const { lang } = useLang();
+  const { bootActive } = useBoot();
   const sectionRef = useRef<HTMLElement>(null);
   const viewWork = lang === "id" ? "Lihat Karya" : "View Work";
   const getInTouch = lang === "id" ? "Hubungi Saya" : "Get in Touch";
@@ -182,7 +183,7 @@ export function HeroSection() {
           </div>
 
           <div data-hero-visual className="lg:col-span-5" style={{ perspective: "800px" }}>
-            <Hero3D />
+            <Hero3D paused={bootActive} />
             <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
               procedural 3D hero accent — WebGL optional
             </p>

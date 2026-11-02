@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import Hero3D from "@/components/hero-3d";
-import { useLang } from "@/components/providers";
+import { useLang, useBoot } from "@/components/providers";
 
 const BOOT_LINES: { en: string; id: string }[] = [
   { en: "aryawgna v2.0.0", id: "aryawgna v2.0.0" },
@@ -15,6 +15,7 @@ const BOOT_LINES: { en: string; id: string }[] = [
 
 export function BootSequence() {
   const { lang } = useLang();
+  const { setBootActive } = useBoot();
   // Tangkap bahasa saat mount pertama — boot hanya berjalan sekali per load penuh
   const langRef = useRef(lang);
   const [phase, setPhase] = useState<"mounting" | "boot" | "done">("mounting");
@@ -23,6 +24,7 @@ export function BootSequence() {
   useEffect(() => {
     // Hormati prefers-reduced-motion (aksesibilitas). Boot selalu tampil saat refresh.
     if (isReducedMotion()) {
+      setBootActive(false);
       setPhase("done");
       return;
     }
@@ -32,12 +34,17 @@ export function BootSequence() {
     const activeLines = BOOT_LINES.map((l) => (locale === "id" ? l.id : l.en));
 
     const finished = () => {
+      setBootActive(false);
       setPhase("done");
     };
 
     let overlay: HTMLElement | null = null;
     let ctx: gsap.Context | null = null;
     const total = 350 + BOOT_LINES.length * 420 + 500;
+    const timers: number[] = [];
+    const later = (fn: () => void, ms: number) => {
+      timers.push(window.setTimeout(fn, ms));
+    };
 
     const tick = requestAnimationFrame(() => {
       overlay = document.getElementById("boot-sequence");
@@ -64,12 +71,12 @@ export function BootSequence() {
       }, overlay);
 
       idLines.forEach((_, idx) => {
-        window.setTimeout(() => {
+        later(() => {
           setLines(idLines.slice(0, idx + 1));
         }, 350 + idx * 420);
       });
 
-      window.setTimeout(() => {
+      later(() => {
         const el = overlay;
         if (!el) return;
         gsap.to(el, {
@@ -82,8 +89,10 @@ export function BootSequence() {
     });
 
     return () => {
+      timers.forEach((t) => window.clearTimeout(t));
       cancelAnimationFrame(tick);
       ctx?.revert();
+      setBootActive(false);
     };
   }, []);
 
@@ -127,7 +136,10 @@ export function BootSequence() {
 
       <button
         type="button"
-        onClick={() => setPhase("done")}
+        onClick={() => {
+          setBootActive(false);
+          setPhase("done");
+        }}
         className="absolute bottom-6 right-6 font-mono text-xs text-muted transition-colors hover:text-foreground"
       >
         skip →

@@ -47,9 +47,16 @@ const LangContext = createContext<{
   t: (key) => key,
 });
 
+const BootContext = createContext<{
+  bootActive: boolean;
+  setBootActive: (v: boolean) => void;
+}>({ bootActive: true, setBootActive: () => {} });
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const [lang, setLangState] = useState<Locale>(getInitialLang);
+  const [bootActive, setBootActiveState] = useState(true);
+  const setBootActive = useCallback((v: boolean) => setBootActiveState(v), []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -84,10 +91,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   const themeValue = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
   const langValue = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
+  const bootValue = useMemo(() => ({ bootActive, setBootActive }), [bootActive, setBootActive]);
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <LangContext.Provider value={langValue}>{children}</LangContext.Provider>
+      <LangContext.Provider value={langValue}>
+        <BootContext.Provider value={bootValue}>{children}</BootContext.Provider>
+      </LangContext.Provider>
     </ThemeContext.Provider>
   );
 }
@@ -98,6 +108,10 @@ export function useTheme() {
 
 export function useLang() {
   return useContext(LangContext);
+}
+
+export function useBoot() {
+  return useContext(BootContext);
 }
 
 export type { Locale, MessageKey };
