@@ -73,7 +73,7 @@ export function BootSequence() {
     >
       <div
         id="boot-visual"
-        className="relative h-32 w-[min(94vw,760px)] opacity-0 md:h-40"
+        className="relative h-40 w-[min(96vw,860px)] opacity-0 md:h-52"
       >
         <BootSketch />
       </div>
