@@ -146,8 +146,8 @@ export function BootSketch() {
         // (2 * tan(22.5°) * 8 = 6.627) — skala dihitung agar seluruh nama
         // selebar ≤92% lebar container, tanpa clip di layar mana pun.
         const pxPerUnit = h / 6.627;
-        const scale = size.x > 0 ? (w * 1.0) / (size.x * pxPerUnit) : 1;
-        fitScale = Math.min(scale, 6);
+        const scale = size.x > 0 ? (w * 1.02) / (size.x * pxPerUnit) : 1;
+        fitScale = Math.min(scale, 8);
         lettersRoot.scale.setScalar(fitScale);
         renderer!.setSize(w, h, false);
         renderer!.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
