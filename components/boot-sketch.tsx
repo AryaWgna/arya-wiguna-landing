@@ -9,8 +9,8 @@ import { isReducedMotion } from "@/lib/gsap";
 /**
  * Boot — "ARYA WIGUNA" 3D besar, huruf muncul satu per satu.
  * - Ekstrusi dengan bevel, dua lapis (navy depan, biru tipis belakang).
- * - Setiap huruf muncul berurutan: naik dari bawah sambil berputar masuk
- *   (spinning-in) lalu tenang; setelah lengkap, keseluruhan sedikit bergoyang.
+ * - Setiap huruf muncul berurutan: fade-in + pop scale + naik sedikit,
+ *   hingga seluruh nama lengkap (tanpa flip, zoom, atau parallax).
  * - Tanpa teks lain.
  */
 
@@ -54,10 +54,20 @@ export function BootSketch() {
     let disposed = false;
     let raf = 0;
     let cleanupRef: (() => void) | null = null;
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    let mx = 0.5;
-    let my = 0.5;
     let fitScale = 1;
+
+    // Timing animasi sederhana: setiap huruf muncul selama PER_LETTER detik,
+    // dengan jeda STAGGER sebelum huruf berikutnya mulai muncul.
+    const PER_LETTER = 0.45;
+    const STAGGER = 0.13;
+
+    // Back-out ease (overshoot): huruf "pop" — membesar melewati ukuran
+    // akhir lalu settle tenang di 100%. Stanar overshoot 1.70158.
+    const S = 1.70158;
+    const backOut = (t: number) => {
+      const u = t - 1;
+      return 1 + (S + 1) * u * u * u + S * u * u;
+    };
 
     type Letter = {
       group: THREE.Group;
@@ -151,34 +161,22 @@ export function BootSketch() {
       renderer.domElement.style.width = "100%";
       renderer.domElement.style.height = "100%";
 
-      const onPointer = (e: PointerEvent) => {
-        const rect = mount.getBoundingClientRect();
-        mx = (e.clientX - rect.left) / Math.max(rect.width, 1);
-        my = (e.clientY - rect.top) / Math.max(rect.height, 1);
-      };
-      if (finePointer && !reduced) mount.addEventListener("pointermove", onPointer);
+
 
       const renderFrame = (t: number) => {
         letters.forEach((l, i) => {
-          // Flip kartu: 180° di tempat — sisi biru belakang dulu (jelas terlihat),
-          // lalu berputar penuh ke sisi navy depan (0 → π)
-          const start = i * 0.1;
-          const k = Math.min(Math.max((t - start) / 0.7, 0), 1);
-          const e = k * k * (3 - 2 * k); // smoothstep
-          l.group.rotation.y = Math.PI * (1 - e);
-          l.front.opacity = e;
-          l.back.opacity = 0.85 * (1 - e);
+          // Muncul satu per satu dengan efek "pop": membesar (overshoot)
+          // sambil naik, lalu settle — fade-in cepat.
+          const start = i * STAGGER;
+          const k = Math.min(Math.max((t - start) / PER_LETTER, 0), 1);
+          const e = backOut(k);
+          l.group.scale.setScalar(0.35 + 0.65 * e);
+          l.group.position.y = -0.45 * (1 - e);
+          l.front.opacity = Math.min(1, k * 1.8);
+          l.back.opacity = 0.32 * Math.min(1, k * 1.8);
         });
-        // Fase zoom: nama membesar ke depan (masuk ke website)
-        const flipEnd = (letters.length - 1) * 0.1 + 0.7; // ≈1.7s
-        const zoomStart = flipEnd + 0.2; // ≈1.9s
-        const zK = Math.min(Math.max((t - zoomStart) / 1.1, 0), 1);
-        const zE = zK * zK * (3 - 2 * zK);
-        const zoomMul = 1 + 2.2 * zE; // 1× → 3.2×
-        lettersRoot.scale.setScalar(fitScale * zoomMul);
-        // Parallax halus mengikuti kursor (tanpa rotasi otomatis)
-        lettersRoot.rotation.y = (mx - 0.5) * 0.6;
-        lettersRoot.rotation.x = 0.22 + (my - 0.5) * 0.35;
+        lettersRoot.scale.setScalar(fitScale);
+        lettersRoot.rotation.set(0, 0, 0);
         renderer!.render(scene, camera);
       };
 
@@ -220,7 +218,7 @@ export function BootSketch() {
       cleanupRef = () => {
         disposed = true;
         stopLoop();
-        if (finePointer && !reduced) mount.removeEventListener("pointermove", onPointer);
+
         document.removeEventListener("visibilitychange", onVis);
         ro.disconnect();
         lettersRoot.traverse((obj) => {

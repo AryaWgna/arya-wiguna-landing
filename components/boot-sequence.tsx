@@ -25,7 +25,7 @@ export function BootSequence() {
 
     let overlay: HTMLElement | null = null;
     let ctx: gsap.Context | null = null;
-    const total = 3200;
+    const total = 2400;
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
