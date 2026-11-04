@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
@@ -19,7 +20,12 @@ export function SelectedWork() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [selectedArchProject, setSelectedArchProject] = useState<Project | null>(null);
+  const [mounted, setMounted] = useState<boolean>(false);
   const { playGlitch } = useWebAudioGlitch();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -189,20 +195,20 @@ export function SelectedWork() {
         </div>
       </div>
 
-      {/* Interactive Architecture Flow Modal */}
-      {selectedArchProject && selectedArchProject.architecture && (
+      {/* Interactive Architecture Flow Modal (Portalled to document.body) */}
+      {mounted && selectedArchProject && selectedArchProject.architecture && createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm sm:p-6"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md sm:p-6"
           onClick={() => setSelectedArchProject(null)}
         >
           <div
-            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border-line bg-background shadow-2xl"
+            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border-line bg-background shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-border-line px-6 py-4">
+            <div className="flex items-center justify-between border-b border-border-line px-6 py-4 bg-surface/50">
               <div className="flex items-center gap-3">
                 <span className="rounded-full border border-blue/40 bg-blue/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-blue">
                   {selectedArchProject.chips[0]}
@@ -215,15 +221,15 @@ export function SelectedWork() {
                 type="button"
                 onClick={() => setSelectedArchProject(null)}
                 aria-label="Close architecture modal"
-                className="rounded-lg p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground"
+                className="rounded-lg p-2 text-muted transition-colors hover:bg-surface hover:text-foreground text-base"
               >
                 ✕
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-              <ArchitectureFlow flow={selectedArchProject.architecture} />
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar-thin">
+              <ArchitectureFlow flow={selectedArchProject.architecture} autoPlayDefault={true} />
             </div>
 
             {/* Modal Footer */}
@@ -251,7 +257,8 @@ export function SelectedWork() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

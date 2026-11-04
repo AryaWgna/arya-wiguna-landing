@@ -203,11 +203,12 @@ export const projects: Project[] = [
           node: "Flutter Client",
           role: { en: "Optical QR Scanner", id: "Pemindai QR Optik" },
           protocol: "Camera2 / AVFoundation",
-          latency: "~16ms",
+          latency: "~16ms (60 FPS)",
           description: {
             en: "Officer scans the QR barcode affixed to medical equipment using the device camera.",
             id: "Petugas memindai kode QR fisik pada alat medis menggunakan kamera perangkat.",
           },
+          payloadExample: '{\n  "event": "QR_SCANNED",\n  "optical_raw": "UMMI://MED-EQUIP/VENT-04",\n  "barcode_format": "QR_CODE",\n  "camera_lens": "BACK_MACRO",\n  "timestamp": "2026-11-04T14:22:05Z"\n}',
         },
         {
           step: 2,
@@ -219,7 +220,7 @@ export const projects: Project[] = [
             en: "App validates JWT auth token, bundles device FCM token, and structures the inspection payload.",
             id: "Aplikasi memvalidasi token JWT, menyertakan token FCM perangkat, dan menyusun payload inspeksi.",
           },
-          payloadExample: '{\n  "asset_id": "MED-VENT-04",\n  "status": "OPERATIONAL",\n  "inspector_id": "STF-289",\n  "fcm_token": "eX_98a...qk"\n}',
+          payloadExample: '{\n  "auth_header": "Bearer eyJhbGciOiJIUzI1Ni...",\n  "asset_id": "MED-VENT-04",\n  "inspector_id": "STF-289",\n  "device_fingerprint": "fcm_token_eX_98a...qk",\n  "battery_level": 0.88\n}',
         },
         {
           step: 3,
@@ -231,6 +232,7 @@ export const projects: Project[] = [
             en: "Server verifies asset existence, writes stock opname log into the database, and fires FCM event.",
             id: "Server memvalidasi aset, mencatat log stock opname ke database, dan memicu event notifikasi.",
           },
+          payloadExample: '{\n  "status": 200,\n  "transaction": "DB_TRANSACTION_COMMITTED",\n  "audit_log_id": 14092,\n  "inspection_status": "OPERATIONAL_VERIFIED",\n  "event_fired": "App\\\\Events\\\\MedicalAssetInspected"\n}',
         },
         {
           step: 4,
@@ -242,17 +244,19 @@ export const projects: Project[] = [
             en: "Google FCM dispatches targeted notifications to relevant technician and department head channels.",
             id: "Google FCM mengirimkan alert push bertarget ke channel teknisi dan kepala ruangan.",
           },
+          payloadExample: '{\n  "message": {\n    "topic": "hospital-head-nurse-dept",\n    "notification": {\n      "title": "Inspeksi Selesai: Ventilator 04",\n      "body": "Petugas STF-289 memverifikasi aset dalam kondisi laik pakai."\n    },\n    "priority": "HIGH"\n  }\n}',
         },
         {
           step: 5,
           node: "Target Staff Device",
           role: { en: "Background Alert Receiver", id: "Penerima Alert Latar Belakang" },
           protocol: "FCM Push Listener",
-          latency: "Real-time",
+          latency: "Real-time (<100ms)",
           description: {
             en: "Custom background/foreground handler rings audible alert and routes user straight to the asset log.",
             id: "Handler background/foreground memunculkan alert audio dan membuka log aset secara instan.",
           },
+          payloadExample: '{\n  "received_state": "BACKGROUND_WAKE_LOCK",\n  "channel_id": "urgent_medical_alerts",\n  "sound": "haptic_pulse.wav",\n  "action_intent": "OPEN_INSPECTION_DETAIL_14092"\n}',
         },
       ],
     },
@@ -450,6 +454,7 @@ export const projects: Project[] = [
             en: "Public display screens poll flight schedules every 30s while admins manage airline assets.",
             id: "Layar display publik mem-polling jadwal tiap 30 detik saat admin mengelola maskapai.",
           },
+          payloadExample: '{\n  "client_type": "FIDS_KIOSK_DISPLAY",\n  "poll_interval_sec": 30,\n  "active_terminal": "TERMINAL_2_DEPARTURES",\n  "requested_fields": ["flight_no", "destination", "status", "gate"]\n}',
         },
         {
           step: 2,
@@ -461,6 +466,7 @@ export const projects: Project[] = [
             en: "Nginx routes `/` requests to Next.js 15 UI and proxies `/api/*` to Laravel 11 container.",
             id: "Nginx me-route path `/` ke UI Next.js 15 dan mem-proxy `/api/*` ke kontainer Laravel 11.",
           },
+          payloadExample: 'upstream skyboard_app {\n    server nextjs_ui:3000;\n}\nupstream skyboard_api {\n    server laravel_backend:9000;\n}\n# Port 80/443 SSL termination & traffic split',
         },
         {
           step: 3,
@@ -472,7 +478,7 @@ export const projects: Project[] = [
             en: "Renders live flight statuses (On Time, Delayed, Boarding, Gate Closed, Departed) with audio chimes.",
             id: "Merender status penerbangan dinamis beserta chime audio pengumuman keberangkatan.",
           },
-          payloadExample: '{\n  "flight_no": "GA-421",\n  "airline": "Garuda Indonesia",\n  "status": "BOARDING",\n  "gate": "A4",\n  "time": "14:35"\n}',
+          payloadExample: '{\n  "flight_no": "GA-421",\n  "airline": "Garuda Indonesia",\n  "status": "BOARDING",\n  "gate": "A4",\n  "time": "14:35",\n  "audio_chime": "chime_boarding_call.mp3"\n}',
         },
         {
           step: 4,
@@ -484,6 +490,7 @@ export const projects: Project[] = [
             en: "Handles airline asset uploads, flight schedule mutations, and promo banner scheduling.",
             id: "Memproses upload aset maskapai, perubahan jadwal penerbangan, dan banner promosi.",
           },
+          payloadExample: '{\n  "method": "PATCH",\n  "endpoint": "/api/v2/flights/GA-421/status",\n  "auth_user": "operator_skyboard_admin",\n  "new_status": "BOARDING",\n  "updated_at": "2026-11-04T14:30:00Z"\n}',
         },
         {
           step: 5,
@@ -495,6 +502,7 @@ export const projects: Project[] = [
             en: "ACID transactions for flights, gates, and audit trails under isolated Docker network.",
             id: "Transaksi ACID untuk data penerbangan, gate, dan audit trail di jaringan Docker terisolasi.",
           },
+          payloadExample: 'UPDATE flights \nSET status = \'BOARDING\', updated_at = NOW() \nWHERE flight_number = \'GA-421\';\n-- 1 row affected in 0.003s [Docker Bridge Network]',
         },
       ],
     },
@@ -692,6 +700,7 @@ export const projects: Project[] = [
             en: "Lightweight client computes Jaccard genre similarity directly in browser memory without extra round-trips.",
             id: "Klien ringan menghitung similaritas genre Jaccard langsung di memori browser tanpa round-trip tambahan.",
           },
+          payloadExample: '{\n  "selected_genres": ["Sci-Fi", "Thriller"],\n  "target_candidate": "Steins;Gate",\n  "intersection_count": 4,\n  "union_count": 5,\n  "jaccard_similarity": 0.8\n}',
         },
         {
           step: 2,
@@ -703,6 +712,7 @@ export const projects: Project[] = [
             en: "Bootstraps and caches 15,000+ title records in RAM, serving requests with near-zero overhead.",
             id: "Memuat dan menyimpan 15.000+ rekaman judul di RAM, melayani request dengan overhead nyaris nol.",
           },
+          payloadExample: '{\n  "ram_cached_records": 15420,\n  "bun_heap_mb": 42.6,\n  "cache_hit": true,\n  "lookup_ns": 42000,\n  "status": "CACHE_HIT_RAM"\n}',
         },
         {
           step: 3,
@@ -714,7 +724,7 @@ export const projects: Project[] = [
             en: "Implements heuristic fallbacks between TVmaze and OMDB API to resolve cast and rating metadata.",
             id: "Menerapkan fallback heuristik antara TVmaze dan OMDB API untuk metadata kru dan rating.",
           },
-          payloadExample: '{\n  "title": "Steins;Gate",\n  "cached": true,\n  "providers": ["VidSrc", "MultiEmbed"],\n  "jaccard_score": 0.875\n}',
+          payloadExample: '{\n  "title": "Steins;Gate",\n  "cached": true,\n  "providers": ["VidSrc", "MultiEmbed"],\n  "heuristic_fallback": "TVmaze -> OMDB"\n}',
         },
         {
           step: 4,
@@ -726,6 +736,7 @@ export const projects: Project[] = [
             en: "Seamlessly switches video stream providers (VidSrc, MultiEmbed, 2Embed) if one server encounters downtime.",
             id: "Beralih secara mulus antar provider video (VidSrc, MultiEmbed, 2Embed) jika salah satu server mengalami gangguan.",
           },
+          payloadExample: '{\n  "active_stream": "https://vidsrc.xyz/embed/anime/steins-gate",\n  "health_check": "200_OK",\n  "failover_ready": ["MultiEmbed", "2Embed"],\n  "auto_recovered": true\n}',
         },
       ],
     },
