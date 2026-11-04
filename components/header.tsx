@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang, useTheme } from "@/components/providers";
+import { scrollToHash } from "@/lib/gsap";
 import { MagneticWrap } from "@/components/magnetic-wrap";
 import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import { profile } from "@/lib/data/profile";
@@ -47,6 +49,7 @@ export function Header() {
   }, [open]);
 
   const [active, setActive] = useState("");
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
@@ -73,6 +76,15 @@ export function Header() {
     { href: "/#contact", hash: "contact", label: t("nav-contact") },
   ];
 
+  // Klik nav di halaman beranda → scroll halus via Lenis (bukan lompatan instan).
+  const onNavClick = (e: React.MouseEvent, href: string) => {
+    const hashIndex = href.indexOf("#");
+    if (pathname !== "/") return; // navigasi antar-halaman tetap default
+    e.preventDefault();
+    setOpen(false);
+    scrollToHash(hashIndex >= 0 ? href.slice(hashIndex) : "");
+  };
+
   const isDark = theme === "dark";
 
   return (
@@ -97,6 +109,7 @@ export function Header() {
             <Link
               key={l.href}
               href={l.href}
+              onClick={(e) => onNavClick(e, l.href)}
               aria-current={l.hash && active === l.hash ? "true" : undefined}
               className={`text-sm font-medium transition-colors ${
                 l.hash && active === l.hash
@@ -191,7 +204,7 @@ export function Header() {
               <Link
                 key={l.href}
                 href={l.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => onNavClick(e, l.href)}
                 className="rounded px-2 py-2.5 text-[15px] font-medium text-foreground hover:bg-surface"
               >
                 {l.label}

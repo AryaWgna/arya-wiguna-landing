@@ -67,6 +67,10 @@ export function TextReveal({
       paused: useScroll,
     });
 
+    // Jaring pengaman: jangan biarkan konten tersembunyi jika trigger gagal
+    // menyala (layout bergeser, font telat, dsb).
+    const fallback = window.setTimeout(() => tween.play(), 1500);
+
     let trigger: ScrollTrigger | undefined;
     if (useScroll) {
       trigger = ScrollTrigger.create({
@@ -85,6 +89,7 @@ export function TextReveal({
     }
 
     return () => {
+      window.clearTimeout(fallback);
       trigger?.kill();
       tween.kill();
     };

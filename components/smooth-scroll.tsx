@@ -14,6 +14,9 @@ export function SmoothScroll() {
     const lenis = initLenis();
     if (!lenis) return;
 
+    // Refresh trigger awal setelah layout stabil (font/gambar belum tentu siap).
+    const initialRefresh = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+
     // Scroll progress indicator
     const bar = document.getElementById("scroll-progress");
     if (bar) {
@@ -28,6 +31,7 @@ export function SmoothScroll() {
     }
 
     return () => {
+      window.clearTimeout(initialRefresh);
       destroyLenis();
     };
   }, []);

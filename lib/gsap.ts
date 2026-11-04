@@ -46,7 +46,40 @@ export function getLenis(): Lenis | null {
   return lenisInstance;
 }
 
+/* ── Smooth hash scrolling (Lenis-aware) ─────────── */
+export function scrollToHash(hash: string) {
+  const id = hash.length > 1 ? hash.slice(1) : "";
+  const lenis = getLenis();
+
+  if (id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (lenis) {
+      lenis.scrollTo(target, {
+        offset: -80,
+        duration: 1.1,
+        easing: (t: number) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+      });
+    } else {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    return;
+  }
+
+  if (lenis) lenis.scrollTo(0, { duration: 0.9 });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 /* ── Refresh positions on load ──────────────── */
+let refreshTimer = 0;
+
+/** Debounce refresh ScrollTrigger (dipakai saat layout bergeser). */
+export function scheduleScrollTriggerRefresh() {
+  window.clearTimeout(refreshTimer);
+  refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 120);
+}
+
 if (typeof window !== "undefined") {
   window.addEventListener(
     "load",
@@ -55,6 +88,15 @@ if (typeof window !== "undefined") {
     },
     { once: true }
   );
+
+  // Gambar dimuat belakangan (lazy) menggeser layout → refresh trigger.
+  // Capture-phase menangkap semua event load (termasuk <img>).
+  document.addEventListener("load", () => scheduleScrollTriggerRefresh(), true);
+
+  // Font selesai dimuat → ukuran teks bisa berubah → refresh.
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => scheduleScrollTriggerRefresh());
+  }
 }
 
 /* ── Text splitting utility ─────────────────── */

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLang, useBoot } from "@/components/providers";
@@ -16,6 +16,8 @@ export function HeroSection() {
   const { lang } = useLang();
   const { bootActive } = useBoot();
   const sectionRef = useRef<HTMLElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const playedRef = useRef(false);
   const viewWork = lang === "id" ? "Lihat Karya" : "View Work";
   const getInTouch = lang === "id" ? "Hubungi Saya" : "Get in Touch";
 
@@ -24,7 +26,10 @@ export function HeroSection() {
     if (!sec || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({
+        paused: true, // diputar begitu boot selesai agar transisi menyambung
+        defaults: { ease: "power3.out" },
+      });
 
       // Eyebrow fade in
       tl.fromTo(
@@ -86,6 +91,8 @@ export function HeroSection() {
         0.5
       );
 
+      tlRef.current = tl;
+
       // Scroll parallax halus pada kolom 3D
       gsap.to("[data-hero-visual]", {
         yPercent: -12,
@@ -111,8 +118,21 @@ export function HeroSection() {
       });
     }, sec);
 
-    return () => ctx.revert();
+    return () => {
+      tlRef.current = null;
+      ctx.revert();
+    };
   }, []);
+
+  // Putar timeline entrance setelah overlay boot selesai (atau di-skip),
+  // supaya reveal teks tidak terlewat di balik layar boot.
+  useEffect(() => {
+    const tl = tlRef.current;
+    if (!tl || playedRef.current || isReducedMotion()) return;
+    if (bootActive) return;
+    playedRef.current = true;
+    requestAnimationFrame(() => tl.play());
+  }, [bootActive]);
 
   return (
     <section id="hero" ref={sectionRef} className="relative overflow-hidden">

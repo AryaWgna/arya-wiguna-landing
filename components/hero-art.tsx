@@ -273,9 +273,11 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
   const mountRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const controlsRef = useRef<{ start: () => void; stop: () => void; sync: () => void } | null>(null);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
 
   useEffect(() => {
-    if (paused) return;
     const mount = mountRef.current;
     if (!mount) return;
 
@@ -535,8 +537,18 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       }
     };
 
+    controlsRef.current = {
+      start: startLoop,
+      stop: stopLoop,
+      // Render satu frame pada waktu saat ini sebelum loop dilanjutkan,
+      // sehingga transisi dari frame statis (selama boot) ke loop kontinu.
+      sync: () => renderFrame(clock.getElapsedTime()),
+    };
+
     if (reduced) {
       renderFrame(0); // satu frame statis
+    } else if (pausedRef.current) {
+      renderFrame(0); // frame statis selama boot berlangsung
     } else {
       startLoop();
     }
@@ -565,6 +577,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     setReady(true);
 
     return () => {
+      controlsRef.current = null;
       stopLoop();
       if (finePointer) {
         mount.removeEventListener("pointermove", onPointer);
@@ -587,6 +600,19 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
         mount.removeChild(renderer.domElement);
       }
     };
+  }, []);
+
+  // Start/stop loop saja (tanpa rebuild scene) saat status boot berubah —
+  // posisi/rotasi planet tetap kontinu, tanpa flicker atau lompatan.
+  useEffect(() => {
+    if (isReducedMotion()) return;
+    const c = controlsRef.current;
+    if (!c) return;
+    if (paused) c.stop();
+    else {
+      c.sync(); // teruskan dari posisi frame statis terakhir
+      c.start();
+    }
   }, [paused]);
 
   return (
