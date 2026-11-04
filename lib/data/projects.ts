@@ -21,9 +21,11 @@ export type FanOutDevice = {
 };
 
 export type FanOutDevices = {
-  left: FanOutDevice;
+  layout?: "phones" | "desktop";
+  left?: FanOutDevice;
   center: FanOutDevice;
-  right: FanOutDevice;
+  right?: FanOutDevice;
+  secondary?: FanOutDevice;
 };
 
 export type RationaleItem = {
@@ -126,6 +128,7 @@ export const projects: Project[] = [
       id: "Proyek ini sepenuhnya open-source: codebase Flutter lengkap (scaffolding Android/iOS/web) tersedia di GitHub, menunjukkan progres konsisten pada inspeksi QR, penanganan notifikasi push FCM, dan manajemen token.",
     },
     fanout: {
+      layout: "phones",
       left: { src: "assets/projects/simaru-login.jpg", frame: "phone", alt: "SIMARU login screen" },
       center: { src: "assets/projects/simaru-home.jpg", frame: "phone", alt: "SIMARU main dashboard" },
       right: { src: "assets/projects/simaru-stock.jpg", frame: "phone", alt: "SIMARU stock opname" },
@@ -350,9 +353,17 @@ export const projects: Project[] = [
       id: "Repository mencakup changelog yang mendokumentasikan riwayat rilis (v1.0.0 tahun 2026; v2.0.0 pada 2026-01-12), dengan tonggak fitur tercatat di seluruh commit.",
     },
     fanout: {
-      left: { src: "assets/projects/skyboard-boarding.jpg", frame: "phone", alt: "Skyboard boarding filter" },
-      center: { src: "assets/projects/skyboard-main.jpg", frame: "laptop", alt: "Skyboard public flight board" },
-      right: { src: "assets/projects/skyboard-addflight.jpg", frame: "phone", alt: "Skyboard add flight modal" },
+      layout: "desktop",
+      secondary: {
+        src: "assets/projects/skyboard-admin.jpg",
+        frame: "laptop",
+        alt: "Skyboard Admin Dashboard (CRUD & Assets)",
+      },
+      center: {
+        src: "assets/projects/skyboard-main.jpg",
+        frame: "laptop",
+        alt: "Skyboard Public Flight Board (Real-Time FIDS)",
+      },
     },
     rationale: [
       {
@@ -596,9 +607,17 @@ export const projects: Project[] = [
       id: "Demo live ter-deploy di Vercel, dan README repository mendokumentasikan arsitektur lengkap — gateway Bun, API Elysia, klien Svelte, serta strategi proxy.",
     },
     fanout: {
-      left: { src: "assets/projects/streamely-explore.jpg", frame: "phone", alt: "StreamEly explore grid" },
-      center: { src: "assets/projects/streamely-home.jpg", frame: "laptop", alt: "StreamEly home page" },
-      right: { src: "assets/projects/streamely-player.jpg", frame: "phone", alt: "StreamEly video player" },
+      layout: "desktop",
+      secondary: {
+        src: "assets/projects/streamely-player.jpg",
+        frame: "laptop",
+        alt: "StreamEly Multi-Server Video Player",
+      },
+      center: {
+        src: "assets/projects/streamely-home.jpg",
+        frame: "laptop",
+        alt: "StreamEly VOD Streaming Catalog",
+      },
     },
     rationale: [
       {
