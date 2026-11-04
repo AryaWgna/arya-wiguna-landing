@@ -32,6 +32,31 @@ export type RationaleItem = {
   tradeoff: { en: string; id: string };
 };
 
+export type TelemetryMetric = {
+  id: string;
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: { en: string; id: string };
+  detail: { en: string; id: string };
+};
+
+export type ArchitectureStep = {
+  step: number;
+  node: string;
+  role: { en: string; id: string };
+  protocol: string;
+  latency?: string;
+  description: { en: string; id: string };
+  payloadExample?: string;
+};
+
+export type ArchitectureFlow = {
+  title: { en: string; id: string };
+  subtitle: { en: string; id: string };
+  steps: ArchitectureStep[];
+};
+
 export type Project = {
   slug: string;
   titleKey: string;
@@ -54,6 +79,14 @@ export type Project = {
    * Pattern 2 — trade-off arsitektur ("Why this tech stack").
    */
   rationale?: RationaleItem[];
+  /**
+   * Telemetry metrics — verifiable numerical data points.
+   */
+  telemetry?: TelemetryMetric[];
+  /**
+   * Interactive architecture flow — end-to-end data pipeline simulation.
+   */
+  architecture?: ArchitectureFlow;
   screenshots: Screenshot[];
 };
 
@@ -132,6 +165,97 @@ export const projects: Project[] = [
         },
       },
     ],
+    telemetry: [
+      {
+        id: "commits",
+        value: 71,
+        suffix: "",
+        label: { en: "Git Commits", id: "Commit Terverifikasi" },
+        detail: { en: "Visible across public commit history", id: "Tercatat di riwayat commit publik GitHub" },
+      },
+      {
+        id: "modules",
+        value: 4,
+        suffix: "",
+        label: { en: "Core Modules", id: "Modul Utama" },
+        detail: { en: "QR Scan, FCM Sync, Stock Opname, Complaint", id: "Scan QR, Sinkron FCM, Stock Opname, Komplain" },
+      },
+      {
+        id: "fcm-sync",
+        value: 100,
+        suffix: "%",
+        label: { en: "FCM Token Sync", id: "Sinkronisasi Token FCM" },
+        detail: { en: "Auto-refresh & server handshake", id: "Refresh & handshake otomatis dengan server" },
+      },
+    ],
+    architecture: {
+      title: {
+        en: "Event-Driven QR & Push Notification Pipeline",
+        id: "Pipeline Event-Driven QR & Notifikasi Push",
+      },
+      subtitle: {
+        en: "End-to-end data flow from physical QR scan on medical equipment to staff alert via FCM",
+        id: "Alur data menyeluruh dari scan QR fisik aset medis hingga notifikasi staf via FCM",
+      },
+      steps: [
+        {
+          step: 1,
+          node: "Flutter Client",
+          role: { en: "Optical QR Scanner", id: "Pemindai QR Optik" },
+          protocol: "Camera2 / AVFoundation",
+          latency: "~16ms",
+          description: {
+            en: "Officer scans the QR barcode affixed to medical equipment using the device camera.",
+            id: "Petugas memindai kode QR fisik pada alat medis menggunakan kamera perangkat.",
+          },
+        },
+        {
+          step: 2,
+          node: "Mobile Storage",
+          role: { en: "JWT Session & Token Cache", id: "Sesi JWT & Cache Token" },
+          protocol: "Flutter SecureStorage",
+          latency: "<5ms",
+          description: {
+            en: "App validates JWT auth token, bundles device FCM token, and structures the inspection payload.",
+            id: "Aplikasi memvalidasi token JWT, menyertakan token FCM perangkat, dan menyusun payload inspeksi.",
+          },
+          payloadExample: '{\n  "asset_id": "MED-VENT-04",\n  "status": "OPERATIONAL",\n  "inspector_id": "STF-289",\n  "fcm_token": "eX_98a...qk"\n}',
+        },
+        {
+          step: 3,
+          node: "Laravel Backend",
+          role: { en: "Inspection & Audit Gateway", id: "Gateway Inspeksi & Audit" },
+          protocol: "HTTPS / REST JSON",
+          latency: "~85ms",
+          description: {
+            en: "Server verifies asset existence, writes stock opname log into the database, and fires FCM event.",
+            id: "Server memvalidasi aset, mencatat log stock opname ke database, dan memicu event notifikasi.",
+          },
+        },
+        {
+          step: 4,
+          node: "Firebase Cloud Messaging",
+          role: { en: "Push Broadcast Engine", id: "Engine Distribusi Notifikasi" },
+          protocol: "HTTP v1 OAuth2",
+          latency: "~120ms",
+          description: {
+            en: "Google FCM dispatches targeted notifications to relevant technician and department head channels.",
+            id: "Google FCM mengirimkan alert push bertarget ke channel teknisi dan kepala ruangan.",
+          },
+        },
+        {
+          step: 5,
+          node: "Target Staff Device",
+          role: { en: "Background Alert Receiver", id: "Penerima Alert Latar Belakang" },
+          protocol: "FCM Push Listener",
+          latency: "Real-time",
+          description: {
+            en: "Custom background/foreground handler rings audible alert and routes user straight to the asset log.",
+            id: "Handler background/foreground memunculkan alert audio dan membuka log aset secara instan.",
+          },
+        },
+      ],
+    },
     screenshots: [
       {
         src: "assets/projects/simaru-home.jpg",
@@ -283,6 +407,97 @@ export const projects: Project[] = [
         },
       },
     ],
+    telemetry: [
+      {
+        id: "refresh",
+        value: 30,
+        suffix: "s",
+        label: { en: "Auto-Refresh Rate", id: "Laju Refresh Otomatis" },
+        detail: { en: "Live flight schedule sync interval", id: "Interval sinkronisasi jadwal penerbangan live" },
+      },
+      {
+        id: "containers",
+        value: 3,
+        suffix: "",
+        label: { en: "Docker Services", id: "Layanan Docker" },
+        detail: { en: "Nginx gateway, Next.js UI, Laravel API", id: "Gateway Nginx, UI Next.js, API Laravel" },
+      },
+      {
+        id: "promo",
+        value: 10,
+        suffix: "+",
+        label: { en: "Promo Slots", id: "Slot Banner Promo" },
+        detail: { en: "Admin-managed dynamic media banners", id: "Banner media dinamis yang dikelola admin" },
+      },
+    ],
+    architecture: {
+      title: {
+        en: "Containerized Microservices & Reverse Proxy Gateway",
+        id: "Microservices Kontainer & Gateway Reverse Proxy",
+      },
+      subtitle: {
+        en: "Multi-container Docker topology routing public flight schedules and administrative CRUD operations",
+        id: "Topologi multi-kontainer Docker yang me-route jadwal publik dan operasi CRUD admin",
+      },
+      steps: [
+        {
+          step: 1,
+          node: "Display & Admin Client",
+          role: { en: "Airport Screen & Admin Browser", id: "Layar Bandara & Browser Admin" },
+          protocol: "HTTP/2 HTTPS",
+          latency: "~24ms",
+          description: {
+            en: "Public display screens poll flight schedules every 30s while admins manage airline assets.",
+            id: "Layar display publik mem-polling jadwal tiap 30 detik saat admin mengelola maskapai.",
+          },
+        },
+        {
+          step: 2,
+          node: "Nginx Gateway",
+          role: { en: "Reverse Proxy & Load Balancer", id: "Reverse Proxy & Gateway Trafik" },
+          protocol: "TCP Port 80/443",
+          latency: "<2ms",
+          description: {
+            en: "Nginx routes `/` requests to Next.js 15 UI and proxies `/api/*` to Laravel 11 container.",
+            id: "Nginx me-route path `/` ke UI Next.js 15 dan mem-proxy `/api/*` ke kontainer Laravel 11.",
+          },
+        },
+        {
+          step: 3,
+          node: "Next.js 15 SSR",
+          role: { en: "Real-Time Flight UI", id: "UI Papan Penerbangan Real-Time" },
+          protocol: "React Server Components",
+          latency: "~18ms",
+          description: {
+            en: "Renders live flight statuses (On Time, Delayed, Boarding, Gate Closed, Departed) with audio chimes.",
+            id: "Merender status penerbangan dinamis beserta chime audio pengumuman keberangkatan.",
+          },
+          payloadExample: '{\n  "flight_no": "GA-421",\n  "airline": "Garuda Indonesia",\n  "status": "BOARDING",\n  "gate": "A4",\n  "time": "14:35"\n}',
+        },
+        {
+          step: 4,
+          node: "Laravel 11 Backend",
+          role: { en: "API & Admin CRUD Engine", id: "Engine API & CRUD Admin" },
+          protocol: "PHP-FPM REST",
+          latency: "~45ms",
+          description: {
+            en: "Handles airline asset uploads, flight schedule mutations, and promo banner scheduling.",
+            id: "Memproses upload aset maskapai, perubahan jadwal penerbangan, dan banner promosi.",
+          },
+        },
+        {
+          step: 5,
+          node: "MySQL Database",
+          role: { en: "Relational Storage", id: "Penyimpanan Relasional" },
+          protocol: "MySQL Native Protocol",
+          latency: "~5ms",
+          description: {
+            en: "ACID transactions for flights, gates, and audit trails under isolated Docker network.",
+            id: "Transaksi ACID untuk data penerbangan, gate, dan audit trail di jaringan Docker terisolasi.",
+          },
+        },
+      ],
+    },
     screenshots: [
       {
         src: "assets/projects/skyboard-main.jpg",
@@ -434,6 +649,86 @@ export const projects: Project[] = [
         },
       },
     ],
+    telemetry: [
+      {
+        id: "cache",
+        value: 15000,
+        suffix: "+",
+        label: { en: "Cached Titles", id: "Judul Ter-cache" },
+        detail: { en: "In-memory metadata preloaded at Bun boot", id: "Metadata in-memory di-preload saat boot Bun" },
+      },
+      {
+        id: "gateways",
+        value: 3,
+        suffix: "",
+        label: { en: "Stream Gateways", id: "Gateway Stream" },
+        detail: { en: "VidSrc, MultiEmbed, 2Embed resolver", id: "Resolver VidSrc, MultiEmbed, dan 2Embed" },
+      },
+      {
+        id: "latency",
+        value: 0,
+        suffix: "ms",
+        label: { en: "Client Vectoring", id: "Vektorisasi Klien" },
+        detail: { en: "Client-side Jaccard similarity scoring", id: "Kalkulasi skor similaritas Jaccard sisi klien" },
+      },
+    ],
+    architecture: {
+      title: {
+        en: "High-Throughput In-Memory Gateway & Client-Side Vector Engine",
+        id: "Gateway In-Memory Throughput Tinggi & Engine Vektor Sisi Klien",
+      },
+      subtitle: {
+        en: "Bun runtime caching layer with resilient multi-provider streaming fallback and client-side Jaccard indexing",
+        id: "Lapisan cache runtime Bun dengan fallback multi-provider andal dan kalkulasi indeks Jaccard di klien",
+      },
+      steps: [
+        {
+          step: 1,
+          node: "Svelte 5 Client",
+          role: { en: "Fast Hydrated UI", id: "UI Terkompilasi Ringan" },
+          protocol: "SPA DOM Hydration",
+          latency: "<10ms",
+          description: {
+            en: "Lightweight client computes Jaccard genre similarity directly in browser memory without extra round-trips.",
+            id: "Klien ringan menghitung similaritas genre Jaccard langsung di memori browser tanpa round-trip tambahan.",
+          },
+        },
+        {
+          step: 2,
+          node: "Bun Gateway",
+          role: { en: "In-Memory Reverse Proxy", id: "Reverse Proxy & Cache RAM" },
+          protocol: "Bun HTTP Native",
+          latency: "<3ms",
+          description: {
+            en: "Bootstraps and caches 15,000+ title records in RAM, serving requests with near-zero overhead.",
+            id: "Memuat dan menyimpan 15.000+ rekaman judul di RAM, melayani request dengan overhead nyaris nol.",
+          },
+        },
+        {
+          step: 3,
+          node: "Elysia.js Backend",
+          role: { en: "Type-Safe Routing", id: "Router API Type-Safe" },
+          protocol: "TypeScript Schema Validation",
+          latency: "~15ms",
+          description: {
+            en: "Implements heuristic fallbacks between TVmaze and OMDB API to resolve cast and rating metadata.",
+            id: "Menerapkan fallback heuristik antara TVmaze dan OMDB API untuk metadata kru dan rating.",
+          },
+          payloadExample: '{\n  "title": "Steins;Gate",\n  "cached": true,\n  "providers": ["VidSrc", "MultiEmbed"],\n  "jaccard_score": 0.875\n}',
+        },
+        {
+          step: 4,
+          node: "Multi-Server Resolver",
+          role: { en: "Dynamic Failover", id: "Failover Provider Dinamis" },
+          protocol: "Cross-Origin Sandbox Embed",
+          latency: "~150ms",
+          description: {
+            en: "Seamlessly switches video stream providers (VidSrc, MultiEmbed, 2Embed) if one server encounters downtime.",
+            id: "Beralih secara mulus antar provider video (VidSrc, MultiEmbed, 2Embed) jika salah satu server mengalami gangguan.",
+          },
+        },
+      ],
+    },
     screenshots: [
       {
         src: "assets/projects/streamely-home.jpg",

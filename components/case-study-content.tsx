@@ -5,6 +5,8 @@ import { useLang } from "@/components/providers";
 import type { Project } from "@/lib/data/projects";
 import { TechIcon } from "@/components/tech-icon";
 import { ProjectRationaleBox } from "@/components/project-rationale-box";
+import { ProjectTelemetry } from "@/components/project-telemetry";
+import { ArchitectureFlow } from "@/components/architecture-flow";
 
 export function CaseStudyContent({ project }: { project: Project }) {
   const { t, lang } = useLang();
@@ -40,6 +42,12 @@ export function CaseStudyContent({ project }: { project: Project }) {
           {t(project.titleKey)}
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted">{t(project.summaryKey)}</p>
+
+        {project.telemetry ? (
+          <div className="mt-8">
+            <ProjectTelemetry metrics={project.telemetry} />
+          </div>
+        ) : null}
 
         <div className="mt-8 flex flex-wrap gap-4">
           <a href={project.repo} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
@@ -119,6 +127,15 @@ export function CaseStudyContent({ project }: { project: Project }) {
           ) : null}
         </div>
       </div>
+
+      {project.architecture ? (
+        <section id="architecture" className="mt-16 scroll-mt-24">
+          <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
+            {id ? "Arsitektur Sistem & Alur Data" : "System Architecture & Data Flow"}
+          </h2>
+          <ArchitectureFlow flow={project.architecture} />
+        </section>
+      ) : null}
 
       {project.screenshots.length > 0 ? (
         <div className="mt-16">
