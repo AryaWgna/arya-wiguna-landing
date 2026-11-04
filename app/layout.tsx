@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { BootSequence } from "@/components/boot-sequence";
+import { CustomCursor } from "@/components/custom-cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,6 +87,7 @@ export default function RootLayout({
     >
       <body>
         <div id="scroll-progress" aria-hidden="true" />
+        <CustomCursor />
         <Providers>
           <BootSequence />
           <SmoothScroll />
