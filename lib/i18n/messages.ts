@@ -38,12 +38,12 @@ export const messages = {
     "Tersedia untuk bekerja"
   ],
   "hero-bio": [
-    "Full-stack developer based in Indonesia, crafting clean, scalable, and secure applications. ",
-    "Pengembang full-stack dari Indonesia, membuat aplikasi bersih, skalabel, dan aman. "
+    "Informatika graduate & software engineer based in Bogor. Building production-grade Flutter mobile apps and containerized web backends with Next.js & Laravel.",
+    "Lulusan Informatika & software engineer dari Bogor. Mengembangkan aplikasi mobile Flutter siap rilis dan sistem backend ter-kontainerisasi dengan Next.js & Laravel."
   ],
   "hero-motto": [
-    "First solve the problem, then write the code.",
-    "Pertama selesaikan masalahnya, baru tulis kodenya."
+    "Pragmatic engineering over framework trends: reliable database schemas, predictable state management, and real system boundaries.",
+    "Rekayasa pragmatis di atas tren framework: skema database reliabel, state management terprediksi, dan batasan sistem nyata."
   ],
   "hero-cta1": [
     "View Work",
@@ -90,12 +90,12 @@ export const messages = {
     "web & mobile"
   ],
   "about-p1": [
-    "I'm Arya Wiguna, a full-stack developer from Indonesia. I love turning complex problems into simple, beautiful, and intuitive solutions. My toolkit spans from React and Vue on the frontend to Node.js, Laravel, and Go on the backend.",
-    "Saya Arya Wiguna, pengembang full-stack dari Indonesia. Saya suka mengubah masalah kompleks menjadi solusi yang simpel dan intuitif. Toolkit saya mulai dari React dan Vue di frontend hingga Node.js, Laravel, dan Go di backend."
+    "I am an Informatika graduate (S1) and software engineer from Bogor, Indonesia, certified by BNSP as a Junior Coder. I build field-tested Flutter mobile clients and modular web architectures with Laravel, Next.js, and Bun.",
+    "Saya lulusan S1 Teknik Informatika dan software engineer asal Bogor dengan sertifikasi resmi BNSP (Junior Coder). Saya berfokus pada pengembangan aplikasi mobile Flutter teruji di lapangan serta arsitektur web modular berbasis Laravel, Next.js, dan Bun."
   ],
   "about-p2": [
-    "Currently exploring cloud architecture and contributing to open-source projects. When I'm not coding, I'm probably learning something new or refining my craft.",
-    "Saat ini mempelajari arsitektur cloud dan berkontribusi ke proyek open-source."
+    "I prioritize pragmatic software design: clean relational schemas, type-safe APIs, and containerized microservices over hype. From hospital medical asset tracking at RS UMMI to real-time airport display systems, I focus on systems that remain dependable in production.",
+    "Pendekatan saya mengutamakan rekayasa pragmatis: skema relasional bersih, API bertipe ketat, dan microservice ter-kontainerisasi tanpa abstraksi berlebihan. Mulai dari pelacakan aset medis RS UMMI hingga sistem display bandara real-time, prioritas saya adalah keandalan nyata di lingkungan operasional."
   ],
   "about-badge": [
     "Available for hire",

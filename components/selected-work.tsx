@@ -11,7 +11,7 @@ import { TiltCard } from "@/components/tilt-card";
 import { DeviceFanOutMockup } from "@/components/device-fanout";
 import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import { profile } from "@/lib/data/profile";
-import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
+import { gsap, isReducedMotion } from "@/lib/gsap";
 import { ProjectTelemetry } from "@/components/project-telemetry";
 import { ArchitectureFlow } from "@/components/architecture-flow";
 

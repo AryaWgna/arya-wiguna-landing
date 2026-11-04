@@ -91,7 +91,7 @@ export function ArchitectureFlow({
     <div
       className={`rounded-2xl border border-border-line bg-surface/30 p-5 md:p-7 font-mono transition-all ${className}`}
     >
-      {/* ── Top Header ────────────────────────────────────────── */}
+      {}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border-line/70 pb-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-navy">
@@ -130,7 +130,7 @@ export function ArchitectureFlow({
         </div>
       </div>
 
-      {/* ── Visual Motion SVG Architecture Topology ────────────── */}
+      {}
       <div className="relative mt-6 overflow-x-auto pb-4 pt-2 scrollbar-thin">
         <div className="flex min-w-[680px] items-start justify-between gap-2 px-3">
           {flow.steps.map((item, index) => {
@@ -227,7 +227,7 @@ export function ArchitectureFlow({
         </div>
       </div>
 
-      {/* ── Active Node Technical Inspector ─────────────────────── */}
+      {}
       <div className="mt-6 rounded-xl border border-border-line bg-background p-5 transition-all shadow-sm">
         {/* Step Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-line/60 pb-3.5">

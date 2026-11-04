@@ -24,7 +24,7 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="font-mono text-xs text-muted">
             © {year} {profile.name}.{" "}
-            {lang === "id" ? "Dibuat dengan penuh perhatian." : "Built with care."}
+            {lang === "id" ? "Next.js 15 · Tailwind CSS · GSAP." : "Next.js 15 · Tailwind CSS · GSAP."}
           </p>
           <OnlineVisitors variant="footer" />
         </div>

@@ -7,7 +7,7 @@ import type { FanOutDevices, FanOutDevice } from "@/lib/data/projects";
 
 export type { FanOutDevices, FanOutDevice };
 
-/* ── Phone Shell (For Mobile Apps like SIMARU) ────────────────── */
+
 function PhoneShell({
   device,
   widthClass,
@@ -38,7 +38,7 @@ function PhoneShell({
   );
 }
 
-/* ── Browser Window Shell (For Desktop & Web Apps like Skyboard & Streamely) ── */
+
 function BrowserWindowShell({
   device,
   widthClass,
@@ -55,7 +55,7 @@ function BrowserWindowShell({
       ref={shellRef}
       className={`overflow-hidden rounded-xl border border-border-line/90 bg-background shadow-2xl ring-1 ring-white/10 ${widthClass} ${className ?? ""} transition-shadow duration-300 will-change-transform`}
     >
-      {/* Titlebar with Traffic Light Dots */}
+      
       <div className="flex h-5 items-center gap-1.5 border-b border-border-line/70 bg-surface/90 px-3">
         <span className="h-2 w-2 rounded-full bg-red-400/80" />
         <span className="h-2 w-2 rounded-full bg-amber-400/80" />
@@ -73,7 +73,7 @@ function BrowserWindowShell({
           loading="lazy"
           className="h-full w-full object-cover object-center select-none"
         />
-        {/* Subtle glass reflection sheen */}
+        
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-60" />
       </div>
     </div>
@@ -218,7 +218,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         ref={containerRef}
         className="group relative flex items-center justify-center overflow-hidden bg-surface/80 px-4 py-8 [perspective:1200px] [transform-style:preserve-3d] cursor-pointer select-none min-h-[220px] sm:min-h-[250px]"
       >
-        {/* Back Secondary Window (Admin / Player) */}
+        
         <BrowserWindowShell
           shellRef={secondaryRef}
           device={devices.secondary}
@@ -226,7 +226,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
           className="[transform:translate3d(-22px,-12px,-18px)_rotateY(-4deg)]"
         />
 
-        {/* Front Primary Hero Window (Flight Board / Catalog) */}
+        
         <BrowserWindowShell
           shellRef={centerRef}
           device={devices.center}
@@ -234,19 +234,19 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
           className="[transform:translate3d(18px,12px,28px)_rotateY(3deg)]"
         />
 
-        {/* Ambient Depth Glow */}
+        
         <div className="pointer-events-none absolute -bottom-4 h-14 w-3/4 rounded-full bg-blue/15 blur-xl transition-opacity duration-500 group-hover:opacity-100 opacity-40" />
       </div>
     );
   }
 
-  // Fallback to Mobile 3-Phone Fan-Out (SIMARU)
+  
   return (
     <div
       ref={containerRef}
       className="group relative flex items-center justify-center gap-2 overflow-hidden bg-surface/80 px-4 py-6 [perspective:1100px] [transform-style:preserve-3d] sm:gap-3 cursor-pointer select-none"
     >
-      {/* Left Device */}
+      
       {devices.left && (
         <PhoneShell
           shellRef={leftRef}
@@ -256,7 +256,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         />
       )}
 
-      {/* Center Hero Device */}
+      
       <PhoneShell
         shellRef={centerRef}
         device={devices.center}
@@ -264,7 +264,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         className="[transform:translate3d(0,0,30px)]"
       />
 
-      {/* Right Device */}
+      
       {devices.right && (
         <PhoneShell
           shellRef={rightRef}
@@ -274,7 +274,7 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
         />
       )}
 
-      {/* Ambient Depth Glow */}
+      
       <div className="pointer-events-none absolute -bottom-4 h-12 w-3/4 rounded-full bg-blue/10 blur-xl transition-opacity duration-500 group-hover:opacity-100 opacity-40" />
     </div>
   );

@@ -11,11 +11,9 @@ export function CustomCursor() {
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    // Disable on touch devices or if reduced motion is preferred
     if (isReducedMotion()) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-    // Add class to html to hide native Windows cursor
     document.documentElement.classList.add("has-custom-cursor");
 
     let mouseX = -100;
@@ -27,12 +25,10 @@ export function CustomCursor() {
 
       if (!isVisible) setIsVisible(true);
 
-      // Zero-latency instant hardware transform for the custom pointer
       if (pointerRef.current) {
         pointerRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       }
 
-      // Check if hovering over clickable or interactive element
       const target = e.target as HTMLElement | null;
       if (target) {
         const interactive = target.closest(
@@ -63,13 +59,11 @@ export function CustomCursor() {
     };
   }, [isVisible]);
 
-  // Don't render on touch / SSR
   if (typeof window !== "undefined" && !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     return null;
   }
 
   return (
-    /* ── Custom Pointer Shape (Replaces Windows Arrow) ──── */
     <div
       ref={pointerRef}
       aria-hidden="true"
@@ -82,7 +76,6 @@ export function CustomCursor() {
           isHovered ? "-rotate-6 scale-110" : "rotate-0 scale-100"
         } ${isClicked ? "scale-85" : ""}`}
       >
-        {/* Bespoke Precision Stealth Arrowhead */}
         <svg
           width="24"
           height="24"
@@ -91,14 +84,12 @@ export function CustomCursor() {
           xmlns="http://www.w3.org/2000/svg"
           className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
         >
-          {/* Outer Arrowhead boundary */}
           <path
             d="M0 0L7.5 19.5L10.5 12.2L17.5 9.2L0 0Z"
             className="fill-background stroke-blue"
             strokeWidth="1.75"
             strokeLinejoin="round"
           />
-          {/* Subtle geometric inner core */}
           <path
             d="M2.5 3.5L7.5 15.5L9.6 11L14.5 8.8L2.5 3.5Z"
             className="fill-navy/20 dark:fill-blue/25"

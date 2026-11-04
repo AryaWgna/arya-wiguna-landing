@@ -1,35 +1,31 @@
-/**
- * Keahlian — dikelompokkan per disiplin (dari situs sebelumnya).
- * Tanpa persentase / rating (sesuai aturan agent kit).
- */
 export type ExpertiseGroup = {
-  key: string; // key kamus untuk label grup (sk-languages, sk-frontend, …)
+  key: string;
   items: string[];
 };
 
 export const expertiseGroups: ExpertiseGroup[] = [
   {
-    key: "sk-languages",
-    items: ["TypeScript", "JavaScript", "Python", "Go", "PHP", "Dart"],
+    key: "sk-mobile",
+    items: ["Flutter", "Dart", "Firebase", "REST"],
   },
   {
     key: "sk-frontend",
-    items: ["React", "Vue", "Next.js", "Angular", "Svelte"],
+    items: ["Next.js", "React", "Svelte", "TypeScript"],
   },
   {
     key: "sk-backend",
-    items: ["Node.js", "Laravel", "NestJS", "Flask", "Gin"],
-  },
-  {
-    key: "sk-mobile",
-    items: ["Flutter", "React Native"],
+    items: ["Laravel", "PHP", "Bun", "Node.js"],
   },
   {
     key: "sk-database",
-    items: ["PostgreSQL", "MongoDB", "Redis", "Firebase"],
+    items: ["MySQL", "Redis", "Firebase"],
   },
   {
     key: "sk-devops",
-    items: ["Docker", "K8s", "AWS"],
+    items: ["Docker", "Nginx", "Cloudflare"],
+  },
+  {
+    key: "sk-languages",
+    items: ["TypeScript", "Dart", "PHP", "JavaScript", "Python"],
   },
 ];

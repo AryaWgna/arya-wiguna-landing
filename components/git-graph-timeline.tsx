@@ -76,7 +76,7 @@ export function GitGraphTimeline() {
         />
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-          {/* ── Git Commit Tree ─────────────────────────── */}
+          {}
           <div className="flex flex-col gap-3 font-mono text-xs lg:col-span-5">
             {gitMilestones.map((item: GitCommitMilestone, idx: number) => {
               const isSelected = idx === activeIdx;
@@ -125,7 +125,7 @@ export function GitGraphTimeline() {
             })}
           </div>
 
-          {/* ── Telemetry HUD ──────────────────────────── */}
+          {}
           <div
             data-git-hud
             className="rounded-xl border border-border-line bg-background p-6 font-mono shadow-sm lg:col-span-7 lg:sticky lg:top-24"

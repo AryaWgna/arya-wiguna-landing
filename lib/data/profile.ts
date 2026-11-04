@@ -11,12 +11,12 @@ export const profile = {
   },
   location: "Bogor, Indonesia",
   heroLine: {
-    en: "Full-stack developer based in Bogor, Indonesia, crafting clean, scalable, and secure applications.",
-    id: "Pengembang full stack berbasis di Bogor, Indonesia, membuat aplikasi bersih, skalabel, dan aman.",
+    en: "Informatika graduate & software engineer based in Bogor. Building production-grade Flutter mobile apps and containerized web backends with Next.js & Laravel.",
+    id: "Lulusan Informatika & software engineer dari Bogor. Mengembangkan aplikasi mobile Flutter siap rilis dan sistem backend ter-kontainerisasi dengan Next.js & Laravel.",
   },
   motto: {
-    en: "First solve the problem, then write the code.",
-    id: "Selesaikan masalahnya dulu, baru tulis kodenya.",
+    en: "Pragmatic engineering over framework trends: reliable database schemas, predictable state management, and real system boundaries.",
+    id: "Rekayasa pragmatis di atas tren framework: skema database reliabel, state management terprediksi, dan batasan sistem nyata.",
   },
   email: "wgnarya123@gmail.com",
   github: "https://github.com/AryaWgna",
