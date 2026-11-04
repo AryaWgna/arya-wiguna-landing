@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import { BootSketch } from "@/components/boot-sketch";
-import { useBoot } from "@/components/providers";
+import { useBoot, useTheme } from "@/components/providers";
 
 /** Durasi overlay tampil setelah konten 3D siap (ms). */
 const SHOW_MS = 2400;
@@ -17,6 +17,7 @@ const MAX_WAIT_MS = 5000;
 
 export function BootSequence() {
   const { setBootActive } = useBoot();
+  const { theme } = useTheme();
   const [phase, setPhase] = useState<"mounting" | "boot" | "done">("mounting");
 
   const startedRef = useRef(false);
@@ -93,7 +94,7 @@ export function BootSequence() {
         id="boot-visual"
         className="relative h-48 w-[min(98vw,1160px)] opacity-0 md:h-64"
       >
-        <BootSketch onReady={tryStart} />
+        <BootSketch onReady={tryStart} dark={theme === "dark"} />
       </div>
 
       <button

@@ -26,7 +26,20 @@ const GAP = 0.22;
 const SPACE_ADV = 0.62;
 const FONT_URL = "/assets/fonts/helvetiker_bold.typeface.json";
 
-export function BootSketch({ onReady }: { onReady?: () => void }) {
+// Warna huruf mengikuti tema: di dark mode pakai token navy/biru muda
+// (nilai --navy/--blue versi dark) agar kontras tetap kuat di latar gelap.
+const FRONT_COLOR_LIGHT = 0x172a45; // navy gelap — untuk latar terang
+const BACK_COLOR_LIGHT = 0x4778a9; // biru
+const FRONT_COLOR_DARK = 0x9fb6d6; // navy muda — untuk latar gelap
+const BACK_COLOR_DARK = 0x7fa8d0; // biru muda
+
+export function BootSketch({
+  onReady,
+  dark = false,
+}: {
+  onReady?: () => void;
+  dark?: boolean;
+}) {
   const mountRef = useRef<HTMLDivElement>(null);
   const [fallback, setFallback] = useState(false);
 
@@ -137,8 +150,8 @@ export function BootSketch({ onReady }: { onReady?: () => void }) {
             -(b.max.z + b.min.z) / 2
           );
 
-          const front = makeMat(0x172a45, 0);
-          const back = makeMat(0x4778a9, 0);
+          const front = makeMat(dark ? FRONT_COLOR_DARK : FRONT_COLOR_LIGHT, 0);
+          const back = makeMat(dark ? BACK_COLOR_DARK : BACK_COLOR_LIGHT, 0);
           const g = new THREE.Group();
           const frontMesh = new THREE.Mesh(geo, front);
           const backMesh = new THREE.Mesh(geo.clone(), back);
@@ -284,7 +297,7 @@ export function BootSketch({ onReady }: { onReady?: () => void }) {
       }
       cleanupRef?.();
     };
-  }, [onReady]);
+  }, [onReady, dark]);
 
   if (fallback) {
     return (
