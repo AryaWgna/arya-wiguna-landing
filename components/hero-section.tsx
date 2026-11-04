@@ -135,9 +135,9 @@ export function HeroSection() {
   }, [bootActive]);
 
   return (
-    <section id="hero" ref={sectionRef} className="relative overflow-hidden">
+    <section id="hero" ref={sectionRef} className="relative z-20">
       {/* Ambient scrim halus */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-32 right-[-12%] h-[480px] w-[480px] rounded-full bg-blue-soft/70 blur-3xl dark:bg-blue-soft/30" />
         <div className="absolute bottom-[-18%] left-[-10%] h-[420px] w-[420px] rounded-full bg-surface/70 blur-3xl" />
       </div>

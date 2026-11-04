@@ -80,140 +80,148 @@ export function CvDropdown() {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute left-0 top-full z-40 mt-2 w-72 sm:w-80 overflow-hidden rounded-xl border border-border-line bg-background/95 p-3.5 shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150"
+          className="absolute left-0 top-full z-50 mt-2 w-80 sm:w-96 overflow-hidden rounded-xl border border-border-line bg-background/95 p-3 shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150"
         >
           {/* HEADER / NOTE */}
-          <div className="mb-3 px-1">
+          <div className="mb-2 flex items-center justify-between border-b border-border-line/60 px-1 pb-1.5">
             <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-muted">
               {isId ? "Pilih Format & Bahasa" : "Select Format & Language"}
             </span>
+            <span className="font-mono text-[10px] text-muted">PDF</span>
           </div>
 
-          {/* 1. CV ATS SECTION */}
-          <div className="rounded-lg border border-border-line/70 bg-surface/40 p-2.5 transition-colors hover:border-border-line">
-            <div className="flex items-start gap-2.5">
-              <div className="rounded-md bg-blue/10 p-1.5 text-blue">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                  <line x1="16" y1="13" x2="8" y2="13" />
-                  <line x1="16" y1="17" x2="8" y2="17" />
-                  <polyline points="10 9 9 9 8 9" />
-                </svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <strong className="text-xs font-semibold text-foreground">
-                    {t("cv-ats")}
-                  </strong>
-                  <span className="rounded bg-blue/15 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-blue">
-                    ATS
-                  </span>
+          <div className="flex flex-col gap-2">
+            {/* 1. CV ATS */}
+            <div className="rounded-lg border border-border-line/70 bg-surface/40 p-2.5 transition-all hover:border-blue/50">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="rounded-md bg-blue/10 p-1.5 text-blue shrink-0">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <strong className="text-xs font-semibold text-foreground">
+                        {t("cv-ats")}
+                      </strong>
+                      <span className="rounded bg-blue/15 px-1.5 py-0.2 font-mono text-[9px] font-semibold text-blue">
+                        ATS
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted truncate">
+                      {isId ? "Format standar ramah ATS" : "Standard ATS-friendly"}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-[11px] text-muted leading-tight mt-0.5">
-                  {isId ? "Standar Jake's Resume · Ramah ATS" : "Jake's template · ATS friendly"}
-                </p>
-              </div>
-            </div>
 
-            {/* Language options */}
-            <div className="mt-2.5 grid grid-cols-2 gap-1.5 pt-1">
-              <a
-                role="menuitem"
-                href={profile.cv.atsId}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playGlitch("click")}
-                className="flex items-center justify-center gap-1.5 rounded-md border border-border-line bg-background px-2 py-1.5 text-xs font-medium text-foreground transition-all hover:border-blue/70 hover:bg-surface hover:text-blue hover:shadow-sm"
-              >
-                <span className="text-sm leading-none">🇮🇩</span>
-                <span>Indonesia</span>
-              </a>
-              <a
-                role="menuitem"
-                href={profile.cv.ats}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playGlitch("click")}
-                className="flex items-center justify-center gap-1.5 rounded-md border border-border-line bg-background px-2 py-1.5 text-xs font-medium text-foreground transition-all hover:border-blue/70 hover:bg-surface hover:text-blue hover:shadow-sm"
-              >
-                <span className="text-sm leading-none">🇬🇧</span>
-                <span>English</span>
-              </a>
-            </div>
-          </div>
-
-          {/* 2. CV KREATIF SECTION */}
-          <div className="mt-2.5 rounded-lg border border-border-line/70 bg-surface/40 p-2.5 transition-colors hover:border-border-line">
-            <div className="flex items-start gap-2.5">
-              <div className="rounded-md bg-rose-500/10 p-1.5 text-rose-500">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-                  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-                  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-                  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-                </svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <strong className="text-xs font-semibold text-foreground">
-                    {t("cv-creative")}
-                  </strong>
-                  <span className="rounded bg-rose-500/15 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-rose-500">
-                    Visual
-                  </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <a
+                    role="menuitem"
+                    href={profile.cv.atsId}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playGlitch("click")}
+                    title="CV ATS Bahasa Indonesia"
+                    className="flex items-center gap-1 rounded-md border border-border-line bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-all hover:border-blue/70 hover:bg-surface hover:text-blue hover:shadow-sm"
+                  >
+                    <span>🇮🇩</span>
+                    <span className="font-mono text-[11px] font-semibold">ID</span>
+                  </a>
+                  <a
+                    role="menuitem"
+                    href={profile.cv.ats}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playGlitch("click")}
+                    title="CV ATS English"
+                    className="flex items-center gap-1 rounded-md border border-border-line bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-all hover:border-blue/70 hover:bg-surface hover:text-blue hover:shadow-sm"
+                  >
+                    <span>🇬🇧</span>
+                    <span className="font-mono text-[11px] font-semibold">EN</span>
+                  </a>
                 </div>
-                <p className="text-[11px] text-muted leading-tight mt-0.5">
-                  {isId ? "Desain visual 2-kolom dengan foto" : "Modern 2-column with photo"}
-                </p>
               </div>
             </div>
 
-            {/* Language options */}
-            <div className="mt-2.5 grid grid-cols-2 gap-1.5 pt-1">
-              <a
-                role="menuitem"
-                href={profile.cv.creativeId}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playGlitch("click")}
-                className="flex items-center justify-center gap-1.5 rounded-md border border-border-line bg-background px-2 py-1.5 text-xs font-medium text-foreground transition-all hover:border-rose-500/70 hover:bg-surface hover:text-rose-500 hover:shadow-sm"
-              >
-                <span className="text-sm leading-none">🇮🇩</span>
-                <span>Indonesia</span>
-              </a>
-              <a
-                role="menuitem"
-                href={profile.cv.creative}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playGlitch("click")}
-                className="flex items-center justify-center gap-1.5 rounded-md border border-border-line bg-background px-2 py-1.5 text-xs font-medium text-foreground transition-all hover:border-rose-500/70 hover:bg-surface hover:text-rose-500 hover:shadow-sm"
-              >
-                <span className="text-sm leading-none">🇬🇧</span>
-                <span>English</span>
-              </a>
+            {/* 2. CV KREATIF */}
+            <div className="rounded-lg border border-border-line/70 bg-surface/40 p-2.5 transition-all hover:border-rose-500/50">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="rounded-md bg-rose-500/10 p-1.5 text-rose-500 shrink-0">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <strong className="text-xs font-semibold text-foreground">
+                        {t("cv-creative")}
+                      </strong>
+                      <span className="rounded bg-rose-500/15 px-1.5 py-0.2 font-mono text-[9px] font-semibold text-rose-500">
+                        Visual
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted truncate">
+                      {isId ? "Desain visual 2-kolom dengan foto" : "Modern 2-column with photo"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <a
+                    role="menuitem"
+                    href={profile.cv.creativeId}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playGlitch("click")}
+                    title="CV Kreatif Bahasa Indonesia"
+                    className="flex items-center gap-1 rounded-md border border-border-line bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-all hover:border-rose-500/70 hover:bg-surface hover:text-rose-500 hover:shadow-sm"
+                  >
+                    <span>🇮🇩</span>
+                    <span className="font-mono text-[11px] font-semibold">ID</span>
+                  </a>
+                  <a
+                    role="menuitem"
+                    href={profile.cv.creative}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playGlitch("click")}
+                    title="Creative CV English"
+                    className="flex items-center gap-1 rounded-md border border-border-line bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-all hover:border-rose-500/70 hover:bg-surface hover:text-rose-500 hover:shadow-sm"
+                  >
+                    <span>🇬🇧</span>
+                    <span className="font-mono text-[11px] font-semibold">EN</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
