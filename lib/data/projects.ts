@@ -369,8 +369,8 @@ export const projects: Project[] = [
       {
         technology: "Laravel (PHP)",
         reason: {
-          en: "Batteries-included CRUD, auth, and validation fit the Web Software Tools course scope while keeping the admin panel robust.",
-          id: "CRUD, autentikasi, dan validasi bawaan cocok dengan cakupan mata kuliah Web Software Tools sekaligus membuat panel admin kokoh.",
+          en: "Batteries-included CRUD, auth, and validation fit the coursework scope while keeping administrative routing maintainable.",
+          id: "CRUD, autentikasi, dan validasi bawaan cocok dengan cakupan tugas akhir sekaligus menjaga routing administrasi tetap terstruktur.",
         },
         tradeoff: {
           en: "PHP request model is less suited to real-time push; solved with 30-second auto-refresh instead of websockets.",
@@ -752,8 +752,8 @@ export const projects: Project[] = [
           protocol: "Cross-Origin Sandbox Embed",
           latency: "~150ms",
           description: {
-            en: "Seamlessly switches video stream providers (VidSrc, MultiEmbed, 2Embed) if one server encounters downtime.",
-            id: "Beralih secara mulus antar provider video (VidSrc, MultiEmbed, 2Embed) jika salah satu server mengalami gangguan.",
+            en: "Switches video stream providers (VidSrc, MultiEmbed, 2Embed) with client-side fallback if a gateway fails.",
+            id: "Mengalihkan provider streaming video (VidSrc, MultiEmbed, 2Embed) secara otomatis jika salah satu gateway down.",
           },
           payloadExample: '{\n  "active_stream": "https://vidsrc.xyz/embed/anime/steins-gate",\n  "health_check": "200_OK",\n  "failover_ready": ["MultiEmbed", "2Embed"],\n  "auto_recovered": true\n}',
         },
