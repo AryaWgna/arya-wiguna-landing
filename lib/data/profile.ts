@@ -24,7 +24,9 @@ export const profile = {
   portrait: "https://avatars.githubusercontent.com/u/156288269?s=400",
   cv: {
     ats: "/assets/cv/cv-ats-arya-wiguna.pdf",
+    atsId: "/assets/cv/cv-ats-arya-wiguna-id.pdf",
     creative: "/assets/cv/cv-kreatif-arya-wiguna.pdf",
+    creativeId: "/assets/cv/cv-kreatif-arya-wiguna-id.pdf",
   },
 } as const;
 
