@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "extract:content": "node scripts/extract-content.mjs"
+    "check:assets": "node scripts/check-cert-assets.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",
@@ -23,7 +23,6 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.0",
     "@types/node": "^22.15.0",
-    "@types/p5": "^1.7.7",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@types/three": "^0.178.0",

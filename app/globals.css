@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* ──────────────────────────────────────────────
-   Design tokens — "Modern Editorial + Subtle 3D"
-   (dari arya-portfolio-agent-kit)
-   ────────────────────────────────────────────── */
 :root {
   --background: #f5f4ef;
   --foreground: #20252c;
@@ -42,12 +38,10 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-/* ── Base ────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
 
-/* ── Custom Cursor — Replace default Windows cursor on desktop ── */
 @media (hover: hover) and (pointer: fine) {
   html.has-custom-cursor,
   html.has-custom-cursor *,
@@ -71,7 +65,7 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -111,7 +105,6 @@ section[id] {
   }
 }
 
-/* ── Reusable editorial primitives ───────────── */
 .container-x {
   width: 100%;
   max-width: 1200px;
@@ -149,7 +142,7 @@ section[id] {
   gap: 0.5rem;
   font-weight: 500;
   font-size: 0.9rem;
-  padding: 0.7rem 1.1rem;
+  padding: 0.65rem 1.05rem;
   border: 1px solid var(--border);
   border-radius: 6px;
   color: var(--foreground);
@@ -170,14 +163,13 @@ section[id] {
   border-color: var(--navy-light);
 }
 
-/* ── Scroll progress bar ────────────────────── */
 #scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--blue), var(--navy));
+  height: 2px;
+  background: var(--blue);
   transform-origin: left;
   transform: scaleX(0);
   z-index: 100;
@@ -185,11 +177,6 @@ section[id] {
   will-change: transform;
 }
 
-/* ── Horizontal scroll section ──────────────── */
-.horizontal-section {
-  overflow: hidden;
-}
-/* Sembunyikan scrollbar horizontal (swipe tetap berjalan) */
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -198,7 +185,6 @@ section[id] {
   display: none;
 }
 
-/* ── Parallax image wrapper ─────────────────── */
 .parallax-img-wrap {
   overflow: hidden;
   border-radius: 0.75rem;
@@ -208,7 +194,6 @@ section[id] {
   will-change: transform;
 }
 
-/* ── Lenis overrides ────────────────────────── */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -221,36 +206,4 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
-}
-
-/* ── Stagger card animations ────────────────── */
-.stagger-card {
-  will-change: transform, opacity;
-}
-
-/* ── LED status halus (online visitors) ────────── */
-@keyframes led-blink {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(0.75);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.15);
-  }
-}
-.led-dot {
-  position: relative;
-  width: 5px;
-  height: 5px;
-  border-radius: 9999px;
-  background: var(--blue);
-}
-.led-dot > span {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: inherit;
-  animation: led-blink 2.8s ease-in-out infinite;
 }

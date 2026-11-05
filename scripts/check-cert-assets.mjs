@@ -1,14 +1,23 @@
 import { readFileSync, existsSync } from "node:fs";
 
-const src = readFileSync(new URL("../lib/data/certifications.ts", import.meta.url), "utf8");
+const certsSrc = readFileSync(new URL("../lib/data/certifications.ts", import.meta.url), "utf8");
+const projectsSrc = readFileSync(new URL("../lib/data/projects.ts", import.meta.url), "utf8");
 
-const imgs = [...src.matchAll(/"img": "([^"]+)"/g)].map((m) => m[1]);
-const pdfs = [...src.matchAll(/"pdf": "([^"]+)"/g)].map((m) => m[1]);
+const certImgs = [...certsSrc.matchAll(/\bimg:\s*"([^"]+)"/g)].map((m) => m[1]);
+const certPdfs = [...certsSrc.matchAll(/\bpdf:\s*"([^"]+)"/g)].map((m) => m[1]);
+const projectImgs = [...projectsSrc.matchAll(/\bsrc:\s*"([^"]+)"/g)].map((m) => m[1]);
 
-const bad = [];
-for (const p of [...imgs, ...pdfs]) {
-  if (!existsSync(`public/${p}`)) bad.push(p);
+const missing = [];
+for (const p of [...certImgs, ...certPdfs, ...projectImgs]) {
+  const rel = p.replace(/^\//, "");
+  if (!existsSync(`public/${rel}`)) missing.push(p);
 }
 
-console.log(`Total img refs: ${imgs.length} | Total pdf refs: ${pdfs.length}`);
-console.log(bad.length ? `MISSING: ${bad.join(", ")}` : "ALL ASSETS OK");
+console.log(
+  `Cert imgs: ${certImgs.length} | Cert pdfs: ${certPdfs.length} | Project imgs: ${projectImgs.length}`
+);
+if (missing.length) {
+  console.error(`MISSING: ${missing.join(", ")}`);
+  process.exit(1);
+}
+console.log("ALL ASSETS OK");

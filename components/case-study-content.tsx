@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import type { Project } from "@/lib/data/projects";
@@ -10,7 +11,7 @@ import { ArchitectureFlow } from "@/components/architecture-flow";
 
 export function CaseStudyContent({ project }: { project: Project }) {
   const { t, lang } = useLang();
-  const id = lang === "id";
+  const isId = lang === "id";
 
   return (
     <div className="container-x py-20 md:py-28">
@@ -18,40 +19,39 @@ export function CaseStudyContent({ project }: { project: Project }) {
         href="/#projects"
         className="font-mono text-sm text-muted transition-colors hover:text-foreground"
       >
-        ← {id ? "Kembali ke karya" : "Back to work"}
+        ← {isId ? "Kembali ke proyek" : "Back to projects"}
       </Link>
 
-      <div className="mt-10 max-w-3xl">
-        <div className="flex flex-wrap gap-2">
-          {project.chips.map((chip) => (
-            <span
-              key={chip}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-0.5 font-mono text-[11px] text-muted"
-            >
-              <TechIcon name={chip} />
-              {chip}
-            </span>
-          ))}
+      <div className="mt-8 max-w-3xl">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-xs font-medium text-blue">
+            {project.contextBadge[lang]}
+          </span>
           {project.year ? (
-            <span className="rounded-full border border-blue px-3 py-0.5 font-mono text-[11px] text-blue">
-              {project.year}
-            </span>
+            <span className="font-mono text-xs text-muted">· {project.year}</span>
           ) : null}
         </div>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           {t(project.titleKey)}
         </h1>
+
         <p className="mt-5 text-lg leading-relaxed text-muted">{t(project.summaryKey)}</p>
 
         {project.telemetry ? (
-          <div className="mt-8">
+          <div className="mt-7">
             <ProjectTelemetry metrics={project.telemetry} />
           </div>
         ) : null}
 
-        <div className="mt-8 flex flex-wrap gap-4">
-          <a href={project.repo} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            {id ? "Lihat sumber ↗" : "View source ↗"}
+        <div className="mt-7 flex flex-wrap gap-3">
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+          >
+            {isId ? "Lihat kode sumber ↗" : "View source code ↗"}
           </a>
           {project.liveUrl ? (
             <a
@@ -60,7 +60,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="btn"
             >
-              {id ? "Demo live ↗" : "Live demo ↗"}
+              {isId ? "Buka demo live ↗" : "Open live demo ↗"}
             </a>
           ) : null}
         </div>
@@ -69,24 +69,27 @@ export function CaseStudyContent({ project }: { project: Project }) {
       <div className="mt-16 grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <h2 className="mb-5 text-2xl font-semibold tracking-tight text-foreground">
-            {id ? "Fitur & bukti dari repo" : "Features & evidence from repo"}
+            {isId ? "Cakupan fitur di repository" : "Implemented features"}
           </h2>
           <ul className="flex flex-col gap-3">
-            {project.highlights.map((h) => (
-              <li key={h.id} className="flex gap-3 border-l border-blue pl-4 text-[15px] leading-relaxed text-foreground/90">
+            {project.highlights.map((h, i) => (
+              <li
+                key={i}
+                className="border-l-2 border-blue pl-4 text-[15px] leading-relaxed text-foreground/90"
+              >
                 {h[lang]}
               </li>
             ))}
           </ul>
 
           <h2 className="mb-4 mt-10 text-2xl font-semibold tracking-tight text-foreground">
-            {id ? "Stack" : "Stack"}
+            {isId ? "Teknologi yang digunakan" : "Stack & dependencies"}
           </h2>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((s) => (
               <span
                 key={s}
-                className="inline-flex items-center gap-1.5 rounded-full border border-border-line px-3 py-1 text-[13px] text-muted"
+                className="inline-flex items-center gap-1.5 rounded-md border border-border-line px-3 py-1 text-[13px] text-muted"
               >
                 <TechIcon name={s} />
                 {s}
@@ -102,8 +105,8 @@ export function CaseStudyContent({ project }: { project: Project }) {
 
           {project.roleNote ? (
             <div className="mt-10 rounded-xl border border-border-line p-5">
-              <h3 className="font-mono text-sm font-semibold text-navy">
-                {id ? "Peran & konteks" : "Role & context"}
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-navy">
+                {isId ? "Peran & Konteks" : "Role & Context"}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
                 {project.roleNote[lang]}
@@ -114,10 +117,12 @@ export function CaseStudyContent({ project }: { project: Project }) {
 
         <div className="lg:col-span-5">
           <div className="overflow-hidden rounded-xl border border-border-line bg-surface">
-            <img
+            <Image
               src={`/${project.thumb}`}
               alt={t(project.titleKey)}
-              className="w-full h-auto"
+              width={900}
+              height={600}
+              className="h-auto w-full"
             />
           </div>
           {project.evidenceNote ? (
@@ -131,7 +136,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
       {project.architecture ? (
         <section id="architecture" className="mt-16 scroll-mt-24">
           <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
-            {id ? "Arsitektur Sistem & Alur Data" : "System Architecture & Data Flow"}
+            {isId ? "Arsitektur Sistem & Alur Data" : "System Architecture & Data Flow"}
           </h2>
           <ArchitectureFlow flow={project.architecture} />
         </section>
@@ -140,7 +145,7 @@ export function CaseStudyContent({ project }: { project: Project }) {
       {project.screenshots.length > 0 ? (
         <div className="mt-16">
           <h2 className="mb-6 text-2xl font-semibold tracking-tight text-foreground">
-            {id ? "Tangkapan layar" : "Screenshots"}
+            {isId ? "Tangkapan layar antarmuka" : "Interface screenshots"}
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {project.screenshots.map((shot) => (
@@ -148,13 +153,14 @@ export function CaseStudyContent({ project }: { project: Project }) {
                 key={shot.src}
                 className="group overflow-hidden rounded-xl border border-border-line bg-surface"
               >
-                <img
+                <Image
                   src={`/${shot.src}`}
                   alt={shot.caption[lang]}
-                  loading="lazy"
-                  className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
+                  width={800}
+                  height={520}
+                  className="h-auto w-full transition-transform duration-300 group-hover:scale-[1.015]"
                 />
-                <figcaption className="px-4 py-3">
+                <figcaption className="px-4 py-3.5">
                   <p className="text-sm font-medium text-foreground">
                     {shot.caption[lang]}
                   </p>

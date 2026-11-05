@@ -3,7 +3,6 @@
 import { FormEvent, useLayoutEffect, useRef, useState } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import { SiGithub } from "react-icons/si";
@@ -14,6 +13,7 @@ type Status = "idle" | "loading" | "success" | "error";
 
 export function ContactSection() {
   const { t, lang } = useLang();
+  const isId = lang === "id";
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -40,41 +40,19 @@ export function ContactSection() {
     if (!sec || !form || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Form reveal — slides up with a subtle scale
       gsap.fromTo(
         form,
-        { autoAlpha: 0, y: 40, scale: 0.97 },
+        { autoAlpha: 0, y: 16 },
         {
           autoAlpha: 1,
           y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 0.6,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: form,
             start: "top 85%",
             once: true,
           },
-        }
-      );
-
-      // Stagger form fields
-      const fields = form.querySelectorAll<HTMLElement>("[data-form-field]");
-      gsap.fromTo(
-        fields,
-        { autoAlpha: 0, y: 20 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: form,
-            start: "top 80%",
-            once: true,
-          },
-          delay: 0.3,
         }
       );
     }, sec);
@@ -90,9 +68,11 @@ export function ContactSection() {
     send: t("ct-send"),
     or: t("ct-or"),
     placeholders: {
-      name: lang === "id" ? "Nama Anda" : "Your name",
-      email: lang === "id" ? "anda@contoh.com" : "you@example.com",
-      message: lang === "id" ? "Ceritakan proyek Anda..." : "Tell me about your project...",
+      name: isId ? "Nama Anda" : "Your name",
+      email: isId ? "anda@perusahaan.com" : "you@company.com",
+      message: isId
+        ? "Ceritakan posisi atau proyek yang sedang Anda bangun..."
+        : "Share role details or what you are building...",
     },
     options: [
       t("ct-opt0"),
@@ -130,12 +110,7 @@ export function ContactSection() {
         <div className="mx-auto max-w-2xl">
           <SectionHeading
             eyebrow={t("ct-tag")}
-            title={
-              <>
-                {t("ct-h1")}
-                <em className="not-italic text-navy">{t("ct-h2")}</em>
-              </>
-            }
+            title={t("ct-h1")}
             intro={t("ct-sub")}
           />
 
@@ -158,7 +133,7 @@ export function ContactSection() {
               autoComplete="off"
             />
 
-            <div data-form-field className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
                   {labels.name}
@@ -187,7 +162,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div data-form-field>
+            <div>
               <label htmlFor="project" className="mb-2 block text-sm font-medium text-foreground">
                 {labels.type}
               </label>
@@ -197,14 +172,14 @@ export function ContactSection() {
                 className="w-full rounded-lg border border-border-line bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-blue"
               >
                 <option value="">{labels.options[0]}</option>
-                <option value="freelance">{labels.options[1]}</option>
                 <option value="fulltime">{labels.options[2]}</option>
+                <option value="freelance">{labels.options[1]}</option>
                 <option value="consulting">{labels.options[3]}</option>
                 <option value="other">{labels.options[4]}</option>
               </select>
             </div>
 
-            <div data-form-field>
+            <div>
               <label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
                 {labels.message}
               </label>
@@ -218,24 +193,26 @@ export function ContactSection() {
               />
             </div>
 
-            <MagneticWrap strength={0.2} className="w-full">
-              <button data-form-field type="submit" className="btn btn-primary w-full justify-center" disabled={status === "loading"}>
-                {status === "loading"
-                  ? lang === "id"
-                    ? "Mengirim…"
-                    : "Sending…"
-                  : labels.send}
-              </button>
-            </MagneticWrap>
+            <button
+              type="submit"
+              className="btn btn-primary w-full justify-center"
+              disabled={status === "loading"}
+            >
+              {status === "loading"
+                ? isId
+                  ? "Mengirim…"
+                  : "Sending…"
+                : labels.send}
+            </button>
 
             {status === "success" ? (
               <p
                 className="rounded-lg border border-blue-soft bg-blue-soft/40 px-4 py-3 text-sm text-navy"
                 role="status"
               >
-                {lang === "id"
-                  ? "Terima kasih! Pesan Anda terkirim."
-                  : "Thank you! Your message has been sent."}
+                {isId
+                  ? "Terima kasih, pesan Anda sudah terkirim."
+                  : "Thank you, your message has been sent."}
               </p>
             ) : null}
             {status === "error" ? (
@@ -243,9 +220,9 @@ export function ContactSection() {
                 className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/40 dark:text-red-300"
                 role="alert"
               >
-                {lang === "id"
-                  ? "Terjadi kesalahan. Coba lagi atau kirim langsung lewat email."
-                  : "Something went wrong. Please try again or email me directly."}
+                {isId
+                  ? "Pengiriman gagal. Silakan coba lagi atau kirim langsung lewat email."
+                  : "Delivery failed. Please try again or reach out via email directly."}
               </p>
             ) : null}
           </form>
@@ -257,11 +234,7 @@ export function ContactSection() {
               onClick={copyEmail}
               className="text-blue underline-offset-4 hover:underline"
             >
-              {copied
-                ? lang === "id"
-                  ? "Tersalin!"
-                  : "Copied!"
-                : profile.email}
+              {copied ? (isId ? "Tersalin ✓" : "Copied ✓") : profile.email}
             </button>
           </p>
 
@@ -269,7 +242,7 @@ export function ContactSection() {
             <button
               type="button"
               onClick={copyEmail}
-              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 text-left transition-colors hover:border-navy/60"
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 text-left transition-colors hover:border-navy/50"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -287,20 +260,16 @@ export function ContactSection() {
                 <path d="M3 7l9 6 9-6" />
               </svg>
               <span className="text-sm font-medium text-foreground">
-                {copied
-                  ? lang === "id"
-                    ? "Email tersalin ✓"
-                    : "Email copied ✓"
-                  : "Email"}
+                {copied ? (isId ? "Email tersalin ✓" : "Email copied ✓") : "Email"}
               </span>
-              <span className="text-[13px] text-muted">{profile.email}</span>
+              <span className="truncate text-[13px] text-muted">{profile.email}</span>
             </button>
 
             <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/50"
             >
               <SiGithub size={18} className="text-blue" />
               <span className="text-sm font-medium text-foreground">GitHub</span>
@@ -311,7 +280,7 @@ export function ContactSection() {
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/60"
+              className="group flex flex-col gap-2 rounded-xl border border-border-line bg-background p-5 transition-colors hover:border-navy/50"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -327,15 +296,8 @@ export function ContactSection() {
               <span className="text-[13px] text-muted">linkedin.com/in/arya-wgna</span>
             </a>
           </div>
-
-          <p className="mt-6 text-center text-sm text-muted">
-            {lang === "id"
-              ? "Bogor, Indonesia (WIB) · Biasanya membalas dalam 1–2 hari kerja."
-              : "Bogor, Indonesia (WIB) · Usually replies within 1–2 business days."}
-          </p>
         </div>
       </div>
     </section>
   );
 }
-

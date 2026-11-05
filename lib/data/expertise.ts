@@ -6,26 +6,26 @@ export type ExpertiseGroup = {
 export const expertiseGroups: ExpertiseGroup[] = [
   {
     key: "sk-mobile",
-    items: ["Flutter", "Dart", "Firebase", "REST"],
+    items: ["Flutter", "Dart", "Firebase FCM", "REST API"],
   },
   {
     key: "sk-frontend",
-    items: ["Next.js", "React", "Svelte", "TypeScript"],
+    items: ["Next.js", "React", "Svelte", "Tailwind CSS"],
   },
   {
     key: "sk-backend",
-    items: ["Laravel", "PHP", "Bun", "Node.js"],
+    items: ["Laravel", "Bun", "Elysia.js", "Node.js"],
   },
   {
     key: "sk-database",
-    items: ["MySQL", "Redis", "Firebase"],
+    items: ["MySQL", "SQLite", "Secure Storage"],
   },
   {
     key: "sk-devops",
-    items: ["Docker", "Nginx", "Cloudflare"],
+    items: ["Docker", "Nginx", "Cloudflare", "Git"],
   },
   {
     key: "sk-languages",
-    items: ["TypeScript", "Dart", "PHP", "JavaScript", "Python"],
+    items: ["TypeScript", "Dart", "PHP", "JavaScript", "Python", "C"],
   },
 ];

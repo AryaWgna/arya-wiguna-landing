@@ -5,7 +5,10 @@ import { isReducedMotion } from "@/lib/gsap";
 
 export function CustomCursor() {
   const pointerRef = useRef<HTMLDivElement>(null);
+  const visibleRef = useRef(false);
+  const hoveredRef = useRef(false);
 
+  const [enabled, setEnabled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -14,34 +17,41 @@ export function CustomCursor() {
     if (isReducedMotion()) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
+    setEnabled(true);
     document.documentElement.classList.add("has-custom-cursor");
 
-    let mouseX = -100;
-    let mouseY = -100;
-
     const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      if (!isVisible) setIsVisible(true);
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setIsVisible(true);
+      }
 
       if (pointerRef.current) {
-        pointerRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        pointerRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
 
       const target = e.target as HTMLElement | null;
-      if (target) {
-        const interactive = target.closest(
-          "a, button, input, textarea, select, [role='button'], [data-cursor-hover], .btn, [data-project-card]"
-        );
-        setIsHovered(!!interactive);
+      const nextHovered = Boolean(
+        target?.closest(
+          "a, button, summary, input, textarea, select, [role='button'], [data-cursor-hover], .btn"
+        )
+      );
+      if (nextHovered !== hoveredRef.current) {
+        hoveredRef.current = nextHovered;
+        setIsHovered(nextHovered);
       }
     };
 
     const onMouseDown = () => setIsClicked(true);
     const onMouseUp = () => setIsClicked(false);
-    const onMouseLeave = () => setIsVisible(false);
-    const onMouseEnter = () => setIsVisible(true);
+    const onMouseLeave = () => {
+      visibleRef.current = false;
+      setIsVisible(false);
+    };
+    const onMouseEnter = () => {
+      visibleRef.current = true;
+      setIsVisible(true);
+    };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("mousedown", onMouseDown);
@@ -57,32 +67,30 @@ export function CustomCursor() {
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseenter", onMouseEnter);
     };
-  }, [isVisible]);
+  }, []);
 
-  if (typeof window !== "undefined" && !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    return null;
-  }
+  if (!enabled) return null;
 
   return (
     <div
       ref={pointerRef}
       aria-hidden="true"
       className={`pointer-events-none fixed top-0 left-0 z-[99999] transition-opacity duration-150 will-change-transform ${
-        !isVisible ? "opacity-0" : "opacity-100"
+        isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div
-        className={`relative transition-transform duration-150 ease-out origin-top-left ${
+        className={`relative origin-top-left transition-transform duration-150 ease-out ${
           isHovered ? "-rotate-6 scale-110" : "rotate-0 scale-100"
-        } ${isClicked ? "scale-85" : ""}`}
+        } ${isClicked ? "scale-90" : ""}`}
       >
         <svg
-          width="24"
-          height="24"
+          width="22"
+          height="22"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+          className="drop-shadow-[0_2px_6px_rgba(0,0,0,0.28)]"
         >
           <path
             d="M0 0L7.5 19.5L10.5 12.2L17.5 9.2L0 0Z"

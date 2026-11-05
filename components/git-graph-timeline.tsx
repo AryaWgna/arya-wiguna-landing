@@ -3,57 +3,47 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { gitMilestones, type GitBranch, type GitCommitMilestone } from "@/lib/data/git-milestones";
-import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
+import { careerMilestones, type CareerMilestone } from "@/lib/data/git-milestones";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
-const BRANCH_TAG: Record<GitBranch, string> = {
-  main: "border-navy/50 text-navy",
-  edu: "border-blue/60 text-blue",
-};
-
-/**
- * Pattern 1 — Git-Graph Career Timeline & Telemetry HUD.
- * Kiri: pohon commit (node, hash, branch). Kanan: Telemetry HUD sticky.
- */
 export function GitGraphTimeline() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const isId = lang === "id";
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
-  const { playGlitch } = useWebAudioGlitch();
 
-  const active = gitMilestones[activeIdx];
+  const active = careerMilestones[activeIdx];
 
   useLayoutEffect(() => {
     const sec = sectionRef.current;
     if (!sec || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const nodes = sec.querySelectorAll<HTMLElement>("[data-git-node]");
+      const items = sec.querySelectorAll<HTMLElement>("[data-timeline-item]");
       gsap.fromTo(
-        nodes,
-        { autoAlpha: 0, x: -24 },
+        items,
+        { autoAlpha: 0, y: 14 },
         {
           autoAlpha: 1,
-          x: 0,
-          duration: 0.55,
-          stagger: 0.09,
-          ease: "power3.out",
-          scrollTrigger: { trigger: sec, start: "top 75%", once: true },
+          y: 0,
+          duration: 0.5,
+          stagger: 0.07,
+          ease: "power2.out",
+          scrollTrigger: { trigger: sec, start: "top 80%", once: true },
         }
       );
 
-      const hud = sec.querySelector<HTMLElement>("[data-git-hud]");
-      if (hud) {
+      const panel = sec.querySelector<HTMLElement>("[data-timeline-detail]");
+      if (panel) {
         gsap.fromTo(
-          hud,
-          { autoAlpha: 0, y: 20 },
+          panel,
+          { autoAlpha: 0, y: 14 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: { trigger: hud, start: "top 85%", once: true },
+            duration: 0.55,
+            ease: "power2.out",
+            scrollTrigger: { trigger: panel, start: "top 84%", once: true },
           }
         );
       }
@@ -62,145 +52,142 @@ export function GitGraphTimeline() {
     return () => ctx.revert();
   }, []);
 
+  const kindLabel = (kind: CareerMilestone["kind"]) =>
+    kind === "work"
+      ? isId
+        ? "Pengalaman"
+        : "Experience"
+      : isId
+        ? "Pendidikan"
+        : "Education";
+
   return (
     <section id="experience" ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
-        <SectionHeading
-          eyebrow={t("ggt-eyebrow")}
-          title={
-            <>
-              {t("ggt-h1")}
-              <em className="not-italic text-navy">{t("ggt-h2")}</em>
-            </>
-          }
-        />
+        <SectionHeading eyebrow={t("ggt-eyebrow")} title={t("ggt-h1")} />
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-          {}
-          <div className="flex flex-col gap-3 font-mono text-xs lg:col-span-5">
-            {gitMilestones.map((item: GitCommitMilestone, idx: number) => {
+          <div className="flex flex-col gap-2.5 lg:col-span-5">
+            {careerMilestones.map((item, idx) => {
               const isSelected = idx === activeIdx;
               return (
                 <button
                   key={item.id}
                   type="button"
-                  data-git-node
+                  data-timeline-item
                   aria-pressed={isSelected}
-                  onClick={() => {
-                    setActiveIdx(idx);
-                    playGlitch("click");
-                  }}
-                  className={`flex items-start gap-3 rounded-lg border p-3 text-left transition-all ${
+                  onClick={() => setActiveIdx(idx)}
+                  className={`flex items-start gap-3.5 rounded-xl border p-4 text-left transition-colors ${
                     isSelected
-                      ? "border-navy bg-navy text-white shadow-md"
-                      : "border-border-line bg-surface/50 text-foreground hover:border-navy/40"
+                      ? "border-navy bg-navy text-background shadow-sm"
+                      : "border-border-line bg-background text-foreground hover:border-navy/45"
                   }`}
                 >
-                  <div className="flex flex-col items-center pt-0.5">
+                  <div className="flex flex-col items-center pt-1.5">
                     <span
-                      className={`h-2.5 w-2.5 rounded-full border-2 ${
-                        isSelected ? "border-white bg-white" : "border-navy bg-blue"
+                      className={`h-2.5 w-2.5 rounded-full ${
+                        isSelected ? "bg-background" : "bg-blue"
                       }`}
                     />
-                    {idx !== gitMilestones.length - 1 && (
-                      <span className="my-1 h-8 w-0.5 bg-border-line" />
-                    )}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between gap-2 text-[11px] opacity-75">
-                      <span>{item.hash}</span>
-                      <span className={`rounded-full border px-1.5 py-px uppercase ${BRANCH_TAG[item.branch]}`}>
-                        {item.branch}
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
+                      <span className={isSelected ? "text-background/80" : "text-muted"}>
+                        {item.period[lang]}
+                      </span>
+                      <span
+                        className={`rounded border px-1.5 py-0.5 text-[10px] uppercase tracking-wider ${
+                          isSelected
+                            ? "border-background/30 text-background/90"
+                            : "border-border-line text-blue"
+                        }`}
+                      >
+                        {kindLabel(item.kind)}
                       </span>
                     </div>
-                    <div className="mt-0.5 font-semibold text-sm">{t(item.titleKey)}</div>
-                    <div className="text-xs opacity-80">
-                      {t(item.organizationKey)}
-                      {item.locationKey ? ` · ${t(item.locationKey)}` : ""}
+
+                    <div className="mt-1 text-sm font-semibold leading-snug">
+                      {t(item.titleKey)}
                     </div>
-                    <div className="mt-0.5 text-[11px] opacity-60">{item.dateLabel} · {item.year}</div>
+                    <div
+                      className={`mt-0.5 text-xs ${
+                        isSelected ? "text-background/80" : "text-muted"
+                      }`}
+                    >
+                      {t(item.organizationKey)}
+                    </div>
                   </div>
                 </button>
               );
             })}
           </div>
 
-          {}
           <div
-            data-git-hud
-            className="rounded-xl border border-border-line bg-background p-6 font-mono shadow-sm lg:col-span-7 lg:sticky lg:top-24"
+            data-timeline-detail
+            className="rounded-2xl border border-border-line bg-background p-6 sm:p-8 lg:col-span-7 lg:sticky lg:top-24"
           >
-            <div className="mb-4 flex items-center justify-between border-b border-border-line pb-3 text-xs text-muted">
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-                {t("ggt-telemetry")}
-                <span aria-hidden="true">{" // "}</span>
-                {active.hash}
-              </span>
-              <span>
-                {t("ggt-branch")}: {active.branch.toUpperCase()}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-line pb-4 font-mono text-xs text-muted">
+              <span>{active.period[lang]}</span>
+              <span className="rounded border border-border-line bg-surface/60 px-2 py-0.5 text-[11px] uppercase tracking-wider text-navy">
+                {kindLabel(active.kind)}
               </span>
             </div>
 
-            <h3 className="mb-1 font-sans text-lg font-bold text-foreground">{t(active.titleKey)}</h3>
-            <p className="mb-1 text-sm font-semibold text-navy">
+            <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+              {t(active.titleKey)}
+            </h3>
+            <p className="mt-1 text-sm font-medium text-navy">
               {t(active.roleKey)} · {t(active.organizationKey)}
             </p>
             {active.locationKey ? (
-              <p className="mb-4 text-xs text-muted">
-                {t(active.locationKey)} · {active.dateLabel}
-              </p>
-            ) : (
-              <p className="mb-4 text-xs text-muted">{active.dateLabel}</p>
-            )}
+              <p className="mt-1 text-xs text-muted">{t(active.locationKey)}</p>
+            ) : null}
 
-            <div className="space-y-4 text-xs text-foreground/85">
+            <div className="mt-6 space-y-5">
               <div>
-                <div className="mb-1 text-[10px] uppercase tracking-wider text-muted">
+                <h4 className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
                   {t("ggt-arch")}
-                </div>
-                <p className="rounded-md border border-border-line/50 bg-surface/40 p-3 font-sans text-sm leading-relaxed">
+                </h4>
+                <p className="text-sm leading-relaxed text-foreground/90">
                   {t(active.contextKey)}
                 </p>
               </div>
 
               <div>
-                <div className="mb-1 text-[10px] uppercase tracking-wider text-muted">
+                <h4 className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
                   {t("ggt-resp")}
-                </div>
-                <ul className="space-y-1 font-sans text-sm">
+                </h4>
+                <ul className="space-y-1.5 text-sm text-foreground/90">
                   {active.responsibilitiesKeys.map((key) => (
-                    <li key={key} className="flex gap-2">
-                      <span className="text-blue">▸</span>
+                    <li key={key} className="flex gap-2.5">
+                      <span className="text-blue">–</span>
                       <span>{t(key)}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div>
-                <div className="mb-1 text-[10px] uppercase tracking-wider text-muted">
-                  {t("ggt-deliv")}
-                </div>
-                {active.deliverables.length > 0 ? (
-                  <ul className="flex flex-col gap-1.5">
+              {active.deliverables.length > 0 ? (
+                <div className="border-t border-border-line pt-4">
+                  <h4 className="mb-2.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
+                    {t("ggt-deliv")}
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
                     {active.deliverables.map((d) => (
-                      <li key={`${d.labelKey}-${d.url}`}>
-                        <a
-                          href={d.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue transition-colors hover:text-navy-light"
-                        >
-                          {t(d.labelKey)} ↗
-                        </a>
-                      </li>
+                      <a
+                        key={`${d.labelKey}-${d.url}`}
+                        href={d.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-border-line bg-surface/40 px-3 py-1.5 font-mono text-xs font-medium text-blue transition-colors hover:border-navy hover:text-navy"
+                      >
+                        {t(d.labelKey)} ↗
+                      </a>
                     ))}
-                  </ul>
-                ) : (
-                  <p className="text-xs italic text-muted">{t("ggt-none")}</p>
-                )}
-              </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

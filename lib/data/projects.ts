@@ -1,11 +1,3 @@
-/**
- * Proyek pilihan — ditulis tangan berdasarkan bukti terverifikasi:
- * - README & isi repo GitHub (SIMARU-Mobile-App, Digital-Skyboard-Announcement, streamely)
- * - Teks deskripsi situs lama (key kamus p1/p2/p3)
- *
- * Hanya data yang terbukti dari repo yang dicantumkan. Tidak ada metrik
- * dibuat-buat (jumlah user, dampak, dll).
- */
 export type Screenshot = {
   src: string;
   caption: { en: string; id: string };
@@ -36,9 +28,7 @@ export type RationaleItem = {
 
 export type TelemetryMetric = {
   id: string;
-  value: number;
-  suffix?: string;
-  prefix?: string;
+  value: string;
   label: { en: string; id: string };
   detail: { en: string; id: string };
 };
@@ -48,8 +38,8 @@ export type ArchitectureStep = {
   node: string;
   role: { en: string; id: string };
   protocol: string;
-  latency?: string;
   description: { en: string; id: string };
+  codeLabel?: string;
   payloadExample?: string;
 };
 
@@ -66,28 +56,16 @@ export type Project = {
   thumb: string;
   repo: string;
   liveUrl?: string;
-  /** Tahun hanya jika terverifikasi dari repo (mis. changelog). */
   year?: string;
+  contextBadge: { en: string; id: string };
   chips: string[];
   stack: string[];
   highlights: { en: string; id: string }[];
   roleNote?: { en: string; id: string };
   evidenceNote?: { en: string; id: string };
-  /**
-   * Pattern 3 — perangkat fan-out (left/center/right) untuk banner kartu.
-   */
   fanout?: FanOutDevices;
-  /**
-   * Pattern 2 — trade-off arsitektur ("Why this tech stack").
-   */
   rationale?: RationaleItem[];
-  /**
-   * Telemetry metrics — verifiable numerical data points.
-   */
   telemetry?: TelemetryMetric[];
-  /**
-   * Interactive architecture flow — end-to-end data pipeline simulation.
-   */
   architecture?: ArchitectureFlow;
   screenshots: Screenshot[];
 };
@@ -99,33 +77,46 @@ export const projects: Project[] = [
     summaryKey: "p1-desc",
     thumb: "assets/projects/simaru-home.jpg",
     repo: "https://github.com/AryaWgna/SIMARU-Mobile-App",
-    chips: ["Flutter", "Dart", "Mobile"],
-    stack: ["Flutter", "Dart", "Firebase Cloud Messaging (FCM)", "REST API"],
+    year: "2025",
+    contextBadge: {
+      en: "Hospital Internship · RS UMMI Bogor",
+      id: "Magang Rumah Sakit · RS UMMI Bogor",
+    },
+    chips: ["Flutter", "Dart", "Firebase", "REST API"],
+    stack: [
+      "Flutter",
+      "Dart",
+      "Provider",
+      "mobile_scanner",
+      "Firebase Cloud Messaging (FCM)",
+      "flutter_secure_storage",
+      "REST API",
+    ],
     highlights: [
       {
-        en: "QR scanning to inspect medical assets",
-        id: "Pemindaian QR untuk inspeksi aset medis",
+        en: "Camera QR scanning for room-by-room medical asset stock opname",
+        id: "Pemindaian QR kamera untuk stock opname aset medis per gedung dan ruangan",
       },
       {
-        en: "FCM push notifications — custom background & in-app handling",
-        id: "Notifikasi push FCM — penanganan background & foreground custom",
+        en: "Asset lifecycle modules: check-in/out, mutation, repair status, and depreciation view",
+        id: "Modul siklus hidup aset: check-in/out, mutasi, status perbaikan, dan nilai penyusutan",
       },
       {
-        en: "Automatic FCM token management (refresh & server sync)",
-        id: "Manajemen token FCM otomatis (refresh & sinkronisasi server)",
+        en: "FCM push notifications with foreground/background handlers and token sync",
+        id: "Notifikasi push FCM dengan handler foreground/background serta sinkronisasi token ke server",
       },
       {
-        en: "In-app notification settings page",
-        id: "Halaman pengaturan notifikasi di dalam aplikasi",
+        en: "Field complaint submission & tracking directly tied to asset records",
+        id: "Pelaporan dan pelacakan keluhan kerusakan alat langsung dari lapangan",
       },
     ],
     roleNote: {
-      en: "Personal project — the implementation is visible across Arya's public commit history (71 commits).",
-      id: "Proyek pribadi — implementasinya dapat dilihat di riwayat commit publik Arya (71 commit).",
+      en: "Built during my Mobile Developer internship at RS UMMI Bogor (Feb–Jul 2025), documented across 71 public commits on the dev branch.",
+      id: "Dikembangkan selama magang Mobile Developer di RS UMMI Bogor (Feb–Jul 2025), tercatat di 71 commit publik pada branch dev.",
     },
     evidenceNote: {
-      en: "This project is fully open-source: the complete Flutter codebase (Android/iOS/web scaffolding) is available on GitHub, showing consistent progress on QR inspection, FCM push handling, and token management.",
-      id: "Proyek ini sepenuhnya open-source: codebase Flutter lengkap (scaffolding Android/iOS/web) tersedia di GitHub, menunjukkan progres konsisten pada inspeksi QR, penanganan notifikasi push FCM, dan manajemen token.",
+      en: "Full Flutter source code is public on GitHub, covering StockOpnameController, FcmTokenManager, FlutterSecureStorage session handling, and REST integration.",
+      id: "Seluruh kode sumber Flutter tersedia publik di GitHub, mencakup StockOpnameController, FcmTokenManager, manajemen sesi FlutterSecureStorage, dan integrasi REST.",
     },
     fanout: {
       layout: "phones",
@@ -135,131 +126,134 @@ export const projects: Project[] = [
     },
     rationale: [
       {
-        technology: "Flutter",
+        technology: "Flutter + Provider",
         reason: {
-          en: "One Dart codebase ships Android & iOS with consistent behavior — critical for a field tool used by hospital officers on varied devices.",
-          id: "Satu codebase Dart merilis Android & iOS dengan perilaku konsisten — penting untuk alat lapangan yang dipakai petugas rumah sakit di berbagai perangkat.",
+          en: "Single Dart codebase builds for Android & iOS while Provider keeps controller state explicit across scan, asset, and complaint screens.",
+          id: "Satu codebase Dart membangun Android & iOS, sementara Provider menjaga state antar layar scan, aset, dan komplain tetap lugas.",
         },
         tradeoff: {
-          en: "Native runtime is heavier than a web view; APK size grows, acceptable for internal tooling.",
-          id: "Runtime native lebih berat daripada web view; ukuran APK membesar, masih wajar untuk alat internal.",
+          en: "Larger binary size than a web wrapper, acceptable for an internal hospital tool.",
+          id: "Ukuran aplikasi lebih besar dibanding web view, namun wajar untuk aplikasi operasional internal rumah sakit.",
         },
       },
       {
         technology: "Firebase Cloud Messaging (FCM)",
         reason: {
-          en: "Push notifications reach officers even when the app is backgrounded — essential for inspection alerts while staff are on duty.",
-          id: "Notifikasi push tetap sampai meski aplikasi di background — penting untuk pengingat inspeksi saat petugas bertugas.",
+          en: "Delivers inspection and complaint notifications reliably even when staff lock their phones on hospital rounds.",
+          id: "Mengirimkan pemberitahuan inspeksi dan komplain secara andal meski ponsel petugas terkunci saat bertugas keliling.",
         },
         tradeoff: {
-          en: "Depends on Google services; token refresh requires server sync.",
-          id: "Bergantung pada layanan Google; refresh token perlu sinkronisasi server.",
+          en: "Requires Google Play Services and server-side token synchronization whenever device tokens rotate.",
+          id: "Bergantung pada Google Play Services dan membutuhkan sinkronisasi ulang saat token perangkat berubah.",
         },
       },
       {
-        technology: "REST API",
+        technology: "REST API + Secure Storage",
         reason: {
-          en: "Keeps the mobile client decoupled from the backend, so the hospital system can evolve its API independently.",
-          id: "Memisahkan klien mobile dari backend, sehingga sistem rumah sakit dapat mengembangkan API secara independen.",
+          en: "Decouples the Flutter app from the hospital web backend while storing Bearer & FCM tokens encrypted on device.",
+          id: "Memisahkan aplikasi Flutter dari backend web rumah sakit sekaligus menyimpan token Bearer & FCM terenkripsi di perangkat.",
         },
         tradeoff: {
-          en: "Every action needs network round-trips; no offline queue yet.",
-          id: "Setiap aksi butuh koneksi jaringan; belum ada antrean offline.",
+          en: "Requires active Wi-Fi/cellular coverage inside wards; offline mutation queue is not yet implemented.",
+          id: "Memerlukan koneksi jaringan aktif di area ruangan; antrean mutasi offline belum diimplementasikan.",
         },
       },
     ],
     telemetry: [
       {
         id: "commits",
-        value: 71,
-        suffix: "",
-        label: { en: "Git Commits", id: "Commit Terverifikasi" },
-        detail: { en: "Visible across public commit history", id: "Tercatat di riwayat commit publik GitHub" },
+        value: "71",
+        label: { en: "Public Commits", id: "Commit Publik" },
+        detail: { en: "Verified on GitHub dev branch", id: "Tercatat di branch dev GitHub" },
       },
       {
         id: "modules",
-        value: 4,
-        suffix: "",
-        label: { en: "Core Modules", id: "Modul Utama" },
-        detail: { en: "QR Scan, FCM Sync, Stock Opname, Complaint", id: "Scan QR, Sinkron FCM, Stock Opname, Komplain" },
+        value: "4",
+        label: { en: "Core Workflows", id: "Alur Utama" },
+        detail: { en: "QR Opname, Assets, Complaints, FCM", id: "Opname QR, Aset, Komplain, FCM" },
       },
       {
-        id: "fcm-sync",
-        value: 100,
-        suffix: "%",
-        label: { en: "FCM Token Sync", id: "Sinkronisasi Token FCM" },
-        detail: { en: "Auto-refresh & server handshake", id: "Refresh & handshake otomatis dengan server" },
+        id: "platforms",
+        value: "Android & iOS",
+        label: { en: "Target Client", id: "Target Klien" },
+        detail: { en: "Single Dart 3.4+ Flutter codebase", id: "Satu codebase Flutter Dart 3.4+" },
       },
     ],
     architecture: {
       title: {
-        en: "Event-Driven QR & Push Notification Pipeline",
-        id: "Pipeline Event-Driven QR & Notifikasi Push",
+        en: "QR Asset Opname & FCM Token Sync Flow",
+        id: "Alur Stock Opname QR & Sinkronisasi Token FCM",
       },
       subtitle: {
-        en: "End-to-end data flow from physical QR scan on medical equipment to staff alert via FCM",
-        id: "Alur data menyeluruh dari scan QR fisik aset medis hingga notifikasi staf via FCM",
+        en: "Actual controller, storage, and API boundaries from Aryawgna/SIMARU-Mobile-App",
+        id: "Batas modul controller, penyimpanan lokal, dan endpoint API asli dari repo SIMARU-Mobile-App",
       },
       steps: [
         {
           step: 1,
-          node: "Flutter Client",
-          role: { en: "Optical QR Scanner", id: "Pemindai QR Optik" },
-          protocol: "Camera2 / AVFoundation",
-          latency: "~16ms (60 FPS)",
+          node: "StockOpnameController",
+          role: { en: "Camera QR Scanner", id: "Pemindai QR Kamera" },
+          protocol: "mobile_scanner ^6.0.10",
           description: {
-            en: "Officer scans the QR barcode affixed to medical equipment using the device camera.",
-            id: "Petugas memindai kode QR fisik pada alat medis menggunakan kamera perangkat.",
+            en: "Staff selects a hospital building and room, then scans physical asset QR labels with debounced duplicate filtering.",
+            id: "Petugas memilih gedung dan ruangan rumah sakit, lalu memindai label QR aset dengan proteksi duplikasi bacaan.",
           },
-          payloadExample: '{\n  "event": "QR_SCANNED",\n  "optical_raw": "UMMI://MED-EQUIP/VENT-04",\n  "barcode_format": "QR_CODE",\n  "camera_lens": "BACK_MACRO",\n  "timestamp": "2026-11-04T14:22:05Z"\n}',
+          codeLabel: "lib/controllers/scan/stockopname_controller.dart",
+          payloadExample: `// Building & Room scoped opname session
+Building? _selectedBuilding;
+List<Room> _filteredRooms = [];
+List<StockOpnameItem> _scannedItems = [];
+Map<int, int> _localScannedCounts = {}; // opnameId -> count`,
         },
         {
           step: 2,
-          node: "Mobile Storage",
-          role: { en: "JWT Session & Token Cache", id: "Sesi JWT & Cache Token" },
-          protocol: "Flutter SecureStorage",
-          latency: "<5ms",
+          node: "FcmTokenManager",
+          role: { en: "Encrypted Session & Token", id: "Sesi & Token Terenkripsi" },
+          protocol: "flutter_secure_storage",
           description: {
-            en: "App validates JWT auth token, bundles device FCM token, and structures the inspection payload.",
-            id: "Aplikasi memvalidasi token JWT, menyertakan token FCM perangkat, dan menyusun payload inspeksi.",
+            en: "Compares current Firebase device token against secure local storage and posts updates only when the token rotates.",
+            id: "Membandingkan token perangkat Firebase dengan penyimpanan terenkripsi lokal dan hanya mengirim pembaruan jika token berubah.",
           },
-          payloadExample: '{\n  "auth_header": "Bearer eyJhbGciOiJIUzI1Ni...",\n  "asset_id": "MED-VENT-04",\n  "inspector_id": "STF-289",\n  "device_fingerprint": "fcm_token_eX_98a...qk",\n  "battery_level": 0.88\n}',
+          codeLabel: "lib/services/firebase/fcm_token_manager.dart",
+          payloadExample: `POST /api/notifications/fcm-token
+Authorization: Bearer <jwt_token>
+Content-Type: application/json
+
+{
+  "fcm_token": "<firebase_messaging_device_token>"
+}`,
         },
         {
           step: 3,
-          node: "Laravel Backend",
-          role: { en: "Inspection & Audit Gateway", id: "Gateway Inspeksi & Audit" },
-          protocol: "HTTPS / REST JSON",
-          latency: "~85ms",
+          node: "Hospital REST API",
+          role: { en: "Asset & Complaint Endpoints", id: "Endpoint Aset & Komplain" },
+          protocol: "HTTPS JSON",
           description: {
-            en: "Server verifies asset existence, writes stock opname log into the database, and fires FCM event.",
-            id: "Server memvalidasi aset, mencatat log stock opname ke database, dan memicu event notifikasi.",
+            en: "Handles authentication, asset inventory records, depreciation summaries, activity history, and field complaints.",
+            id: "Menangani autentikasi, inventaris aset, ringkasan penyusutan nilai, riwayat aktivitas, dan pelaporan komplain.",
           },
-          payloadExample: '{\n  "status": 200,\n  "transaction": "DB_TRANSACTION_COMMITTED",\n  "audit_log_id": 14092,\n  "inspection_status": "OPERATIONAL_VERIFIED",\n  "event_fired": "App\\\\Events\\\\MedicalAssetInspected"\n}',
+          codeLabel: "lib/core/config/api_config.dart",
+          payloadExample: `POST /api/auth/login
+POST /api/auth/refresh-token
+GET  /api/dashboard/summary
+GET  /api/assets
+GET  /api/depreciations/total-value?year=2025
+POST /api/complaints`,
         },
         {
           step: 4,
-          node: "Firebase Cloud Messaging",
-          role: { en: "Push Broadcast Engine", id: "Engine Distribusi Notifikasi" },
-          protocol: "HTTP v1 OAuth2",
-          latency: "~120ms",
+          node: "NotificationService",
+          role: { en: "Push & Badge Handler", id: "Penanganan Push & Badge" },
+          protocol: "firebase_messaging",
           description: {
-            en: "Google FCM dispatches targeted notifications to relevant technician and department head channels.",
-            id: "Google FCM mengirimkan alert push bertarget ke channel teknisi dan kepala ruangan.",
+            en: "Processes incoming foreground/background FCM alerts, updates unread badge state, and routes users to notification details.",
+            id: "Memproses notifikasi FCM saat aplikasi aktif maupun di latar belakang, memperbarui badge, dan membuka detail laporan.",
           },
-          payloadExample: '{\n  "message": {\n    "topic": "hospital-head-nurse-dept",\n    "notification": {\n      "title": "Inspeksi Selesai: Ventilator 04",\n      "body": "Petugas STF-289 memverifikasi aset dalam kondisi laik pakai."\n    },\n    "priority": "HIGH"\n  }\n}',
-        },
-        {
-          step: 5,
-          node: "Target Staff Device",
-          role: { en: "Background Alert Receiver", id: "Penerima Alert Latar Belakang" },
-          protocol: "FCM Push Listener",
-          latency: "Real-time (<100ms)",
-          description: {
-            en: "Custom background/foreground handler rings audible alert and routes user straight to the asset log.",
-            id: "Handler background/foreground memunculkan alert audio dan membuka log aset secara instan.",
-          },
-          payloadExample: '{\n  "received_state": "BACKGROUND_WAKE_LOCK",\n  "channel_id": "urgent_medical_alerts",\n  "sound": "haptic_pulse.wav",\n  "action_intent": "OPEN_INSPECTION_DETAIL_14092"\n}',
+          codeLabel: "lib/controllers/notification/",
+          payloadExample: `// Notification controllers & settings
+NotificationController
+NotificationBadgeController
+NotificationSettingsController // per-user toggle preferences`,
         },
       ],
     },
@@ -268,40 +262,40 @@ export const projects: Project[] = [
         src: "assets/projects/simaru-home.jpg",
         caption: { en: "Main dashboard", id: "Dashboard utama" },
         description: {
-          en: "Home dashboard showing the latest asset inspection status and quick actions for daily medical equipment checks.",
-          id: "Dashboard utama yang menampilkan status inspeksi aset terbaru dan aksi cepat untuk pemeriksaan alat medis harian.",
+          en: "Summary of total medical assets, repair counts, net asset value, and daily activity feed.",
+          id: "Ringkasan total aset medis, jumlah alat dalam perbaikan, nilai buku aset, dan aktivitas harian.",
         },
       },
       {
         src: "assets/projects/simaru-stock.jpg",
         caption: { en: "Stock opname", id: "Stock opname" },
         description: {
-          en: "Stock opname flow where officers record the physical condition of medical assets via QR scan.",
-          id: "Alur stock opname tempat petugas mencatat kondisi fisik aset medis melalui pemindaian QR.",
+          en: "Building and room stock opname workflow where staff verify physical equipment via QR scan.",
+          id: "Alur stock opname per gedung dan ruangan tempat petugas memverifikasi fisik alat medis lewat scan QR.",
         },
       },
       {
         src: "assets/projects/simaru-complain.jpg",
         caption: { en: "Complaint reporting", id: "Pelaporan keluhan" },
         description: {
-          en: "Complaint screen for reporting damaged or problematic equipment directly from the field.",
-          id: "Layar keluhan untuk melaporkan peralatan rusak atau bermasalah langsung dari lapangan.",
+          en: "Field complaint submission form for reporting damaged or malfunctioning hospital equipment.",
+          id: "Formulir pelaporan keluhan lapangan untuk melaporkan alat medis yang rusak atau bermasalah.",
         },
       },
       {
         src: "assets/projects/simaru-notif.jpg",
         caption: { en: "Push notifications", id: "Notifikasi push" },
         description: {
-          en: "Push notification list and in-app settings for controlling which alerts arrive.",
-          id: "Daftar notifikasi push dan pengaturan dalam aplikasi untuk mengontrol pemberitahuan yang masuk.",
+          en: "Notification inbox and in-app alert preferences backed by Firebase Cloud Messaging.",
+          id: "Kotak masuk pemberitahuan dan pengaturan preferensi notifikasi berbasis Firebase Cloud Messaging.",
         },
       },
       {
         src: "assets/projects/simaru-login.jpg",
         caption: { en: "Login screen", id: "Halaman masuk" },
         description: {
-          en: "Login screen (phone demo) — the entry point to the system.",
-          id: "Halaman masuk (demo HP) — pintu masuk ke sistem.",
+          en: "Staff authentication screen issuing JWT credentials stored in FlutterSecureStorage.",
+          id: "Halaman autentikasi petugas yang menyimpan sesi JWT ke dalam FlutterSecureStorage.",
         },
       },
     ],
@@ -313,207 +307,191 @@ export const projects: Project[] = [
     thumb: "assets/projects/skyboard-main.jpg",
     repo: "https://github.com/AryaWgna/Digital-Skyboard-Announcement",
     year: "2026",
-    chips: ["TypeScript", "PHP", "UI", "Docker"],
+    contextBadge: {
+      en: "Final Coursework (UAS) · Multi-Container System",
+      id: "Proyek UAS · Sistem Multi-Kontainer",
+    },
+    chips: ["Next.js 15", "Laravel 11", "Docker", "Nginx"],
     stack: [
-      "Laravel (PHP)",
-      "MySQL",
-      "Nginx (gateway)",
+      "Next.js 15",
+      "TypeScript",
+      "Laravel 11 (PHP)",
+      "Laravel Sanctum",
+      "MySQL 8.0",
+      "Nginx (Reverse Proxy & Static)",
       "Docker Compose",
-      "Next.js 15 (UI)",
       "SweetAlert2",
     ],
     highlights: [
       {
-        en: "Real-time flight board with auto-refresh every 30 seconds",
-        id: "Flight board real-time dengan auto-refresh setiap 30 detik",
+        en: "5-service Docker Compose topology isolated on a dedicated bridge network (skyboard-net)",
+        id: "Topologi 5 kontainer Docker Compose terisolasi di jaringan bridge khusus (skyboard-net)",
       },
       {
-        en: "Flight statuses: On Time, Delayed, Boarding, Gate Closed, Departed",
-        id: "Status penerbangan: On Time, Delayed, Boarding, Gate Closed, Departed",
+        en: "Public flight display board auto-refreshing schedules every 30 seconds with boarding audio chimes",
+        id: "Papan jadwal penerbangan publik dengan auto-refresh tiap 30 detik dan pengumuman audio boarding",
       },
       {
-        en: "Full admin dashboard: CRUD flights, airlines, assets/promos",
-        id: "Admin dashboard lengkap: CRUD penerbangan, maskapai, aset/promo",
+        en: "Sanctum-protected admin dashboard for flights, airlines, running text, and promo banners",
+        id: "Dashboard admin terproteksi Sanctum untuk CRUD penerbangan, maskapai, running text, dan banner promo",
       },
       {
-        en: "Promo slider (10 banners) + audio announcement for boarding",
-        id: "Promo slider 10 banner + audio announcement untuk boarding",
-      },
-      {
-        en: "Microservices architecture + Nginx reverse proxy via Docker",
-        id: "Arsitektur microservices + reverse proxy Nginx via Docker",
+        en: "Nginx TLS gateway routing traffic across Next.js UI, Laravel API, and static media containers",
+        id: "Gateway TLS Nginx yang mengarahkan trafik ke kontainer UI Next.js, API Laravel, dan server aset statis",
       },
     ],
     roleNote: {
-      en: "Built as final coursework (UAS) for the Web Software Tools subject, per the repository README.",
-      id: "Dibuat sebagai tugas akhir (UAS) mata kuliah Web Software Tools, sesuai README repository.",
+      en: "Developed as final coursework (UAS) for the Web Software Tools course, with documented v1.0.0 and v2.0.0 releases.",
+      id: "Dikembangkan sebagai proyek ujian akhir semester (UAS) mata kuliah Web Software Tools, lengkap dengan rilis v1.0.0 dan v2.0.0.",
     },
     evidenceNote: {
-      en: "The repository includes a changelog documenting the release history (v1.0.0 in 2026; v2.0.0 on 2026-01-12), with feature milestones recorded across commits.",
-      id: "Repository mencakup changelog yang mendokumentasikan riwayat rilis (v1.0.0 tahun 2026; v2.0.0 pada 2026-01-12), dengan tonggak fitur tercatat di seluruh commit.",
+      en: "Repository includes the complete docker-compose.yml, gateway Nginx TLS config, Laravel 11 Sanctum API routes, SQL seeders, and Next.js 15 app.",
+      id: "Repository memuat docker-compose.yml lengkap, konfigurasi TLS Nginx gateway, route API Laravel 11 Sanctum, seeder SQL, dan aplikasi Next.js 15.",
     },
     fanout: {
       layout: "desktop",
       secondary: {
         src: "assets/projects/skyboard-admin.jpg",
         frame: "laptop",
-        alt: "Skyboard Admin Dashboard (CRUD & Assets)",
+        alt: "Skyboard Admin Dashboard",
       },
       center: {
         src: "assets/projects/skyboard-main.jpg",
         frame: "laptop",
-        alt: "Skyboard Public Flight Board (Real-Time FIDS)",
+        alt: "Skyboard Public Flight Board",
       },
     },
     rationale: [
       {
-        technology: "Laravel (PHP)",
+        technology: "Docker Compose + Nginx Gateway",
         reason: {
-          en: "Batteries-included CRUD, auth, and validation fit the coursework scope while keeping administrative routing maintainable.",
-          id: "CRUD, autentikasi, dan validasi bawaan cocok dengan cakupan tugas akhir sekaligus menjaga routing administrasi tetap terstruktur.",
+          en: "Splits UI, API, static media, and MySQL into 5 reproducible containers behind a single HTTPS reverse proxy (skyboard.local).",
+          id: "Memisahkan UI, API, media statis, dan MySQL ke dalam 5 kontainer yang mudah direproduksi di balik satu reverse proxy HTTPS (skyboard.local).",
         },
         tradeoff: {
-          en: "PHP request model is less suited to real-time push; solved with 30-second auto-refresh instead of websockets.",
-          id: "Model request PHP kurang cocok untuk push real-time; disiasati dengan auto-refresh 30 detik alih-alih websocket.",
+          en: "Higher local memory footprint than running a monolith, traded for clean service isolation.",
+          id: "Konsumsi memori lokal lebih besar dibanding monolit tunggal, ditukar dengan isolasi antar layanan yang rapi.",
         },
       },
       {
-        technology: "MySQL",
+        technology: "Laravel 11 + Sanctum",
         reason: {
-          en: "Relational model matches flight/airline/asset entities and keeps administrative data consistent.",
-          id: "Model relasional cocok untuk entitas penerbangan/maskapai/aset dan menjaga konsistensi data administrasi.",
+          en: "Provides structured REST controllers, validation, and token-authenticated admin mutations for flight statuses and promos.",
+          id: "Menyediakan controller REST terstruktur, validasi request, dan autentikasi token Sanctum untuk pengelolaan jadwal serta promo.",
         },
         tradeoff: {
-          en: "Schema migrations and joins add overhead at scale; fine for this board.",
-          id: "Migrasi skema dan join menambah beban saat skalabilitas besar; masih aman untuk papan ini.",
+          en: "Uses 30-second client polling instead of persistent WebSockets, keeping PHP-FPM deployment straightforward.",
+          id: "Menggunakan polling 30 detik alih-alih WebSocket persisten agar deployment PHP-FPM tetap sederhana.",
         },
       },
       {
-        technology: "Docker Compose + Nginx",
+        technology: "Next.js 15 + MySQL 8.0",
         reason: {
-          en: "Microservices topology with Nginx reverse proxy is reproducible anywhere for grading or demoing.",
-          id: "Topologi microservices dengan reverse proxy Nginx dapat direproduksi di mana saja untuk penilaian atau demo.",
+          en: "Next.js renders the kiosk display and admin views cleanly while MySQL enforces relational integrity between airlines and flights.",
+          id: "Next.js merender layar display dan panel admin dengan responsif, sementara MySQL menjaga relasi data maskapai dan penerbangan.",
         },
         tradeoff: {
-          en: "More moving parts than a single service; requires Docker knowledge to operate.",
-          id: "Lebih banyak komponen daripada satu layanan; butuh pengetahuan Docker untuk mengoperasikannya.",
-        },
-      },
-      {
-        technology: "Next.js 15 (UI)",
-        reason: {
-          en: "React server components render the public board efficiently while sharing type-safe calls with the Laravel API.",
-          id: "Server component React merender papan publik secara efisien sekaligus berbagi panggilan type-safe dengan API Laravel.",
-        },
-        tradeoff: {
-          en: "Node runtime adds a second service beside PHP.",
-          id: "Runtime Node menambah layanan kedua di samping PHP.",
-        },
-      },
-      {
-        technology: "SweetAlert2",
-        reason: {
-          en: "Polished modal feedback for admin CRUD without dragging in a heavy UI kit.",
-          id: "Feedback modal yang rapi untuk CRUD admin tanpa menarik pustaka UI yang berat.",
-        },
-        tradeoff: {
-          en: "Less flexible than a bespoke dialog system.",
-          id: "Kurang fleksibel dibanding sistem dialog khusus.",
+          en: "Running Node.js alongside PHP adds a second runtime in development.",
+          id: "Menjalankan runtime Node.js berdampingan dengan PHP menambah layanan yang perlu dikelola.",
         },
       },
     ],
     telemetry: [
       {
-        id: "refresh",
-        value: 30,
-        suffix: "s",
-        label: { en: "Auto-Refresh Rate", id: "Laju Refresh Otomatis" },
-        detail: { en: "Live flight schedule sync interval", id: "Interval sinkronisasi jadwal penerbangan live" },
+        id: "containers",
+        value: "5",
+        label: { en: "Docker Containers", id: "Kontainer Docker" },
+        detail: { en: "Gateway, UI, API, Assets, MySQL 8", id: "Gateway, UI, API, Assets, MySQL 8" },
       },
       {
-        id: "containers",
-        value: 3,
-        suffix: "",
-        label: { en: "Docker Services", id: "Layanan Docker" },
-        detail: { en: "Nginx gateway, Next.js UI, Laravel API", id: "Gateway Nginx, UI Next.js, API Laravel" },
+        id: "refresh",
+        value: "30s",
+        label: { en: "Board Polling", id: "Siklus Polling" },
+        detail: { en: "Automatic schedule & status sync", id: "Sinkronisasi jadwal & status otomatis" },
       },
       {
         id: "promo",
-        value: 10,
-        suffix: "+",
-        label: { en: "Promo Slots", id: "Slot Banner Promo" },
-        detail: { en: "Admin-managed dynamic media banners", id: "Banner media dinamis yang dikelola admin" },
+        value: "10",
+        label: { en: "Promo Banners", id: "Slot Banner" },
+        detail: { en: "Admin-managed rotating display media", id: "Media rotasi yang dikelola dari admin" },
       },
     ],
     architecture: {
       title: {
-        en: "Containerized Microservices & Reverse Proxy Gateway",
-        id: "Microservices Kontainer & Gateway Reverse Proxy",
+        en: "5-Container Docker Compose & Nginx Reverse Proxy Topology",
+        id: "Topologi 5 Kontainer Docker Compose & Reverse Proxy Nginx",
       },
       subtitle: {
-        en: "Multi-container Docker topology routing public flight schedules and administrative CRUD operations",
-        id: "Topologi multi-kontainer Docker yang me-route jadwal publik dan operasi CRUD admin",
+        en: "Verified service routing from Digital-Skyboard-Announcement/docker-compose.yml & gateway-skyboard/nginx.conf",
+        id: "Routing antar kontainer asli dari docker-compose.yml dan gateway-skyboard/nginx.conf",
       },
       steps: [
         {
           step: 1,
-          node: "Display & Admin Client",
-          role: { en: "Airport Screen & Admin Browser", id: "Layar Bandara & Browser Admin" },
-          protocol: "HTTP/2 HTTPS",
-          latency: "~24ms",
+          node: "gateway-skyboard",
+          role: { en: "Nginx TLS Reverse Proxy", id: "Reverse Proxy TLS Nginx" },
+          protocol: "HTTPS :443 / HTTP :80",
           description: {
-            en: "Public display screens poll flight schedules every 30s while admins manage airline assets.",
-            id: "Layar display publik mem-polling jadwal tiap 30 detik saat admin mengelola maskapai.",
+            en: "Terminates TLS for skyboard.local and splits incoming requests between the Next.js UI, Laravel API, and static assets container.",
+            id: "Menangani terminasi TLS untuk skyboard.local dan membagi trafik ke kontainer UI Next.js, API Laravel, serta server aset statis.",
           },
-          payloadExample: '{\n  "client_type": "FIDS_KIOSK_DISPLAY",\n  "poll_interval_sec": 30,\n  "active_terminal": "TERMINAL_2_DEPARTURES",\n  "requested_fields": ["flight_no", "destination", "status", "gate"]\n}',
+          codeLabel: "gateway-skyboard/nginx.conf",
+          payloadExample: `upstream nextjs_app   { server ui-skyboard:3000; }
+upstream laravel_api  { server api-skyboard:80; }
+upstream assets_server { server assets-skyboard:80; }
+
+location /    { proxy_pass http://nextjs_app; }
+location /api { proxy_pass http://laravel_api/api; }`,
         },
         {
           step: 2,
-          node: "Nginx Gateway",
-          role: { en: "Reverse Proxy & Load Balancer", id: "Reverse Proxy & Gateway Trafik" },
-          protocol: "TCP Port 80/443",
-          latency: "<2ms",
+          node: "ui-skyboard",
+          role: { en: "Public FIDS & Admin UI", id: "Layar FIDS Publik & UI Admin" },
+          protocol: "Next.js 15 (:3000)",
           description: {
-            en: "Nginx routes `/` requests to Next.js 15 UI and proxies `/api/*` to Laravel 11 container.",
-            id: "Nginx me-route path `/` ke UI Next.js 15 dan mem-proxy `/api/*` ke kontainer Laravel 11.",
+            en: "Polls public flight schedules, airport info, running text, and promo banners every 30s, triggering audio chimes on boarding.",
+            id: "Mem-polling jadwal penerbangan, info bandara, running text, dan banner promo tiap 30 detik serta memutar audio saat boarding.",
           },
-          payloadExample: 'upstream skyboard_app {\n    server nextjs_ui:3000;\n}\nupstream skyboard_api {\n    server laravel_backend:9000;\n}\n# Port 80/443 SSL termination & traffic split',
+          codeLabel: "routes/api.php (Public Display)",
+          payloadExample: `GET /api/flights
+GET /api/flights/stats
+GET /api/airlines
+GET /api/settings/running-text
+GET /api/promos`,
         },
         {
           step: 3,
-          node: "Next.js 15 SSR",
-          role: { en: "Real-Time Flight UI", id: "UI Papan Penerbangan Real-Time" },
-          protocol: "React Server Components",
-          latency: "~18ms",
+          node: "api-skyboard",
+          role: { en: "Sanctum REST Backend", id: "Backend REST Sanctum" },
+          protocol: "Laravel 11 + PHP-FPM",
           description: {
-            en: "Renders live flight statuses (On Time, Delayed, Boarding, Gate Closed, Departed) with audio chimes.",
-            id: "Merender status penerbangan dinamis beserta chime audio pengumuman keberangkatan.",
+            en: "Authenticates admin operators via Laravel Sanctum and processes CRUD mutations for flights, status transitions, airlines, and assets.",
+            id: "Mengautentikasi operator admin lewat Laravel Sanctum dan memproses CRUD jadwal, perubahan status penerbangan, maskapai, serta aset.",
           },
-          payloadExample: '{\n  "flight_no": "GA-421",\n  "airline": "Garuda Indonesia",\n  "status": "BOARDING",\n  "gate": "A4",\n  "time": "14:35",\n  "audio_chime": "chime_boarding_call.mp3"\n}',
+          codeLabel: "api-skyboard/skyboard-api/routes/api.php",
+          payloadExample: `Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/flights', [FlightController::class, 'store']);
+    Route::put('/flights/{flight}', [FlightController::class, 'update']);
+    Route::patch('/flights/{flight}/status', [FlightController::class, 'updateStatus']);
+    Route::delete('/flights/{flight}', [FlightController::class, 'destroy']);
+});`,
         },
         {
           step: 4,
-          node: "Laravel 11 Backend",
-          role: { en: "API & Admin CRUD Engine", id: "Engine API & CRUD Admin" },
-          protocol: "PHP-FPM REST",
-          latency: "~45ms",
+          node: "database & assets",
+          role: { en: "MySQL 8.0 & Static Media", id: "MySQL 8.0 & Media Statis" },
+          protocol: "skyboard-net (Bridge)",
           description: {
-            en: "Handles airline asset uploads, flight schedule mutations, and promo banner scheduling.",
-            id: "Memproses upload aset maskapai, perubahan jadwal penerbangan, dan banner promosi.",
+            en: "MySQL 8.0 persists flight/airline schemas with healthcheck gating, while assets-skyboard serves uploaded airline logos and promo banners.",
+            id: "MySQL 8.0 menyimpan tabel penerbangan dan maskapai dengan healthcheck otomatis, sementara assets-skyboard menyajikan logo dan banner.",
           },
-          payloadExample: '{\n  "method": "PATCH",\n  "endpoint": "/api/v2/flights/GA-421/status",\n  "auth_user": "operator_skyboard_admin",\n  "new_status": "BOARDING",\n  "updated_at": "2026-11-04T14:30:00Z"\n}',
-        },
-        {
-          step: 5,
-          node: "MySQL Database",
-          role: { en: "Relational Storage", id: "Penyimpanan Relasional" },
-          protocol: "MySQL Native Protocol",
-          latency: "~5ms",
-          description: {
-            en: "ACID transactions for flights, gates, and audit trails under isolated Docker network.",
-            id: "Transaksi ACID untuk data penerbangan, gate, dan audit trail di jaringan Docker terisolasi.",
-          },
-          payloadExample: 'UPDATE flights \nSET status = \'BOARDING\', updated_at = NOW() \nWHERE flight_number = \'GA-421\';\n-- 1 row affected in 0.003s [Docker Bridge Network]',
+          codeLabel: "docker-compose.yml",
+          payloadExample: `database-skyboard:
+  image: mysql:8.0
+  healthcheck: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+assets-skyboard:
+  image: nginx:alpine
+  volumes: ["./assets-skyboard:/usr/share/nginx/html"]`,
         },
       ],
     },
@@ -522,40 +500,40 @@ export const projects: Project[] = [
         src: "assets/projects/skyboard-main.jpg",
         caption: { en: "Public flight board", id: "Papan penerbangan publik" },
         description: {
-          en: "Public flight board displaying live flight statuses with auto-refresh every 30 seconds.",
-          id: "Papan penerbangan publik menampilkan status penerbangan langsung dengan auto-refresh tiap 30 detik.",
+          en: "Main FIDS terminal display showing departures, airline logos, gate assignments, and live status badges.",
+          id: "Layar utama FIDS terminal yang menampilkan keberangkatan, logo maskapai, nomor gate, dan status penerbangan.",
         },
       },
       {
         src: "assets/projects/skyboard-boarding.jpg",
-        caption: { en: "Boarding filter", id: "Filter boarding" },
+        caption: { en: "Boarding status filter", id: "Filter status boarding" },
         description: {
-          en: "Filter by boarding status — highlights flights that are currently boarding.",
-          id: "Filter status boarding — menyorot penerbangan yang sedang naik pesawat.",
+          en: "Filtered view highlighting active boarding calls paired with terminal audio announcements.",
+          id: "Tampilan tersaring untuk menyorot penerbangan yang sedang boarding beserta pengumuman suara.",
         },
       },
       {
         src: "assets/projects/skyboard-promo.jpg",
-        caption: { en: "Promo slider", id: "Slider promo" },
+        caption: { en: "Promo banner carousel", id: "Carousel banner promo" },
         description: {
-          en: "Promo slider banner area surfaced on the board and admin-manageable.",
-          id: "Area banner slider promo yang tampil di papan dan dapat dikelola admin.",
+          en: "Rotating promotional banner slot served from the static assets container and managed via the admin panel.",
+          id: "Area banner promosi bergilir yang disajikan dari kontainer aset statis dan dikelola melalui panel admin.",
         },
       },
       {
         src: "assets/projects/skyboard-admin.jpg",
         caption: { en: "Admin dashboard", id: "Dashboard admin" },
         description: {
-          en: "Admin dashboard with CRUD controls for flights, airlines, assets and promos.",
-          id: "Dashboard admin dengan kontrol CRUD untuk penerbangan, maskapai, aset, dan promo.",
+          en: "Authenticated operator dashboard for managing flight schedules, airlines, running text, and media.",
+          id: "Dashboard operator terautentikasi untuk mengelola jadwal penerbangan, maskapai, teks berjalan, dan media.",
         },
       },
       {
         src: "assets/projects/skyboard-addflight.jpg",
-        caption: { en: "Add flight modal", id: "Modal tambah penerbangan" },
+        caption: { en: "Flight editor modal", id: "Modal editor penerbangan" },
         description: {
-          en: "Modal for adding/editing a flight record with schedule and status fields.",
-          id: "Modal untuk menambah/mengedit data penerbangan beserta jadwal dan status.",
+          en: "Modal form for creating and updating flight records, scheduled times, gates, and statuses.",
+          id: "Formulir modal untuk menambah dan memperbarui jadwal, nomor gate, serta status penerbangan.",
         },
       },
     ],
@@ -567,44 +545,45 @@ export const projects: Project[] = [
     thumb: "assets/projects/streamely-home.jpg",
     repo: "https://github.com/AryaWgna/streamely",
     liveUrl: "https://streamely.vercel.app",
-    chips: ["Svelte", "Bun", "TS"],
+    contextBadge: {
+      en: "Personal Project · Live Demo Available",
+      id: "Proyek Pribadi · Demo Live Tersedia",
+    },
+    chips: ["Bun", "Elysia.js", "Svelte", "TypeScript"],
     stack: [
-      "Bun (gateway + reverse proxy)",
+      "Bun (Reverse Proxy & Runtime)",
       "Elysia.js (API)",
-      "Svelte + Vite (client)",
+      "Svelte + Vite (Client)",
+      "TypeScript",
       "TVmaze & OMDB API",
       "Cloudflare Tunnel",
       "PM2",
     ],
     highlights: [
       {
-        en: "Bootstraps 15,000+ metadata entries at startup (in-memory cache)",
-        id: "Bootstraps 15.000+ entri metadata saat startup (in-memory cache)",
+        en: "Preloads 15,000+ movie, series, and anime records into in-memory structures at Bun startup",
+        id: "Memuat 15.000+ metadata film, serial, dan anime ke dalam memori saat server Bun dinyalakan",
       },
       {
-        en: "Heuristic fallback: TVmaze cast/crew metadata proxied to OMDB",
-        id: "Fallback heuristik: metadata cast/crew TVmaze diproxy ke OMDB",
+        en: "Custom Bun reverse proxy stripping duplicate compression headers for Cloudflare Tunnel compatibility",
+        id: "Reverse proxy Bun khusus yang membersihkan duplikasi header kompresi agar stabil di balik Cloudflare Tunnel",
       },
       {
-        en: "Jaccard-index recommendations computed client-side",
-        id: "Rekomendasi berbasis indeks Jaccard di sisi klien",
+        en: "Client-side pagination, genre filtering, and Jaccard-index similarity recommendations in Svelte",
+        id: "Paginasi, penyaringan genre, dan rekomendasi kemiripan indeks Jaccard dihitung langsung di klien Svelte",
       },
       {
-        en: "Multi-server player: VidSrc, MultiEmbed, 2Embed",
-        id: "Multi-server player: VidSrc, MultiEmbed, 2Embed",
-      },
-      {
-        en: "Watch history & bookmarks synced via localStorage",
-        id: "Watch history & bookmarks sinkron via localStorage",
+        en: "Multi-server embed player switching between VidSrc, MultiEmbed, and 2Embed with localStorage history",
+        id: "Pemutar multi-server (VidSrc, MultiEmbed, 2Embed) dilengkapi riwayat tontonan dan bookmark di localStorage",
       },
     ],
     roleNote: {
-      en: "Personal, self-hosted project — licensed for personal and educational use.",
-      id: "Proyek pribadi self-hosted — dilisensikan untuk penggunaan pribadi dan edukasi.",
+      en: "Personal self-hosted engineering project exploring Bun's native HTTP server, Elysia schema validation, and Svelte.",
+      id: "Proyek eksplorasi pribadi self-hosted yang memanfaatkan HTTP server bawaan Bun, validasi skema Elysia, dan Svelte.",
     },
     evidenceNote: {
-      en: "A live demo is deployed on Vercel, and the repository README documents the full architecture — Bun gateway, Elysia API, Svelte client, and the proxying strategy.",
-      id: "Demo live ter-deploy di Vercel, dan README repository mendokumentasikan arsitektur lengkap — gateway Bun, API Elysia, klien Svelte, serta strategi proxy.",
+      en: "Source code (proxy.ts, backend/src/index.ts, frontend/src/App.svelte, PM2 ecosystem config) is on GitHub alongside a live Vercel deployment.",
+      id: "Kode sumber (proxy.ts, backend/src/index.ts, frontend/src/App.svelte, konfigurasi PM2) tersedia di GitHub beserta demo live di Vercel.",
     },
     fanout: {
       layout: "desktop",
@@ -616,146 +595,138 @@ export const projects: Project[] = [
       center: {
         src: "assets/projects/streamely-home.jpg",
         frame: "laptop",
-        alt: "StreamEly VOD Streaming Catalog",
+        alt: "StreamEly VOD Catalog",
       },
     },
     rationale: [
       {
-        technology: "Bun (gateway + reverse proxy)",
+        technology: "Bun + Custom Reverse Proxy",
         reason: {
-          en: "Bootstraps 15,000+ metadata entries at startup and serves as gateway/proxy with a small memory footprint.",
-          id: "Men-bootstrap 15.000+ entri metadata saat startup dan berperan sebagai gateway/proxy dengan jejak memori kecil.",
+          en: "Runs both the API runtime and a lightweight port-8000 reverse proxy that strips conflicting content-encoding headers over Cloudflare Tunnel.",
+          id: "Menjalankan runtime API sekaligus reverse proxy port 8000 yang menghapus konflik header content-encoding saat melalui Cloudflare Tunnel.",
         },
         tradeoff: {
-          en: "Newer runtime — some npm packages assume Node behavior.",
-          id: "Runtime relatif baru — beberapa paket npm berasumsi perilaku Node.",
+          en: "In-memory Map/Array storage resets on process restart — acceptable for read-only public catalog metadata.",
+          id: "Penyimpanan Map/Array di RAM dimuat ulang saat proses restart — wajar untuk katalog metadata publik read-only.",
         },
       },
       {
-        technology: "Elysia.js (API)",
+        technology: "Elysia.js + TVmaze / OMDB",
         reason: {
-          en: "End-to-end typed API with schema inference reduces runtime errors at the edge.",
-          id: "API type-safe ujung-ke-ujung dengan inferensi skema mengurangi error runtime di sisi tepi.",
+          en: "Typed routes aggregate TVmaze show schedules and fall back to OMDB by IMDb ID when cast or movie fields are missing.",
+          id: "Route bertipe menggabungkan data serial TVmaze dan melakukan fallback ke OMDB via IMDb ID ketika data kru atau film belum lengkap.",
         },
         tradeoff: {
-          en: "Smaller ecosystem than Express; team should embrace TypeScript-first patterns.",
-          id: "Ekosistem lebih kecil daripada Express; tim perlu nyaman dengan pola TypeScript-first.",
+          en: "Depends on third-party API rate limits during initial startup ingestion.",
+          id: "Bergantung pada batas rate limit API pihak ketiga saat proses pemuatan awal.",
         },
       },
       {
-        technology: "Svelte + Vite (client)",
+        technology: "Svelte + Vite",
         reason: {
-          en: "Compiled, lightweight client matches a streaming UI that must feel instant on slower connections.",
-          id: "Klien terkompilasi dan ringan cocok untuk UI streaming yang harus terasa instan di koneksi lambat.",
+          en: "Compiles reactive catalog browsing, search, and Jaccard similarity scoring into a small client bundle.",
+          id: "Mengompilasi penjelajahan katalog, pencarian instan, dan perhitungan kemiripan Jaccard ke dalam bundle klien yang ringan.",
         },
         tradeoff: {
-          en: "Less mainstream than React; community and hiring pool are smaller.",
-          id: "Kurang populer daripada React; komunitas dan kandidat lebih sedikit.",
-        },
-      },
-      {
-        technology: "TVmaze & OMDB API",
-        reason: {
-          en: "Proxying cast/crew metadata with heuristic fallback avoids maintaining an internal scraper.",
-          id: "Proxy metadata cast/crew dengan fallback heuristik menghindari perawatan scraper internal.",
-        },
-        tradeoff: {
-          en: "External APIs impose rate limits and availability risk.",
-          id: "API eksternal memberlakukan batas laju dan risiko ketersediaan.",
-        },
-      },
-      {
-        technology: "Cloudflare Tunnel + PM2",
-        reason: {
-          en: "Zero-config public exposure plus process supervision make self-hosting simple.",
-          id: "Eksposur publik tanpa konfigurasi plus supervisi proses membuat self-hosting sederhana.",
-        },
-        tradeoff: {
-          en: "Tunnel adds a hop; PM2 runs a single node (no cluster yet).",
-          id: "Tunnel menambah satu hop; PM2 menjalankan satu node (belum cluster).",
+          en: "Smaller component ecosystem than React, though sufficient for a focused media interface.",
+          id: "Ekosistem pustaka komponen lebih kecil dibanding React, namun sangat mencukupi untuk antarmuka media yang fokus.",
         },
       },
     ],
     telemetry: [
       {
         id: "cache",
-        value: 15000,
-        suffix: "+",
-        label: { en: "Cached Titles", id: "Judul Ter-cache" },
-        detail: { en: "In-memory metadata preloaded at Bun boot", id: "Metadata in-memory di-preload saat boot Bun" },
+        value: "15,000+",
+        label: { en: "Preloaded Titles", id: "Judul di Memori" },
+        detail: { en: "Cached in showsDB & moviesDB at startup", id: "Di-cache pada showsDB & moviesDB saat boot" },
       },
       {
         id: "gateways",
-        value: 3,
-        suffix: "",
-        label: { en: "Stream Gateways", id: "Gateway Stream" },
-        detail: { en: "VidSrc, MultiEmbed, 2Embed resolver", id: "Resolver VidSrc, MultiEmbed, dan 2Embed" },
+        value: "3",
+        label: { en: "Embed Servers", id: "Server Pemutar" },
+        detail: { en: "VidSrc, MultiEmbed, 2Embed switcher", id: "Pilihan server VidSrc, MultiEmbed, 2Embed" },
       },
       {
-        id: "latency",
-        value: 0,
-        suffix: "ms",
-        label: { en: "Client Vectoring", id: "Vektorisasi Klien" },
-        detail: { en: "Client-side Jaccard similarity scoring", id: "Kalkulasi skor similaritas Jaccard sisi klien" },
+        id: "sources",
+        value: "2 APIs",
+        label: { en: "Metadata Sources", id: "Sumber Metadata" },
+        detail: { en: "TVmaze primary + OMDB fallback", id: "TVmaze utama + fallback OMDB" },
       },
     ],
     architecture: {
       title: {
-        en: "High-Throughput In-Memory Gateway & Client-Side Vector Engine",
-        id: "Gateway In-Memory Throughput Tinggi & Engine Vektor Sisi Klien",
+        en: "Bun Reverse Proxy, In-Memory Catalog & Svelte Client",
+        id: "Reverse Proxy Bun, Katalog In-Memory & Klien Svelte",
       },
       subtitle: {
-        en: "Bun runtime caching layer with resilient multi-provider streaming fallback and client-side Jaccard indexing",
-        id: "Lapisan cache runtime Bun dengan fallback multi-provider andal dan kalkulasi indeks Jaccard di klien",
+        en: "Actual request routing and data structures from AryaWgna/streamely",
+        id: "Alur request dan struktur data asli dari repositori AryaWgna/streamely",
       },
       steps: [
         {
           step: 1,
-          node: "Svelte 5 Client",
-          role: { en: "Fast Hydrated UI", id: "UI Terkompilasi Ringan" },
-          protocol: "SPA DOM Hydration",
-          latency: "<10ms",
+          node: "Bun Reverse Proxy",
+          role: { en: "Gateway & Header Sanitizer", id: "Gateway & Pembersih Header" },
+          protocol: "Bun.serve (0.0.0.0:8000)",
           description: {
-            en: "Lightweight client computes Jaccard genre similarity directly in browser memory without extra round-trips.",
-            id: "Klien ringan menghitung similaritas genre Jaccard langsung di memori browser tanpa round-trip tambahan.",
+            en: "Routes /api/* to Elysia (:3000) and / to Vite (:5173), stripping content-encoding headers to avoid ERR_CONTENT_DECODING_FAILED over Cloudflare Tunnel.",
+            id: "Mengarahkan /api/* ke Elysia (:3000) dan / ke Vite (:5173), serta menghapus header content-encoding ganda agar aman diakses lewat Cloudflare Tunnel.",
           },
-          payloadExample: '{\n  "selected_genres": ["Sci-Fi", "Thriller"],\n  "target_candidate": "Steins;Gate",\n  "intersection_count": 4,\n  "union_count": 5,\n  "jaccard_similarity": 0.8\n}',
+          codeLabel: "proxy.ts",
+          payloadExample: `Bun.serve({
+  port: 8000,
+  hostname: "0.0.0.0",
+  async fetch(req) {
+    const url = new URL(req.url);
+    if (url.pathname.startsWith("/api/")) {
+      return forwardRequest(req, "http://localhost:3000", true);
+    }
+    return forwardRequest(req, "http://localhost:5173", false);
+  },
+});`,
         },
         {
           step: 2,
-          node: "Bun Gateway",
-          role: { en: "In-Memory Reverse Proxy", id: "Reverse Proxy & Cache RAM" },
-          protocol: "Bun HTTP Native",
-          latency: "<3ms",
+          node: "Elysia.js Backend",
+          role: { en: "In-Memory Metadata API", id: "API Metadata In-Memory" },
+          protocol: "Bun + Elysia (:3000)",
           description: {
-            en: "Bootstraps and caches 15,000+ title records in RAM, serving requests with near-zero overhead.",
-            id: "Memuat dan menyimpan 15.000+ rekaman judul di RAM, melayani request dengan overhead nyaris nol.",
+            en: "Bootstraps 15,000+ entries from TVmaze and curated IMDb IDs via OMDB into showsDB[] and moviesDB Map for fast lookups.",
+            id: "Memuat 15.000+ entri dari TVmaze dan daftar IMDb melalui OMDB ke dalam showsDB[] serta Map moviesDB saat startup.",
           },
-          payloadExample: '{\n  "ram_cached_records": 15420,\n  "bun_heap_mb": 42.6,\n  "cache_hit": true,\n  "lookup_ns": 42000,\n  "status": "CACHE_HIT_RAM"\n}',
+          codeLabel: "backend/src/index.ts",
+          payloadExample: `const showsDB: Show[] = [];
+const moviesDB = new Map<string, Show>();
+
+// Fallback lookup via OMDB when TVmaze cast/movie metadata is missing
+const res = await fetch(\`http://www.omdbapi.com/?apikey=\${OMDB_API_KEY}&i=\${id}\`);`,
         },
         {
           step: 3,
-          node: "Elysia.js Backend",
-          role: { en: "Type-Safe Routing", id: "Router API Type-Safe" },
-          protocol: "TypeScript Schema Validation",
-          latency: "~15ms",
+          node: "Svelte + Vite Client",
+          role: { en: "Catalog & Jaccard Scorer", id: "Katalog & Rekomendasi Jaccard" },
+          protocol: "Client-Side State + localStorage",
           description: {
-            en: "Implements heuristic fallbacks between TVmaze and OMDB API to resolve cast and rating metadata.",
-            id: "Menerapkan fallback heuristik antara TVmaze dan OMDB API untuk metadata kru dan rating.",
+            en: "Handles local pagination, genre filtering, Jaccard genre-overlap recommendations, and persistent watch history/bookmarks.",
+            id: "Menjalankan paginasi lokal, filter genre, perhitungan rekomendasi kemiripan genre Jaccard, serta riwayat tontonan di localStorage.",
           },
-          payloadExample: '{\n  "title": "Steins;Gate",\n  "cached": true,\n  "providers": ["VidSrc", "MultiEmbed"],\n  "heuristic_fallback": "TVmaze -> OMDB"\n}',
+          codeLabel: "frontend/src/App.svelte",
+          payloadExample: `// Jaccard similarity between two title genre sets:
+// J(A, B) = |A ∩ B| / |A ∪ B|
+// Watch history & bookmarks persisted in window.localStorage`,
         },
         {
           step: 4,
-          node: "Multi-Server Resolver",
-          role: { en: "Dynamic Failover", id: "Failover Provider Dinamis" },
-          protocol: "Cross-Origin Sandbox Embed",
-          latency: "~150ms",
+          node: "Embed Player Switcher",
+          role: { en: "Multi-Source Video Iframe", id: "Pemutar Iframe Multi-Server" },
+          protocol: "VidSrc · MultiEmbed · 2Embed",
           description: {
-            en: "Switches video stream providers (VidSrc, MultiEmbed, 2Embed) with client-side fallback if a gateway fails.",
-            id: "Mengalihkan provider streaming video (VidSrc, MultiEmbed, 2Embed) secara otomatis jika salah satu gateway down.",
+            en: "Lets viewers switch seamlessly across three external embed servers by IMDb ID, season, and episode number when a mirror is unavailable.",
+            id: "Memungkinkan pengguna berpindah antar tiga server embed berdasarkan IMDb ID, season, dan nomor episode apabila salah satu server gangguan.",
           },
-          payloadExample: '{\n  "active_stream": "https://vidsrc.xyz/embed/anime/steins-gate",\n  "health_check": "200_OK",\n  "failover_ready": ["MultiEmbed", "2Embed"],\n  "auto_recovered": true\n}',
+          codeLabel: "Multi-server stream selector",
+          payloadExample: `servers = ["VidSrc", "MultiEmbed", "2Embed"]
+// Resolves embed URL by imdbId + season/episode for TV series`,
         },
       ],
     },
@@ -764,40 +735,40 @@ export const projects: Project[] = [
         src: "assets/projects/streamely-home.jpg",
         caption: { en: "Home & trending", id: "Beranda & trending" },
         description: {
-          en: "Home page featuring trending titles and genre rows, personalized by the Jaccard recommendation index.",
-          id: "Beranda menampilkan judul trending dan baris genre, dipersonalisasi indeks rekomendasi Jaccard.",
+          en: "Landing catalog featuring hero highlights, genre rows, and Jaccard-based recommendations.",
+          id: "Beranda katalog menampilkan sorotan utama, daftar per genre, dan rekomendasi berbasis Jaccard.",
         },
       },
       {
         src: "assets/projects/streamely-explore.jpg",
-        caption: { en: "Explore grid", id: "Jelajahi grid" },
+        caption: { en: "Explore catalog", id: "Jelajahi katalog" },
         description: {
-          en: "Explore page: dense grid browsing with sorting/filtering controls.",
-          id: "Halaman jelajahi: grid rapat dengan kontrol urutkan/saring.",
+          en: "Dense poster grid with client-side genre filtering and pagination.",
+          id: "Grid poster lengkap dengan penyaringan genre dan paginasi di sisi klien.",
         },
       },
       {
         src: "assets/projects/streamely-search.jpg",
-        caption: { en: "Search results", id: "Hasil pencarian" },
+        caption: { en: "Instant search", id: "Pencarian instan" },
         description: {
-          en: "Search with smart suggestions and instant result updates.",
-          id: "Pencarian dengan saran cerdas dan hasil yang diperbarui instan.",
+          en: "Keyword filtering across the preloaded 15,000+ movie, TV, and anime catalog.",
+          id: "Pencarian kata kunci langsung di atas 15.000+ katalog film, serial TV, dan anime.",
         },
       },
       {
         src: "assets/projects/streamely-detail.jpg",
-        caption: { en: "Watch detail", id: "Detail tontonan" },
+        caption: { en: "Title details", id: "Detail tontonan" },
         description: {
-          en: "Detail page with overview, metadata from TVmaze/OMDB, and similar titles.",
-          id: "Halaman detail berisi ikhtisar, metadata dari TVmaze/OMDB, dan judul serupa.",
+          en: "Synopsis, cast/crew metadata resolved from TVmaze/OMDB, season/episode picker, and related titles.",
+          id: "Sinopsis, informasi pemeran dari TVmaze/OMDB, pemilih season/episode, serta judul serupa.",
         },
       },
       {
         src: "assets/projects/streamely-player.jpg",
-        caption: { en: "Video player", id: "Pemutar video" },
+        caption: { en: "Multi-server player", id: "Pemutar multi-server" },
         description: {
-          en: "Multi-server video player in action with server fallback support.",
-          id: "Pemutar video multi-server sedang memutar dengan dukungan fallback server.",
+          en: "Embedded playback screen with one-click switching between VidSrc, MultiEmbed, and 2Embed.",
+          id: "Layar pemutar terintegrasi dengan tombol perpindahan server VidSrc, MultiEmbed, dan 2Embed.",
         },
       },
     ],

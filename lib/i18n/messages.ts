@@ -278,24 +278,24 @@ export const messages = {
     "SIMARU Mobile App"
   ],
   "p1-desc": [
-    "A QR-scanning mobile app for medical asset inspection at UMMI Hospital — tracking device location & condition, plus push notifications.",
-    "Aplikasi QR-scanning untuk inspeksi aset medis di RS UMMI — pelacakan lokasi & kondisi perangkat."
+    "Field mobile application built at RS UMMI Bogor for QR-based medical asset stock opname, complaint reporting, and FCM push notifications.",
+    "Aplikasi mobile lapangan di RS UMMI Bogor untuk stock opname aset medis via scan QR, pelaporan keluhan alat, dan notifikasi push FCM."
   ],
   "p2-title": [
     "Digital Skyboard Announcement",
     "Digital Skyboard Announcement"
   ],
   "p2-desc": [
-    "A Flight Information Display (FIDS) system for airports: API gateway, database, and realtime UI for flight schedules.",
-    "Sistem FIDS untuk bandara: gateway API, database, dan UI realtime untuk jadwal penerbangan."
+    "Containerized Flight Information Display System (FIDS) running 5 Docker services: Nginx TLS gateway, Next.js 15 board, Laravel 11 API, static asset server, and MySQL.",
+    "Sistem papan jadwal penerbangan (FIDS) berbasis 5 kontainer Docker: gateway TLS Nginx, papan Next.js 15, API Laravel 11, server aset statis, dan MySQL."
   ],
   "p3-title": [
     "StreamEly",
     "StreamEly"
   ],
   "p3-desc": [
-    "A self-hosted VOD platform: Bun gateway + Elysia.js API + Svelte frontend, aggregating TVmaze & OMDB metadata.",
-    "Platform VOD self-hosted: Bun + Elysia.js + Svelte, mengagregasi metadata TVmaze & OMDB."
+    "Self-hosted VOD catalog built on Bun and Elysia.js with 15,000+ preloaded TVmaze & OMDB records, Svelte client-side Jaccard recommendations, and multi-embed failover.",
+    "Katalog VOD self-hosted di atas Bun dan Elysia.js dengan 15.000+ data TVmaze & OMDB di memori, rekomendasi Jaccard sisi klien Svelte, dan multi-server player."
   ],
   "view-src": [
     "View source",
@@ -498,16 +498,16 @@ export const messages = {
     "Kontak"
   ],
   "ct-h1": [
-    "Let's build something ",
-    "Mari bangun sesuatu "
+    "Get in touch",
+    "Hubungi saya"
   ],
   "ct-h2": [
-    "together",
-    "bersama"
+    "",
+    ""
   ],
   "ct-sub": [
-    "Have a project in mind? I usually reply within 24 hours.",
-    "Punya proyek? Saya biasanya membalas dalam 24 jam."
+    "Open to full-time software engineering roles and freelance work. Based in Bogor (WIB) — I typically reply within 1–2 business days.",
+    "Terbuka untuk posisi tetap software engineer maupun proyek lepas. Berdomisili di Bogor (WIB) — biasanya membalas dalam 1–2 hari kerja."
   ],
   "ct-name": [
     "Name",
@@ -558,40 +558,32 @@ export const messages = {
     "Pengembang Full Stack · Indonesia"
   ],
   "ggt-eyebrow": [
-    "Telemetry",
-    "Telemetri"
+    "Experience & Education",
+    "Pengalaman & Pendidikan"
   ],
   "ggt-h1": [
-    "Interactive commit ",
-    "Riwayat commit "
+    "Career & academic timeline",
+    "Riwayat kerja & pendidikan"
   ],
   "ggt-h2": [
-    "history",
-    "interaktif"
-  ],
-  "ggt-telemetry": [
-    "TELEMETRY INSPECTOR",
-    "INSPEKTOR TELEMETRI"
-  ],
-  "ggt-branch": [
-    "BRANCH",
-    "CABANG"
+    "",
+    ""
   ],
   "ggt-arch": [
-    "Architecture & Operational Context",
-    "Konteks Arsitektur & Operasional"
+    "Context & Summary",
+    "Konteks & Ringkasan"
   ],
   "ggt-resp": [
-    "Key Responsibilities & Scope",
-    "Tanggung Jawab Utama & Ruang Lingkup"
+    "Scope & Responsibilities",
+    "Cakupan & Tanggung Jawab"
   ],
   "ggt-deliv": [
-    "Deliverables & Artifacts",
-    "Hasil Kerja & Artefak"
+    "Verified Documents & Links",
+    "Dokumen & Tautan Terverifikasi"
   ],
   "ggt-none": [
-    "No deliverables recorded",
-    "Tidak ada hasil kerja tercatat"
+    "No external documents attached",
+    "Tidak ada dokumen eksternal terlampir"
   ],
   "ggt-d-skl": [
     "Study Completion Letter (PDF)",

@@ -4,10 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { isReducedMotion } from "@/lib/gsap";
 
-/* ──────────────────────────────────────────────
-   Konfigurasi planet — teks bilingual + palet tekstur
-   ────────────────────────────────────────────── */
-
 type PlanetDef = {
   id: string;
   name: { en: string; id: string };
@@ -238,7 +234,7 @@ function makeGlowTexture(): THREE.CanvasTexture {
 
 function makeStars(seed: number): THREE.Points {
   const rng = makeRng(seed);
-  const count = 650;
+  const count = 520;
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const navy = new THREE.Color(0x172a45);
@@ -263,19 +259,16 @@ function makeStars(seed: number): THREE.Points {
     size: 0.035,
     vertexColors: true,
     transparent: true,
-    opacity: 0.75,
+    opacity: 0.7,
     sizeAttenuation: true,
   });
   return new THREE.Points(geo, mat);
 }
 
-export default function HeroArt({ paused = false }: { paused?: boolean }) {
+export default function HeroArt() {
   const mountRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
-  const controlsRef = useRef<{ start: () => void; stop: () => void; sync: () => void } | null>(null);
-  const pausedRef = useRef(paused);
-  pausedRef.current = paused;
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -288,7 +281,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     } catch {
-      return; // WebGL tidak tersedia — biarkan placeholder
+      return;
     }
     renderer.setClearColor(0x000000, 0);
 
@@ -305,7 +298,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     group.rotation.y = rng() * Math.PI * 2;
     scene.add(group);
 
-    // Matahari + glow
     const sun = new THREE.Mesh(
       new THREE.SphereGeometry(0.34, 32, 24),
       new THREE.MeshBasicMaterial({ color: 0xf1b96a })
@@ -319,16 +311,14 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
         blending: THREE.AdditiveBlending,
         depthWrite: false,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.5,
       })
     );
-    glow.scale.set(3, 3, 1);
+    glow.scale.set(2.8, 2.8, 1);
     group.add(glow);
 
-    // Bintang latar
     scene.add(makeStars(seed ^ 0x9e3779b9));
 
-    // Planet + orbit + bulan
     const bodies: { mesh: THREE.Mesh; def: PlanetDef }[] = [];
     const hitMeshes: THREE.Object3D[] = [sun];
     const moons: { mesh: THREE.Mesh; orbit: number; speed: number; phase: number }[] = [];
@@ -336,7 +326,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     for (const def of PLANETS) {
       const tex = makePlanetTexture(def, seed + def.id.length * 97);
       const mesh = new THREE.Mesh(
-        new THREE.SphereGeometry(def.size, 48, 32),
+        new THREE.SphereGeometry(def.size, 40, 28),
         new THREE.MeshBasicMaterial({ map: tex })
       );
       mesh.rotation.z = def.tilt;
@@ -347,7 +337,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
 
       if (def.ring) {
         const ring = new THREE.Mesh(
-          new THREE.RingGeometry(def.size * 1.35, def.size * 2.15, 72),
+          new THREE.RingGeometry(def.size * 1.35, def.size * 2.15, 64),
           new THREE.MeshBasicMaterial({
             color: 0xcbb087,
             side: THREE.DoubleSide,
@@ -361,7 +351,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
 
       if (def.hasMoon) {
         const moon = new THREE.Mesh(
-          new THREE.SphereGeometry(0.045, 20, 16),
+          new THREE.SphereGeometry(0.045, 16, 12),
           new THREE.MeshBasicMaterial({ color: 0x8d99a6 })
         );
         group.add(moon);
@@ -385,7 +375,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       group.add(line);
     }
 
-    /* ── Hover label ──────────────────────────────── */
     type HoverLabel = {
       name: { en: string; id: string };
       tagline: { en: string; id: string };
@@ -421,7 +410,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     };
 
     const raycaster = new THREE.Raycaster();
-    const pointerNdc = new THREE.Vector2(10, 10); // di luar [-1,1] → "tidak ada hover"
+    const pointerNdc = new THREE.Vector2(10, 10);
     let hovered: HoverState | null = null;
     let lastHoverKey = "";
 
@@ -435,18 +424,15 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
         const label: HoverLabel = hit!.object === sun ? SUN_LABEL : PLANETS.find((p) => p.id === key)!;
         hovered = { label, target: hit!.object };
         projectLabel(hovered);
-        mount.style.cursor = "pointer";
       } else if (!key && lastHoverKey) {
         lastHoverKey = "";
         hovered = null;
         updateLabel(null);
-        mount.style.cursor = "default";
       } else if (hovered) {
         projectLabel(hovered);
       }
     };
 
-    /* ── Pointer (parallax + hover) ────────────────── */
     let mx = 0.5;
     let my = 0.5;
     let tx = 0.5;
@@ -456,10 +442,7 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       const rect = mount.getBoundingClientRect();
       mx = (e.clientX - rect.left) / Math.max(rect.width, 1);
       my = (e.clientY - rect.top) / Math.max(rect.height, 1);
-      pointerNdc.set(
-        ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1,
-        -((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 + 1
-      );
+      pointerNdc.set(mx * 2 - 1, -(my * 2 - 1));
       if (reduced) raycastHover();
     };
 
@@ -470,7 +453,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       lastHoverKey = "";
       hovered = null;
       updateLabel(null);
-      mount.style.cursor = "default";
     };
 
     if (finePointer) {
@@ -478,7 +460,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       mount.addEventListener("pointerleave", onPointerLeave);
     }
 
-    /* ── Resize ─────────────────────────────────────── */
     const resize = () => {
       const w = mount.clientWidth || 1;
       const h = mount.clientHeight || 1;
@@ -495,7 +476,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
 
-    /* ── Render per frame ────────────────────────────── */
     const baseYaw = group.rotation.y;
     const clock = new THREE.Clock();
 
@@ -537,21 +517,8 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
       }
     };
 
-    controlsRef.current = {
-      start: startLoop,
-      stop: stopLoop,
-      // Render satu frame pada waktu saat ini sebelum loop dilanjutkan,
-      // sehingga transisi dari frame statis (selama boot) ke loop kontinu.
-      sync: () => renderFrame(clock.getElapsedTime()),
-    };
-
-    if (reduced) {
-      renderFrame(0); // satu frame statis
-    } else if (pausedRef.current) {
-      renderFrame(0); // frame statis selama boot berlangsung
-    } else {
-      startLoop();
-    }
+    if (reduced) renderFrame(0);
+    else startLoop();
 
     const obs = new IntersectionObserver((entries) => {
       inView = entries[0]?.isIntersecting ?? true;
@@ -577,7 +544,6 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     setReady(true);
 
     return () => {
-      controlsRef.current = null;
       stopLoop();
       if (finePointer) {
         mount.removeEventListener("pointermove", onPointer);
@@ -602,40 +568,24 @@ export default function HeroArt({ paused = false }: { paused?: boolean }) {
     };
   }, []);
 
-  // Start/stop loop saja (tanpa rebuild scene) saat status boot berubah —
-  // posisi/rotasi planet tetap kontinu, tanpa flicker atau lompatan.
-  useEffect(() => {
-    if (isReducedMotion()) return;
-    const c = controlsRef.current;
-    if (!c) return;
-    if (paused) c.stop();
-    else {
-      c.sync(); // teruskan dari posisi frame statis terakhir
-      c.start();
-    }
-  }, [paused]);
-
   return (
-    <div className="relative aspect-square w-full max-w-[420px]" aria-hidden="true">
+    <div className="relative aspect-square w-full max-w-[400px]" aria-hidden="true">
       <div ref={mountRef} className="absolute inset-0" />
       <div
         ref={labelRef}
         className="pointer-events-none absolute left-0 top-0 z-10 opacity-0 transition-opacity duration-200"
         style={{ transform: "translate(-50%, -115%)" }}
       >
-        <div className="rounded-lg border border-border-line bg-background/95 px-3 py-2 text-center shadow-lg backdrop-blur-sm">
+        <div className="rounded-lg border border-border-line bg-background/95 px-3 py-2 text-center shadow-md backdrop-blur-sm">
           <div data-label-name className="font-mono text-xs font-bold text-foreground" />
           <div data-label-tagline className="mt-0.5 whitespace-nowrap font-mono text-[10px] text-muted" />
         </div>
       </div>
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-40 w-40 rounded-full border border-border-line bg-surface" />
+          <div className="h-36 w-36 rounded-full border border-border-line bg-surface" />
         </div>
       )}
     </div>
   );
 }
-
-
-

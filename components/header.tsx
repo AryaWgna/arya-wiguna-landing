@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang, useTheme } from "@/components/providers";
 import { scrollToHash } from "@/lib/gsap";
-import { MagneticWrap } from "@/components/magnetic-wrap";
-import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import { profile } from "@/lib/data/profile";
 
 function GitHubIcon() {
@@ -28,9 +26,12 @@ function LinkedInIcon() {
 export function Header() {
   const { t, lang, setLang } = useLang();
   const { theme, toggleTheme } = useTheme();
-  const { playGlitch } = useWebAudioGlitch();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
+  const pathname = usePathname();
+  const isId = lang === "id";
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -48,12 +49,9 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const [active, setActive] = useState("");
-  const pathname = usePathname();
-
   useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return;
-    const ids = ["projects", "about", "skills", "experience", "education", "certs", "contact"];
+    if (pathname !== "/" || typeof IntersectionObserver === "undefined") return;
+    const ids = ["projects", "about", "skills", "experience", "certs", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -67,31 +65,29 @@ export function Header() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   const links = [
     { href: "/#projects", hash: "projects", label: t("nav-proj") },
     { href: "/#about", hash: "about", label: t("nav-about") },
     { href: "/#experience", hash: "experience", label: t("nav-exp") },
+    { href: "/#certs", hash: "certs", label: t("nav-certs") },
     { href: "/#contact", hash: "contact", label: t("nav-contact") },
   ];
 
-  // Klik nav di halaman beranda → scroll halus via Lenis (bukan lompatan instan).
   const onNavClick = (e: React.MouseEvent, href: string) => {
     const hashIndex = href.indexOf("#");
-    if (pathname !== "/") return; // navigasi antar-halaman tetap default
+    if (pathname !== "/") return;
     e.preventDefault();
     setOpen(false);
     scrollToHash(hashIndex >= 0 ? href.slice(hashIndex) : "");
   };
 
-  const isDark = theme === "dark";
-
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200 ${
         scrolled
-          ? "border-border-line bg-background/85 backdrop-blur-md"
+          ? "border-border-line bg-background/90 backdrop-blur-md"
           : "border-transparent bg-background"
       }`}
     >
@@ -99,20 +95,23 @@ export function Header() {
         <Link
           href="/"
           className="font-mono text-lg font-bold tracking-tight text-foreground"
-          aria-label="Arya Wiguna — beranda"
+          aria-label={isId ? "Arya Wiguna — Beranda" : "Arya Wiguna — Home"}
         >
           AW<span className="text-blue">.</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Navigasi utama">
+        <nav
+          className="hidden items-center gap-7 md:flex"
+          aria-label={isId ? "Navigasi utama" : "Primary navigation"}
+        >
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={(e) => onNavClick(e, l.href)}
-              aria-current={l.hash && active === l.hash ? "true" : undefined}
+              aria-current={pathname === "/" && active === l.hash ? "true" : undefined}
               className={`text-sm font-medium transition-colors ${
-                l.hash && active === l.hash
+                pathname === "/" && active === l.hash
                   ? "text-foreground underline decoration-blue decoration-2 underline-offset-8"
                   : "text-muted hover:text-foreground"
               }`}
@@ -122,55 +121,76 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <MagneticWrap strength={0.4}>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded p-2 text-muted transition-colors hover:text-foreground"
-              aria-label="GitHub"
-            >
-              <GitHubIcon />
-            </a>
-          </MagneticWrap>
-          <MagneticWrap strength={0.4}>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded p-2 text-muted transition-colors hover:text-foreground"
-              aria-label="LinkedIn"
-            >
-              <LinkedInIcon />
-            </a>
-          </MagneticWrap>
+        <div className="flex items-center gap-1.5">
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded p-2 text-muted transition-colors hover:text-foreground"
+            aria-label="GitHub"
+          >
+            <GitHubIcon />
+          </a>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded p-2 text-muted transition-colors hover:text-foreground"
+            aria-label="LinkedIn"
+          >
+            <LinkedInIcon />
+          </a>
 
           <button
             type="button"
             onClick={() => setLang(lang === "en" ? "id" : "en")}
             className="rounded border border-border-line px-2.5 py-1.5 font-mono text-xs font-semibold text-muted transition-colors hover:border-navy hover:text-foreground"
-            aria-label="Ganti bahasa"
+            aria-label={isId ? "Ganti ke Bahasa Inggris" : "Switch to Bahasa Indonesia"}
           >
             {lang === "en" ? "ID" : "EN"}
           </button>
 
           <button
             type="button"
-            onClick={() => {
-              toggleTheme();
-              playGlitch("switch");
-            }}
+            onClick={toggleTheme}
             className="rounded border border-border-line p-2 text-muted transition-colors hover:border-navy hover:text-foreground"
-            aria-label={isDark ? "Mode terang" : "Mode gelap"}
+            aria-label={
+              isDark
+                ? isId
+                  ? "Aktifkan mode terang"
+                  : "Switch to light mode"
+                : isId
+                  ? "Aktifkan mode gelap"
+                  : "Switch to dark mode"
+            }
           >
             {isDark ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
                 <circle cx="12" cy="12" r="4" />
                 <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
               </svg>
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
                 <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             )}
@@ -183,7 +203,16 @@ export function Header() {
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
               {open ? (
                 <path d="M6 6l12 12M18 6L6 18" />
               ) : (
@@ -197,7 +226,7 @@ export function Header() {
       {open ? (
         <nav
           className="border-t border-border-line bg-background px-6 pb-6 pt-4 md:hidden"
-          aria-label="Menu seluler"
+          aria-label={isId ? "Menu seluler" : "Mobile menu"}
         >
           <div className="flex flex-col gap-1">
             {links.map((l) => (
@@ -216,4 +245,3 @@ export function Header() {
     </header>
   );
 }
-

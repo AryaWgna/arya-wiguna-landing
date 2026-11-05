@@ -10,24 +10,15 @@ import {
 } from "react";
 import { messages, type Locale, type MessageKey } from "@/lib/i18n/messages";
 
-/* ── Theme ───────────────────────────────────── */
 function getInitialTheme(): "light" | "dark" {
   if (typeof window === "undefined") return "light";
   try {
     const saved = localStorage.getItem("theme");
     if (saved === "dark" || saved === "light") return saved;
-  } catch {
-    /* ignore */
-  }
+  } catch {}
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-const ThemeContext = createContext<{
-  theme: "light" | "dark";
-  toggleTheme: () => void;
-}>({ theme: "light", toggleTheme: () => {} });
-
-/* ── Language ────────────────────────────────── */
 function getInitialLang(): Locale {
   if (typeof window === "undefined") return "en";
   try {
@@ -36,6 +27,11 @@ function getInitialLang(): Locale {
     return "en";
   }
 }
+
+const ThemeContext = createContext<{
+  theme: "light" | "dark";
+  toggleTheme: () => void;
+}>({ theme: "light", toggleTheme: () => {} });
 
 const LangContext = createContext<{
   lang: Locale;
@@ -47,20 +43,15 @@ const LangContext = createContext<{
   t: (key) => key,
 });
 
-const BootContext = createContext<{
-  bootActive: boolean;
-  setBootActive: (v: boolean) => void;
-}>({ bootActive: true, setBootActive: () => {} });
-
 export function Providers({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const [lang, setLangState] = useState<Locale>(getInitialLang);
-  const [bootActive, setBootActiveState] = useState(true);
-  const setBootActive = useCallback((v: boolean) => setBootActiveState(v), []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {}
   }, [theme]);
 
   const lookup = useCallback(
@@ -77,27 +68,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    localStorage.setItem("lang", lang);
-    document.title = pick(lookup("title")) || "Arya Wiguna";
-  }, [lang, lookup, pick]);
+    try {
+      localStorage.setItem("lang", lang);
+    } catch {}
+  }, [lang]);
 
   const toggleTheme = useCallback(() => {
     setTheme((p) => (p === "dark" ? "light" : "dark"));
   }, []);
 
   const setLang = useCallback((l: Locale) => setLangState(l), []);
-
   const t = useCallback((key: string) => pick(lookup(key)) || key, [lookup, pick]);
 
   const themeValue = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
   const langValue = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
-  const bootValue = useMemo(() => ({ bootActive, setBootActive }), [bootActive, setBootActive]);
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <LangContext.Provider value={langValue}>
-        <BootContext.Provider value={bootValue}>{children}</BootContext.Provider>
-      </LangContext.Provider>
+      <LangContext.Provider value={langValue}>{children}</LangContext.Provider>
     </ThemeContext.Provider>
   );
 }
@@ -108,10 +96,6 @@ export function useTheme() {
 
 export function useLang() {
   return useContext(LangContext);
-}
-
-export function useBoot() {
-  return useContext(BootContext);
 }
 
 export type { Locale, MessageKey };

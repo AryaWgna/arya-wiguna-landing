@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { isReducedMotion } from "@/lib/gsap";
-import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
 import type { FanOutDevices, FanOutDevice } from "@/lib/data/projects";
 
 export type { FanOutDevices, FanOutDevice };
-
 
 function PhoneShell({
   device,
@@ -22,22 +21,20 @@ function PhoneShell({
   return (
     <div
       ref={shellRef}
-      className={`overflow-hidden bg-foreground/95 shadow-2xl rounded-[1.25rem] border-4 border-foreground/80 ring-1 ring-white/10 ${widthClass} ${className ?? ""} transition-shadow duration-300 will-change-transform`}
+      className={`overflow-hidden rounded-[1.2rem] border-[3px] border-foreground/85 bg-foreground shadow-xl transition-shadow duration-300 will-change-transform ${widthClass} ${className ?? ""}`}
     >
-      <div className="relative h-full w-full overflow-hidden bg-black/40">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <div className="relative h-full w-full overflow-hidden bg-surface">
+        <Image
           src={`/${device.src.replace(/^\//, "")}`}
           alt={device.alt ?? ""}
-          loading="lazy"
-          className="h-full w-full object-cover object-top select-none"
+          width={360}
+          height={760}
+          className="h-full w-full select-none object-cover object-top"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/12 to-white/0 opacity-70" />
       </div>
     </div>
   );
 }
-
 
 function BrowserWindowShell({
   device,
@@ -53,47 +50,45 @@ function BrowserWindowShell({
   return (
     <div
       ref={shellRef}
-      className={`overflow-hidden rounded-xl border border-border-line/90 bg-background shadow-2xl ring-1 ring-white/10 ${widthClass} ${className ?? ""} transition-shadow duration-300 will-change-transform`}
+      className={`overflow-hidden rounded-xl border border-border-line bg-background shadow-xl transition-shadow duration-300 will-change-transform ${widthClass} ${className ?? ""}`}
     >
-      
-      <div className="flex h-5 items-center gap-1.5 border-b border-border-line/70 bg-surface/90 px-3">
-        <span className="h-2 w-2 rounded-full bg-red-400/80" />
-        <span className="h-2 w-2 rounded-full bg-amber-400/80" />
-        <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
-        <span className="ml-2 font-mono text-[9px] text-muted truncate opacity-70">
-          {device.alt ?? "https://web-application"}
+      <div className="flex h-5 items-center gap-1.5 border-b border-border-line bg-surface px-3">
+        <span className="h-2 w-2 rounded-full bg-border-line" />
+        <span className="h-2 w-2 rounded-full bg-border-line" />
+        <span className="h-2 w-2 rounded-full bg-border-line" />
+        <span className="ml-1.5 truncate font-mono text-[9px] text-muted">
+          {device.alt ?? "web-app"}
         </span>
       </div>
 
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/60">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
+        <Image
           src={`/${device.src.replace(/^\//, "")}`}
           alt={device.alt ?? ""}
-          loading="lazy"
-          className="h-full w-full object-cover object-center select-none"
+          width={960}
+          height={540}
+          className="h-full w-full select-none object-cover object-center"
         />
-        
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-60" />
       </div>
     </div>
   );
 }
 
-/**
- * Responsive 3D Device Showcase Mockup.
- * - Mobile layout (SIMARU): 3 phones fan-out.
- * - Desktop layout (Skyboard & Streamely): Overlapping 16:9 cascading browser windows.
- */
-export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
-  const isDesktop = devices.layout === "desktop" || (!devices.left && !devices.right && !!devices.secondary);
+export function DeviceFanOutMockup({
+  devices,
+  featured = false,
+}: {
+  devices: FanOutDevices;
+  featured?: boolean;
+}) {
+  const isDesktop =
+    devices.layout === "desktop" || (!devices.left && !devices.right && Boolean(devices.secondary));
 
   const containerRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const secondaryRef = useRef<HTMLDivElement>(null);
-  const { playGlitch } = useWebAudioGlitch();
 
   useEffect(() => {
     const el = containerRef.current;
@@ -101,99 +96,93 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     let raf = 0;
-    let isHovering = false;
+    let hovering = false;
     let targetX = 0;
     let targetY = 0;
     let curX = 0;
     let curY = 0;
 
     const onPointerEnter = () => {
-      isHovering = true;
-      playGlitch("hover");
+      hovering = true;
       if (!raf) loop();
     };
 
     const onPointerMove = (e: PointerEvent) => {
       const rect = el.getBoundingClientRect();
-      targetX = (e.clientX - rect.left) / rect.width - 0.5;
-      targetY = (e.clientY - rect.top) / rect.height - 0.5;
+      targetX = (e.clientX - rect.left) / Math.max(rect.width, 1) - 0.5;
+      targetY = (e.clientY - rect.top) / Math.max(rect.height, 1) - 0.5;
     };
 
     const onPointerLeave = () => {
-      isHovering = false;
+      hovering = false;
       targetX = 0;
       targetY = 0;
     };
 
     const loop = () => {
-      curX += (targetX - curX) * 0.08;
-      curY += (targetY - curY) * 0.08;
+      curX += (targetX - curX) * 0.09;
+      curY += (targetY - curY) * 0.09;
 
       if (isDesktop) {
-        // Desktop Dual-Window Cascade
         const secEl = secondaryRef.current;
         const mainEl = centerRef.current;
 
         if (secEl) {
-          const transX = -22 + curX * -16;
-          const transY = -12 + curY * 8;
-          const rotY = -4 + curX * 10;
-          const rotX = -curY * 8;
-          secEl.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, -18px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg)`;
+          const tx = -20 + curX * -12;
+          const ty = -12 + curY * 6;
+          const ry = -3 + curX * 7;
+          const rx = -curY * 6;
+          secEl.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, -14px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg)`;
         }
 
         if (mainEl) {
-          const transX = 18 + curX * -10;
-          const transY = 12 + curY * 8;
-          const rotY = 3 + curX * 12;
-          const rotX = -curY * 8;
-          const scale = isHovering ? 1.02 : 1.0;
-          mainEl.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 28px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) scale(${scale})`;
+          const tx = 16 + curX * -8;
+          const ty = 12 + curY * 6;
+          const ry = 2.5 + curX * 8;
+          const rx = -curY * 6;
+          const scale = hovering ? 1.015 : 1;
+          mainEl.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 22px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale})`;
         }
       } else {
-        // Mobile 3-Phone Fan-Out
         const leftEl = leftRef.current;
         const centerEl = centerRef.current;
         const rightEl = rightRef.current;
 
         if (leftEl) {
-          const rotY = -8 + curX * 14;
-          const rotX = -curY * 10;
-          const transX = 12 + curX * -14;
-          const transY = 8 + curY * 8;
-          leftEl.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, -15px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg)`;
+          const ry = -7 + curX * 10;
+          const rx = -curY * 7;
+          const tx = 10 + curX * -10;
+          const ty = 8 + curY * 6;
+          leftEl.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, -12px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg)`;
         }
 
         if (centerEl) {
-          const rotY = curX * 12;
-          const rotX = -curY * 8;
-          const scale = isHovering ? 1.04 : 1.0;
-          centerEl.style.transform = `translate3d(0px, 0px, 30px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) scale(${scale})`;
+          const ry = curX * 9;
+          const rx = -curY * 6;
+          const scale = hovering ? 1.025 : 1;
+          centerEl.style.transform = `translate3d(0px, 0px, 24px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale})`;
         }
 
         if (rightEl) {
-          const rotY = 8 + curX * 14;
-          const rotX = -curY * 10;
-          const transX = -12 + curX * -14;
-          const transY = 8 + curY * 8;
-          rightEl.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, -15px) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg)`;
+          const ry = 7 + curX * 10;
+          const rx = -curY * 7;
+          const tx = -10 + curX * -10;
+          const ty = 8 + curY * 6;
+          rightEl.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, -12px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg)`;
         }
       }
 
-      const isResting =
-        !isHovering && Math.abs(curX) < 0.001 && Math.abs(curY) < 0.001;
-
-      if (!isResting) {
+      if (hovering || Math.abs(curX) > 0.001 || Math.abs(curY) > 0.001) {
         raf = requestAnimationFrame(loop);
       } else {
         raf = 0;
       }
     };
 
-    const leftElCapture = leftRef.current;
-    const centerElCapture = centerRef.current;
-    const rightElCapture = rightRef.current;
-    const secElCapture = secondaryRef.current;
+    const leftEl = leftRef.current;
+    const centerEl = centerRef.current;
+    const rightEl = rightRef.current;
+    const secEl = secondaryRef.current;
 
     el.addEventListener("pointerenter", onPointerEnter);
     el.addEventListener("pointermove", onPointerMove);
@@ -204,78 +193,66 @@ export function DeviceFanOutMockup({ devices }: { devices: FanOutDevices }) {
       el.removeEventListener("pointerenter", onPointerEnter);
       el.removeEventListener("pointermove", onPointerMove);
       el.removeEventListener("pointerleave", onPointerLeave);
-
-      if (leftElCapture) leftElCapture.style.transform = "";
-      if (centerElCapture) centerElCapture.style.transform = "";
-      if (rightElCapture) rightElCapture.style.transform = "";
-      if (secElCapture) secElCapture.style.transform = "";
+      if (leftEl) leftEl.style.transform = "";
+      if (centerEl) centerEl.style.transform = "";
+      if (rightEl) rightEl.style.transform = "";
+      if (secEl) secEl.style.transform = "";
     };
-  }, [isDesktop, playGlitch]);
+  }, [isDesktop]);
 
   if (isDesktop && devices.secondary) {
     return (
       <div
         ref={containerRef}
-        className="group relative flex items-center justify-center overflow-hidden bg-surface/80 px-4 py-8 [perspective:1200px] [transform-style:preserve-3d] cursor-pointer select-none min-h-[220px] sm:min-h-[250px]"
+        className="group relative flex min-h-[220px] select-none items-center justify-center overflow-hidden bg-surface/75 px-4 py-8 sm:min-h-[250px] [perspective:1200px] [transform-style:preserve-3d]"
       >
-        
         <BrowserWindowShell
           shellRef={secondaryRef}
           device={devices.secondary}
-          widthClass="w-[78%] sm:w-[74%] md:w-[76%] opacity-85 group-hover:opacity-100"
-          className="[transform:translate3d(-22px,-12px,-18px)_rotateY(-4deg)]"
+          widthClass="w-[76%] sm:w-[74%] opacity-85 group-hover:opacity-100"
+          className="[transform:translate3d(-20px,-12px,-14px)_rotateY(-3deg)]"
         />
-
-        
         <BrowserWindowShell
           shellRef={centerRef}
           device={devices.center}
-          widthClass="w-[84%] sm:w-[82%] md:w-[84%] relative z-10"
-          className="[transform:translate3d(18px,12px,28px)_rotateY(3deg)]"
+          widthClass="relative z-10 w-[82%] sm:w-[82%]"
+          className="[transform:translate3d(16px,12px,22px)_rotateY(2.5deg)]"
         />
-
-        
-        <div className="pointer-events-none absolute -bottom-4 h-14 w-3/4 rounded-full bg-blue/15 blur-xl transition-opacity duration-500 group-hover:opacity-100 opacity-40" />
       </div>
     );
   }
 
-  
   return (
     <div
       ref={containerRef}
-      className="group relative flex items-center justify-center gap-2 overflow-hidden bg-surface/80 px-4 py-6 [perspective:1100px] [transform-style:preserve-3d] sm:gap-3 cursor-pointer select-none"
+      className={`group relative flex select-none items-center justify-center gap-2 overflow-hidden bg-surface/75 px-4 sm:gap-3 [perspective:1100px] [transform-style:preserve-3d] ${
+        featured ? "min-h-[300px] py-8 md:min-h-full md:py-10" : "py-6"
+      }`}
     >
-      
-      {devices.left && (
+      {devices.left ? (
         <PhoneShell
           shellRef={leftRef}
           device={devices.left}
-          widthClass="hidden w-24 aspect-[9/19] sm:block md:w-28 opacity-90"
-          className="[transform:translate3d(12px,8px,-15px)_rotateY(-8deg)]"
+          widthClass="hidden aspect-[9/19] w-24 opacity-90 sm:block md:w-28"
+          className="[transform:translate3d(10px,8px,-12px)_rotateY(-7deg)]"
         />
-      )}
+      ) : null}
 
-      
       <PhoneShell
         shellRef={centerRef}
         device={devices.center}
-        widthClass="relative z-10 w-36 aspect-[9/19] md:w-44"
-        className="[transform:translate3d(0,0,30px)]"
+        widthClass="relative z-10 aspect-[9/19] w-36 md:w-44"
+        className="[transform:translate3d(0,0,24px)]"
       />
 
-      
-      {devices.right && (
+      {devices.right ? (
         <PhoneShell
           shellRef={rightRef}
           device={devices.right}
-          widthClass="hidden w-24 aspect-[9/19] sm:block md:w-28 opacity-90"
-          className="[transform:translate3d(-12px,8px,-15px)_rotateY(8deg)]"
+          widthClass="hidden aspect-[9/19] w-24 opacity-90 sm:block md:w-28"
+          className="[transform:translate3d(-10px,8px,-12px)_rotateY(7deg)]"
         />
-      )}
-
-      
-      <div className="pointer-events-none absolute -bottom-4 h-12 w-3/4 rounded-full bg-blue/10 blur-xl transition-opacity duration-500 group-hover:opacity-100 opacity-40" />
+      ) : null}
     </div>
   );
 }

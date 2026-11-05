@@ -5,7 +5,6 @@ import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { BootSequence } from "@/components/boot-sequence";
 import { CustomCursor } from "@/components/custom-cursor";
 
 const geistSans = Geist({
@@ -52,13 +51,13 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     url: SITE_URL,
     siteName: "Arya Wiguna",
-    title: "Arya Wiguna | Software Engineer Portfolio",
+    title: "Arya Wiguna — Full Stack Developer",
     description:
       "Computer science graduate (S1 Informatika) & software engineer based in Bogor. Building field-ready Flutter mobile applications and containerized Next.js & Laravel systems.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arya Wiguna | Software Engineer Portfolio",
+    title: "Arya Wiguna — Full Stack Developer",
     description:
       "Computer science graduate (S1 Informatika) & software engineer based in Bogor. Building field-ready Flutter mobile applications and containerized Next.js & Laravel systems.",
   },
@@ -93,7 +92,6 @@ export default function RootLayout({
         <div id="scroll-progress" aria-hidden="true" />
         <CustomCursor />
         <Providers>
-          <BootSequence />
           <SmoothScroll />
           <Header />
           {children}

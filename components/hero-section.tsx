@@ -1,24 +1,19 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useLang, useBoot } from "@/components/providers";
-import { OnlineVisitors } from "@/components/online-visitors";
+import { useLang } from "@/components/providers";
 import { CvDropdown } from "@/components/cv-dropdown";
-import { MagneticWrap } from "@/components/magnetic-wrap";
 import { profile } from "@/lib/data/profile";
-import { gsap, isReducedMotion, splitTextIntoSpans } from "@/lib/gsap";
+import { gsap, isReducedMotion, scrollToHash } from "@/lib/gsap";
 
 const HeroArt = dynamic(() => import("@/components/hero-art"), { ssr: false });
 
 export function HeroSection() {
   const { lang } = useLang();
-  const { bootActive } = useBoot();
   const sectionRef = useRef<HTMLElement>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const playedRef = useRef(false);
-  const viewWork = lang === "id" ? "Lihat Karya" : "View Work";
+  const viewWork = lang === "id" ? "Lihat Proyek" : "View Projects";
   const getInTouch = lang === "id" ? "Hubungi Saya" : "Get in Touch";
 
   useLayoutEffect(() => {
@@ -26,186 +21,98 @@ export function HeroSection() {
     if (!sec || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        paused: true, // diputar begitu boot selesai agar transisi menyambung
-        defaults: { ease: "power3.out" },
-      });
-
-      // Eyebrow fade in
-      tl.fromTo(
-        "[data-hero-eyebrow]",
-        { autoAlpha: 0, y: -10 },
-        { autoAlpha: 1, y: 0, duration: 0.5 },
-        0
-      );
-
-      // Premium text reveal — split name into chars for dramatic effect
-      const heroLines = sec.querySelectorAll<HTMLElement>("[data-hero-line]");
-      heroLines.forEach((line) => {
-        const chars = splitTextIntoSpans(line, "chars");
-        tl.fromTo(
-          chars,
-          { yPercent: 120, rotateZ: 5 },
-          {
-            yPercent: 0,
-            rotateZ: 0,
-            duration: 1,
-            stagger: 0.025,
-            ease: "power4.out",
-          },
-          0.1
-        );
-      });
-
-      // Description text — word split reveal
-      const heroCopy = sec.querySelectorAll<HTMLElement>("[data-hero-copy]");
-      heroCopy.forEach((el, i) => {
-        tl.fromTo(
-          el,
-          { autoAlpha: 0, y: 18 },
-          { autoAlpha: 1, y: 0, duration: 0.7 },
-          0.5 + i * 0.12
-        );
-      });
-
-      // CTAs — stagger up with slight scale bounce
-      tl.fromTo(
-        "[data-hero-cta]",
-        { autoAlpha: 0, y: 16, scale: 0.95 },
+      gsap.fromTo(
+        "[data-hero-item]",
+        { autoAlpha: 0, y: 14 },
         {
           autoAlpha: 1,
           y: 0,
-          scale: 1,
           duration: 0.55,
-          stagger: 0.1,
-          ease: "back.out(1.4)",
-        },
-        0.7
+          stagger: 0.08,
+          ease: "power2.out",
+        }
       );
 
-      // Visual — fade up datar (tanpa 3D/rotasi)
-      tl.fromTo(
+      gsap.fromTo(
         "[data-hero-visual]",
-        { autoAlpha: 0, y: 18 },
-        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        0.5
+        { autoAlpha: 0, y: 14 },
+        { autoAlpha: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power2.out" }
       );
-
-      tlRef.current = tl;
-
-      // Scroll parallax halus pada kolom 3D
-      gsap.to("[data-hero-visual]", {
-        yPercent: -12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      });
-
-      // Parallax on text column — moves slower
-      gsap.to("[data-hero-text]", {
-        yPercent: -4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.4,
-        },
-      });
     }, sec);
 
-    return () => {
-      tlRef.current = null;
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
-  // Putar timeline entrance setelah overlay boot selesai (atau di-skip),
-  // supaya reveal teks tidak terlewat di balik layar boot.
-  useEffect(() => {
-    const tl = tlRef.current;
-    if (!tl || playedRef.current || isReducedMotion()) return;
-    if (bootActive) return;
-    playedRef.current = true;
-    requestAnimationFrame(() => tl.play());
-  }, [bootActive]);
+  const handleHashJump = (e: React.MouseEvent, hash: string) => {
+    e.preventDefault();
+    scrollToHash(hash);
+  };
 
   return (
     <section id="hero" ref={sectionRef} className="relative z-20">
-      {/* Ambient scrim halus */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-32 right-[-12%] h-[480px] w-[480px] rounded-full bg-blue-soft/70 blur-3xl dark:bg-blue-soft/30" />
-        <div className="absolute bottom-[-18%] left-[-10%] h-[420px] w-[420px] rounded-full bg-surface/70 blur-3xl" />
-      </div>
+      <div className="container-x flex min-h-[88svh] items-center py-28 md:py-32">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <p data-hero-item className="eyebrow mb-4">
+              {profile.role[lang]}
+            </p>
 
-      <div className="relative z-10 container-x flex min-h-[92svh] items-center py-28 md:py-32">
-        <div className="grid w-full items-center gap-14 lg:grid-cols-12">
-          <div data-hero-text className="lg:col-span-7">
-            <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2">
-              <p data-hero-eyebrow className="eyebrow">
-                {profile.role[lang]}
-              </p>
-              <OnlineVisitors variant="hero" />
-            </div>
-            <h1 className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              <span className="block overflow-hidden pb-1">
-                <span data-hero-line className="block will-change-transform">
-                  Arya
-                </span>
-              </span>
-              <span className="block overflow-hidden pb-1">
-                <span data-hero-line className="block will-change-transform text-navy">
-                  Wiguna
-                </span>
-              </span>
+            <h1
+              data-hero-item
+              className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+            >
+              Arya <span className="text-navy">Wiguna</span>
             </h1>
-            <p data-hero-copy className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+
+            <p data-hero-item className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {profile.heroLine[lang]}
             </p>
-            <blockquote
-              data-hero-copy
-              className="mt-6 border-l-2 border-blue pl-4 text-[15px] italic text-foreground"
+
+            <p
+              data-hero-item
+              className="mt-5 max-w-xl border-l-2 border-blue pl-4 text-[15px] leading-relaxed text-foreground/90"
             >
               {profile.motto[lang]}
-            </blockquote>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <MagneticWrap strength={0.25}>
-                <Link data-hero-cta href="/work" className="btn btn-primary">
-                  {viewWork}
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </MagneticWrap>
-              <span data-hero-cta>
-                <CvDropdown />
-              </span>
-              <MagneticWrap strength={0.25}>
-                <Link data-hero-cta href="/#contact" className="btn">
-                  {getInTouch}
-                </Link>
-              </MagneticWrap>
+            </p>
+
+            <div data-hero-item className="mt-9 flex flex-wrap items-center gap-3">
+              <Link
+                href="/#projects"
+                onClick={(e) => handleHashJump(e, "#projects")}
+                className="btn btn-primary"
+              >
+                {viewWork}
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+
+              <CvDropdown />
+
+              <Link
+                href="/#contact"
+                onClick={(e) => handleHashJump(e, "#contact")}
+                className="btn"
+              >
+                {getInTouch}
+              </Link>
             </div>
           </div>
 
-          <div data-hero-visual className="lg:col-span-5">
-            <HeroArt paused={bootActive} />
-            <p className="mt-4 text-center font-mono text-[11px] tracking-wide text-muted">
-              {lang === "id" ? "tata surya kecil." : "a small solar system."}
+          <div data-hero-visual className="flex flex-col items-center lg:col-span-5">
+            <HeroArt />
+            <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-muted">
+              {lang === "id" ? "tata surya kecil · interaktif" : "small interactive solar system"}
             </p>
           </div>
         </div>

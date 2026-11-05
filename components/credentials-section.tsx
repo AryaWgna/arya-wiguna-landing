@@ -1,78 +1,98 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
-import { certifications, type CertificationCategory } from "@/lib/data/certifications";
-import { gsap, isReducedMotion } from "@/lib/gsap";
-import { useWebAudioGlitch } from "@/lib/use-web-audio-glitch";
+import { certifications, type Certification } from "@/lib/data/certifications";
+import { gsap, isReducedMotion, scheduleScrollTriggerRefresh } from "@/lib/gsap";
 
-const CATEGORY_LABEL: Record<CertificationCategory, { en: string; id: string }> = {
-  bnsp: { en: "BNSP — National Professional Certification", id: "BNSP — Sertifikasi Profesi Nasional" },
-  dicoding: { en: "Dicoding Indonesia", id: "Dicoding Indonesia" },
-  cisco: { en: "Cisco Networking Academy", id: "Cisco Networking Academy" },
-  webinar: { en: "Webinars — IDwebTalks", id: "Webinar — IDwebTalks" },
-  akademik: { en: "Academic", id: "Akademik" },
-  lainnya: { en: "Others", id: "Lainnya" },
-};
+function ArchiveRow({
+  cert,
+  title,
+  lang,
+  isId,
+}: {
+  cert: Certification;
+  title: string;
+  lang: "en" | "id";
+  isId: boolean;
+}) {
+  return (
+    <article className="flex items-start gap-3.5 rounded-xl border border-border-line bg-background p-3.5 transition-colors hover:border-navy/45">
+      <div className="relative aspect-[16/11] w-20 shrink-0 overflow-hidden rounded-md border border-border-line bg-surface sm:w-24">
+        <Image
+          src={`/${cert.img}`}
+          alt={cert.alt}
+          width={240}
+          height={165}
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <h4 className="text-sm font-semibold leading-snug text-foreground">{title}</h4>
+        <p className="mt-0.5 font-mono text-[11px] text-muted">
+          {cert.issuer} · {cert.date[lang]}
+        </p>
+        {cert.note ? (
+          <p className="mt-0.5 text-xs text-muted/85">{cert.note[lang]}</p>
+        ) : null}
+
+        <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
+          {cert.pdf ? (
+            <a
+              href={`/${cert.pdf}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-blue transition-colors hover:text-navy"
+            >
+              {isId ? "Dokumen →" : "Document →"}
+            </a>
+          ) : null}
+          {cert.verifyUrl ? (
+            <a
+              href={cert.verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted transition-colors hover:text-foreground"
+            >
+              {isId ? "Verifikasi ↗" : "Verify ↗"}
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function CredentialsSection() {
   const { t, lang } = useLang();
-  const id = lang === "id";
+  const isId = lang === "id";
   const sectionRef = useRef<HTMLElement>(null);
-  const { playGlitch } = useWebAudioGlitch();
+  const [showArchive, setShowArchive] = useState(false);
 
-  const groups = (Object.keys(CATEGORY_LABEL) as CertificationCategory[]).map((category) => ({
-    category,
-    items: certifications.filter((c) => c.category === category),
-  }));
+  const primary = certifications.filter((c) => c.featured);
+  const archive = certifications.filter((c) => !c.featured);
 
   useLayoutEffect(() => {
     const sec = sectionRef.current;
     if (!sec || isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Stagger each group's cards with 3D perspective tilt
-      const grids = sec.querySelectorAll<HTMLElement>("[data-cert-grid]");
-      grids.forEach((grid) => {
-        const cards = grid.querySelectorAll<HTMLElement>(".stagger-card");
-        gsap.fromTo(
-          cards,
-          { autoAlpha: 0, y: 50, rotateX: 10, scale: 0.9 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            rotateX: 0,
-            scale: 1,
-            duration: 0.65,
-            stagger: {
-              each: 0.08,
-              from: "start",
-            },
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: grid,
-              start: "top 85%",
-              once: true,
-            },
-          }
-        );
-      });
-
-      // Animate category headings
-      const headings = sec.querySelectorAll<HTMLElement>("[data-cert-heading]");
+      const cards = sec.querySelectorAll<HTMLElement>("[data-cert-card]");
       gsap.fromTo(
-        headings,
-        { autoAlpha: 0, x: -20 },
+        cards,
+        { autoAlpha: 0, y: 16 },
         {
           autoAlpha: 1,
-          x: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power3.out",
+          y: 0,
+          duration: 0.55,
+          stagger: 0.07,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sec,
-            start: "top 80%",
+            start: "top 82%",
             once: true,
           },
         }
@@ -82,105 +102,143 @@ export function CredentialsSection() {
     return () => ctx.revert();
   }, []);
 
+  const toggleArchive = () => {
+    setShowArchive((prev) => !prev);
+    window.setTimeout(() => scheduleScrollTriggerRefresh(), 60);
+  };
+
   return (
     <section id="certs" ref={sectionRef} className="border-t border-border-line">
       <div className="container-x py-24 md:py-32">
         <SectionHeading
-          eyebrow={id ? "Kredensial" : "Credentials"}
+          eyebrow={isId ? "Kredensial" : "Credentials"}
           title={
-            <>
-              {id ? "Sertifikat & " : "Credentials & "}
-              <em className="not-italic text-navy">
-                {id ? "kredensial" : "certifications"}
-              </em>
-            </>
+            isId
+              ? "Sertifikasi kompetensi & dokumen akademik"
+              : "Professional certifications & academic records"
           }
           intro={
-            id
-              ? "Diverifikasi langsung dari isi PDF (penerbit & tanggal) — tautan verifikasi untuk sertifikat Dicoding."
-              : "Verified directly from the PDF contents (issuer & date) — verification links for Dicoding certificates."
+            isId
+              ? "Menampilkan sertifikasi utama (BNSP, SKL S1, magang rumah sakit, Cisco, dan Dicoding) beserta tautan dokumen asli."
+              : "Highlighting core credentials (BNSP national certification, S1 graduation letter, hospital internship, Cisco, and Dicoding) with direct proof."
           }
         />
 
-        <div className="flex flex-col gap-14">
-          {groups.map(({ category, items }) =>
-            items.length === 0 ? null : (
-              <section key={category}>
-                <h3
-                  data-cert-heading
-                  className="mb-6 flex items-baseline gap-3 font-mono text-sm font-semibold uppercase tracking-wider text-navy"
-                >
-                  {CATEGORY_LABEL[category][lang]}
-                  <span className="text-xs font-normal normal-case text-muted">
-                    {items.length} · {id ? "diverifikasi" : "verified"}
-                  </span>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {primary.map((cert) => (
+            <article
+              key={cert.slug}
+              data-cert-card
+              className="group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-colors hover:border-navy/50"
+            >
+              <div className="aspect-[16/10] overflow-hidden border-b border-border-line bg-surface">
+                <Image
+                  src={`/${cert.img}`}
+                  alt={cert.alt}
+                  width={640}
+                  height={400}
+                  className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+              </div>
+
+              <div className="flex flex-1 flex-col p-5">
+                <p className="font-mono text-[11px] text-blue">
+                  {cert.issuer} · {cert.date[lang]}
+                </p>
+
+                <h3 className="mt-1.5 text-[15px] font-semibold leading-snug text-foreground">
+                  {t(cert.titleKey)}
                 </h3>
-                <div
-                  data-cert-grid
-                  className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-                  style={{ perspective: "800px" }}
-                >
-                  {items.map((cert) => (
-                    <article
-                      key={cert.slug}
-                      className="stagger-card group flex flex-col overflow-hidden rounded-xl border border-border-line bg-background transition-all duration-300 hover:border-navy/60 hover:shadow-lg"
+
+                {cert.descKey ? (
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                    {t(cert.descKey)}
+                  </p>
+                ) : null}
+
+                {cert.note ? (
+                  <p className="mt-2 font-mono text-[11px] text-muted/90">
+                    {cert.note[lang]}
+                  </p>
+                ) : null}
+
+                <div className="mt-auto flex items-center gap-4 pt-4 font-mono text-xs">
+                  {cert.pdf ? (
+                    <a
+                      href={`/${cert.pdf}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-navy transition-colors hover:text-blue"
                     >
-                      <div className="aspect-[16/10] overflow-hidden bg-surface">
-                        <img
-                          src={`/${cert.img}`}
-                          alt={cert.alt}
-                          loading="lazy"
-                          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col gap-2 p-5">
-                        <h4 className="text-[15px] font-semibold leading-snug text-foreground">
-                          {t(cert.titleKey)}
-                        </h4>
-                        {cert.descKey ? (
-                          <p className="text-sm text-muted">{t(cert.descKey)}</p>
-                        ) : null}
-                        {cert.issuer || cert.date ? (
-                          <p className="font-mono text-[11px] text-muted">
-                            {cert.issuer ? `${cert.issuer} · ` : ""}
-                            {cert.date ?? ""}
-                          </p>
-                        ) : null}
-                        {cert.note ? (
-                          <p className="text-xs italic text-muted">{cert.note}</p>
-                        ) : null}
-                        <div className="mt-auto flex items-center gap-4 pt-3">
-                          {cert.pdf ? (
-                            <a
-                              href={`/${cert.pdf}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => playGlitch("click")}
-                              className="font-mono text-xs font-medium text-blue transition-colors hover:text-navy-light"
-                            >
-                              {id ? "Lihat sertifikat →" : "View certificate →"}
-                            </a>
-                          ) : null}
-                          {cert.verifyUrl ? (
-                            <a
-                              href={cert.verifyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => playGlitch("click")}
-                              className="font-mono text-xs text-muted transition-colors hover:text-foreground"
-                            >
-                              {id ? "Verifikasi ↗" : "Verify ↗"}
-                            </a>
-                          ) : null}
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+                      {isId ? "Lihat dokumen →" : "View document →"}
+                    </a>
+                  ) : null}
+                  {cert.verifyUrl ? (
+                    <a
+                      href={cert.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted transition-colors hover:text-foreground"
+                    >
+                      {isId ? "Verifikasi ↗" : "Verify ↗"}
+                    </a>
+                  ) : null}
                 </div>
-              </section>
-            )
-          )}
+              </div>
+            </article>
+          ))}
         </div>
+
+        {archive.length > 0 ? (
+          <div className="mt-10 rounded-2xl border border-border-line bg-surface/30 p-5 sm:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-sm font-semibold text-foreground">
+                  {isId
+                    ? `Arsip Kursus, Seminar & Webinar (${archive.length})`
+                    : `Additional Courses, Seminars & Webinars (${archive.length})`}
+                </h3>
+                <p className="mt-0.5 text-xs text-muted">
+                  {isId
+                    ? "Dicoding (Python, Cloud AWS/Azure, C), Cisco English for IT, RevoU, OJK, DJP, dan IDwebTalks."
+                    : "Dicoding (Python, AWS/Azure Cloud, C), Cisco English for IT, RevoU, OJK, DJP, and IDwebTalks."}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                aria-expanded={showArchive}
+                onClick={toggleArchive}
+                className="btn shrink-0 self-start py-2 px-3.5 font-mono text-xs sm:self-auto"
+              >
+                <span>
+                  {showArchive
+                    ? isId
+                      ? "Sembunyikan arsip"
+                      : "Hide archive"
+                    : isId
+                      ? `Tampilkan ${archive.length} sertifikat lainnya`
+                      : `Show all ${archive.length} additional certificates`}
+                </span>
+                <span aria-hidden="true">{showArchive ? "↑" : "↓"}</span>
+              </button>
+            </div>
+
+            {showArchive ? (
+              <div className="mt-5 grid gap-3 border-t border-border-line pt-5 md:grid-cols-2">
+                {archive.map((cert) => (
+                  <ArchiveRow
+                    key={cert.slug}
+                    cert={cert}
+                    title={t(cert.titleKey)}
+                    lang={lang}
+                    isId={isId}
+                  />
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   );
