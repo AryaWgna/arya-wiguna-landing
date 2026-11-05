@@ -1,7 +1,3 @@
-/**
- * Data profil pribadi — terverifikasi dari konten situs sebelumnya.
- * TODO (belum diverifikasi): foto potret resmi selain avatar GitHub.
- */
 export const profile = {
   name: "Arya Wiguna",
   firstName: "Arya",
@@ -21,7 +17,7 @@ export const profile = {
   email: "wgnarya123@gmail.com",
   github: "https://github.com/AryaWgna",
   linkedin: "https://www.linkedin.com/in/arya-wgna",
-  portrait: "https://avatars.githubusercontent.com/u/156288269?s=400",
+  portrait: "/assets/avatar.jpg",
   cv: {
     ats: "/assets/cv/cv-ats-arya-wiguna.pdf",
     atsId: "/assets/cv/cv-ats-arya-wiguna-id.pdf",

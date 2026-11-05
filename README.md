@@ -1,56 +1,41 @@
-# Arya Wiguna — Portfolio
+# arya-wiguna.my.id
 
-**Also available in [Bahasa Indonesia](README.id.md).**
+Source code for my personal software engineering portfolio at **[arya-wiguna.my.id](https://arya-wiguna.my.id)**.
 
-Personal software-engineering portfolio for **Arya Wiguna**, redesigned with the **Modern Editorial + Subtle 3D** direction from the `arya-portfolio-agent-kit`.
+**Baca dalam [Bahasa Indonesia](README.id.md).**
 
-## Tech Stack
+## Stack
 
-| Layer | Technology |
-| --- | --- |
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS v4 (design tokens editorial) |
-| Fonts | Geist / Geist Mono (next/font, self-hosted) |
-| 3D | Three.js — aksen hero opsional, dimuat dinamis, fallback + reduced-motion |
-| Hosting | Vercel (auto-deploy via GitHub Actions) |
+- **Framework:** Next.js 15 (App Router, static generation)
+- **Language:** TypeScript (strict)
+- **Styling:** Tailwind CSS v4 + Geist & Geist Mono (`next/font`)
+- **Motion & 3D:** GSAP + Lenis smooth scroll, Three.js interactive solar system in the hero (`prefers-reduced-motion` aware)
+- **Contact:** Web3Forms
 
-## Structure
+## Project Structure
 
-```
-app/                  # layout, homepage, /work, /work/[slug], sitemap, robots
-components/           # Header, Hero (+3D), sections, ContactForm, Footer, providers
+```text
+app/                  # Root layout, homepage, /work/[slug] case studies, sitemap, robots
+components/           # UI sections, interactive architecture flow, custom cursor, theme/i18n providers
 lib/
-  data/               # konten typed: profile, projects, certifications, experience, education, expertise
-  i18n/messages.ts    # kamus EN/ID (hasil ekstraksi dari situs lama)
-public/assets/        # cv/, projects/, sertifikat/
-docs/                 # audit, content-inventory, product brief, implementation plan
-scripts/              # extract-content.mjs (regenerasi data dari sumber lama)
-AGENTS.md             # instruksi agent (dari agent kit)
+  data/               # Typed data for profile, projects, credentials, expertise, and career timeline
+  i18n/messages.ts    # Bilingual dictionary (EN / ID)
+  gsap.ts             # GSAP + Lenis helpers
+public/assets/        # CV PDFs, project screenshots, and certificate scans
+scripts/              # Asset integrity verification scripts
 ```
 
-## Scripts
+## Development
 
 ```bash
-npm run dev          # development
-npm run build        # production build
-npm start            # jalankan hasil build
-npm run lint         # eslint
-npm run typecheck    # tsc --noEmit
-npm run extract:content  # regenerasi lib/data + messages dari index.html lama
+npm install
+npm run dev           # Start local dev server
+npm run check:assets  # Verify all referenced images & PDFs exist in public/
+npm run typecheck     # Run TypeScript compiler check
+npm run lint          # Run ESLint
+npm run build         # Build static production bundle
 ```
 
-## Fitur
+## License
 
-- **Bilingual EN/ID** — toggle di header, kamus terpusat (`lib/i18n/messages.ts`).
-- **Dark/light mode** — mengikuti sistem, bisa di-toggle, tersimpan di `localStorage`.
-- **Editorial design system** — off-white `#F5F4EF`, navy `#172A45`, aksen `#4778A9`, Geist, whitespace, borders tipis.
-- **Subtle 3D hero** — skulptur geometris procedural; fallback CSS statis; berhenti saat tab/elemen tak terlihat; menghormati `prefers-reduced-motion`; DPR dibatasi 1.5.
-- **Case studies** — `/work/[slug]` per proyek; bagian yang belum terverifikasi ditandai TODO (tidak dikarang).
-- **Contact form** — Web3Forms.
-- **Counter orang online** — `/api/presence` + komponen `OnlineVisitors` (hero & footer); heartbeat browser tiap 10 dtk, polling 5 dtk, jendela aktif 60 dtk. Store default in-memory; untuk Vercel/serverless set `UPSTASH_REDIS_REST_URL` & `UPSTASH_REDIS_REST_TOKEN` (lihat `.env.example`).
-- **SEO** — metadata, OG, canonical, sitemap, robots.
-
-## Deploy
-
-Sama seperti sebelumnya: push ke `main` pada repo ini memicu GitHub Actions → `vercel --prod` (project `arya-wiguna`, domain `arya-wiguna.my.id`). Tidak ada perubahan konfigurasi deployment.
+Code is MIT-licensed; personal documents, CVs, and certificate scans in `public/assets/` belong to Arya Wiguna.

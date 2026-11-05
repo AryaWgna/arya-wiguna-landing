@@ -3,10 +3,6 @@
 import { useEffect } from "react";
 import { initLenis, destroyLenis, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
-/**
- * Initialises Lenis smooth scroll and the scroll progress bar.
- * Mount once in the root layout (inside Providers).
- */
 export function SmoothScroll() {
   useEffect(() => {
     if (isReducedMotion()) return;
@@ -14,10 +10,8 @@ export function SmoothScroll() {
     const lenis = initLenis();
     if (!lenis) return;
 
-    // Refresh trigger awal setelah layout stabil (font/gambar belum tentu siap).
     const initialRefresh = window.setTimeout(() => ScrollTrigger.refresh(), 300);
 
-    // Scroll progress indicator
     const bar = document.getElementById("scroll-progress");
     if (bar) {
       ScrollTrigger.create({

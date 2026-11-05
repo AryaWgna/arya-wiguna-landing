@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/lib/data/projects";
+import { messages, type MessageKey } from "@/lib/i18n/messages";
 import { CaseStudyContent } from "@/components/case-study-content";
 
 type Props = {
@@ -14,12 +15,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
-  if (!project) return { title: "Proyek tidak ditemukan" };
-  // Judul bilingual diambil dari kamus
-  const messages = (await import("@/lib/i18n/messages")).messages;
-  const title = messages[project.titleKey as keyof typeof messages]?.[0] ?? project.titleKey;
-  const description =
-    messages[project.summaryKey as keyof typeof messages]?.[0] ?? project.summaryKey;
+  if (!project) return { title: "Project not found" };
+
+  const title = messages[project.titleKey as MessageKey]?.[0] ?? project.titleKey;
+  const description = messages[project.summaryKey as MessageKey]?.[0] ?? project.summaryKey;
   return { title, description };
 }
 

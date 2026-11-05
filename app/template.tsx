@@ -3,10 +3,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap, isReducedMotion, scrollToHash } from "@/lib/gsap";
 
-/**
- * Transisi antar-halaman (App Router): enter fade/slide halus.
- * Reduced-motion → halaman tampil normal.
- */
 export default function Template({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -20,7 +16,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
       { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
     );
 
-    // Pindah halaman: scroll halus via Lenis (kalau aktif), fallback native.
     scrollToHash(window.location.hash);
 
     return () => {

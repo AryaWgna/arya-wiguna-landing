@@ -6,17 +6,12 @@ import { gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 type GsapRevealProps = {
   children: React.ReactNode;
   className?: string;
-  /** Tag yang dirender (default div). */
   as?: React.ElementType;
-  /** Mulai saat elemen memasuki viewport (format ScrollTrigger). */
   start?: string;
-  /** Jarak awal translateY (px). */
   y?: number;
   duration?: number;
   ease?: string;
-  /** Stagger antar [data-reveal-item]. */
   stagger?: number;
-  /** Hanya mainkan sekali (default true). */
   once?: boolean;
 };
 
@@ -35,13 +30,9 @@ export function GsapReveal({
 
   useLayoutEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || isReducedMotion()) return;
 
-    if (isReducedMotion()) return; // konten tetap terlihat tanpa animasi
-
-    const items = Array.from(
-      el.querySelectorAll<HTMLElement>("[data-reveal-item]")
-    );
+    const items = Array.from(el.querySelectorAll<HTMLElement>("[data-reveal-item]"));
     const targets = items.length ? items : [el];
 
     const tween = gsap.fromTo(
@@ -79,8 +70,7 @@ export function GsapReveal({
       requestAnimationFrame(play);
     }
 
-    // Jaring pengaman: jangan biarkan konten tetap tersembunyi
-    // (mis. font/asset bergeser setelah trigger gagal menyala).
+    // Fallback in case layout shift prevents ScrollTrigger from firing
     const fallback = window.setTimeout(play, 1500);
 
     return () => {

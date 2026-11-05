@@ -185,15 +185,6 @@ section[id] {
   display: none;
 }
 
-.parallax-img-wrap {
-  overflow: hidden;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-}
-.parallax-img-wrap img {
-  will-change: transform;
-}
-
 html.lenis,
 html.lenis body {
   height: auto;

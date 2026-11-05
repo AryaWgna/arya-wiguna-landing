@@ -1,13 +1,13 @@
-.vercel/*
 node_modules/
 .next/
 out/
 *.tsbuildinfo
 next-env.d.ts
-
-!.vercel/project.json
-
-.vercel
 .env*
 
+.vercel/*
+!.vercel/project.json
+
 .agents/
+AGENTS.md
+docs/
