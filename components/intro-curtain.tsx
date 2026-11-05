@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, getLenis, isReducedMotion } from "@/lib/gsap";
 
-const STORAGE_KEY = "aw_intro_seen";
-
 export function IntroCurtain() {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -17,9 +15,6 @@ export function IntroCurtain() {
 
     const finish = () => {
       html.classList.remove("intro-pending");
-      try {
-        sessionStorage.setItem(STORAGE_KEY, "1");
-      } catch {}
       getLenis()?.start();
       setDone(true);
     };
@@ -88,9 +83,6 @@ export function IntroCurtain() {
       aria-hidden="true"
       onClick={() => {
         document.documentElement.classList.remove("intro-pending");
-        try {
-          sessionStorage.setItem(STORAGE_KEY, "1");
-        } catch {}
         getLenis()?.start();
         setDone(true);
       }}
@@ -128,4 +120,3 @@ export function IntroCurtain() {
     </div>
   );
 }
-

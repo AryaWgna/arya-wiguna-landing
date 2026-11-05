@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://arya-wiguna.my.id";
 
-const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.classList.toggle("dark",dark);var rm=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!rm&&!sessionStorage.getItem("aw_intro_seen")){d.classList.add("intro-pending");}}catch(e){}})();`;
+const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.classList.toggle("dark",dark);if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("intro-pending");}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: {
