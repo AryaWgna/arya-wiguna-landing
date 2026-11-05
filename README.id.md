@@ -10,6 +10,7 @@ Kode sumber website portfolio pribadi saya di **[arya-wiguna.my.id](https://arya
 - **Bahasa:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 + Geist & Geist Mono (`next/font`)
 - **Animasi & UI:** GSAP + Lenis smooth scroll, tirai pembuka editorial, dan skema arsitektur SVG interaktif di bagian hero (mendukung `prefers-reduced-motion`)
+- **Indikator Pengunjung Aktif:** Penghitung pengunjung real-time via `/api/presence` (Upstash Redis REST dengan fallback memori lokal otomatis)
 - **Formulir Kontak:** Web3Forms
 
 ## Struktur Direktori

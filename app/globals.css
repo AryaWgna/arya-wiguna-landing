@@ -190,7 +190,7 @@ section[id] {
 }
 html.intro-pending #intro-curtain {
   display: flex;
-  animation: intro-safety-hide 0.25s ease 1.9s forwards;
+  animation: intro-safety-hide 0.3s ease 4.2s forwards;
 }
 @keyframes intro-safety-hide {
   to {

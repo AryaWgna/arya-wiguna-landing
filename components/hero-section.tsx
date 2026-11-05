@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { CvDropdown } from "@/components/cv-dropdown";
 import { HeroBlueprint } from "@/components/hero-blueprint";
+import { OnlineVisitors } from "@/components/online-visitors";
 import { profile } from "@/lib/data/profile";
 import { gsap, isReducedMotion, scrollToHash } from "@/lib/gsap";
 
@@ -18,37 +19,50 @@ export function HeroSection() {
     const sec = sectionRef.current;
     if (!sec || isReducedMotion()) return;
 
-    const hasIntro = document.documentElement.classList.contains("intro-pending");
-    const baseDelay = hasIntro ? 0.68 : 0;
+    const waitIntro = document.documentElement.classList.contains("intro-pending");
+    let fallbackTimer = 0;
+    let onReveal: (() => void) | null = null;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+      const tl = gsap.timeline({ paused: waitIntro });
+
+      tl.fromTo(
         "[data-hero-item]",
         { autoAlpha: 0, y: 14 },
         {
           autoAlpha: 1,
           y: 0,
           duration: 0.55,
-          delay: baseDelay,
           stagger: 0.07,
           ease: "power2.out",
-        }
+        },
+        0
       );
 
-      gsap.fromTo(
+      tl.fromTo(
         "[data-hero-visual]",
         { autoAlpha: 0, y: 14 },
         {
           autoAlpha: 1,
           y: 0,
           duration: 0.65,
-          delay: baseDelay + 0.12,
           ease: "power2.out",
-        }
+        },
+        0.12
       );
+
+      if (waitIntro) {
+        onReveal = () => tl.play();
+        window.addEventListener("aw-intro-reveal", onReveal, { once: true });
+        fallbackTimer = window.setTimeout(() => tl.play(), 2200);
+      }
     }, sec);
 
-    return () => ctx.revert();
+    return () => {
+      if (onReveal) window.removeEventListener("aw-intro-reveal", onReveal);
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+      ctx.revert();
+    };
   }, []);
 
   const handleHashJump = (e: React.MouseEvent, hash: string) => {
@@ -61,9 +75,10 @@ export function HeroSection() {
       <div className="container-x flex min-h-[88svh] items-center py-28 md:py-32">
         <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-6">
-            <p data-hero-item className="eyebrow mb-4">
-              {profile.role[lang]}
-            </p>
+            <div data-hero-item className="mb-4 flex flex-wrap items-center gap-3">
+              <p className="eyebrow">{profile.role[lang]}</p>
+              <OnlineVisitors variant="hero" />
+            </div>
 
             <h1
               data-hero-item

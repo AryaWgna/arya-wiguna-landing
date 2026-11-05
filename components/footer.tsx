@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/components/providers";
+import { OnlineVisitors } from "@/components/online-visitors";
 import { profile } from "@/lib/data/profile";
 
 export function Footer() {
@@ -45,8 +46,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-border-line/70 pt-6 font-mono text-xs text-muted">
-          © {year} {profile.name} · Next.js 15 &amp; TypeScript
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border-line/70 pt-6 font-mono text-xs text-muted">
+          <span>© {year} {profile.name} · Next.js 15 &amp; TypeScript</span>
+          <OnlineVisitors variant="footer" />
         </div>
       </div>
     </footer>

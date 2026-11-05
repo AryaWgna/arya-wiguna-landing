@@ -3,17 +3,34 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, getLenis, isReducedMotion } from "@/lib/gsap";
 
+function emitReveal() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("aw-intro-reveal"));
+  }
+}
+
 export function IntroCurtain() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+  const markRef = useRef<HTMLDivElement>(null);
   const ruleRef = useRef<HTMLDivElement>(null);
+  const botRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const revealedRef = useRef(false);
   const [done, setDone] = useState(false);
+
+  const triggerHero = () => {
+    if (revealedRef.current) return;
+    revealedRef.current = true;
+    emitReveal();
+  };
 
   useEffect(() => {
     const root = rootRef.current;
     const html = document.documentElement;
 
     const finish = () => {
+      triggerHero();
       html.classList.remove("intro-pending");
       getLenis()?.start();
       setDone(true);
@@ -28,12 +45,21 @@ export function IntroCurtain() {
 
     const tl = gsap.timeline({ onComplete: finish });
 
-    if (contentRef.current) {
+    if (topRef.current) {
       tl.fromTo(
-        contentRef.current,
+        topRef.current,
         { autoAlpha: 0, y: 6 },
-        { autoAlpha: 1, y: 0, duration: 0.26, ease: "power2.out" },
-        0
+        { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        0.05
+      );
+    }
+
+    if (markRef.current) {
+      tl.fromTo(
+        markRef.current,
+        { autoAlpha: 0, y: 10 },
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        0.14
       );
     }
 
@@ -41,23 +67,34 @@ export function IntroCurtain() {
       tl.fromTo(
         ruleRef.current,
         { scaleX: 0 },
-        { scaleX: 1, duration: 0.52, ease: "power3.inOut" },
-        0.06
+        { scaleX: 1, duration: 1.15, ease: "power2.inOut" },
+        0.25
+      );
+    }
+
+    if (botRef.current) {
+      tl.fromTo(
+        botRef.current,
+        { autoAlpha: 0, y: 6 },
+        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.55
       );
     }
 
     if (contentRef.current) {
       tl.to(
         contentRef.current,
-        { autoAlpha: 0, y: -8, duration: 0.22, ease: "power2.in" },
-        0.62
+        { autoAlpha: 0, y: -10, duration: 0.32, ease: "power2.in" },
+        1.78
       );
     }
 
+    tl.call(triggerHero, undefined, 1.88);
+
     tl.to(
       root,
-      { yPercent: -100, duration: 0.46, ease: "expo.inOut" },
-      0.66
+      { yPercent: -100, duration: 0.68, ease: "expo.inOut" },
+      1.86
     );
 
     const onKey = (e: KeyboardEvent) => {
@@ -82,6 +119,7 @@ export function IntroCurtain() {
       ref={rootRef}
       aria-hidden="true"
       onClick={() => {
+        triggerHero();
         document.documentElement.classList.remove("intro-pending");
         getLenis()?.start();
         setDone(true);
@@ -89,32 +127,38 @@ export function IntroCurtain() {
       className="fixed inset-0 z-[120] flex-col items-center justify-center border-b border-border-line bg-background px-6 text-foreground select-none"
     >
       <div ref={contentRef} className="w-full max-w-sm">
-        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-muted">
+        <div
+          ref={topRef}
+          className="flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-muted"
+        >
           <span>Arya Wiguna</span>
           <span>Bogor · 06°35′S 106°48′E</span>
         </div>
 
-        <div className="my-5 flex items-baseline justify-between">
+        <div ref={markRef} className="my-5 flex items-baseline justify-between">
           <span className="font-mono text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             AW<span className="text-blue">.</span>
           </span>
-          <span className="font-mono text-[11px] text-muted">2026</span>
+          <span className="font-mono text-[11px] text-muted">Portfolio · 2026</span>
         </div>
 
         <div className="relative flex items-center">
-          <span className="h-1.5 w-px bg-border-line" />
+          <span className="h-2 w-px bg-border-line" />
           <div className="relative h-px flex-1 bg-border-line">
             <div
               ref={ruleRef}
               className="absolute inset-0 origin-left scale-x-0 bg-navy"
             />
           </div>
-          <span className="h-1.5 w-px bg-border-line" />
+          <span className="h-2 w-px bg-border-line" />
         </div>
 
-        <div className="mt-3 flex items-center justify-between font-mono text-[10px] tracking-wider uppercase text-muted">
+        <div
+          ref={botRef}
+          className="mt-3.5 flex items-center justify-between font-mono text-[10px] tracking-wider uppercase text-muted"
+        >
           <span>Full-Stack &amp; Mobile</span>
-          <span>S1 · BNSP</span>
+          <span>S1 Informatika · BNSP</span>
         </div>
       </div>
     </div>

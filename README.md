@@ -10,6 +10,7 @@ Source code for my personal software engineering portfolio at **[arya-wiguna.my.
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 + Geist & Geist Mono (`next/font`)
 - **Motion & UI:** GSAP + Lenis smooth scroll, editorial intro curtain, and interactive SVG system architecture schematics (`prefers-reduced-motion` aware)
+- **Live Presence:** Active visitor counter via `/api/presence` (Upstash Redis REST with automatic in-memory fallback)
 - **Contact:** Web3Forms
 
 ## Project Structure
