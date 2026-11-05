@@ -12,7 +12,8 @@
   --border: #dcddd7;
 }
 
-.dark {
+.dark,
+[data-theme="dark"] {
   --background: #10161c;
   --foreground: #e9e8e2;
   --surface: #1a222b;
@@ -186,11 +187,7 @@ section[id] {
 }
 
 #intro-curtain {
-  display: none;
-}
-html.intro-pending #intro-curtain {
-  display: flex;
-  animation: intro-safety-hide 0.3s ease 4.2s forwards;
+  animation: intro-safety-hide 0.3s ease 7s forwards;
 }
 @keyframes intro-safety-hide {
   to {

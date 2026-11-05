@@ -85,3 +85,4 @@ export function getPresenceStore(): PresenceStore {
 
   return cachedStore;
 }
+

@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://arya-wiguna.my.id";
 
-const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.classList.toggle("dark",dark);if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("intro-pending");}}catch(e){}})();`;
+const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.dataset.theme=dark?"dark":"light";d.classList.toggle("dark",dark);}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: {
@@ -93,6 +93,9 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOTSTRAP_SCRIPT }} />
+        <noscript>
+          <style>{`#intro-curtain{display:none!important}`}</style>
+        </noscript>
       </head>
       <body>
         <IntroCurtain />

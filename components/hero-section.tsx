@@ -19,7 +19,7 @@ export function HeroSection() {
     const sec = sectionRef.current;
     if (!sec || isReducedMotion()) return;
 
-    const waitIntro = document.documentElement.classList.contains("intro-pending");
+    const waitIntro = Boolean(document.getElementById("intro-curtain"));
     let fallbackTimer = 0;
     let onReveal: (() => void) | null = null;
 
@@ -54,7 +54,7 @@ export function HeroSection() {
       if (waitIntro) {
         onReveal = () => tl.play();
         window.addEventListener("aw-intro-reveal", onReveal, { once: true });
-        fallbackTimer = window.setTimeout(() => tl.play(), 2200);
+        fallbackTimer = window.setTimeout(() => tl.play(), 3400);
       }
     }, sec);
 

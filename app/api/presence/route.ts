@@ -36,3 +36,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ online: 0 }, { status: 503, headers: NO_STORE_HEADERS });
   }
 }
+

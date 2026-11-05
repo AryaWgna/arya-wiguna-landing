@@ -13,6 +13,7 @@ export function IntroCurtain() {
   const rootRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const markRef = useRef<HTMLDivElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
   const ruleRef = useRef<HTMLDivElement>(null);
   const botRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -27,39 +28,38 @@ export function IntroCurtain() {
 
   useEffect(() => {
     const root = rootRef.current;
-    const html = document.documentElement;
 
     const finish = () => {
       triggerHero();
-      html.classList.remove("intro-pending");
       getLenis()?.start();
       setDone(true);
     };
 
-    if (!root || isReducedMotion() || !html.classList.contains("intro-pending")) {
+    if (!root || isReducedMotion()) {
       finish();
       return;
     }
 
     getLenis()?.stop();
 
+    const counter = { val: 0 };
     const tl = gsap.timeline({ onComplete: finish });
 
     if (topRef.current) {
       tl.fromTo(
         topRef.current,
-        { autoAlpha: 0, y: 6 },
-        { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
-        0.05
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.08
       );
     }
 
     if (markRef.current) {
       tl.fromTo(
         markRef.current,
-        { autoAlpha: 0, y: 10 },
-        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
-        0.14
+        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        0.18
       );
     }
 
@@ -67,34 +67,49 @@ export function IntroCurtain() {
       tl.fromTo(
         ruleRef.current,
         { scaleX: 0 },
-        { scaleX: 1, duration: 1.15, ease: "power2.inOut" },
-        0.25
+        { scaleX: 1, duration: 1.65, ease: "power2.inOut" },
+        0.32
       );
     }
+
+    tl.to(
+      counter,
+      {
+        val: 100,
+        duration: 1.65,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          if (pctRef.current) {
+            pctRef.current.textContent = String(Math.round(counter.val)).padStart(3, "0");
+          }
+        },
+      },
+      0.32
+    );
 
     if (botRef.current) {
       tl.fromTo(
         botRef.current,
-        { autoAlpha: 0, y: 6 },
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
-        0.55
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        0.65
       );
     }
 
     if (contentRef.current) {
       tl.to(
         contentRef.current,
-        { autoAlpha: 0, y: -10, duration: 0.32, ease: "power2.in" },
-        1.78
+        { autoAlpha: 0, y: -12, duration: 0.36, ease: "power2.in" },
+        2.45
       );
     }
 
-    tl.call(triggerHero, undefined, 1.88);
+    tl.call(triggerHero, undefined, 2.58);
 
     tl.to(
       root,
-      { yPercent: -100, duration: 0.68, ease: "expo.inOut" },
-      1.86
+      { yPercent: -100, duration: 0.75, ease: "expo.inOut" },
+      2.52
     );
 
     const onKey = (e: KeyboardEvent) => {
@@ -120,26 +135,33 @@ export function IntroCurtain() {
       aria-hidden="true"
       onClick={() => {
         triggerHero();
-        document.documentElement.classList.remove("intro-pending");
         getLenis()?.start();
         setDone(true);
       }}
-      className="fixed inset-0 z-[120] flex-col items-center justify-center border-b border-border-line bg-background px-6 text-foreground select-none"
+      className="fixed inset-0 z-[120] flex flex-col items-center justify-center border-b border-border-line bg-background px-6 text-foreground select-none"
     >
       <div ref={contentRef} className="w-full max-w-sm">
         <div
           ref={topRef}
-          className="flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-muted"
+          className="invisible flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-muted"
         >
           <span>Arya Wiguna</span>
           <span>Bogor · 06°35′S 106°48′E</span>
         </div>
 
-        <div ref={markRef} className="my-5 flex items-baseline justify-between">
-          <span className="font-mono text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+        <div
+          ref={markRef}
+          className="invisible my-5 flex items-baseline justify-between"
+        >
+          <span className="font-mono text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             AW<span className="text-blue">.</span>
           </span>
-          <span className="font-mono text-[11px] text-muted">Portfolio · 2026</span>
+          <span
+            ref={pctRef}
+            className="font-mono text-xs tabular-nums text-muted"
+          >
+            000
+          </span>
         </div>
 
         <div className="relative flex items-center">
@@ -155,7 +177,7 @@ export function IntroCurtain() {
 
         <div
           ref={botRef}
-          className="mt-3.5 flex items-center justify-between font-mono text-[10px] tracking-wider uppercase text-muted"
+          className="invisible mt-3.5 flex items-center justify-between font-mono text-[10px] tracking-wider uppercase text-muted"
         >
           <span>Full-Stack &amp; Mobile</span>
           <span>S1 Informatika · BNSP</span>
