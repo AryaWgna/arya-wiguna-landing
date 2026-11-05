@@ -9,7 +9,7 @@ Kode sumber website portfolio pribadi saya di **[arya-wiguna.my.id](https://arya
 - **Framework:** Next.js 15 (App Router, static generation)
 - **Bahasa:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 + Geist & Geist Mono (`next/font`)
-- **Animasi & 3D:** GSAP + Lenis smooth scroll, tata surya 3D interaktif dengan Three.js di bagian hero (mendukung `prefers-reduced-motion`)
+- **Animasi & UI:** GSAP + Lenis smooth scroll, tirai pembuka editorial, dan skema arsitektur SVG interaktif di bagian hero (mendukung `prefers-reduced-motion`)
 - **Formulir Kontak:** Web3Forms
 
 ## Struktur Direktori

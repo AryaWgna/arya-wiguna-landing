@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { CustomCursor } from "@/components/custom-cursor";
+import { IntroCurtain } from "@/components/intro-curtain";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_URL = "https://arya-wiguna.my.id";
+
+const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.classList.toggle("dark",dark);var rm=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!rm&&!sessionStorage.getItem("aw_intro_seen")){d.classList.add("intro-pending");}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: {
@@ -88,7 +91,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: BOOTSTRAP_SCRIPT }} />
+      </head>
       <body>
+        <IntroCurtain />
         <div id="scroll-progress" aria-hidden="true" />
         <CustomCursor />
         <Providers>

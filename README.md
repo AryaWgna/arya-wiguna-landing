@@ -9,7 +9,7 @@ Source code for my personal software engineering portfolio at **[arya-wiguna.my.
 - **Framework:** Next.js 15 (App Router, static generation)
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 + Geist & Geist Mono (`next/font`)
-- **Motion & 3D:** GSAP + Lenis smooth scroll, Three.js interactive solar system in the hero (`prefers-reduced-motion` aware)
+- **Motion & UI:** GSAP + Lenis smooth scroll, editorial intro curtain, and interactive SVG system architecture schematics (`prefers-reduced-motion` aware)
 - **Contact:** Web3Forms
 
 ## Project Structure

@@ -1,14 +1,12 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLang } from "@/components/providers";
 import { CvDropdown } from "@/components/cv-dropdown";
+import { HeroBlueprint } from "@/components/hero-blueprint";
 import { profile } from "@/lib/data/profile";
 import { gsap, isReducedMotion, scrollToHash } from "@/lib/gsap";
-
-const HeroArt = dynamic(() => import("@/components/hero-art"), { ssr: false });
 
 export function HeroSection() {
   const { lang } = useLang();
@@ -20,6 +18,9 @@ export function HeroSection() {
     const sec = sectionRef.current;
     if (!sec || isReducedMotion()) return;
 
+    const hasIntro = document.documentElement.classList.contains("intro-pending");
+    const baseDelay = hasIntro ? 0.68 : 0;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         "[data-hero-item]",
@@ -28,7 +29,8 @@ export function HeroSection() {
           autoAlpha: 1,
           y: 0,
           duration: 0.55,
-          stagger: 0.08,
+          delay: baseDelay,
+          stagger: 0.07,
           ease: "power2.out",
         }
       );
@@ -36,7 +38,13 @@ export function HeroSection() {
       gsap.fromTo(
         "[data-hero-visual]",
         { autoAlpha: 0, y: 14 },
-        { autoAlpha: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power2.out" }
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.65,
+          delay: baseDelay + 0.12,
+          ease: "power2.out",
+        }
       );
     }, sec);
 
@@ -51,15 +59,15 @@ export function HeroSection() {
   return (
     <section id="hero" ref={sectionRef} className="relative z-20">
       <div className="container-x flex min-h-[88svh] items-center py-28 md:py-32">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-6">
             <p data-hero-item className="eyebrow mb-4">
               {profile.role[lang]}
             </p>
 
             <h1
               data-hero-item
-              className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+              className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-[64px] lg:leading-[1.05]"
             >
               Arya <span className="text-navy">Wiguna</span>
             </h1>
@@ -109,11 +117,8 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div data-hero-visual className="flex flex-col items-center lg:col-span-5">
-            <HeroArt />
-            <p className="mt-3 text-center font-mono text-[11px] tracking-wide text-muted">
-              {lang === "id" ? "tata surya kecil · interaktif" : "small interactive solar system"}
-            </p>
+          <div data-hero-visual className="lg:col-span-6">
+            <HeroBlueprint />
           </div>
         </div>
       </div>
