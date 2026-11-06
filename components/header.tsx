@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLang, useTheme } from "@/components/providers";
+import { useLang } from "@/components/providers";
+import { AnimatedThemeToggler } from "@/components/animated-theme-toggler";
 import { scrollToHash } from "@/lib/gsap";
 import { profile } from "@/lib/data/profile";
 
@@ -25,13 +26,11 @@ function LinkedInIcon() {
 
 export function Header() {
   const { t, lang, setLang } = useLang();
-  const { theme, toggleTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const pathname = usePathname();
   const isId = lang === "id";
-  const isDark = theme === "dark";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -150,51 +149,7 @@ export function Header() {
             {lang === "en" ? "ID" : "EN"}
           </button>
 
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="rounded border border-border-line p-2 text-muted transition-colors hover:border-navy hover:text-foreground"
-            aria-label={
-              isDark
-                ? isId
-                  ? "Aktifkan mode terang"
-                  : "Switch to light mode"
-                : isId
-                  ? "Aktifkan mode gelap"
-                  : "Switch to dark mode"
-            }
-          >
-            {isDark ? (
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-              </svg>
-            ) : (
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            )}
-          </button>
+          <AnimatedThemeToggler />
 
           <button
             type="button"

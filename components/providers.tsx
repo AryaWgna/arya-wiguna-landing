@@ -30,8 +30,9 @@ function getInitialLang(): Locale {
 
 const ThemeContext = createContext<{
   theme: "light" | "dark";
+  setTheme: (t: "light" | "dark") => void;
   toggleTheme: () => void;
-}>({ theme: "light", toggleTheme: () => {} });
+}>({ theme: "light", setTheme: () => {}, toggleTheme: () => {} });
 
 const LangContext = createContext<{
   lang: Locale;
@@ -81,7 +82,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const setLang = useCallback((l: Locale) => setLangState(l), []);
   const t = useCallback((key: string) => pick(lookup(key)) || key, [lookup, pick]);
 
-  const themeValue = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
+  const themeValue = useMemo(
+    () => ({ theme, setTheme, toggleTheme }),
+    [theme, toggleTheme]
+  );
   const langValue = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
 
   return (

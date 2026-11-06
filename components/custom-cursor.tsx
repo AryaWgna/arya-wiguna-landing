@@ -74,6 +74,7 @@ export function CustomCursor() {
   return (
     <div
       ref={pointerRef}
+      data-custom-cursor
       aria-hidden="true"
       className={`pointer-events-none fixed top-0 left-0 z-[99999] transition-opacity duration-150 will-change-transform ${
         isVisible ? "opacity-100" : "opacity-0"
