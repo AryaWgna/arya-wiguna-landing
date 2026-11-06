@@ -1,39 +1,110 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLang } from "@/components/providers";
 import { profile } from "@/lib/data/profile";
+
+type MenuPos = {
+  top?: number;
+  bottom?: number;
+  maxHeight: number;
+  left: number;
+  mobile: boolean;
+};
 
 export function CvDropdown() {
   const { t, lang } = useLang();
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [pos, setPos] = useState<MenuPos>({
+    top: 0,
+    maxHeight: 360,
+    left: 16,
+    mobile: false,
+  });
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const isId = lang === "id";
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const updatePosition = useCallback(() => {
+    const btn = btnRef.current;
+    if (!btn || typeof window === "undefined") return;
+
+    const rect = btn.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const isMobile = vw < 640;
+    const spaceBelow = vh - rect.bottom - 16;
+    const spaceAbove = rect.top - 76;
+    const flipUp = spaceBelow < 220 && spaceAbove > spaceBelow;
+
+    const left = isMobile
+      ? 16
+      : Math.max(16, Math.min(rect.left, vw - 344 - 16));
+
+    if (flipUp) {
+      setPos({
+        bottom: vh - rect.top + 8,
+        maxHeight: Math.max(180, spaceAbove),
+        left,
+        mobile: isMobile,
+      });
+    } else {
+      const top = Math.max(72, rect.bottom + 8);
+      setPos({
+        top,
+        maxHeight: Math.max(180, vh - top - 16),
+        left,
+        mobile: isMobile,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
+    updatePosition();
+
     const onPointer = (e: PointerEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      const target = e.target as Node;
+      if (btnRef.current?.contains(target) || menuRef.current?.contains(target)) {
+        return;
+      }
+      setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+    const onViewportChange = () => updatePosition();
+
     window.addEventListener("pointerdown", onPointer);
     window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onViewportChange);
+    window.addEventListener("scroll", onViewportChange, { passive: true });
     return () => {
       window.removeEventListener("pointerdown", onPointer);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onViewportChange);
+      window.removeEventListener("scroll", onViewportChange);
     };
-  }, [open]);
+  }, [open, updatePosition]);
 
   return (
-    <div ref={ref} className="relative inline-block text-left">
+    <>
       <button
+        ref={btnRef}
         type="button"
         className="btn"
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          if (!open) updatePosition();
+          setOpen((v) => !v);
+        }}
       >
         <svg
           width="15"
@@ -68,108 +139,133 @@ export function CvDropdown() {
         </svg>
       </button>
 
-      {open ? (
-        <div
-          role="menu"
-          aria-orientation="vertical"
-          className="absolute left-0 top-full z-50 mt-2 w-76 sm:w-88 overflow-hidden rounded-xl border border-border-line bg-background p-3 shadow-xl"
-        >
-          <div className="mb-2.5 flex items-center justify-between border-b border-border-line pb-2 px-1">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-muted">
-              {isId ? "Pilih Format & Bahasa" : "Select Format & Language"}
-            </span>
-            <span className="font-mono text-[10px] text-muted">PDF</span>
-          </div>
+      {mounted && open
+        ? createPortal(
+            <div
+              ref={menuRef}
+              role="menu"
+              aria-orientation="vertical"
+              style={
+                pos.mobile
+                  ? {
+                      top: pos.top,
+                      bottom: pos.bottom,
+                      maxHeight: pos.maxHeight,
+                      left: 16,
+                      right: 16,
+                    }
+                  : {
+                      top: pos.top,
+                      bottom: pos.bottom,
+                      maxHeight: pos.maxHeight,
+                      left: pos.left,
+                      width: 344,
+                    }
+              }
+              className="fixed z-[95] overflow-y-auto rounded-xl border border-border-line bg-background p-3 shadow-2xl"
+            >
+              <div className="mb-2.5 flex items-center justify-between border-b border-border-line px-1 pb-2">
+                <span className="font-mono text-[10px] font-semibold tracking-wider uppercase text-muted">
+                  {isId ? "Pilih Format & Bahasa" : "Select Format & Language"}
+                </span>
+                <span className="font-mono text-[10px] text-muted">PDF</span>
+              </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <strong className="text-xs font-semibold text-foreground">
-                      {t("cv-ats")}
-                    </strong>
-                    <span className="rounded border border-blue/30 bg-blue-soft px-1.5 py-0.5 font-mono text-[9px] font-semibold text-navy">
-                      ATS
-                    </span>
+              <div className="flex flex-col gap-2">
+                <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <strong className="text-xs font-semibold text-foreground">
+                          {t("cv-ats")}
+                        </strong>
+                        <span className="rounded border border-blue/30 bg-blue-soft px-1.5 py-0.5 font-mono text-[9px] font-semibold text-navy">
+                          ATS
+                        </span>
+                      </div>
+                      <p className="mt-0.5 truncate text-[11px] text-muted">
+                        {isId
+                          ? "Format satu kolom standar rekrutmen"
+                          : "Single-column standard resume"}
+                      </p>
+                    </div>
+
+                    <div className="flex shrink-0 items-center gap-1.5">
+                      <a
+                        role="menuitem"
+                        href={profile.cv.atsId}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        title="CV ATS (Bahasa Indonesia)"
+                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                      >
+                        ID
+                      </a>
+                      <a
+                        role="menuitem"
+                        href={profile.cv.ats}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        title="CV ATS (English)"
+                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                      >
+                        EN
+                      </a>
+                    </div>
                   </div>
-                  <p className="mt-0.5 truncate text-[11px] text-muted">
-                    {isId ? "Format satu kolom standar rekrutmen" : "Single-column standard resume"}
-                  </p>
                 </div>
 
-                <div className="flex shrink-0 items-center gap-1.5">
-                  <a
-                    role="menuitem"
-                    href={profile.cv.atsId}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    title="CV ATS (Bahasa Indonesia)"
-                    className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
-                  >
-                    ID
-                  </a>
-                  <a
-                    role="menuitem"
-                    href={profile.cv.ats}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    title="CV ATS (English)"
-                    className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
-                  >
-                    EN
-                  </a>
+                <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <strong className="text-xs font-semibold text-foreground">
+                          {t("cv-creative")}
+                        </strong>
+                        <span className="rounded border border-border-line bg-background px-1.5 py-0.5 font-mono text-[9px] font-semibold text-muted">
+                          2-Col
+                        </span>
+                      </div>
+                      <p className="mt-0.5 truncate text-[11px] text-muted">
+                        {isId
+                          ? "Tata letak 2 kolom dengan foto"
+                          : "Two-column layout with photo"}
+                      </p>
+                    </div>
+
+                    <div className="flex shrink-0 items-center gap-1.5">
+                      <a
+                        role="menuitem"
+                        href={profile.cv.creativeId}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        title="CV Kreatif (Bahasa Indonesia)"
+                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                      >
+                        ID
+                      </a>
+                      <a
+                        role="menuitem"
+                        href={profile.cv.creative}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        title="Creative CV (English)"
+                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                      >
+                        EN
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <strong className="text-xs font-semibold text-foreground">
-                      {t("cv-creative")}
-                    </strong>
-                    <span className="rounded border border-border-line bg-background px-1.5 py-0.5 font-mono text-[9px] font-semibold text-muted">
-                      2-Col
-                    </span>
-                  </div>
-                  <p className="mt-0.5 truncate text-[11px] text-muted">
-                    {isId ? "Tata letak 2 kolom dengan foto" : "Two-column layout with photo"}
-                  </p>
-                </div>
-
-                <div className="flex shrink-0 items-center gap-1.5">
-                  <a
-                    role="menuitem"
-                    href={profile.cv.creativeId}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    title="CV Kreatif (Bahasa Indonesia)"
-                    className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
-                  >
-                    ID
-                  </a>
-                  <a
-                    role="menuitem"
-                    href={profile.cv.creative}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    title="Creative CV (English)"
-                    className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
-                  >
-                    EN
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+            </div>,
+            document.body
+          )
+        : null}
+    </>
   );
 }

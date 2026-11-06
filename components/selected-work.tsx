@@ -328,12 +328,12 @@ export function SelectedWork() {
               className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border-line bg-background shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between border-b border-border-line bg-surface/50 px-6 py-4">
-                <div className="flex items-center gap-3">
-                  <span className="rounded border border-border-line bg-background px-2 py-0.5 font-mono text-[11px] font-medium text-blue">
+              <div className="flex items-center justify-between gap-3 border-b border-border-line bg-surface/50 px-4 py-3.5 sm:px-6 sm:py-4">
+                <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+                  <span className="shrink-0 rounded border border-border-line bg-background px-2 py-0.5 font-mono text-[11px] font-medium text-blue">
                     {selectedArchProject.chips[0]}
                   </span>
-                  <h3 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+                  <h3 className="truncate text-sm font-semibold tracking-tight text-foreground sm:text-lg">
                     {t(selectedArchProject.titleKey)}
                   </h3>
                 </div>
@@ -341,17 +341,17 @@ export function SelectedWork() {
                   type="button"
                   onClick={() => setSelectedArchProject(null)}
                   aria-label={isId ? "Tutup modal arsitektur" : "Close architecture modal"}
-                  className="rounded-lg p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground"
+                  className="shrink-0 rounded-lg p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground"
                 >
                   ✕
                 </button>
               </div>
 
-              <div data-lenis-prevent className="flex-1 overflow-y-auto p-4 sm:p-6">
+              <div data-lenis-prevent className="flex-1 overflow-y-auto p-3.5 sm:p-6">
                 <ArchitectureFlow flow={selectedArchProject.architecture} />
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border-line bg-surface/50 px-6 py-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border-line bg-surface/50 px-4 py-3 sm:px-6 sm:py-3.5">
                 <span className="font-mono text-xs text-muted">
                   {isId
                     ? "Pilih tiap modul untuk melihat route & batas sistem asli."

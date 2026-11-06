@@ -79,7 +79,7 @@ export function ArchitectureFlow({
   };
 
   return (
-    <div className={`rounded-xl border border-border-line bg-surface/35 p-5 md:p-6 ${className}`}>
+    <div className={`rounded-xl border border-border-line bg-surface/35 p-4 sm:p-5 md:p-6 ${className}`}>
       <div className="flex flex-col gap-3 border-b border-border-line pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h4 className="text-base font-semibold tracking-tight text-foreground">
@@ -114,18 +114,18 @@ export function ArchitectureFlow({
         </div>
       </div>
 
-      <div className="mt-5 overflow-x-auto pb-2">
-        <div className="grid min-w-[600px] grid-cols-4 gap-3">
+      <div className="mt-5">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
           {flow.steps.map((item, idx) => {
             const isCurrent = item.step === activeStep;
             const isLast = idx === flow.steps.length - 1;
 
             return (
-              <div key={item.step} className="relative flex items-stretch">
+              <div key={item.step} className="relative flex min-w-0 items-stretch">
                 <button
                   type="button"
                   onClick={() => handleSelect(item.step)}
-                  className={`flex w-full flex-col justify-between rounded-lg border p-3.5 text-left transition-colors ${
+                  className={`flex min-w-0 w-full flex-col justify-between rounded-lg border p-3 sm:p-3.5 text-left transition-colors ${
                     isCurrent
                       ? "border-navy bg-navy text-background shadow-sm"
                       : "border-border-line bg-background text-foreground hover:border-navy/50"
@@ -144,7 +144,7 @@ export function ArchitectureFlow({
                     </span>
                   </div>
 
-                  <div className="mt-3">
+                  <div className="mt-2.5 sm:mt-3">
                     <div className="truncate font-mono text-xs font-semibold">
                       {item.node}
                     </div>
@@ -161,7 +161,7 @@ export function ArchitectureFlow({
                 {!isLast ? (
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-2.5 top-1/2 z-10 -translate-y-1/2 font-mono text-xs text-muted"
+                    className="pointer-events-none absolute -right-2.5 top-1/2 z-10 hidden -translate-y-1/2 font-mono text-xs text-muted sm:block"
                   >
                     →
                   </span>
@@ -172,7 +172,7 @@ export function ArchitectureFlow({
         </div>
       </div>
 
-      <div className="mt-4 rounded-lg border border-border-line bg-background p-5">
+      <div className="mt-4 rounded-lg border border-border-line bg-background p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-line pb-3">
           <div className="flex flex-wrap items-baseline gap-2">
             <span className="font-mono text-xs font-semibold text-blue">

@@ -126,7 +126,7 @@ export function Header() {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded p-2 text-muted transition-colors hover:text-foreground"
+            className="hidden rounded p-2 text-muted transition-colors hover:text-foreground sm:inline-flex"
             aria-label="GitHub"
           >
             <GitHubIcon />
@@ -135,7 +135,7 @@ export function Header() {
             href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded p-2 text-muted transition-colors hover:text-foreground"
+            className="hidden rounded p-2 text-muted transition-colors hover:text-foreground sm:inline-flex"
             aria-label="LinkedIn"
           >
             <LinkedInIcon />
@@ -225,7 +225,7 @@ export function Header() {
 
       {open ? (
         <nav
-          className="border-t border-border-line bg-background px-6 pb-6 pt-4 md:hidden"
+          className="border-t border-border-line bg-background px-5 pb-5 pt-3.5 md:hidden"
           aria-label={isId ? "Menu seluler" : "Mobile menu"}
         >
           <div className="flex flex-col gap-1">
@@ -239,6 +239,27 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+          </div>
+
+          <div className="mt-3 flex items-center gap-4 border-t border-border-line pt-3.5 px-2 font-mono text-xs text-muted">
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              <GitHubIcon />
+              <span>GitHub ↗</span>
+            </a>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              <LinkedInIcon />
+              <span>LinkedIn ↗</span>
+            </a>
           </div>
         </nav>
       ) : null}

@@ -32,8 +32,8 @@ type BlueprintSystem = {
   edges: BlueprintEdge[];
 };
 
-const NODE_W = 112;
-const NODE_H = 44;
+const NODE_W = 114;
+const NODE_H = 46;
 
 const SYSTEMS: BlueprintSystem[] = [
   {
@@ -50,8 +50,8 @@ const SYSTEMS: BlueprintSystem[] = [
     nodes: [
       {
         id: "scanner",
-        x: 14,
-        y: 42,
+        x: 6,
+        y: 40,
         title: "QR Scanner",
         sub: "mobile_scanner",
         refLabel: "lib/controllers/scan/stockopname_controller.dart",
@@ -62,7 +62,7 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "keystore",
-        x: 14,
+        x: 6,
         y: 130,
         title: "Secure Store",
         sub: "flutter_secure",
@@ -74,8 +74,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "hub",
-        x: 164,
-        y: 86,
+        x: 141,
+        y: 85,
         title: "Flutter State",
         sub: "Provider · State",
         refLabel: "lib/core/config/api_config.dart",
@@ -86,8 +86,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "api",
-        x: 314,
-        y: 42,
+        x: 276,
+        y: 40,
         title: "SIMARU API",
         sub: "REST · Bearer",
         refLabel: "/api/assets · /api/complaints",
@@ -98,7 +98,7 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "fcm",
-        x: 314,
+        x: 276,
         y: 130,
         title: "Firebase FCM",
         sub: "Token Sync",
@@ -110,10 +110,10 @@ const SYSTEMS: BlueprintSystem[] = [
       },
     ],
     edges: [
-      { from: "scanner", to: "hub", d: "M 126 64 H 145 V 102 H 164" },
-      { from: "keystore", to: "hub", d: "M 126 152 H 145 V 114 H 164" },
-      { from: "hub", to: "api", d: "M 276 102 H 295 V 64 H 314" },
-      { from: "hub", to: "fcm", d: "M 276 114 H 295 V 152 H 314" },
+      { from: "scanner", to: "hub", d: "M 120 63 H 130.5 V 101 H 141" },
+      { from: "keystore", to: "hub", d: "M 120 153 H 130.5 V 115 H 141" },
+      { from: "hub", to: "api", d: "M 255 101 H 265.5 V 63 H 276" },
+      { from: "hub", to: "fcm", d: "M 255 115 H 265.5 V 153 H 276" },
     ],
   },
   {
@@ -130,8 +130,8 @@ const SYSTEMS: BlueprintSystem[] = [
     nodes: [
       {
         id: "gateway",
-        x: 14,
-        y: 86,
+        x: 6,
+        y: 85,
         title: "Nginx :443",
         sub: "gateway-skyboard",
         refLabel: "gateway-skyboard/nginx.conf",
@@ -142,8 +142,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "ui",
-        x: 164,
-        y: 16,
+        x: 141,
+        y: 14,
         title: "Next.js :3000",
         sub: "ui-skyboard",
         refLabel: "30s poll · boarding chime",
@@ -154,8 +154,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "api",
-        x: 164,
-        y: 86,
+        x: 141,
+        y: 85,
         title: "Laravel :8000",
         sub: "api-skyboard",
         refLabel: "routes/api.php · Sanctum",
@@ -166,7 +166,7 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "assets",
-        x: 164,
+        x: 141,
         y: 156,
         title: "Static :80",
         sub: "assets-skyboard",
@@ -178,8 +178,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "db",
-        x: 314,
-        y: 86,
+        x: 276,
+        y: 85,
         title: "MySQL :3306",
         sub: "db-skyboard",
         refLabel: "docker-compose.yml · MySQL 8.0",
@@ -190,10 +190,10 @@ const SYSTEMS: BlueprintSystem[] = [
       },
     ],
     edges: [
-      { from: "gateway", to: "ui", d: "M 126 100 H 145 V 38 H 164" },
-      { from: "gateway", to: "api", d: "M 126 108 H 164" },
-      { from: "gateway", to: "assets", d: "M 126 116 H 145 V 178 H 164" },
-      { from: "api", to: "db", d: "M 276 108 H 314" },
+      { from: "gateway", to: "ui", d: "M 120 100 H 130.5 V 37 H 141" },
+      { from: "gateway", to: "api", d: "M 120 108 H 141" },
+      { from: "gateway", to: "assets", d: "M 120 116 H 130.5 V 179 H 141" },
+      { from: "api", to: "db", d: "M 255 108 H 276" },
     ],
   },
   {
@@ -210,8 +210,8 @@ const SYSTEMS: BlueprintSystem[] = [
     nodes: [
       {
         id: "tunnel",
-        x: 14,
-        y: 86,
+        x: 6,
+        y: 85,
         title: "CF Tunnel",
         sub: "HTTPS Edge",
         refLabel: "Cloudflare Tunnel -> :8000",
@@ -222,8 +222,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "proxy",
-        x: 164,
-        y: 86,
+        x: 141,
+        y: 85,
         title: "Bun :8000",
         sub: "proxy.ts",
         refLabel: "proxy.ts · Bun.serve",
@@ -234,8 +234,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "svelte",
-        x: 314,
-        y: 16,
+        x: 276,
+        y: 14,
         title: "Svelte :5173",
         sub: "Jaccard UI",
         refLabel: "Jaccard similarity · 3 gateways",
@@ -246,8 +246,8 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "elysia",
-        x: 314,
-        y: 86,
+        x: 276,
+        y: 85,
         title: "Elysia :3000",
         sub: "15k+ RAM Map",
         refLabel: "backend/src/index.ts",
@@ -258,22 +258,22 @@ const SYSTEMS: BlueprintSystem[] = [
       },
       {
         id: "sources",
-        x: 314,
+        x: 276,
         y: 156,
         title: "TVmaze · OMDB",
         sub: "2 Upstream APIs",
         refLabel: "Catalog preload + fallback",
         note: {
           en: "Primary catalog ingestion from TVmaze paired with on-demand OMDB title enrichment.",
-          id: " Sumber katalog utama dari TVmaze dipadukan dengan pencarian tambahan ke API OMDB.",
+          id: "Sumber katalog utama dari TVmaze dipadukan dengan pencarian tambahan ke API OMDB.",
         },
       },
     ],
     edges: [
-      { from: "tunnel", to: "proxy", d: "M 126 108 H 164" },
-      { from: "proxy", to: "svelte", d: "M 276 100 H 295 V 38 H 314" },
-      { from: "proxy", to: "elysia", d: "M 276 108 H 314" },
-      { from: "elysia", to: "sources", d: "M 370 130 V 156" },
+      { from: "tunnel", to: "proxy", d: "M 120 108 H 141" },
+      { from: "proxy", to: "svelte", d: "M 255 100 H 265.5 V 37 H 276" },
+      { from: "proxy", to: "elysia", d: "M 255 108 H 276" },
+      { from: "elysia", to: "sources", d: "M 333 131 V 156" },
     ],
   },
 ];
@@ -293,12 +293,12 @@ export function HeroBlueprint() {
   };
 
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-border-line bg-background shadow-sm">
-      <div className="flex items-center justify-between border-b border-border-line bg-surface/45 px-4 py-2.5">
-        <span className="font-mono text-[10px] font-semibold tracking-[0.12em] uppercase text-muted">
+    <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-border-line bg-background shadow-sm">
+      <div className="flex items-center justify-between gap-2 border-b border-border-line bg-surface/45 px-3.5 py-2.5 sm:px-4">
+        <span className="truncate font-mono text-[10px] font-semibold tracking-[0.12em] uppercase text-muted">
           {isId ? "Skema Arsitektur Proyek" : "Project Architecture Index"}
         </span>
-        <span className="font-mono text-[10px] text-muted">
+        <span className="shrink-0 font-mono text-[10px] text-muted">
           {sys.code} / 0{SYSTEMS.length}
         </span>
       </div>
@@ -317,7 +317,7 @@ export function HeroBlueprint() {
               role="tab"
               aria-selected={active}
               onClick={() => setSysIdx(idx)}
-              className={`border-b-2 px-3 py-2.5 text-left font-mono text-[11px] transition-colors ${
+              className={`truncate border-b-2 px-2 py-2.5 text-center font-mono text-[10px] transition-colors sm:px-3.5 sm:text-left sm:text-[11px] ${
                 active
                   ? "border-navy bg-background font-semibold text-foreground"
                   : "border-transparent text-muted hover:bg-background/60 hover:text-foreground"
@@ -330,19 +330,19 @@ export function HeroBlueprint() {
         })}
       </div>
 
-      <div className="px-4 pt-3 pb-1">
-        <p className="font-mono text-[11px] text-muted">{sys.context[lang]}</p>
+      <div className="px-3.5 pt-3 pb-1 sm:px-4">
+        <p className="truncate font-mono text-[11px] text-muted">{sys.context[lang]}</p>
       </div>
 
       <div
-        className="relative mx-3 my-2 overflow-hidden rounded-xl border border-border-line/80 bg-surface/35 px-1.5 py-2"
+        className="relative mx-2 my-2 overflow-hidden rounded-xl border border-border-line/80 bg-surface/35 px-1 py-2 sm:mx-3 sm:px-1.5"
         style={{
           backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)",
           backgroundSize: "14px 14px",
         }}
       >
         <svg
-          viewBox="0 0 440 216"
+          viewBox="0 0 396 216"
           className="h-auto w-full select-none"
           role="img"
           aria-label={sys.context[lang]}
@@ -416,25 +416,25 @@ export function HeroBlueprint() {
                   strokeWidth={isSelected ? 1.6 : 1.2}
                 />
                 <text
-                  x={10}
-                  y={18}
+                  x={9}
+                  y={19}
                   fill={isSelected ? "var(--background)" : "var(--foreground)"}
                   style={{
                     fontFamily: "var(--font-geist-mono), monospace",
-                    fontSize: "10.5px",
+                    fontSize: "11px",
                     fontWeight: 600,
                   }}
                 >
                   {node.title}
                 </text>
                 <text
-                  x={10}
-                  y={33}
+                  x={9}
+                  y={34}
                   fill={isSelected ? "var(--background)" : "var(--muted)"}
-                  fillOpacity={isSelected ? 0.8 : 1}
+                  fillOpacity={isSelected ? 0.82 : 1}
                   style={{
                     fontFamily: "var(--font-geist-mono), monospace",
-                    fontSize: "9.2px",
+                    fontSize: "9.5px",
                   }}
                 >
                   {node.sub}
@@ -445,8 +445,8 @@ export function HeroBlueprint() {
         </svg>
       </div>
 
-      <div className="border-t border-border-line bg-background px-4 py-3.5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="border-t border-border-line bg-background px-3.5 py-3.5 sm:px-4">
+        <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-xs font-semibold text-foreground">
             {activeNode.title}
           </span>
@@ -459,7 +459,7 @@ export function HeroBlueprint() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border-line bg-surface/35 px-4 py-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border-line bg-surface/35 px-3.5 py-2.5 sm:px-4">
         <div className="flex flex-wrap gap-1.5">
           {sys.stack.map((tech) => (
             <span

@@ -35,6 +35,7 @@ export function HeroSection() {
           duration: 0.55,
           stagger: 0.07,
           ease: "power2.out",
+          clearProps: "transform",
         },
         0
       );
@@ -47,6 +48,7 @@ export function HeroSection() {
           y: 0,
           duration: 0.65,
           ease: "power2.out",
+          clearProps: "transform",
         },
         0.12
       );
@@ -72,9 +74,9 @@ export function HeroSection() {
 
   return (
     <section id="hero" ref={sectionRef} className="relative z-20">
-      <div className="container-x flex min-h-[88svh] items-center py-28 md:py-32">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-6">
+      <div className="container-x flex min-h-[88svh] items-center pt-24 pb-16 md:py-32">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 lg:col-span-6">
             <div data-hero-item className="mb-4 flex flex-wrap items-center gap-3">
               <p className="eyebrow">{profile.role[lang]}</p>
               <OnlineVisitors variant="hero" />
@@ -82,23 +84,23 @@ export function HeroSection() {
 
             <h1
               data-hero-item
-              className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-[64px] lg:leading-[1.05]"
+              className="text-[40px] leading-[1.08] font-semibold tracking-tight text-foreground sm:text-6xl lg:text-[64px] lg:leading-[1.05]"
             >
               Arya <span className="text-navy">Wiguna</span>
             </h1>
 
-            <p data-hero-item className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+            <p data-hero-item className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
               {profile.heroLine[lang]}
             </p>
 
             <p
               data-hero-item
-              className="mt-5 max-w-xl border-l-2 border-blue pl-4 text-[15px] leading-relaxed text-foreground/90"
+              className="mt-4 max-w-xl border-l-2 border-blue pl-4 text-sm leading-relaxed text-foreground/90 sm:mt-5 sm:text-[15px]"
             >
               {profile.motto[lang]}
             </p>
 
-            <div data-hero-item className="mt-9 flex flex-wrap items-center gap-3">
+            <div data-hero-item className="mt-7 flex flex-wrap items-center gap-2.5 sm:mt-9 sm:gap-3">
               <Link
                 href="/#projects"
                 onClick={(e) => handleHashJump(e, "#projects")}
@@ -132,7 +134,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div data-hero-visual className="lg:col-span-6">
+          <div data-hero-visual className="min-w-0 lg:col-span-6">
             <HeroBlueprint />
           </div>
         </div>
