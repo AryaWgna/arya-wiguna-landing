@@ -77,7 +77,10 @@ export function HeroSection() {
       <div className="container-x flex min-h-[88svh] items-center pt-24 pb-16 md:py-32">
         <div className="grid w-full items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-6">
-            <div data-hero-item className="mb-4 flex flex-wrap items-center gap-3">
+            <div
+              data-hero-item
+              className="mb-4 flex flex-col items-start gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+            >
               <p className="eyebrow">{profile.role[lang]}</p>
               <OnlineVisitors variant="hero" />
             </div>

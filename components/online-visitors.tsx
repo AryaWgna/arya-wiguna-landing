@@ -105,30 +105,45 @@ export function OnlineVisitors({
   if (online === null || online <= 0) return null;
 
   const isId = lang === "id";
-  const label = isId ? `${online} sedang online` : `${online} online`;
+  const count = String(online).padStart(2, "0");
+  const label = isId ? "Pengunjung aktif" : "Viewing now";
   const tooltip = isId
-    ? `${online} pengunjung aktif saat ini`
+    ? `${online} pengunjung sedang mengakses halaman ini`
     : online === 1
-      ? "1 active visitor right now"
-      : `${online} active visitors right now`;
+      ? "1 visitor currently viewing this site"
+      : `${online} visitors currently viewing this site`;
 
-  const tone =
-    variant === "hero"
-      ? "border-border-line bg-surface/55 text-foreground/85"
-      : "border-border-line/80 bg-transparent text-muted";
+  if (variant === "footer") {
+    return (
+      <span
+        role="status"
+        aria-label={tooltip}
+        title={tooltip}
+        className="inline-flex items-center gap-2 font-mono text-xs tabular-nums text-muted"
+      >
+        <span aria-hidden="true" className="h-[5px] w-[5px] bg-blue" />
+        <span>{label}</span>
+        <span aria-hidden="true" className="text-muted/50">/</span>
+        <span className="font-semibold text-foreground">{count}</span>
+      </span>
+    );
+  }
 
   return (
     <span
       role="status"
       aria-label={tooltip}
       title={tooltip}
-      className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 font-mono text-[11px] tabular-nums ${tone}`}
+      className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase tabular-nums text-muted"
     >
       <span
         aria-hidden="true"
-        className="h-1.5 w-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"
+        className="hidden h-3 w-px bg-border-line sm:mr-1 sm:inline-block"
       />
+      <span aria-hidden="true" className="h-[5px] w-[5px] bg-blue" />
       <span>{label}</span>
+      <span aria-hidden="true" className="text-muted/50">/</span>
+      <span className="font-semibold text-navy">{count}</span>
     </span>
   );
 }
