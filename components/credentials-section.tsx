@@ -200,8 +200,8 @@ export function CredentialsSection() {
                 </h3>
                 <p className="mt-0.5 text-xs text-muted">
                   {isId
-                    ? "Dicoding (Python, Cloud AWS/Azure, C), Cisco English for IT, RevoU, OJK, DJP, dan IDwebTalks."
-                    : "Dicoding (Python, AWS/Azure Cloud, C), Cisco English for IT, RevoU, OJK, DJP, and IDwebTalks."}
+                    ? "Dicoding (Python, Cloud AWS/Azure, C), Cisco English for IT, Kemnaker RI, RevoU, OJK, DJP, dan IDwebTalks."
+                    : "Dicoding (Python, AWS/Azure Cloud, C), Cisco English for IT, Kemnaker RI, RevoU, OJK, DJP, and IDwebTalks."}
                 </p>
               </div>
 

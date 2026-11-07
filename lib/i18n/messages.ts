@@ -253,6 +253,14 @@ export const messages = {
     "Software Development – Programming competency certification by the Indonesian Professional Certification Authority (BNSP)",
     "Sertifikasi kompetensi Pengembangan Perangkat Lunak – Pemrograman oleh Badan Nasional Sertifikasi Profesi (BNSP)",
   ],
+  "c24-title": [
+    "TMI English Short Classes — English for Community Services",
+    "TMI English Short Classes — English for Community Services",
+  ],
+  "c24-desc": [
+    "English for community services short class in the 2026 National Productivity Improvement Week (P3N)",
+    "Kelas singkat Bahasa Inggris layanan masyarakat dalam Pekan Peningkatan Produktivitas Nasional (P3N) 2026",
+  ],
 
   "ct-tag": ["Contact", "Kontak"],
   "ct-h1": ["Get in touch", "Hubungi saya"],

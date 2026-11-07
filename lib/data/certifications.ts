@@ -128,6 +128,23 @@ export const certifications: Certification[] = [
     note: null,
   },
   {
+    slug: "c24",
+    titleKey: "c24-title",
+    descKey: "c24-desc",
+    img: "assets/sertifikat/tmi-english-for-community-services.jpg",
+    pdf: "assets/sertifikat/tmi-english-for-community-services.pdf",
+    alt: "TMI English Short Classes — English for Community Services",
+    category: "lainnya",
+    issuer: "Kemnaker RI · Trainers Management Indonesia (TMI)",
+    date: { en: "Nov 6, 2026", id: "6 November 2026" },
+    credentialId: "2603237/P3N/2026",
+    verifyUrl: null,
+    note: {
+      en: "National Productivity Improvement Week (P3N) 2026 · No. 2603237/P3N/2026",
+      id: "Pekan Peningkatan Produktivitas Nasional (P3N) 2026 · No. 2603237/P3N/2026",
+    },
+  },
+  {
     slug: "c2",
     titleKey: "c2-title",
     descKey: "c2-desc",
