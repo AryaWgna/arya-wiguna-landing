@@ -15,10 +15,9 @@ const CHORDS = [
  * is persisted locally.
  */
 export function useAmbientMusic() {
-  // Music is always ON by default (per user request): every visit/refresh
-  // starts in an enabled state. The user can mute temporarily, but a refresh
-  // returns to ON.
-  const [enabled, setEnabled] = useState(true);
+  // Music starts OFF on every visit/refresh; the user enables it with the
+  // topbar speaker toggle (browser autoplay policy requires a gesture).
+  const [enabled, setEnabled] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const ctxRef = useRef<AudioContext | null>(null);
   const masterRef = useRef<GainNode | null>(null);
