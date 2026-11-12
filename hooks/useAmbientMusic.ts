@@ -62,10 +62,10 @@ export function useAmbientMusic() {
     if (ctx.state === "suspended") void ctx.resume();
 
     const master = ctx.createGain();
-    master.gain.value = 0.05;
+    master.gain.value = 0.12;
     const filter = ctx.createBiquadFilter();
     filter.type = "lowpass";
-    filter.frequency.value = 720;
+    filter.frequency.value = 900;
     master.connect(filter);
     filter.connect(ctx.destination);
     masterRef.current = master;
@@ -83,17 +83,22 @@ export function useAmbientMusic() {
       const freqs = CHORDS[chordIdx % CHORDS.length];
       chordIdx += 1;
       for (const f of freqs) {
-        const osc = ctx.createOscillator();
-        osc.type = "triangle";
-        osc.frequency.value = f;
-        const g = ctx.createGain();
-        g.gain.setValueAtTime(0, ctx.currentTime);
-        g.gain.linearRampToValueAtTime(1, ctx.currentTime + 1.6);
-        g.gain.linearRampToValueAtTime(0, ctx.currentTime + 4.2);
-        osc.connect(g);
-        g.connect(master);
-        osc.start();
-        voicesRef.current.push(osc);
+        // Every chord voice pairs a soft triangle with a sine one octave up,
+        // giving the pad a clearer, more audible character.
+        const types: OscillatorType[] = ["triangle", "sine"];
+        for (const type of types) {
+          const osc = ctx.createOscillator();
+          osc.type = type;
+          osc.frequency.value = type === "sine" ? f * 2 : f;
+          const g = ctx.createGain();
+          g.gain.setValueAtTime(0, ctx.currentTime);
+          g.gain.linearRampToValueAtTime(1, ctx.currentTime + 1.6);
+          g.gain.linearRampToValueAtTime(0, ctx.currentTime + 4.2);
+          osc.connect(g);
+          g.connect(master);
+          osc.start();
+          voicesRef.current.push(osc);
+        }
       }
     };
     playChord();
