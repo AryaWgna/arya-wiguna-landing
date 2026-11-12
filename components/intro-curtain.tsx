@@ -11,12 +11,9 @@ function emitReveal() {
 
 export function IntroCurtain() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const topRef = useRef<HTMLDivElement>(null);
-  const markRef = useRef<HTMLDivElement>(null);
   const pctRef = useRef<HTMLSpanElement>(null);
-  const ruleRef = useRef<HTMLDivElement>(null);
-  const botRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const revealedRef = useRef(false);
   const [done, setDone] = useState(false);
 
@@ -45,30 +42,21 @@ export function IntroCurtain() {
     const counter = { val: 0 };
     const tl = gsap.timeline({ onComplete: finish });
 
-    if (topRef.current) {
+    if (titleRef.current) {
       tl.fromTo(
-        topRef.current,
-        { autoAlpha: 0, y: 8 },
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
-        0.08
+        titleRef.current,
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        0.05
       );
     }
 
-    if (markRef.current) {
+    if (barRef.current) {
       tl.fromTo(
-        markRef.current,
-        { autoAlpha: 0, y: 12 },
-        { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" },
-        0.18
-      );
-    }
-
-    if (ruleRef.current) {
-      tl.fromTo(
-        ruleRef.current,
+        barRef.current,
         { scaleX: 0 },
-        { scaleX: 1, duration: 1.65, ease: "power2.inOut" },
-        0.32
+        { scaleX: 1, duration: 1.4, ease: "power3.inOut" },
+        0.15
       );
     }
 
@@ -76,40 +64,27 @@ export function IntroCurtain() {
       counter,
       {
         val: 100,
-        duration: 1.65,
-        ease: "power2.inOut",
+        duration: 1.4,
+        ease: "power3.inOut",
         onUpdate: () => {
           if (pctRef.current) {
-            pctRef.current.textContent = String(Math.round(counter.val)).padStart(3, "0");
+            pctRef.current.textContent = String(Math.round(counter.val)).padStart(2, "0");
           }
         },
       },
-      0.32
+      0.15
     );
 
-    if (botRef.current) {
-      tl.fromTo(
-        botRef.current,
-        { autoAlpha: 0, y: 8 },
-        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        0.65
-      );
-    }
-
-    if (contentRef.current) {
-      tl.to(
-        contentRef.current,
-        { autoAlpha: 0, y: -12, duration: 0.36, ease: "power2.in" },
-        2.45
-      );
-    }
-
-    tl.call(triggerHero, undefined, 2.58);
+    tl.call(triggerHero, undefined, 1.7);
 
     tl.to(
       root,
-      { yPercent: -100, duration: 0.75, ease: "expo.inOut" },
-      2.52
+      {
+        yPercent: -100,
+        duration: 0.7,
+        ease: "expo.inOut",
+      },
+      1.65
     );
 
     const onKey = (e: KeyboardEvent) => {
@@ -138,49 +113,44 @@ export function IntroCurtain() {
         getLenis()?.start();
         setDone(true);
       }}
-      className="fixed inset-0 z-[120] flex flex-col items-center justify-center border-b border-border-line bg-background px-6 text-foreground select-none"
+      className="fixed inset-0 z-[120] flex flex-col justify-between bg-[#000] p-6 text-[#f4f3ef] select-none sm:p-12"
     >
-      <div ref={contentRef} className="w-full max-w-sm">
-        <div
-          ref={topRef}
-          className="invisible flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-muted"
-        >
-          <span>Arya Wiguna</span>
-          <span>Bogor · 06°35′S 106°48′E</span>
-        </div>
+      <div className="flex items-center justify-between font-mono text-xs tracking-widest uppercase text-zinc-400">
+        <span className="inline-flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[#ff5926]" />
+          Arya Wiguna — Portfolio
+        </span>
+        <span>Bogor, ID</span>
+      </div>
 
-        <div
-          ref={markRef}
-          className="invisible my-5 flex items-baseline justify-between"
-        >
-          <span className="font-mono text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            AW<span className="text-blue">.</span>
-          </span>
-          <span
-            ref={pctRef}
-            className="font-mono text-xs tabular-nums text-muted"
-          >
-            000
-          </span>
-        </div>
+      <div ref={titleRef} className="invisible my-auto max-w-3xl">
+        <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#ff5926]">
+          Full-Stack &amp; Flutter Engineer
+        </p>
+        <h2 className="mt-3 text-4xl leading-[1.05] font-bold tracking-tight sm:text-6xl md:text-7xl">
+          Engineering{" "}
+          <span className="font-editorial italic font-normal text-[#ff5926]">
+            pragmatic
+          </span>{" "}
+          digital systems.
+        </h2>
+      </div>
 
-        <div className="relative flex items-center">
-          <span className="h-2 w-px bg-border-line" />
-          <div className="relative h-px flex-1 bg-border-line">
-            <div
-              ref={ruleRef}
-              className="absolute inset-0 origin-left scale-x-0 bg-navy"
-            />
+      <div className="flex flex-col gap-4">
+        <div className="flex items-end justify-between">
+          <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
+            Loading Experience
+          </span>
+          <div className="flex items-baseline font-mono text-6xl leading-none font-bold tracking-tighter text-white sm:text-8xl">
+            <span ref={pctRef}>00</span>
+            <span className="text-2xl text-[#ff5926] sm:text-4xl">%</span>
           </div>
-          <span className="h-2 w-px bg-border-line" />
         </div>
-
-        <div
-          ref={botRef}
-          className="invisible mt-3.5 flex items-center justify-between font-mono text-[10px] tracking-wider uppercase text-muted"
-        >
-          <span>Full-Stack &amp; Mobile</span>
-          <span>S1 Informatika · BNSP</span>
+        <div className="relative h-1 w-full overflow-hidden rounded-full bg-zinc-800">
+          <div
+            ref={barRef}
+            className="absolute inset-0 origin-left scale-x-0 bg-[#ff5926]"
+          />
         </div>
       </div>
     </div>

@@ -3,52 +3,79 @@
 import { useEffect, useState } from "react";
 import { useLang } from "@/components/providers";
 
-const HEARTBEAT_MS = 12_000;
+const HEARTBEAT_MS = 15_000;
 const STORAGE_KEY = "aw_visitor_id";
+const SESSION_KEY = "aw_session_counted";
 const VISITOR_ID_RE = /^[a-zA-Z0-9_-]{8,64}$/;
 
-function getVisitorId(): string {
+export type VisitorStats = {
+  online: number;
+  total: number;
+};
+
+function getVisitorSession(): { visitorId: string; isNewSession: boolean } {
   try {
-    const existing = localStorage.getItem(STORAGE_KEY);
-    if (existing && VISITOR_ID_RE.test(existing)) return existing;
+    let visitorId = localStorage.getItem(STORAGE_KEY) || "";
+    if (!VISITOR_ID_RE.test(visitorId)) {
+      visitorId =
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+      localStorage.setItem(STORAGE_KEY, visitorId);
+    }
 
-    const fresh =
-      typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+    const counted = sessionStorage.getItem(SESSION_KEY);
+    const isNewSession = !counted;
+    if (isNewSession) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    }
 
-    localStorage.setItem(STORAGE_KEY, fresh);
-    return fresh;
+    return { visitorId, isNewSession };
   } catch {
-    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+    return {
+      visitorId: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`,
+      isNewSession: false,
+    };
   }
 }
 
-let currentCount: number | null = null;
-const listeners = new Set<(n: number | null) => void>();
+let currentStats: VisitorStats | null = null;
+const listeners = new Set<(s: VisitorStats | null) => void>();
 let timerId: ReturnType<typeof setInterval> | null = null;
 let subscriberCount = 0;
 let inFlight = false;
 
 async function pingPresence() {
-  if (inFlight || typeof document === "undefined" || document.visibilityState === "hidden") {
+  if (
+    inFlight ||
+    typeof document === "undefined" ||
+    document.visibilityState === "hidden"
+  ) {
     return;
   }
   inFlight = true;
   try {
+    const { visitorId, isNewSession } = getVisitorSession();
     const res = await fetch(`/api/presence?_ts=${Date.now()}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ visitorId: getVisitorId() }),
+      body: JSON.stringify({ visitorId, isNewSession }),
       cache: "no-store",
     });
     if (!res.ok) return;
     const data = await res.json();
     if (typeof data?.online === "number") {
-      currentCount = data.online;
-      listeners.forEach((fn) => fn(currentCount));
+      currentStats = {
+        online: Math.max(1, data.online),
+        total:
+          typeof data?.total === "number"
+            ? Math.max(data.online, data.total)
+            : Math.max(1, data.online),
+      };
+      listeners.forEach((fn) => fn(currentStats));
     }
   } catch {
+    // ignore network error
   } finally {
     inFlight = false;
   }
@@ -60,12 +87,12 @@ function onVisibilityOrFocus() {
   }
 }
 
-function subscribe(listener: (n: number | null) => void) {
+function subscribe(listener: (s: VisitorStats | null) => void) {
   listeners.add(listener);
   subscriberCount += 1;
 
-  if (currentCount !== null) {
-    listener(currentCount);
+  if (currentStats !== null) {
+    listener(currentStats);
   }
 
   if (subscriberCount === 1 && typeof window !== "undefined") {
@@ -92,26 +119,31 @@ function subscribe(listener: (n: number | null) => void) {
   };
 }
 
+export function useVisitorPresence(): VisitorStats | null {
+  const [stats, setStats] = useState<VisitorStats | null>(currentStats);
+
+  useEffect(() => subscribe(setStats), []);
+
+  return stats;
+}
+
 export function OnlineVisitors({
   variant = "hero",
 }: {
   variant?: "hero" | "footer";
 }) {
   const { lang } = useLang();
-  const [online, setOnline] = useState<number | null>(currentCount);
+  const stats = useVisitorPresence();
 
-  useEffect(() => subscribe(setOnline), []);
-
-  if (online === null || online <= 0) return null;
+  if (!stats || stats.online <= 0) return null;
 
   const isId = lang === "id";
-  const count = String(online).padStart(2, "0");
-  const label = isId ? "Pengunjung aktif" : "Viewing now";
+  const count = String(stats.online).padStart(2, "0");
+  const totalCount = String(stats.total).padStart(2, "0");
+  const label = isId ? "Pengunjung" : "Visitors";
   const tooltip = isId
-    ? `${online} pengunjung sedang mengakses halaman ini`
-    : online === 1
-      ? "1 visitor currently viewing this site"
-      : `${online} visitors currently viewing this site`;
+    ? `${stats.online} pengunjung aktif saat ini · ${stats.total} total kunjungan`
+    : `${stats.online} active now · ${stats.total} total visits`;
 
   if (variant === "footer") {
     return (
@@ -121,10 +153,13 @@ export function OnlineVisitors({
         title={tooltip}
         className="inline-flex items-center gap-2 font-mono text-xs tabular-nums text-muted"
       >
-        <span aria-hidden="true" className="h-[5px] w-[5px] bg-blue" />
         <span>{label}</span>
-        <span aria-hidden="true" className="text-muted/50">/</span>
-        <span className="font-semibold text-foreground">{count}</span>
+        <span aria-hidden="true" className="text-muted/50">
+          ·
+        </span>
+        <span className="font-semibold text-foreground">
+          {count} {isId ? "aktif" : "live"} / {totalCount} {isId ? "kunjungan" : "visits"}
+        </span>
       </span>
     );
   }
@@ -136,15 +171,13 @@ export function OnlineVisitors({
       title={tooltip}
       className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase tabular-nums text-muted"
     >
-      <span
-        aria-hidden="true"
-        className="hidden h-3 w-px bg-border-line sm:mr-1 sm:inline-block"
-      />
-      <span aria-hidden="true" className="h-[5px] w-[5px] bg-blue" />
       <span>{label}</span>
-      <span aria-hidden="true" className="text-muted/50">/</span>
-      <span className="font-semibold text-navy">{count}</span>
+      <span aria-hidden="true" className="text-muted/50">
+        /
+      </span>
+      <span className="font-semibold text-navy">
+        {count} {isId ? "AKTIF" : "LIVE"} · {totalCount} {isId ? "TOTAL" : "VISITS"}
+      </span>
     </span>
   );
 }
-

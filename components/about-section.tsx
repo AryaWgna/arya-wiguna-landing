@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useLang } from "@/components/providers";
 import { GsapReveal } from "@/components/gsap-reveal";
+import { SectionHeading } from "@/components/section-heading";
+import { HeroBlueprint } from "@/components/hero-blueprint";
 import { profile } from "@/lib/data/profile";
 
 const bios = {
@@ -52,18 +53,40 @@ const bios = {
   ],
 };
 
-const stats = {
+const pillars = {
   en: [
-    { value: "S1", label: "Informatika (UNBIN)" },
-    { value: "3.77", label: "Cumulative GPA" },
-    { value: "BNSP", label: "Junior Coder Cert" },
-    { value: "71", label: "SIMARU Commits" },
+    {
+      num: "01",
+      title: "Field-Ready Flutter Apps",
+      desc: "Camera QR scanning, encrypted Android Keystore/Keychain sessions, and real-time FCM push sync built for hospital staff.",
+    },
+    {
+      num: "02",
+      title: "Containerized Web Backends",
+      desc: "Multi-container topologies orchestrated with Docker Compose, Nginx TLS reverse-proxy routing, Laravel Sanctum, and MySQL 8.",
+    },
+    {
+      num: "03",
+      title: "Low-Latency Edge & Bun Services",
+      desc: "In-memory Map indexing (15k+ items) with Elysia.js and custom Bun HTTP proxy streams exposed safely via Cloudflare Tunnels.",
+    },
   ],
   id: [
-    { value: "S1", label: "Informatika (UNBIN)" },
-    { value: "3,77", label: "IPK Kelulusan" },
-    { value: "BNSP", label: "Pemrogram Junior" },
-    { value: "71", label: "Commit SIMARU" },
+    {
+      num: "01",
+      title: "Aplikasi Mobile Flutter Lapangan",
+      desc: "Pemindaian QR kamera, penyimpanan sesi terenkripsi Keystore/Keychain, dan sinkronisasi push notifikasi FCM untuk staf rumah sakit.",
+    },
+    {
+      num: "02",
+      title: "Backend Web Ter-kontainerisasi",
+      desc: "Topologi multi-kontainer dengan Docker Compose, reverse-proxy Nginx TLS, Laravel Sanctum, dan skema relasional MySQL 8.",
+    },
+    {
+      num: "03",
+      title: "Layanan Bun & In-Memory Cepat",
+      desc: "Indeks RAM 15.000+ entitas dengan Elysia.js serta proxy kustom Bun yang diekspos aman melalui Cloudflare Tunnel.",
+    },
   ],
 };
 
@@ -72,61 +95,133 @@ export function AboutSection() {
   const isId = lang === "id";
 
   return (
-    <section id="about" className="border-t border-border-line">
-      <div className="container-x py-20 md:py-28">
-        <div className="grid items-start gap-12 md:gap-14 lg:grid-cols-12 lg:gap-10">
-          <GsapReveal className="lg:col-span-4" y={14} once>
-            <p className="eyebrow mb-3">{isId ? "Tentang" : "About"}</p>
-            <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
-              {isId
-                ? "Aplikasi mobile & sistem backend dengan pendekatan pragmatis"
-                : "Mobile apps & backend systems, built pragmatically"}
-            </h2>
-          </GsapReveal>
-
-          <GsapReveal className="max-w-[260px] lg:col-span-3 lg:max-w-none" y={14} once>
-            <figure className="overflow-hidden rounded-2xl border border-border-line bg-surface/40">
-              <div className="aspect-square w-full overflow-hidden bg-surface">
-                <Image
-                  src={profile.portrait}
-                  alt={profile.name}
-                  width={460}
-                  height={460}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <figcaption className="flex items-center justify-between gap-2 border-t border-border-line bg-background px-3.5 py-2.5 font-mono text-[11px] text-muted">
-                <span className="font-medium text-foreground">Bogor, ID</span>
-                <span className="text-blue">
-                  {isId ? "Terbuka bekerja" : "Open to roles"}
+    <section id="about" className="py-16 md:py-24">
+      <div className="container-x">
+        <SectionHeading
+          index="02"
+          eyebrow={isId ? "Profil & Pendekatan" : "About & Philosophy"}
+          meta="BOGOR, ID · S1 INFORMATIKA"
+          title={
+            isId ? (
+              <>
+                Rekayasa perangkat lunak yang{" "}
+                <span className="font-editorial font-normal italic text-navy">
+                  pragmatis &amp; terukur.
                 </span>
-              </figcaption>
-            </figure>
-          </GsapReveal>
+              </>
+            ) : (
+              <>
+                Software engineering grounded in{" "}
+                <span className="font-editorial font-normal italic text-navy">
+                  real system boundaries.
+                </span>
+              </>
+            )
+          }
+        />
 
-          <GsapReveal className="flex flex-col gap-5 lg:col-span-5" stagger={0.08} y={14}>
-            {bios[lang].map((p, i) => (
-              <p key={i} data-reveal-item className="leading-relaxed text-muted">
-                {p}
-              </p>
-            ))}
+        <div className="grid gap-5 lg:grid-cols-12">
+          {/* Narrative Bento Card (7 cols) */}
+          <GsapReveal
+            className="bento-card flex flex-col justify-between p-6 sm:p-9 lg:col-span-7"
+            stagger={0.08}
+            y={16}
+          >
+            <div className="space-y-5">
+              <span className="eyebrow">
+                <span className="h-1.5 w-1.5 rounded-full bg-navy" />
+                {isId ? "Cerita Singkat" : "Engineering Story"}
+              </span>
 
-            <dl
-              data-reveal-item
-              className="mt-4 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border-line pt-6 sm:grid-cols-4 lg:grid-cols-2"
-            >
-              {stats[lang].map((s) => (
-                <div key={s.label} className="border-l-2 border-blue/70 pl-3.5">
-                  <dd className="font-mono text-2xl font-semibold leading-none text-foreground sm:text-3xl">
-                    {s.value}
-                  </dd>
-                  <dt className="mt-2 font-mono text-[11px] uppercase tracking-wide text-muted">
-                    {s.label}
-                  </dt>
-                </div>
+              {bios[lang].map((p, i) => (
+                <p
+                  key={i}
+                  data-reveal-item
+                  className="text-base leading-[1.75] text-muted sm:text-[17px]"
+                >
+                  {p}
+                </p>
               ))}
-            </dl>
+            </div>
+
+            <div
+              data-reveal-item
+              className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border-line bg-surface/65 p-5"
+            >
+              <div>
+                <div className="font-mono text-xs font-bold uppercase text-foreground">
+                  Universitas Binaniaga Indonesia
+                </div>
+                <div className="mt-0.5 text-xs text-muted">
+                  {isId
+                    ? "Sarjana Komputer (S.Kom) — Teknik Informatika"
+                    : "Bachelor of Computer Science (S1 Informatika)"}
+                </div>
+              </div>
+              <span className="rounded-full bg-navy px-3.5 py-1 font-mono text-xs font-bold text-background">
+                GPA 3.77 / 4.00
+              </span>
+            </div>
+
+            <div
+              data-reveal-item
+              className="mt-5 flex flex-wrap items-center gap-3"
+            >
+              <a
+                href={profile.cv.creative}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+              >
+                {isId ? "Unduh CV Creative (PDF)" : "Download Creative CV (PDF)"} ↗
+              </a>
+              <a
+                href={profile.cv.ats}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+              >
+                {isId ? "Unduh CV ATS (PDF)" : "Download ATS CV (PDF)"} ↗
+              </a>
+            </div>
           </GsapReveal>
+
+          {/* 3 Engineering Pillars Stack (5 cols) */}
+          <GsapReveal
+            className="flex flex-col gap-4 lg:col-span-5"
+            stagger={0.08}
+            y={16}
+          >
+            {pillars[lang].map((item) => (
+              <div
+                key={item.num}
+                data-reveal-item
+                className="bento-card flex flex-1 flex-col justify-between p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full border border-border-line bg-surface px-3 py-0.5 font-mono text-xs font-bold text-navy">
+                    {item.num}
+                  </span>
+                  <span className="font-editorial text-2xl italic text-muted/40">
+                    Pillar
+                  </span>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-lg font-bold tracking-tight text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </GsapReveal>
+        </div>
+
+        {/* Interactive System Architecture Blueprint Console */}
+        <div className="mt-6">
+          <HeroBlueprint />
         </div>
       </div>
     </section>

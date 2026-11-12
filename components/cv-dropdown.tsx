@@ -162,24 +162,24 @@ export function CvDropdown() {
                       width: 344,
                     }
               }
-              className="fixed z-[95] overflow-y-auto rounded-xl border border-border-line bg-background p-3 shadow-2xl"
+              className="fixed z-[95] overflow-y-auto rounded-3xl border border-border-line bg-surface/95 p-3.5 shadow-2xl backdrop-blur-xl"
             >
               <div className="mb-2.5 flex items-center justify-between border-b border-border-line px-1 pb-2">
-                <span className="font-mono text-[10px] font-semibold tracking-wider uppercase text-muted">
+                <span className="font-mono text-[10px] font-bold tracking-wider uppercase text-muted">
                   {isId ? "Pilih Format & Bahasa" : "Select Format & Language"}
                 </span>
-                <span className="font-mono text-[10px] text-muted">PDF</span>
+                <span className="font-mono text-[10px] font-bold text-navy">PDF</span>
               </div>
 
               <div className="flex flex-col gap-2">
-                <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
+                <div className="rounded-2xl border border-border-line bg-background/80 p-3 transition-colors hover:border-navy/50">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <strong className="text-xs font-semibold text-foreground">
+                        <strong className="text-xs font-bold text-foreground">
                           {t("cv-ats")}
                         </strong>
-                        <span className="rounded border border-blue/30 bg-blue-soft px-1.5 py-0.5 font-mono text-[9px] font-semibold text-navy">
+                        <span className="rounded-full bg-navy/15 px-2 py-0.5 font-mono text-[9px] font-bold text-navy">
                           ATS
                         </span>
                       </div>
@@ -198,7 +198,7 @@ export function CvDropdown() {
                         rel="noopener noreferrer"
                         onClick={() => setOpen(false)}
                         title="CV ATS (Bahasa Indonesia)"
-                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                        className="rounded-full border border-border-line bg-surface px-3 py-1 font-mono text-[11px] font-bold text-foreground transition-colors hover:border-navy hover:bg-navy hover:text-white"
                       >
                         ID
                       </a>
@@ -209,7 +209,7 @@ export function CvDropdown() {
                         rel="noopener noreferrer"
                         onClick={() => setOpen(false)}
                         title="CV ATS (English)"
-                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                        className="rounded-full border border-border-line bg-surface px-3 py-1 font-mono text-[11px] font-bold text-foreground transition-colors hover:border-navy hover:bg-navy hover:text-white"
                       >
                         EN
                       </a>
@@ -217,14 +217,14 @@ export function CvDropdown() {
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-border-line bg-surface/40 p-3 transition-colors hover:border-navy/40">
+                <div className="rounded-2xl border border-border-line bg-background/80 p-3 transition-colors hover:border-navy/50">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <strong className="text-xs font-semibold text-foreground">
+                        <strong className="text-xs font-bold text-foreground">
                           {t("cv-creative")}
                         </strong>
-                        <span className="rounded border border-border-line bg-background px-1.5 py-0.5 font-mono text-[9px] font-semibold text-muted">
+                        <span className="rounded-full border border-border-line bg-surface px-2 py-0.5 font-mono text-[9px] font-bold text-muted">
                           2-Col
                         </span>
                       </div>
@@ -243,7 +243,7 @@ export function CvDropdown() {
                         rel="noopener noreferrer"
                         onClick={() => setOpen(false)}
                         title="CV Kreatif (Bahasa Indonesia)"
-                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                        className="rounded-full border border-border-line bg-surface px-3 py-1 font-mono text-[11px] font-bold text-foreground transition-colors hover:border-navy hover:bg-navy hover:text-white"
                       >
                         ID
                       </a>
@@ -254,7 +254,7 @@ export function CvDropdown() {
                         rel="noopener noreferrer"
                         onClick={() => setOpen(false)}
                         title="Creative CV (English)"
-                        className="rounded border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] font-semibold text-foreground transition-colors hover:border-navy hover:text-navy"
+                        className="rounded-full border border-border-line bg-surface px-3 py-1 font-mono text-[11px] font-bold text-foreground transition-colors hover:border-navy hover:bg-navy hover:text-white"
                       >
                         EN
                       </a>

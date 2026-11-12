@@ -7,14 +7,14 @@ export function ProjectRationaleBox({ rationale }: { rationale: RationaleItem[] 
   const { t, lang } = useLang();
 
   return (
-    <div className="rounded-xl border border-border-line bg-surface/35 p-5">
-      <div className="mb-4 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-navy">
+    <div className="rounded-2xl border border-border-line bg-surface/40 p-5">
+      <div className="mb-4 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-navy">
         <svg
-          className="h-4 w-4 text-blue"
+          className="h-4 w-4 text-navy"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.8"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
@@ -30,15 +30,15 @@ export function ProjectRationaleBox({ rationale }: { rationale: RationaleItem[] 
         {rationale.map((item) => (
           <div
             key={item.technology}
-            className="flex flex-col gap-1.5 rounded-lg border border-border-line bg-background p-4"
+            className="flex flex-col gap-1.5 rounded-2xl border border-border-line bg-background p-4"
           >
-            <span className="font-mono text-xs font-bold text-foreground">{item.technology}</span>
+            <span className="font-mono text-xs font-bold text-navy">{item.technology}</span>
             <p className="text-xs leading-relaxed text-muted">
-              <strong className="font-medium text-foreground">{t("proj-why")}</strong>{" "}
+              <strong className="font-semibold text-foreground">{t("proj-why")}</strong>{" "}
               {item.reason[lang]}
             </p>
             <p className="text-xs leading-relaxed text-muted/85">
-              <strong className="font-medium text-foreground/85">{t("proj-tradeoff")}</strong>{" "}
+              <strong className="font-semibold text-foreground/85">{t("proj-tradeoff")}</strong>{" "}
               {item.tradeoff[lang]}
             </p>
           </div>

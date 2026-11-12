@@ -1,55 +1,56 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang } from "@/components/providers";
-import { OnlineVisitors } from "@/components/online-visitors";
 import { profile } from "@/lib/data/profile";
 
 export function Footer() {
   const { lang } = useLang();
-  const year = new Date().getFullYear();
+  const pathname = usePathname();
+  const isId = lang === "id";
+
+  if (pathname === "/") return null;
 
   return (
-    <footer className="border-t border-border-line">
-      <div className="container-x py-12">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <Link href="/" className="font-mono text-xl font-bold tracking-tight text-foreground">
-              AW<span className="text-blue">.</span>
-            </Link>
-            <p className="mt-2 text-sm text-muted">{profile.role[lang]}</p>
+    <footer className="pb-12 pt-8">
+      <div className="container-x">
+        <aside className="p-cta">
+          <div className="p-cta-txt">
+            <p className="p-cta-k">
+              {isId ? "Punya proyek atau posisi yang cocok?" : "Have something in mind?"}
+            </p>
+            <h3 className="p-cta-t">
+              {isId
+                ? "Mari bangun sistem berikutnya bersama."
+                : "Let’s make the next system yours."}
+            </h3>
           </div>
-
-          <div className="flex flex-wrap items-center gap-5 font-mono text-xs text-muted">
+          <div className="p-cta-row">
+            <Link className="p-cta-btn" href="/?open=contact">
+              {isId ? "Mulai diskusi" : "Start a project"}
+            </Link>
+            <Link className="p-cta-alt" href="/">
+              {isId ? "Kembali ke 3D Cosmos" : "Back to 3D Cosmos"}
+            </Link>
             <a
+              className="p-cta-alt"
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-foreground"
             >
-              GitHub ↗
+              GitHub
             </a>
             <a
+              className="p-cta-alt"
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-foreground"
             >
-              LinkedIn ↗
-            </a>
-            <a
-              href={`mailto:${profile.email}`}
-              className="transition-colors hover:text-foreground"
-            >
-              {profile.email}
+              LinkedIn
             </a>
           </div>
-        </div>
-
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border-line/70 pt-6 font-mono text-xs text-muted">
-          <span>© {year} {profile.name} · Next.js 15 &amp; TypeScript</span>
-          <OnlineVisitors variant="footer" />
-        </div>
+        </aside>
       </div>
     </footer>
   );

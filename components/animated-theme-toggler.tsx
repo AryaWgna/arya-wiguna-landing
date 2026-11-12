@@ -113,7 +113,7 @@ export function AnimatedThemeToggler({
       type="button"
       onClick={handleToggle}
       aria-label={label}
-      className={`relative inline-flex items-center justify-center rounded border border-border-line p-2 text-muted transition-colors hover:border-navy hover:text-foreground ${className}`}
+      className={`relative inline-flex items-center justify-center border border-border-line p-2 text-muted transition-colors hover:border-foreground hover:text-foreground ${className}`}
     >
       <svg
         width="16"

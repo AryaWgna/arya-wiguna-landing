@@ -9,6 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "tsc --noEmit && vitest run && next build",
     "check:assets": "node scripts/check-cert-assets.mjs"
   },
   "dependencies": {
@@ -21,12 +24,16 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.0",
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^6.3.0",
     "eslint": "^9.29.0",
     "eslint-config-next": "^15.4.0",
+    "jsdom": "^29.1.1",
     "tailwindcss": "^4.1.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.12"
   }
 }

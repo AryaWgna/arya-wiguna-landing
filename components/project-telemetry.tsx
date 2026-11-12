@@ -16,23 +16,19 @@ export function ProjectTelemetry({
 
   return (
     <dl
-      className={`grid grid-cols-1 gap-2.5 border-y border-border-line py-3.5 sm:grid-cols-3 sm:gap-3 ${className}`}
+      className={`grid grid-cols-1 gap-2.5 sm:grid-cols-3 ${className}`}
     >
-      {metrics.map((item, idx) => (
+      {metrics.map((item) => (
         <div
           key={item.id}
-          className={
-            idx > 0
-              ? "border-t border-border-line/70 pt-2.5 sm:border-t-0 sm:border-l sm:border-border-line sm:pt-0 sm:pl-3"
-              : ""
-          }
+          className="rounded-2xl border border-border-line bg-surface/65 p-3.5 transition-colors hover:border-navy/40"
         >
-          <div className="flex items-baseline justify-between gap-2 sm:block">
-            <dt className="font-mono text-[11px] text-muted">{item.label[lang]}</dt>
-            <dd className="font-mono text-sm font-semibold tracking-tight text-foreground sm:mt-0.5 sm:text-base">
-              {item.value}
-            </dd>
-          </div>
+          <dt className="font-mono text-[10px] font-semibold uppercase tracking-wider text-muted">
+            {item.label[lang]}
+          </dt>
+          <dd className="mt-1 font-mono text-base font-extrabold tracking-tight text-foreground sm:text-lg">
+            {item.value}
+          </dd>
           <p className="mt-0.5 line-clamp-1 text-[11px] text-muted/85">
             {item.detail[lang]}
           </p>

@@ -7,6 +7,8 @@ import { expertiseGroups } from "@/lib/data/expertise";
 import { TechIcon } from "@/components/tech-icon";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 
+const allTechItems = expertiseGroups.flatMap((g) => g.items);
+
 export function ExpertiseSection() {
   const { t, lang } = useLang();
   const isId = lang === "id";
@@ -20,13 +22,13 @@ export function ExpertiseSection() {
       const cards = grid.querySelectorAll<HTMLElement>("[data-skill-group]");
       gsap.fromTo(
         cards,
-        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 0, y: 18 },
         {
           autoAlpha: 1,
           y: 0,
           duration: 0.55,
           stagger: 0.07,
-          ease: "power2.out",
+          ease: "power3.out",
           scrollTrigger: {
             trigger: grid,
             start: "top 84%",
@@ -40,52 +42,95 @@ export function ExpertiseSection() {
   }, []);
 
   return (
-    <section id="skills" className="border-t border-border-line">
-      <div className="container-x py-24 md:py-32">
+    <section id="skills" className="py-16 md:py-24">
+      <div className="container-x">
         <SectionHeading
-          eyebrow={isId ? "Stack Teknis" : "Technical Stack"}
-          title={
+          index="03"
+          eyebrow={isId ? "Arsenal Teknis" : "Technical Arsenal"}
+          meta={
             isId
-              ? "Perangkat kerja di proyek nyata"
-              : "Tools used across shipped projects"
+              ? `${allTechItems.length} Teknologi Teruji`
+              : `${allTechItems.length} Verified Technologies`
+          }
+          title={
+            isId ? (
+              <>
+                Perangkat kerja di balik{" "}
+                <span className="font-editorial font-normal italic text-navy">
+                  setiap repositori.
+                </span>
+              </>
+            ) : (
+              <>
+                Production stack powering{" "}
+                <span className="font-editorial font-normal italic text-navy">
+                  shipped repositories.
+                </span>
+              </>
+            )
+          }
+          intro={
+            isId
+              ? "Seluruh bahasa, framework, dan infrastruktur di bawah ini dipakai langsung di dalam kode proyek dan didukung sertifikasi teknis."
+              : "Every language, framework, and infrastructure tool listed below is backed directly by shipped project repositories and verified credentials."
           }
         />
 
+        {/* Infinite Tech Marquee Ribbon */}
+        <div className="bento-card mb-6 overflow-hidden py-4">
+          <div className="animate-marquee flex items-center gap-3 px-3">
+            {[...allTechItems, ...allTechItems].map((item, idx) => (
+              <span
+                key={`${item}-${idx}`}
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border-line bg-surface px-4 py-1.5 font-mono text-xs font-semibold text-foreground"
+              >
+                <TechIcon name={item} />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* 6-Card Bento Grid */}
         <div
           ref={gridRef}
-          className="grid gap-px overflow-hidden rounded-2xl border border-border-line bg-border-line sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
         >
-          {expertiseGroups.map((group) => (
-            <div key={group.key} data-skill-group className="bg-background p-7">
-              <div className="flex items-baseline justify-between">
-                <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-navy">
+          {expertiseGroups.map((group, idx) => (
+            <div
+              key={group.key}
+              data-skill-group
+              className="bento-card flex flex-col justify-between p-6 sm:p-7"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full bg-navy/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-navy">
+                    0{idx + 1}
+                  </span>
+                  <span className="font-mono text-xs text-muted">
+                    {group.items.length} {isId ? "item" : "tools"}
+                  </span>
+                </div>
+
+                <h3 className="mt-4 text-lg font-bold tracking-tight text-foreground">
                   {t(group.key)}
                 </h3>
-                <span className="font-mono text-xs text-muted">
-                  {String(group.items.length).padStart(2, "0")}
-                </span>
-              </div>
 
-              <div className="mt-5 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-1.5 rounded-md border border-border-line px-3 py-1 text-[13px] text-foreground/85 transition-colors hover:border-navy/50 hover:text-navy"
-                  >
-                    <TechIcon name={item} />
-                    {item}
-                  </span>
-                ))}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border-line bg-surface/75 px-3 py-1.5 text-xs font-medium text-foreground/90 transition-colors hover:border-navy hover:text-navy"
+                    >
+                      <TechIcon name={item} />
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
-
-        <p className="mt-6 max-w-2xl text-sm text-muted" lang={lang}>
-          {isId
-            ? "Mencantumkan bahasa, framework, dan infrastruktur yang benar-benar dipakai pada repositori proyek serta sertifikasi teknis terverifikasi."
-            : "Lists languages, frameworks, and infrastructure directly backed by project repositories and verified technical credentials."}
-        </p>
       </div>
     </section>
   );

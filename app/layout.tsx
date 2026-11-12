@@ -1,34 +1,43 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Inter_Tight,
+  JetBrains_Mono,
+  Instrument_Serif,
+} from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { CustomCursor } from "@/components/custom-cursor";
-import { IntroCurtain } from "@/components/intro-curtain";
 
-const geistSans = Geist({
+const interTight = Inter_Tight({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
 const SITE_URL = "https://arya-wiguna.my.id";
 
-const BOOTSTRAP_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("theme");var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);d.dataset.theme=dark?"dark":"light";d.classList.toggle("dark",dark);}catch(e){}})();`;
-
 export const metadata: Metadata = {
   title: {
-    default: "Arya Wiguna — Full Stack Developer",
+    default: "Arya Wiguna, Full-Stack & Flutter Engineer",
     template: "%s | Arya Wiguna",
   },
   description:
-    "Arya Wiguna — Computer science graduate (S1 Informatika) & software engineer based in Bogor. Building field-ready Flutter mobile applications and containerized Next.js & Laravel systems.",
+    "Arya Wiguna, full-stack web and Flutter mobile engineer based in Bogor, Indonesia. Production hospital asset systems, containerized airport displays, and high-throughput APIs. Scroll to fly through the work.",
   keywords: [
     "Arya Wiguna",
     "portfolio",
@@ -54,32 +63,34 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     url: SITE_URL,
     siteName: "Arya Wiguna",
-    title: "Arya Wiguna — Full Stack Developer",
+    title: "Arya Wiguna, Full-Stack & Flutter Engineer",
     description:
-      "Computer science graduate (S1 Informatika) & software engineer based in Bogor. Building field-ready Flutter mobile applications and containerized Next.js & Laravel systems.",
+      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 21 verified engineering credentials. Scroll to fly through the work.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arya Wiguna — Full Stack Developer",
+    title: "Arya Wiguna, Full-Stack & Flutter Engineer",
     description:
-      "Computer science graduate (S1 Informatika) & software engineer based in Bogor. Building field-ready Flutter mobile applications and containerized Next.js & Laravel systems.",
+      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 21 verified engineering credentials. Scroll to fly through the work.",
   },
   robots: {
     index: true,
     follow: true,
   },
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      { url: "/aw-favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/aw-favicon.svg",
+    apple: "/aw-favicon.svg",
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F5F4EF" },
-    { media: "(prefers-color-scheme: dark)", color: "#10161C" },
-  ],
+  viewportFit: "cover",
+  themeColor: "var(--bg)",
 };
 
 export default function RootLayout({
@@ -88,19 +99,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="dark"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${interTight.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} dark`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: BOOTSTRAP_SCRIPT }} />
-        <noscript>
-          <style>{`#intro-curtain{display:none!important}`}</style>
-        </noscript>
-      </head>
-      <body>
-        <IntroCurtain />
-        <div id="scroll-progress" aria-hidden="true" />
-        <CustomCursor />
+      <body suppressHydrationWarning>
+        {/* Warm the cache for the avatar before the boot sequence requests it */}
+        <link rel="preload" as="image" href="/assets/avatar.jpg" />
         <Providers>
           <SmoothScroll />
           <Header />

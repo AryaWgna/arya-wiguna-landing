@@ -1,10 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { initLenis, destroyLenis, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 
 export function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    if (pathname === "/") {
+      destroyLenis();
+      return;
+    }
     if (isReducedMotion()) return;
 
     const lenis = initLenis();
@@ -12,23 +19,11 @@ export function SmoothScroll() {
 
     const initialRefresh = window.setTimeout(() => ScrollTrigger.refresh(), 300);
 
-    const bar = document.getElementById("scroll-progress");
-    if (bar) {
-      ScrollTrigger.create({
-        trigger: document.documentElement,
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (self) => {
-          bar.style.transform = `scaleX(${self.progress})`;
-        },
-      });
-    }
-
     return () => {
       window.clearTimeout(initialRefresh);
       destroyLenis();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

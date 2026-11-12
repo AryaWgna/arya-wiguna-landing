@@ -45,8 +45,13 @@ const LangContext = createContext<{
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
-  const [lang, setLangState] = useState<Locale>(getInitialLang);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [lang, setLangState] = useState<Locale>("en");
+
+  useEffect(() => {
+    setTheme(getInitialTheme());
+    setLangState(getInitialLang());
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");

@@ -79,10 +79,14 @@ export function ArchitectureFlow({
   };
 
   return (
-    <div className={`rounded-xl border border-border-line bg-surface/35 p-4 sm:p-5 md:p-6 ${className}`}>
+    <div className={`bento-card p-5 sm:p-7 ${className}`}>
       <div className="flex flex-col gap-3 border-b border-border-line pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h4 className="text-base font-semibold tracking-tight text-foreground">
+          <span className="eyebrow">
+            <span className="h-1.5 w-1.5 rounded-full bg-navy" />
+            {isId ? "Alur Arsitektur Sistem" : "System Architecture Flow"}
+          </span>
+          <h4 className="mt-1 text-lg font-bold tracking-tight text-foreground">
             {flow.title[lang]}
           </h4>
           <p className="mt-1 text-xs leading-relaxed text-muted">
@@ -94,10 +98,10 @@ export function ArchitectureFlow({
           <button
             type="button"
             onClick={() => setIsPlaying((v) => !v)}
-            className={`rounded-md border px-2.5 py-1 font-mono text-[11px] transition-colors ${
+            className={`rounded-full border px-3.5 py-1.5 font-mono text-[11px] font-bold transition-colors ${
               isPlaying
-                ? "border-navy bg-navy text-background"
-                : "border-border-line bg-background text-muted hover:border-navy hover:text-foreground"
+                ? "border-navy bg-navy text-white"
+                : "border-border-line bg-surface text-muted hover:border-foreground hover:text-foreground"
             }`}
           >
             {isPlaying
@@ -108,74 +112,63 @@ export function ArchitectureFlow({
                 ? "Putar Otomatis"
                 : "Auto-step"}
           </button>
-          <span className="rounded-md border border-border-line bg-background px-2.5 py-1 font-mono text-[11px] text-muted">
+          <span className="rounded-full border border-border-line bg-surface px-3 py-1.5 font-mono text-[11px] text-muted">
             {flow.steps.length} {isId ? "tahap" : "stages"}
           </span>
         </div>
       </div>
 
       <div className="mt-5">
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-          {flow.steps.map((item, idx) => {
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {flow.steps.map((item) => {
             const isCurrent = item.step === activeStep;
-            const isLast = idx === flow.steps.length - 1;
 
             return (
-              <div key={item.step} className="relative flex min-w-0 items-stretch">
-                <button
-                  type="button"
-                  onClick={() => handleSelect(item.step)}
-                  className={`flex min-w-0 w-full flex-col justify-between rounded-lg border p-3 sm:p-3.5 text-left transition-colors ${
-                    isCurrent
-                      ? "border-navy bg-navy text-background shadow-sm"
-                      : "border-border-line bg-background text-foreground hover:border-navy/50"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span
-                      className={`font-mono text-[11px] font-semibold ${
-                        isCurrent ? "text-background/80" : "text-blue"
-                      }`}
-                    >
-                      0{item.step}
-                    </span>
-                    <span className={isCurrent ? "text-background/85" : "text-muted"}>
-                      {getNodeIcon(item.node)}
-                    </span>
-                  </div>
-
-                  <div className="mt-2.5 sm:mt-3">
-                    <div className="truncate font-mono text-xs font-semibold">
-                      {item.node}
-                    </div>
-                    <div
-                      className={`mt-0.5 truncate text-[11px] ${
-                        isCurrent ? "text-background/75" : "text-muted"
-                      }`}
-                    >
-                      {item.role[lang]}
-                    </div>
-                  </div>
-                </button>
-
-                {!isLast ? (
+              <button
+                key={item.step}
+                type="button"
+                onClick={() => handleSelect(item.step)}
+                className={`flex min-w-0 w-full flex-col justify-between rounded-2xl border p-4 text-left transition-all ${
+                  isCurrent
+                    ? "border-navy bg-navy text-white shadow-lg"
+                    : "border-border-line bg-surface/65 text-foreground hover:border-navy/50"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
                   <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -right-2.5 top-1/2 z-10 hidden -translate-y-1/2 font-mono text-xs text-muted sm:block"
+                    className={`font-mono text-xs font-bold ${
+                      isCurrent ? "text-white/90" : "text-navy"
+                    }`}
                   >
-                    →
+                    0{item.step}
                   </span>
-                ) : null}
-              </div>
+                  <span className={isCurrent ? "text-white/90" : "text-muted"}>
+                    {getNodeIcon(item.node)}
+                  </span>
+                </div>
+
+                <div className="mt-3">
+                  <div className="truncate font-mono text-xs font-bold">
+                    {item.node}
+                  </div>
+                  <div
+                    className={`mt-0.5 truncate text-[11px] ${
+                      isCurrent ? "text-white/80" : "text-muted"
+                    }`}
+                  >
+                    {item.role[lang]}
+                  </div>
+                </div>
+              </button>
             );
           })}
         </div>
       </div>
 
-      <div className="mt-4 rounded-lg border border-border-line bg-background p-4 sm:p-5">
+      <div className="mt-4 rounded-2xl border border-border-line bg-surface/50 p-4 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-line pb-3">
           <div className="flex flex-wrap items-baseline gap-2">
-            <span className="font-mono text-xs font-semibold text-blue">
+            <span className="rounded-md bg-navy/15 px-2 py-0.5 font-mono text-xs font-bold text-navy">
               0{selectedStep.step}
             </span>
             <h5 className="font-mono text-sm font-bold text-foreground">
@@ -184,7 +177,7 @@ export function ArchitectureFlow({
             <span className="text-xs text-muted">· {selectedStep.role[lang]}</span>
           </div>
 
-          <span className="rounded border border-border-line bg-surface/70 px-2 py-0.5 font-mono text-[11px] text-muted">
+          <span className="rounded-full border border-border-line bg-background px-3 py-0.5 font-mono text-[11px] text-muted">
             {selectedStep.protocol}
           </span>
         </div>
@@ -194,21 +187,21 @@ export function ArchitectureFlow({
         </p>
 
         {selectedStep.payloadExample ? (
-          <div className="mt-4 overflow-hidden rounded-lg border border-border-line bg-surface/60">
-            <div className="flex items-center justify-between border-b border-border-line bg-surface px-3 py-1.5 font-mono text-[11px] text-muted">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border-line bg-background">
+            <div className="flex items-center justify-between border-b border-border-line bg-surface px-4 py-2 font-mono text-[11px] text-muted">
               <span className="truncate">
                 {selectedStep.codeLabel ?? (isId ? "Potongan konfigurasi / route" : "Route / config reference")}
               </span>
               <button
                 type="button"
                 onClick={handleCopyPayload}
-                className="shrink-0 font-mono text-[11px] text-blue transition-colors hover:text-navy"
+                className="shrink-0 font-mono text-[11px] font-bold text-navy transition-colors hover:underline"
               >
                 {copied ? (isId ? "Tersalin ✓" : "Copied ✓") : isId ? "Salin" : "Copy"}
               </button>
             </div>
 
-            <pre className="overflow-x-auto p-3.5 font-mono text-xs leading-relaxed text-foreground">
+            <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-foreground">
               <code>{selectedStep.payloadExample}</code>
             </pre>
           </div>
@@ -219,7 +212,7 @@ export function ArchitectureFlow({
             type="button"
             disabled={activeStep <= 1}
             onClick={() => handleSelect(activeStep - 1)}
-            className="rounded px-2 py-1 transition-colors hover:text-foreground disabled:opacity-35"
+            className="rounded-full px-3 py-1 transition-colors hover:text-foreground disabled:opacity-35"
           >
             ← {isId ? "Sebelumnya" : "Previous"}
           </button>
@@ -230,7 +223,7 @@ export function ArchitectureFlow({
             type="button"
             disabled={activeStep >= flow.steps.length}
             onClick={() => handleSelect(activeStep + 1)}
-            className="rounded px-2 py-1 font-semibold text-blue transition-colors hover:text-navy disabled:opacity-35"
+            className="rounded-full px-3 py-1 font-bold text-navy transition-colors hover:underline disabled:opacity-35"
           >
             {isId ? "Berikutnya" : "Next"} →
           </button>

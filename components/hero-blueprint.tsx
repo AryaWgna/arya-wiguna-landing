@@ -293,54 +293,56 @@ export function HeroBlueprint() {
   };
 
   return (
-    <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-border-line bg-background shadow-sm">
-      <div className="flex items-center justify-between gap-2 border-b border-border-line bg-surface/45 px-3.5 py-2.5 sm:px-4">
-        <span className="truncate font-mono text-[10px] font-semibold tracking-[0.12em] uppercase text-muted">
-          {isId ? "Skema Arsitektur Proyek" : "Project Architecture Index"}
-        </span>
-        <span className="shrink-0 font-mono text-[10px] text-muted">
-          {sys.code} / 0{SYSTEMS.length}
-        </span>
+    <div className="bento-card flex h-full w-full min-w-0 flex-col justify-between overflow-hidden p-5 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-navy" />
+          <span className="font-mono text-xs font-bold tracking-wider uppercase text-foreground">
+            {isId ? "Konsol Arsitektur Interaktif" : "Interactive System Blueprint"}
+          </span>
+        </div>
+
+        <div
+          role="tablist"
+          aria-label={isId ? "Pilih skema sistem" : "Select system schematic"}
+          className="inline-flex rounded-full border border-border-line bg-surface p-1"
+        >
+          {SYSTEMS.map((item, idx) => {
+            const active = idx === sysIdx;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setSysIdx(idx)}
+                className={`rounded-full px-3 py-1 font-mono text-[11px] font-semibold transition-all ${
+                  active
+                    ? "bg-navy text-background shadow-sm"
+                    : "text-muted hover:text-foreground"
+                }`}
+              >
+                {item.tab}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div
-        role="tablist"
-        aria-label={isId ? "Pilih skema sistem" : "Select system schematic"}
-        className="grid grid-cols-3 border-b border-border-line bg-surface/20"
-      >
-        {SYSTEMS.map((item, idx) => {
-          const active = idx === sysIdx;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setSysIdx(idx)}
-              className={`truncate border-b-2 px-2 py-2.5 text-center font-mono text-[10px] transition-colors sm:px-3.5 sm:text-left sm:text-[11px] ${
-                active
-                  ? "border-navy bg-background font-semibold text-foreground"
-                  : "border-transparent text-muted hover:bg-background/60 hover:text-foreground"
-              }`}
-            >
-              <span className={active ? "text-blue" : "text-muted/80"}>{item.code}</span>{" "}
-              <span>{item.tab}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="px-3.5 pt-3 pb-1 sm:px-4">
-        <p className="truncate font-mono text-[11px] text-muted">{sys.context[lang]}</p>
-      </div>
-
-      <div
-        className="relative mx-2 my-2 overflow-hidden rounded-xl border border-border-line/80 bg-surface/35 px-1 py-2 sm:mx-3 sm:px-1.5"
+        className="relative my-4 overflow-hidden rounded-2xl border border-border-line bg-surface/50 px-2 py-3 sm:px-4"
         style={{
           backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)",
-          backgroundSize: "14px 14px",
+          backgroundSize: "16px 16px",
         }}
       >
+        <div className="mb-2 flex items-center justify-between px-1 font-mono text-[11px] text-muted">
+          <span>{sys.context[lang]}</span>
+          <span className="text-navy">
+            {isId ? "Klik node untuk inspeksi" : "Hover / click node"}
+          </span>
+        </div>
+
         <svg
           viewBox="0 0 396 216"
           className="h-auto w-full select-none"
@@ -354,8 +356,8 @@ export function HeroBlueprint() {
                 <path
                   d={edge.d}
                   fill="none"
-                  stroke={highlighted ? "var(--blue)" : "var(--border)"}
-                  strokeWidth={highlighted ? 1.8 : 1.25}
+                  stroke={highlighted ? "var(--navy)" : "var(--border)"}
+                  strokeWidth={highlighted ? 2 : 1.3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -363,8 +365,8 @@ export function HeroBlueprint() {
                   <path
                     d={edge.d}
                     fill="none"
-                    stroke="var(--navy)"
-                    strokeWidth={1.8}
+                    stroke="var(--foreground)"
+                    strokeWidth={2}
                     strokeDasharray="4 6"
                     strokeLinecap="round"
                     className="blueprint-flow-line"
@@ -404,33 +406,33 @@ export function HeroBlueprint() {
                 <rect
                   width={NODE_W}
                   height={NODE_H}
-                  rx={7}
+                  rx={10}
                   fill={isSelected ? "var(--navy)" : "var(--background)"}
                   stroke={
                     isSelected
                       ? "var(--navy)"
                       : isConnected
-                        ? "var(--blue)"
+                        ? "var(--navy)"
                         : "var(--border)"
                   }
-                  strokeWidth={isSelected ? 1.6 : 1.2}
+                  strokeWidth={isSelected ? 1.8 : 1.2}
                 />
                 <text
-                  x={9}
+                  x={10}
                   y={19}
-                  fill={isSelected ? "var(--background)" : "var(--foreground)"}
+                  fill={isSelected ? "#000" : "var(--foreground)"}
                   style={{
                     fontFamily: "var(--font-geist-mono), monospace",
                     fontSize: "11px",
-                    fontWeight: 600,
+                    fontWeight: 700,
                   }}
                 >
                   {node.title}
                 </text>
                 <text
-                  x={9}
+                  x={10}
                   y={34}
-                  fill={isSelected ? "var(--background)" : "var(--muted)"}
+                  fill={isSelected ? "#000" : "var(--muted)"}
                   fillOpacity={isSelected ? 0.82 : 1}
                   style={{
                     fontFamily: "var(--font-geist-mono), monospace",
@@ -445,37 +447,26 @@ export function HeroBlueprint() {
         </svg>
       </div>
 
-      <div className="border-t border-border-line bg-background px-3.5 py-3.5 sm:px-4">
-        <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-          <span className="font-mono text-xs font-semibold text-foreground">
-            {activeNode.title}
-          </span>
-          <code className="max-w-full truncate rounded border border-border-line bg-surface/60 px-2 py-0.5 font-mono text-[10px] text-blue">
-            {activeNode.refLabel}
-          </code>
-        </div>
-        <p className="mt-1.5 min-h-[2.5rem] text-xs leading-relaxed text-muted">
-          {activeNode.note[lang].trim()}
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border-line bg-surface/35 px-3.5 py-2.5 sm:px-4">
-        <div className="flex flex-wrap gap-1.5">
-          {sys.stack.map((tech) => (
-            <span
-              key={tech}
-              className="rounded border border-border-line bg-background px-2 py-0.5 font-mono text-[10px] text-muted"
-            >
-              {tech}
+      <div className="flex flex-col gap-3 rounded-2xl border border-border-line bg-surface/65 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-md bg-navy/15 px-2 py-0.5 font-mono text-xs font-bold text-navy">
+              {activeNode.title}
             </span>
-          ))}
+            <code className="truncate font-mono text-[11px] text-muted">
+              {activeNode.refLabel}
+            </code>
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-muted">
+            {activeNode.note[lang].trim()}
+          </p>
         </div>
 
         <Link
           href={`/work/${sys.slug}`}
-          className="font-mono text-xs font-semibold text-navy transition-colors hover:text-blue"
+          className="shrink-0 rounded-full border border-border-line bg-background px-4 py-2 font-mono text-xs font-bold text-foreground transition-colors hover:border-navy hover:text-navy"
         >
-          {isId ? "Studi kasus →" : "Case study →"}
+          {isId ? "Studi Kasus ↗" : "Case Study ↗"}
         </Link>
       </div>
     </div>
