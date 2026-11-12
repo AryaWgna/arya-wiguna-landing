@@ -131,14 +131,22 @@ export function useAmbientMusic() {
     if (!ctx || ctx.state === "running") return;
 
     const unlock = () => {
+      const c = ctxRef.current;
+      if (c && c.state === "suspended") void c.resume();
       attemptStart();
       window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("mousedown", unlock);
+      window.removeEventListener("touchstart", unlock);
       window.removeEventListener("keydown", unlock);
     };
     window.addEventListener("pointerdown", unlock);
+    window.addEventListener("mousedown", unlock);
+    window.addEventListener("touchstart", unlock);
     window.addEventListener("keydown", unlock);
     return () => {
       window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("mousedown", unlock);
+      window.removeEventListener("touchstart", unlock);
       window.removeEventListener("keydown", unlock);
     };
   }, [enabled, startEngine, stopEngine]);
