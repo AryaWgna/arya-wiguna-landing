@@ -46,20 +46,20 @@ export function Header() {
           aria-hidden="true"
         >
           <path
-            d="M9 58 L25 8 L32 8 L48 58"
+            d="M11 60 L25 12 L32 12 L46 60"
             stroke="#ffffff"
             strokeWidth="5.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M14 42 H43"
+            d="M16 43 H38"
             stroke="#ffffff"
             strokeWidth="4.5"
             strokeLinecap="round"
           />
           <path
-            d="M51 8 L57 58 L62 32 L67 58 L73 8"
+            d="M52 12 L58 60 L63 36 L68 60 L74 12"
             stroke="#ffffff"
             strokeWidth="5.5"
             strokeLinecap="round"
