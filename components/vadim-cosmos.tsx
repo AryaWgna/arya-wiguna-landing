@@ -1165,41 +1165,56 @@ export function VadimCosmos() {
             >
               {lang === "en" ? "ID" : "EN"}
             </button>
-            ·{" "}
-            <button
-              type="button"
-              onClick={toggleMusic}
-              aria-label={musicOn ? "Mute ambient music" : "Play ambient music"}
-              aria-pressed={musicOn}
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M11 5 6 9H2v6h4l5 4V5Z" />
-                {musicOn ? (
-                  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-                ) : (
-                  <path d="M16 9l6 6M22 9l-6 6" />
-                )}
-              </svg>
-            </button>
-            ·{" "}
-            <button
-              type="button"
-              onClick={() => setGameOpen(true)}
-              aria-label="Play demo game"
-            >
-              {isId ? "Game" : "Game"}
-            </button>
           </span>
+        </div>
+
+        <div className="topbar-actions">
+          <button
+            type="button"
+            onClick={toggleMusic}
+            title={musicOn ? "Mute music" : "Play ambient music"}
+            aria-label={musicOn ? "Mute ambient music" : "Play ambient music"}
+            aria-pressed={musicOn}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+              {musicOn ? (
+                <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+              ) : (
+                <path d="M16 9l6 6M22 9l-6 6" />
+              )}
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => setGameOpen(true)}
+            title="Play demo game"
+            aria-label="Play demo game"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9h12M6 15h12M4 7l2 10M20 7l-2 10" />
+            </svg>
+          </button>
         </div>
 
         <button

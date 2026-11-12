@@ -49,6 +49,36 @@
   padding: 0;
 }
 
+/* ---------- Topbar action icon group (music & game) ---------- */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+}
+
+.topbar-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(242, 242, 242, 0.04);
+  color: var(--ink);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.topbar-actions button:hover {
+  border-color: rgba(242, 242, 242, 0.35);
+}
+
+.topbar-actions button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
 /* ---------- Fly Game Modal ---------- */
 .game-overlay {
   position: fixed;
