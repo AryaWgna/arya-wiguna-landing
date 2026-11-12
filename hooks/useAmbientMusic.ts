@@ -19,6 +19,7 @@ export function useAmbientMusic() {
   // starts in an enabled state. The user can mute temporarily, but a refresh
   // returns to ON.
   const [enabled, setEnabled] = useState(true);
+  const [blocked, setBlocked] = useState(false);
   const ctxRef = useRef<AudioContext | null>(null);
   const masterRef = useRef<GainNode | null>(null);
   const voicesRef = useRef<OscillatorNode[]>([]);
@@ -128,12 +129,14 @@ export function useAmbientMusic() {
     attemptStart();
 
     const ctx = ctxRef.current;
+    if (ctx && ctx.state !== "running") setBlocked(true);
     if (!ctx || ctx.state === "running") return;
 
     const unlock = () => {
       const c = ctxRef.current;
       if (c && c.state === "suspended") void c.resume();
       attemptStart();
+      setBlocked(false);
       window.removeEventListener("pointerdown", unlock);
       window.removeEventListener("mousedown", unlock);
       window.removeEventListener("touchstart", unlock);
@@ -153,5 +156,13 @@ export function useAmbientMusic() {
 
   const toggle = useCallback(() => setEnabled((v) => !v), []);
 
-  return { enabled, toggle };
+  const unlockNow = useCallback(() => {
+    const c = ctxRef.current;
+    if (c && c.state === "suspended") void c.resume();
+    unlockedRef.current = true;
+    startEngine();
+    setBlocked(false);
+  }, [startEngine]);
+
+  return { enabled, blocked, toggle, unlockNow };
 }

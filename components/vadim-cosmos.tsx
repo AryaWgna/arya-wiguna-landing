@@ -93,7 +93,7 @@ export function VadimCosmos() {
 
   // Mutable simulation state accessed inside requestAnimationFrame
   const { simRef } = useCosmosSimulation();
-  const { enabled: musicOn, toggle: toggleMusic } = useAmbientMusic();
+  const { enabled: musicOn, blocked: musicBlocked, toggle: toggleMusic, unlockNow: unlockMusic } = useAmbientMusic();
   const [gameOpen, setGameOpen] = useState(false);
 
   useEffect(() => {
@@ -1410,6 +1410,11 @@ export function VadimCosmos() {
 
       {/* 7. Left Frosted Glass Box (.box) */}
       <FlyGameModal open={gameOpen} onClose={() => setGameOpen(false)} />
+      {musicOn && musicBlocked ? (
+        <button type="button" className="music-unlock-chip" onClick={unlockMusic}>
+          ♪ Nyalakan musik
+        </button>
+      ) : null}
       <VadimGlassBox
         boxRef={boxRef}
         activeView={activeView}

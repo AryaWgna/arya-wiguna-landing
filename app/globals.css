@@ -79,6 +79,22 @@
   color: var(--bg);
 }
 
+/* ---------- Music unlock chip ---------- */
+.music-unlock-chip {
+  position: fixed;
+  right: var(--pad);
+  bottom: calc(var(--pad) + 60px);
+  z-index: 60;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(10,10,11,0.85);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 /* ---------- Fly Game Modal ---------- */
 .game-overlay {
   position: fixed;
