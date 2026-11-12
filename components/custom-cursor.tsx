@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { isReducedMotion } from "@/lib/gsap";
 
 export function CustomCursor() {
   const pointerRef = useRef<HTMLDivElement>(null);
@@ -14,7 +13,9 @@ export function CustomCursor() {
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    if (isReducedMotion()) return;
+    // Custom cursor is intentionally active regardless of prefers-reduced-motion
+    // (the user explicitly asked to replace the native cursor). Fine-pointer
+    // devices only.
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     setEnabled(true);
