@@ -117,17 +117,20 @@ export function useAmbientMusic() {
       return;
     }
 
-    // Browsers require a user gesture before AudioContext can start. When the
-    // preference is restored from localStorage, the engine waits for the first
-    // interaction (click/key) and then starts automatically.
-    if (unlockedRef.current) {
-      startEngine();
-      return;
-    }
-
-    const unlock = () => {
+    // Try to start immediately. In browsers with a high "Media Engagement"
+    // index (e.g. returning visitors on Chrome) this succeeds on load. If the
+    // AudioContext stays suspended, fall back to starting on the first gesture.
+    const attemptStart = () => {
       unlockedRef.current = true;
       startEngine();
+    };
+    attemptStart();
+
+    const ctx = ctxRef.current;
+    if (!ctx || ctx.state === "running") return;
+
+    const unlock = () => {
+      attemptStart();
       window.removeEventListener("pointerdown", unlock);
       window.removeEventListener("keydown", unlock);
     };
