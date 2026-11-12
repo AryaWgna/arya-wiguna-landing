@@ -22,6 +22,7 @@ export function useAmbientMusic() {
   const masterRef = useRef<GainNode | null>(null);
   const voicesRef = useRef<OscillatorNode[]>([]);
   const intervalRef = useRef<number>(0);
+  const unlockedRef = useRef(false);
 
   const stopEngine = useCallback(() => {
     if (intervalRef.current) {
@@ -110,16 +111,45 @@ export function useAmbientMusic() {
   }, [stopEngine]);
 
   useEffect(() => {
-    if (enabled) startEngine();
-    else stopEngine();
-    try {
-      localStorage.setItem(STORAGE_KEY, enabled ? "1" : "0");
-    } catch {
-      // ignore
+    if (!enabled) {
+      stopEngine();
+      unlockedRef.current = false;
+      return;
     }
+
+    // Browsers require a user gesture before AudioContext can start. When the
+    // preference is restored from localStorage, the engine waits for the first
+    // interaction (click/key) and then starts automatically.
+    if (unlockedRef.current) {
+      startEngine();
+      return;
+    }
+
+    const unlock = () => {
+      unlockedRef.current = true;
+      startEngine();
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+    window.addEventListener("pointerdown", unlock);
+    window.addEventListener("keydown", unlock);
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
   }, [enabled, startEngine, stopEngine]);
 
-  const toggle = useCallback(() => setEnabled((v) => !v), []);
+  const toggle = useCallback(() => {
+    setEnabled((v) => {
+      const next = !v;
+      try {
+        localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  }, []);
 
   return { enabled, toggle };
 }
