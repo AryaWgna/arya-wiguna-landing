@@ -9,6 +9,7 @@ import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { CustomCursor } from "@/components/custom-cursor";
 
 const interTight = Inter_Tight({
   variable: "--font-geist-sans",
@@ -106,6 +107,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         {/* Warm the cache for the avatar before the boot sequence requests it */}
         <link rel="preload" as="image" href="/assets/avatar.jpg" />
+        <CustomCursor />
         <Providers>
           <SmoothScroll />
           <Header />
