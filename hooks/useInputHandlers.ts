@@ -102,7 +102,7 @@ export function useInputHandlers({
         return;
       }
       e.preventDefault();
-      pushFlight(e.deltaY * 0.18);
+      pushFlight(e.deltaY * 0.14);
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -138,7 +138,7 @@ export function useInputHandlers({
       if (s.activeView !== "closed") {
         return;
       }
-      pushFlight(dy * 0.34);
+      pushFlight(dy * 0.28);
     };
 
     const onTouchEnd = () => {
