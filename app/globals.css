@@ -49,6 +49,77 @@
   padding: 0;
 }
 
+/* ---------- Fly Game Modal ---------- */
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 16px;
+}
+
+.game-panel {
+  width: min(760px, 100%);
+  background: #101012;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.game-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.game-canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 760 / 400;
+  border-radius: 10px;
+  background: #0a0a0b;
+  touch-action: none;
+  display: block;
+}
+
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.game-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.game-actions button {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.game-note {
+  font-size: 12px;
+  color: var(--mute);
+}
+
 /* Hide the native cursor only while the custom cursor is active (fine pointers only) */
 html.has-custom-cursor,
 html.has-custom-cursor * {

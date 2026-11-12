@@ -32,6 +32,8 @@ import {
 import { useCosmosSimulation } from "@/hooks/useCosmosSimulation";
 import { useBootSequence } from "@/hooks/useBootSequence";
 import { useInputHandlers } from "@/hooks/useInputHandlers";
+import { useAmbientMusic } from "@/hooks/useAmbientMusic";
+import { FlyGameModal } from "@/components/game/FlyGameModal";
 import { SocialLinks } from "@/components/vadim-cosmos-parts/SocialLinks";
 import {
   buildRenderTiles,
@@ -91,6 +93,8 @@ export function VadimCosmos() {
 
   // Mutable simulation state accessed inside requestAnimationFrame
   const { simRef } = useCosmosSimulation();
+  const { enabled: musicOn, toggle: toggleMusic } = useAmbientMusic();
+  const [gameOpen, setGameOpen] = useState(false);
 
   useEffect(() => {
     simRef.current.activeView = activeView;
@@ -1161,6 +1165,40 @@ export function VadimCosmos() {
             >
               {lang === "en" ? "ID" : "EN"}
             </button>
+            ·{" "}
+            <button
+              type="button"
+              onClick={toggleMusic}
+              aria-label={musicOn ? "Mute ambient music" : "Play ambient music"}
+              aria-pressed={musicOn}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+                {musicOn ? (
+                  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                ) : (
+                  <path d="M16 9l6 6M22 9l-6 6" />
+                )}
+              </svg>
+            </button>
+            ·{" "}
+            <button
+              type="button"
+              onClick={() => setGameOpen(true)}
+              aria-label="Play demo game"
+            >
+              {isId ? "Game" : "Game"}
+            </button>
           </span>
         </div>
 
@@ -1205,6 +1243,40 @@ export function VadimCosmos() {
             {isId ? "Kontak" : "Contact"}
           </button>
         </nav>
+        <button
+          type="button"
+          onClick={toggleMusic}
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 12,
+            color: "var(--mute)",
+            textDecoration: "underline",
+            textUnderlineOffset: "3px",
+            marginBottom: 8,
+          }}
+        >
+          {musicOn
+            ? isId
+              ? "Matikan musik"
+              : "Mute music"
+            : isId
+              ? "Putar musik ambient"
+              : "Play ambient music"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setGameOpen(true)}
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 12,
+            color: "var(--mute)",
+            textDecoration: "underline",
+            textUnderlineOffset: "3px",
+            marginBottom: 8,
+          }}
+        >
+          {isId ? "Mainkan demo game" : "Play demo game"}
+        </button>
         <p className="mnav-lead">
           {isId
             ? "Aplikasi mobile Flutter produksi, sistem multi-kontainer Next.js & Laravel, serta 21 sertifikasi kompetensi resmi. Gulir untuk terbang menjelajahi karya."
@@ -1322,6 +1394,7 @@ export function VadimCosmos() {
       </div>
 
       {/* 7. Left Frosted Glass Box (.box) */}
+      <FlyGameModal open={gameOpen} onClose={() => setGameOpen(false)} />
       <VadimGlassBox
         boxRef={boxRef}
         activeView={activeView}
