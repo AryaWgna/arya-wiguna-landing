@@ -46,17 +46,24 @@ export function Header() {
           aria-hidden="true"
         >
           <path
-            d="M8 66L31 10L47 48L62 12L80 66"
+            d="M9 58 L25 8 L32 8 L48 58"
             stroke="#ffffff"
             strokeWidth="5.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M17 47H42"
+            d="M14 42 H43"
             stroke="#ffffff"
             strokeWidth="4.5"
             strokeLinecap="round"
+          />
+          <path
+            d="M51 8 L57 58 L62 32 L67 58 L73 8"
+            stroke="#ffffff"
+            strokeWidth="5.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </Link>
