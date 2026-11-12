@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270" fill="none" font-family="monospace">
+  <rect width="380" height="270" rx="16" fill="#101012"/>
+
+  <!-- 1. Interlocking (current) -->
+  <g transform="translate(12,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g transform="translate(18,18)" stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 62 L28 10 L36 10 L52 62"/>
+      <path d="M16 44 H44"/>
+      <path d="M23 57 L28 49 L31 53 L34 49 L39 57"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Interlocking</text>
+  </g>
+
+  <!-- 2. Joined side-by-side -->
+  <g transform="translate(140,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g transform="translate(12,18)" stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 62 L26 10 L34 10 L50 62"/>
+      <path d="M14 44 H44"/>
+      <path d="M42 10 L48 62 L53 34 L58 62 L64 10"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Joined</text>
+  </g>
+
+  <!-- 3. Cross-W (bar as W) -->
+  <g transform="translate(268,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g transform="translate(16,18)" stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 62 L30 8 L38 8 L58 62"/>
+      <path d="M18 42 L24 36 L28 42 L32 36 L38 42"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Cross-W</text>
+  </g>
+
+  <!-- 4. Framed monogram -->
+  <g transform="translate(12,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <circle cx="55" cy="55" r="42" stroke="#f2f2f2" stroke-width="4"/>
+    <g transform="translate(32,28)" stroke="#f2f2f2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 54 L21 18 L27 18 L40 54"/>
+      <path d="M12 40 H36"/>
+      <path d="M18 50 L22 44 L24 47 L26 44 L30 50"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Framed</text>
+  </g>
+
+  <!-- 5. Twin peaks -->
+  <g transform="translate(140,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g transform="translate(16,18)" stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 62 L25 10 L33 10 L50 62"/>
+      <path d="M14 44 H44"/>
+      <path d="M38 62 L46 10 L54 10 L62 62"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Twin</text>
+  </g>
+
+  <!-- 6. Badge/pill -->
+  <g transform="translate(268,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <rect x="18" y="18" width="74" height="74" rx="37" stroke="#f2f2f2" stroke-width="4"/>
+    <g transform="translate(34,26)" stroke="#f2f2f2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 52 L18 16 L24 16 L36 52"/>
+      <path d="M9 38 H32"/>
+      <path d="M15 47 L19 41 L21 44 L23 41 L27 47"/>
+    </g>
+    <text x="55" y="104" text-anchor="middle" fill="#9a9a9a" font-size="10">Badge</text>
+  </g>
+</svg>

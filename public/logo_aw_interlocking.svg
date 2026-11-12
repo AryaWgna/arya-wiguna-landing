@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">AW — Interlocking Monogram</title>
+  <desc id="desc">Minimal white monogram combining the letters A and W on a black background.</desc>
+  <rect width="512" height="512" fill="#000000"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- A: the outer structure -->
+    <path d="M112 382 L225 112 Q230 100 240 100 Q250 100 255 112 L368 382"/>
+    <!-- A crossbar -->
+    <path d="M158 272 H322"/>
+    <!-- W: woven into the lower half of the A -->
+    <path d="M157 302 L194 382 L240 307 L286 382 L323 302"/>
+  </g>
+</svg>

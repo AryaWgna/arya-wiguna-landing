@@ -39,33 +39,13 @@ export function Header() {
         aria-label="Arya Wiguna, home"
         title={isId ? "Kembali ke beranda 3D" : "Back to 3D home"}
       >
-        <svg
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/favicon-aw-v1.svg"
+          alt="Arya Wiguna"
           className="logo"
-          viewBox="0 0 88 74"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M10 62 L28 10 L36 10 L52 62"
-            stroke="#ffffff"
-            strokeWidth="5.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 44 H44"
-            stroke="#ffffff"
-            strokeWidth="4.5"
-            strokeLinecap="round"
-          />
-          <path
-            d="M23 57 L28 49 L31 53 L34 49 L39 57"
-            stroke="#ffffff"
-            strokeWidth="4.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          draggable={false}
+        />
       </Link>
 
       <div className="col">

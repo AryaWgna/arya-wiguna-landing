@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="title desc">
+  <title id="title">AW monogram</title>
+  <desc id="desc">Minimal white line monogram combining the letters A and W on a black background.</desc>
+  <rect width="1000" height="1000" fill="#000000"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 270 610 L 390 360 L 505 610 L 565 475 L 645 610 L 735 360"/>
+    <path d="M 325 510 L 455 510"/>
+  </g>
+</svg>

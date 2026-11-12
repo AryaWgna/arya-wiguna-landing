@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270" fill="none" font-family="monospace">
+  <rect width="380" height="270" rx="16" fill="#101012"/>
+
+  <!-- 1. W-hero -->
+  <g transform="translate(12,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 18 L28 94 L42 44 L56 94 L70 18"/>
+      <path d="M80 12 L86 46 L89 28 L92 46 L98 12"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">W-hero</text>
+  </g>
+
+  <!-- 2. Overlap -->
+  <g transform="translate(140,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 74 L30 16 L40 16 L60 74"/>
+      <path d="M18 52 H52"/>
+      <path d="M28 18 L36 72 L42 44 L48 72 L56 18"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Overlap</text>
+  </g>
+
+  <!-- 3. W-frame -->
+  <g transform="translate(268,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <circle cx="55" cy="55" r="42" stroke="#f2f2f2" stroke-width="4"/>
+    <g stroke="#f2f2f2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 34 L38 80 L50 50 L62 80 L76 34"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">W-frame</text>
+  </g>
+
+  <!-- 4. Split -->
+  <g transform="translate(12,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 74 L26 16 L34 16 L52 74"/>
+      <path d="M14 54 H46"/>
+      <path d="M54 16 L64 74 L72 44 L80 74 L90 16"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Split</text>
+  </g>
+
+  <!-- 5. Italic W -->
+  <g transform="translate(140,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 20 L40 86 L52 50 L64 86 L84 20"/>
+      <path d="M76 12 L84 40 L87 24 L90 40 L97 12"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Italic W</text>
+  </g>
+
+  <!-- 6. Duo-stack -->
+  <g transform="translate(268,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 18 L32 66 L44 38 L56 66 L70 18"/>
+      <path d="M36 78 L46 92 L53 92 L63 78"/>
+      <path d="M40 88 H59"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Duo-stack</text>
+  </g>
+</svg>

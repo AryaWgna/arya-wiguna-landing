@@ -1027,6 +1027,7 @@ export function VadimCosmos() {
       <header ref={topbarRef} className={`topbar boot-ui${uiReady ? " on" : ""}`}>
         <a
           className="mark"
+          style={{ marginTop: -6 }}
           href="#home"
           id="home"
           aria-label="Arya Wiguna, home"
@@ -1035,26 +1036,13 @@ export function VadimCosmos() {
             handleBackToPortrait();
           }}
         >
-          <svg
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/favicon-aw-v1.svg"
+            alt="Arya Wiguna"
             className="logo"
-            viewBox="0 0 88 74"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M8 66L31 10L47 48L62 12L80 66"
-              stroke="#ffffff"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M17 47H42"
-              stroke="#ffffff"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-            />
-          </svg>
+            draggable={false}
+          />
         </a>
 
         <div

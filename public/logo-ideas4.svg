@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270" fill="none" font-family="monospace">
+  <rect width="380" height="270" rx="16" fill="#101012"/>
+
+  <!-- 1. Core -->
+  <g transform="translate(12,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M34 16 L44 76 L50 46 L56 76 L66 16"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Core</text>
+  </g>
+
+  <!-- 2. Cross both legs -->
+  <g transform="translate(140,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M28 16 L40 76 L48 44 L56 76 L68 16"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Cross legs</text>
+  </g>
+
+  <!-- 3. Offset right -->
+  <g transform="translate(268,12)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M42 16 L52 76 L58 46 L64 76 L74 16"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Offset right</text>
+  </g>
+
+  <!-- 4. High W -->
+  <g transform="translate(12,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M34 12 L44 60 L50 32 L56 60 L64 12"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">High W</text>
+  </g>
+
+  <!-- 5. Low W -->
+  <g transform="translate(140,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M32 40 L42 78 L48 58 L54 78 L64 40"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Low W</text>
+  </g>
+
+  <!-- 6. Bold W -->
+  <g transform="translate(268,140)">
+    <rect width="110" height="110" rx="12" fill="#0a0a0c"/>
+    <g stroke="#f2f2f2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 76 L30 16 L38 16 L58 76"/>
+      <path d="M18 52 H50"/>
+      <path d="M30 16 L40 76 L48 44 L56 76 L66 16"/>
+      <path d="M36 20 L46 80 L54 48 L62 80 L72 20"/>
+    </g>
+    <text x="55" y="105" text-anchor="middle" fill="#9a9a9a" font-size="10">Bold W</text>
+  </g>
+</svg>
