@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const STORAGE_KEY = "aw-music";
-
 const CHORDS = [
   [110, 164.81, 220],
   [98, 146.83, 196],
@@ -17,7 +15,10 @@ const CHORDS = [
  * is persisted locally.
  */
 export function useAmbientMusic() {
-  const [enabled, setEnabled] = useState(false);
+  // Music is always ON by default (per user request): every visit/refresh
+  // starts in an enabled state. The user can mute temporarily, but a refresh
+  // returns to ON.
+  const [enabled, setEnabled] = useState(true);
   const ctxRef = useRef<AudioContext | null>(null);
   const masterRef = useRef<GainNode | null>(null);
   const voicesRef = useRef<OscillatorNode[]>([]);
@@ -107,11 +108,6 @@ export function useAmbientMusic() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try {
-      if (localStorage.getItem(STORAGE_KEY) === "1") setEnabled(true);
-    } catch {
-      // ignore
-    }
     return stopEngine;
   }, [stopEngine]);
 
@@ -147,17 +143,7 @@ export function useAmbientMusic() {
     };
   }, [enabled, startEngine, stopEngine]);
 
-  const toggle = useCallback(() => {
-    setEnabled((v) => {
-      const next = !v;
-      try {
-        localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
-      } catch {
-        // ignore
-      }
-      return next;
-    });
-  }, []);
+  const toggle = useCallback(() => setEnabled((v) => !v), []);
 
   return { enabled, toggle };
 }
