@@ -1347,16 +1347,28 @@ body.far .social {
   .rec-kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .flyright span,
-  .social {
+  .flyright {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .flyright #seen {
     display: none;
+  }
+  #back {
+    padding: 7px 12px 7px 10px;
+    font-size: 12px;
+  }
+  .flyright .back-link {
+    padding: 6px 10px;
+    font-size: 12px;
   }
   .flybar {
     bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px));
   }
   .now {
     gap: 10px;
-    max-width: calc(100vw - 2 * var(--pad) - 96px);
+    max-width: calc(100vw - 2 * var(--pad) - 140px);
   }
   .now-i {
     font-size: 36px;
