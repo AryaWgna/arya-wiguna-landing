@@ -24,3 +24,4 @@ export const FLY_MAX_STEP = 56;
 export const FLY_SLOW_STEP = 32;
 export const FLY_END_ZONE = 620;
 export const FLY_PORTRAIT_ZONE = 40;
+export const FLY_HOME_LOCK_MS = 900;

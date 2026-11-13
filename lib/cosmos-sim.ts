@@ -1,6 +1,6 @@
 import type { BoxView } from "@/components/vadim-glass-box";
 import type { PortraitCell } from "./cosmos-items";
-import { LANE } from "./config/portfolio";
+import { FLY_HOME_LOCK_MS, LANE } from "./config/portfolio";
 
 export type CosmosSimState = {
   dist: number;
@@ -173,4 +173,5 @@ export function beginLoopWrap(s: CosmosSimState, now: number): void {
   s.seenSet = new Set([0]);
   s.nowK = -1;
   s.autoFlyAt = 0;
+  s.rewindLockUntil = now + FLY_HOME_LOCK_MS;
 }
