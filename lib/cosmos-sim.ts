@@ -32,6 +32,7 @@ export type CosmosSimState = {
   sigWasAway: boolean;
   sigTotalLen: number;
   autoFlyAt: number;
+  homeLock: boolean;
   activeView: BoxView;
   lang: "en" | "id";
   nowK: number;
@@ -101,6 +102,7 @@ export function createInitialSimState(): CosmosSimState {
     sigWasAway: false,
     sigTotalLen: 3600,
     autoFlyAt: 0,
+    homeLock: false,
     activeView: "closed",
     lang: "en",
     nowK: -1,
@@ -174,4 +176,5 @@ export function beginLoopWrap(s: CosmosSimState, now: number): void {
   s.nowK = -1;
   s.autoFlyAt = 0;
   s.rewindLockUntil = now + FLY_HOME_LOCK_MS;
+  s.homeLock = true;
 }

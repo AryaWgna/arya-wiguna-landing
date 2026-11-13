@@ -45,6 +45,8 @@ export function useInputHandlers({
     const pushFlight = (delta: number) => {
       const now = performance.now();
       s.lastInputAt = now;
+      // While locked at home (post-wrap), ignore all input — cannot be bypassed
+      if (s.homeLock) return;
       if (s.rewind) {
         // Never abort an active rewind back to the Home Portrait
         return;

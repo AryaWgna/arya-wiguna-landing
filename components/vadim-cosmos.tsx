@@ -489,6 +489,11 @@ export function VadimCosmos() {
       }
 
 
+      // Unlock home after the user has stopped scrolling for a beat
+      if (s.homeLock && !s.rewind && now - s.lastInputAt > 1200) {
+        s.homeLock = false;
+      }
+
       s.smx += (s.mx - s.smx) * (1 - Math.exp(-dt * 1.8));
       s.smy += (s.my - s.smy) * (1 - Math.exp(-dt * 1.8));
 
