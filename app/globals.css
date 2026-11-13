@@ -1329,17 +1329,23 @@ body.far .social {
     left: var(--pad);
     right: var(--pad);
     width: auto;
-    height: calc(100vh - 2 * var(--pad) - 60px);
-    height: calc(100dvh - 2 * var(--pad) - 60px);
+    height: calc(100dvh - var(--pad) - 48px);
     background: rgba(14, 14, 16, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transform: translateY(40px);
-    --bp: 16px;
+    transform: translateY(24px);
+    --bp: 14px;
   }
   .facts,
   .c-row {
     grid-template-columns: 1fr;
+  }
+  .rec-stack-grid,
+  .rec-cert-grid {
+    grid-template-columns: 1fr;
+  }
+  .rec-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   .flyright span,
   .social {
@@ -1367,6 +1373,21 @@ body.far .social {
   }
   .sel-item .t {
     font-size: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --pad: 12px;
+  }
+  .now-i {
+    font-size: 30px;
+  }
+  .now-t {
+    font-size: 15px;
+  }
+  .mnav-links button {
+    font-size: 32px;
   }
 }
 
