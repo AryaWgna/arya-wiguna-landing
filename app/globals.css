@@ -1353,7 +1353,8 @@ body.far .social {
     gap: 8px;
   }
   .flyright #seen {
-    display: none;
+    font-size: 11px;
+    white-space: nowrap;
   }
   #back {
     padding: 7px 12px 7px 10px;
