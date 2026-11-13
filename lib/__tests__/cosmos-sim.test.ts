@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
-  autoContinueAfterLoop,
   beginLoopWrap,
   computeFlightTarget,
   createInitialSimState,
-  LOOP_SIG_HOLD_MS,
   maxPieceDist,
   shouldWrapAtEnd,
 } from "../cosmos-sim";
@@ -87,35 +85,9 @@ describe("beginLoopWrap", () => {
     expect(s.target).toBe(0);
     expect(s.introStart).toBe(now);
     expect(s.sigStart).toBe(now + 120);
-    expect(s.autoFlyAt).toBe(now + LOOP_SIG_HOLD_MS);
+    expect(s.autoFlyAt).toBe(0);
     expect(s.seenSet.has(0)).toBe(true);
     expect(s.nowK).toBe(-1);
   });
 });
 
-describe("autoContinueAfterLoop", () => {
-  it("triggers and resumes when the hold elapsed", () => {
-    const s = createInitialSimState();
-    const now = 50000;
-    s.autoFlyAt = now - 1;
-    expect(autoContinueAfterLoop(s, now)).toBe(true);
-    expect(s.target).toBe(108);
-    expect(s.autoFlyAt).toBe(0);
-  });
-
-  it("returns false before the hold elapses", () => {
-    const s = createInitialSimState();
-    s.autoFlyAt = 1000;
-    expect(autoContinueAfterLoop(s, 999)).toBe(false);
-  });
-
-  it("does not trigger while rewinding or when a side view is open", () => {
-    const s = createInitialSimState();
-    s.autoFlyAt = 100;
-    s.rewind = { from: 100, t0: 0, dur: 500 };
-    expect(autoContinueAfterLoop(s, 200)).toBe(false);
-    s.rewind = null;
-    s.activeView = "credentials";
-    expect(autoContinueAfterLoop(s, 200)).toBe(false);
-  });
-});

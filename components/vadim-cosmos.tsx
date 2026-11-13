@@ -25,7 +25,6 @@ import {
   LANE,
 } from "@/lib/config/portfolio";
 import {
-  autoContinueAfterLoop,
   beginLoopWrap,
   maxPieceDist as maxPieceDistFor,
 } from "@/lib/cosmos-sim";
@@ -489,8 +488,6 @@ export function VadimCosmos() {
         if (Math.abs(s.target - s.dist) < 0.01) s.dist = s.target;
       }
 
-      // Continue the loop after the signature has had time to appear at Home
-      autoContinueAfterLoop(s, now);
 
       s.smx += (s.mx - s.smx) * (1 - Math.exp(-dt * 1.8));
       s.smy += (s.my - s.smy) * (1 - Math.exp(-dt * 1.8));

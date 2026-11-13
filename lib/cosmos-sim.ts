@@ -1,6 +1,6 @@
 import type { BoxView } from "@/components/vadim-glass-box";
 import type { PortraitCell } from "./cosmos-items";
-import { FLY_START_TARGET, LANE } from "./config/portfolio";
+import { LANE } from "./config/portfolio";
 
 export type CosmosSimState = {
   dist: number;
@@ -162,12 +162,6 @@ export function shouldWrapAtEnd(
   return delta > 0 && nextTarget >= endReturnDist && dist > 40;
 }
 
-// Delay before auto-continuing after a loop lands on the Home signature screen:
-// signature draw delay (120ms) + signature draw duration (2850ms) + grace (350ms).
-export const LOOP_SIG_HOLD_MS = 120 + 2850 + 350;
-
-// Wrap the flight back to the Home portrait (signature screen) and schedule the
-// automatic continuation. Mutates only the simulation state.
 export function beginLoopWrap(s: CosmosSimState, now: number): void {
   s.dist = 0;
   s.target = 0;
@@ -178,22 +172,5 @@ export function beginLoopWrap(s: CosmosSimState, now: number): void {
   s.sigStart = now + 120;
   s.seenSet = new Set([0]);
   s.nowK = -1;
-  s.autoFlyAt = now + LOOP_SIG_HOLD_MS;
-}
-
-// Resume the loop after the signature has had time to appear at home. Returns
-// true when the continuation was triggered.
-export function autoContinueAfterLoop(s: CosmosSimState, now: number): boolean {
-  if (
-    s.autoFlyAt &&
-    !s.rewind &&
-    s.activeView === "closed" &&
-    s.dist < 1 &&
-    now >= s.autoFlyAt
-  ) {
-    s.autoFlyAt = 0;
-    s.target = FLY_START_TARGET;
-    return true;
-  }
-  return false;
+  s.autoFlyAt = 0;
 }
