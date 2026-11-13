@@ -20,7 +20,7 @@ export const UI_REVEAL_DELAY_MS = 350;
 // Flight behaviour defaults
 export const FLY_START_TARGET = 108;
 export const FLY_STEP = 90;
-export const FLY_MAX_STEP = 34;
-export const FLY_SLOW_STEP = 18;
-export const FLY_END_ZONE = 720;
+export const FLY_MAX_STEP = 56;
+export const FLY_SLOW_STEP = 32;
+export const FLY_END_ZONE = 620;
 export const FLY_PORTRAIT_ZONE = 40;

@@ -102,7 +102,7 @@ export function useInputHandlers({
         return;
       }
       e.preventDefault();
-      pushFlight(e.deltaY * 0.075);
+      pushFlight(e.deltaY * 0.10);
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -138,7 +138,7 @@ export function useInputHandlers({
       if (s.activeView !== "closed") {
         return;
       }
-      pushFlight(dy * 0.15);
+      pushFlight(dy * 0.18);
     };
 
     const onTouchEnd = () => {
@@ -154,9 +154,9 @@ export function useInputHandlers({
         onCloseBox();
       } else if (s.activeView === "closed") {
         if (e.key === "ArrowDown" || e.key === "PageDown") {
-          pushFlight(45);
+          pushFlight(55);
         } else if (e.key === "ArrowUp" || e.key === "PageUp") {
-          pushFlight(-45);
+          pushFlight(-55);
         }
       }
     };

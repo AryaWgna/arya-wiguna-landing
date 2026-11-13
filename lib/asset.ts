@@ -21,8 +21,8 @@ export function makeThumbCanvas(
   img: HTMLImageElement,
   lowPower: boolean
 ): HTMLCanvasElement {
-  const tw = lowPower ? 112 : 144;
-  const th = lowPower ? 84 : 108;
+  const tw = lowPower ? 96 : 128;
+  const th = lowPower ? 72 : 96;
   const cv = document.createElement("canvas");
   cv.width = tw;
   cv.height = th;

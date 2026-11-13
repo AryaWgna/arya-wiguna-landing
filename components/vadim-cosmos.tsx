@@ -347,7 +347,7 @@ export function VadimCosmos() {
       const W = window.innerWidth;
       const H = window.innerHeight;
       const lowPower = detectLowPower();
-      const maxDpr = lowPower ? 1.25 : 1.75;
+      const maxDpr = lowPower ? 1.15 : 1.6;
       const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
 
       const topbarBottom = topbarRef.current
@@ -485,7 +485,7 @@ export function VadimCosmos() {
           s.aimTy = 0;
         }
       } else {
-        s.dist += (s.target - s.dist) * (1 - Math.exp(-dt * 3.4));
+        s.dist += (s.target - s.dist) * (1 - Math.exp(-dt * 3.8));
         if (Math.abs(s.target - s.dist) < 0.01) s.dist = s.target;
       }
 
