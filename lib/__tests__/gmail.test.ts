@@ -32,7 +32,7 @@ describe("gmailTemplates", () => {
   });
 
   it("uses a different subject per language", () => {
-    expect(gmailTemplates.en.subject).not.toBe(gmailTemplates.id.subject);
+    expect(gmailTemplates.en.subject === gmailTemplates.id.subject).toBe(false);
   });
 
   it("addresses the recipient by name", () => {
