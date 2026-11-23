@@ -2,6 +2,7 @@
 
 import React from "react";
 import { profile } from "@/lib/data/profile";
+import { gmailComposeUrl } from "@/lib/gmail";
 
 export function SocialLinks({ isId }: { isId: boolean }) {
   return (
@@ -23,7 +24,15 @@ export function SocialLinks({ isId }: { isId: boolean }) {
         >
           LinkedIn
         </a>
-        , <a href={`mailto:${profile.email}`}>Email</a>,{" "}
+        ,{" "}
+        <a
+          href={gmailComposeUrl(profile.email)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Email
+        </a>
+        ,{" "}
         <a
           href={profile.cv.atsId}
           target="_blank"

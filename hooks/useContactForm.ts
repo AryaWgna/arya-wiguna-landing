@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { profile } from "@/lib/data/profile";
+import { gmailComposeUrl } from "@/lib/gmail";
 
 const WEB3FORMS_KEY = "45d3352d-8005-48a8-b024-5840f0914273";
 
@@ -69,9 +70,15 @@ export function useContactForm(isId: boolean) {
       if (needs.length) lines.push(`Needs: ${needs.join(", ")}`);
       if (scope) lines.push(`Scope: ${scope}`);
       lines.push("", message);
-      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-        `Project Brief: ${company || name}`
-      )}&body=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(
+        gmailComposeUrl(
+          profile.email,
+          `Project Brief: ${company || name}`,
+          lines.join("\n")
+        ),
+        "_blank",
+        "noopener,noreferrer"
+      );
     }
     setSentName(name.split(/\s+/)[0] || "");
   };

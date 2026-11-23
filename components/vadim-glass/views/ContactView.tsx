@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import type { BoxView } from "../../vadim-glass-box";
 import { profile } from "@/lib/data/profile";
+import { gmailComposeUrl } from "@/lib/gmail";
 import { useContactForm } from "@/hooks/useContactForm";
 import { ViewHead } from "../ViewHead";
 import { BoxNav } from "../BoxNav";
@@ -80,6 +81,14 @@ export function ContactView({
                       : "Copy Email"}
                 </span>
               </button>
+              <a
+                href={gmailComposeUrl(profile.email)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="back-link"
+              >
+                <span>Gmail ↗</span>
+              </a>
               <a
                 href={profile.linkedin}
                 target="_blank"

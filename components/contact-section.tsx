@@ -4,6 +4,7 @@ import { FormEvent, useLayoutEffect, useRef, useState } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { profile } from "@/lib/data/profile";
+import { gmailComposeUrl } from "@/lib/gmail";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import { SiGithub } from "react-icons/si";
 
@@ -168,6 +169,16 @@ export function ContactSection() {
                     {copied ? "✓" : isId ? "Salin" : "Copy"}
                   </span>
                 </button>
+
+                <a
+                  href={gmailComposeUrl(profile.email)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-2xl border border-border-line bg-surface/60 px-4 py-3 text-sm font-bold text-navy transition-all hover:border-navy"
+                >
+                  <span>{isId ? "Buka di Gmail" : "Open in Gmail"}</span>
+                  <span className="font-mono text-xs font-bold text-navy">↗</span>
+                </a>
 
                 <div className="grid grid-cols-2 gap-3">
                   <a
