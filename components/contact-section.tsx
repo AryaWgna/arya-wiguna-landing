@@ -4,7 +4,7 @@ import { FormEvent, useLayoutEffect, useRef, useState } from "react";
 import { useLang } from "@/components/providers";
 import { SectionHeading } from "@/components/section-heading";
 import { profile } from "@/lib/data/profile";
-import { gmailComposeUrl } from "@/lib/gmail";
+import { gmailComposeUrl, gmailTemplates } from "@/lib/gmail";
 import { gsap, isReducedMotion } from "@/lib/gsap";
 import { SiGithub } from "react-icons/si";
 
@@ -171,7 +171,11 @@ export function ContactSection() {
                 </button>
 
                 <a
-                  href={gmailComposeUrl(profile.email)}
+                  href={gmailComposeUrl(
+                    profile.email,
+                    gmailTemplates[isId ? "id" : "en"].subject,
+                    gmailTemplates[isId ? "id" : "en"].body
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between rounded-2xl border border-border-line bg-surface/60 px-4 py-3 text-sm font-bold text-navy transition-all hover:border-navy"

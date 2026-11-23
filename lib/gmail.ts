@@ -1,3 +1,47 @@
+import type { Locale } from "@/lib/i18n/messages";
+
+/**
+ * Pre-filled Gmail compose templates, matching the visitor's selected
+ * website language (EN/ID). Placeholders like [Your Name] are left for
+ * the visitor to complete before sending.
+ */
+export const gmailTemplates: Record<Locale, { subject: string; body: string }> = {
+  en: {
+    subject: "Hello Arya — let's build something dependable",
+    body: [
+      "Hi Arya,",
+      "",
+      "My name is [Your Name], from [Company / Organization].",
+      "",
+      "I found your portfolio (arya-wiguna.vercel.app) and I'm interested in discussing a [full-time role / freelance project / collaboration] with you.",
+      "",
+      "[Add a few lines about the role or the system you want to build.]",
+      "",
+      "Looking forward to hearing from you.",
+      "",
+      "Best regards,",
+      "[Your Name]",
+    ].join("\n"),
+  },
+  id: {
+    subject: "Halo Arya — mari bangun sistem yang andal",
+    body: [
+      "Halo Arya,",
+      "",
+      "Nama saya [Nama Anda], dari [Perusahaan / Organisasi].",
+      "",
+      "Saya menemukan portofolio Anda (arya-wiguna.vercel.app) dan tertarik berdiskusi mengenai [posisi tetap / proyek lepas / kolaborasi] dengan Anda.",
+      "",
+      "[Tambahkan beberapa baris tentang posisi atau sistem yang ingin Anda bangun.]",
+      "",
+      "Terima kasih, saya tunggu kabar baiknya.",
+      "",
+      "Salam hangat,",
+      "[Nama Anda]",
+    ].join("\n"),
+  },
+};
+
 /**
  * Builds a Gmail web compose URL that opens mail.google.com with the
  * recipient, subject, and body pre-filled.

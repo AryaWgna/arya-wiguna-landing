@@ -2,7 +2,7 @@
 
 import React from "react";
 import { profile } from "@/lib/data/profile";
-import { gmailComposeUrl } from "@/lib/gmail";
+import { gmailComposeUrl, gmailTemplates } from "@/lib/gmail";
 
 export function SocialLinks({ isId }: { isId: boolean }) {
   return (
@@ -26,7 +26,11 @@ export function SocialLinks({ isId }: { isId: boolean }) {
         </a>
         ,{" "}
         <a
-          href={gmailComposeUrl(profile.email)}
+          href={gmailComposeUrl(
+            profile.email,
+            gmailTemplates[isId ? "id" : "en"].subject,
+            gmailTemplates[isId ? "id" : "en"].body
+          )}
           target="_blank"
           rel="noopener noreferrer"
         >

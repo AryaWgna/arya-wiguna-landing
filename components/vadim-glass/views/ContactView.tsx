@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import type { BoxView } from "../../vadim-glass-box";
 import { profile } from "@/lib/data/profile";
-import { gmailComposeUrl } from "@/lib/gmail";
+import { gmailComposeUrl, gmailTemplates } from "@/lib/gmail";
 import { useContactForm } from "@/hooks/useContactForm";
 import { ViewHead } from "../ViewHead";
 import { BoxNav } from "../BoxNav";
@@ -82,7 +82,11 @@ export function ContactView({
                 </span>
               </button>
               <a
-                href={gmailComposeUrl(profile.email)}
+                href={gmailComposeUrl(
+                  profile.email,
+                  gmailTemplates[isId ? "id" : "en"].subject,
+                  gmailTemplates[isId ? "id" : "en"].body
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="back-link"
