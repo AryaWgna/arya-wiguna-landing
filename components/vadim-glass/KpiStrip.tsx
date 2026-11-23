@@ -24,7 +24,7 @@ export function KpiStrip({ isId }: { isId: boolean }) {
         </span>
       </div>
       <div className="rec-kpi">
-        <span className="rec-kpi-val">21 Docs</span>
+        <span className="rec-kpi-val">22 Docs</span>
         <span className="rec-kpi-lbl">
           {isId ? "Sertifikat Resmi" : "Verified Certs"}
         </span>

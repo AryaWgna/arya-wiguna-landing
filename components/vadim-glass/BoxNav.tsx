@@ -29,7 +29,7 @@ export function BoxNav({
       case "experience":
         return isId ? "Pengalaman & Studi" : "Experience & Edu";
       case "credentials":
-        return isId ? "Skill & Sertifikat (21)" : "Stack & Certs (21)";
+        return isId ? "Skill & Sertifikat (22)" : "Stack & Certs (22)";
       case "contact":
         return isId ? "Kontak" : "Contact";
       default:

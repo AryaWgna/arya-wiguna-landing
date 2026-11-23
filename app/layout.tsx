@@ -66,13 +66,13 @@ export const metadata: Metadata = {
     siteName: "Arya Wiguna",
     title: "Arya Wiguna, Full-Stack & Flutter Engineer",
     description:
-      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 21 verified engineering credentials. Scroll to fly through the work.",
+      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 22 verified engineering credentials. Scroll to fly through the work.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Arya Wiguna, Full-Stack & Flutter Engineer",
     description:
-      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 21 verified engineering credentials. Scroll to fly through the work.",
+      "Production Flutter mobile systems, containerized Next.js & Laravel architectures, and 22 verified engineering credentials. Scroll to fly through the work.",
   },
   robots: {
     index: true,

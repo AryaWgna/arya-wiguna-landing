@@ -1127,7 +1127,7 @@ export function VadimCosmos() {
               aria-current={activeView === "credentials" ? "true" : undefined}
               onClick={() => toggleSideView("credentials")}
             >
-              {isId ? "Sertifikasi (21)" : "Credentials"}
+              {isId ? "Sertifikasi (22)" : "Credentials"}
             </button>
             ,{" "}
             <button
@@ -1239,7 +1239,7 @@ export function VadimCosmos() {
             {isId ? "Pengalaman & Studi" : "Experience"}
           </button>
           <button type="button" onClick={() => toggleSideView("credentials")}>
-            {isId ? "Sertifikasi (21)" : "Credentials (21)"}
+            {isId ? "Sertifikasi (22)" : "Credentials (22)"}
           </button>
           <button type="button" onClick={() => toggleSideView("about")}>
             {isId ? "Tentang & CV" : "About & CV"}
@@ -1284,8 +1284,8 @@ export function VadimCosmos() {
         </button>
         <p className="mnav-lead">
           {isId
-            ? "Aplikasi mobile Flutter produksi, sistem multi-kontainer Next.js & Laravel, serta 21 sertifikasi kompetensi resmi. Gulir untuk terbang menjelajahi karya."
-            : "Production Flutter mobile apps, multi-container Next.js & Laravel architectures, and 21 verified engineering credentials. Scroll to fly through the work."}
+            ? "Aplikasi mobile Flutter produksi, sistem multi-kontainer Next.js & Laravel, serta 22 sertifikasi kompetensi resmi. Gulir untuk terbang menjelajahi karya."
+            : "Production Flutter mobile apps, multi-container Next.js & Laravel architectures, and 22 verified engineering credentials. Scroll to fly through the work."}
         </p>
         <div className="mnav-facts">
           <div>

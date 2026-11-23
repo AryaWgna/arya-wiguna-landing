@@ -20,7 +20,7 @@ describe("BoxNav", () => {
     expect(screen.getByRole("button", { name: "Recruiter & CV" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Projects (3)" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Experience & Edu" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Stack & Certs (21)" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Stack & Certs (22)" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Contact" })).toBeTruthy();
 
     const activeTabs = container.querySelectorAll(".box-tab.active");

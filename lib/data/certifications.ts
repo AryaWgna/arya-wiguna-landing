@@ -145,6 +145,23 @@ export const certifications: Certification[] = [
     },
   },
   {
+    slug: "c25",
+    titleKey: "c25-title",
+    descKey: "c25-desc",
+    img: "assets/sertifikat/mandarin-conversation.jpg",
+    pdf: "assets/sertifikat/mandarin-conversation.pdf",
+    alt: "Mandarin Conversation",
+    category: "lainnya",
+    issuer: "Kunkwan International Mandarin Training Centre",
+    date: { en: "Nov 22, 2026", id: "22 November 2026" },
+    credentialId: null,
+    verifyUrl: null,
+    note: {
+      en: "Certificate of participation · 2-hour Amazing Mandarin Conversation Class",
+      id: "Sertifikat partisipasi · Kelas Amazing Mandarin Conversation 2 jam",
+    },
+  },
+  {
     slug: "c2",
     titleKey: "c2-title",
     descKey: "c2-desc",

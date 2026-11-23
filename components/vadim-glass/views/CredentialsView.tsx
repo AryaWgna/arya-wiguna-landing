@@ -41,7 +41,7 @@ export function CredentialsView({
       <ViewHead
         onClose={onClose}
         isId={isId}
-        label={isId ? "6 Kategori Stack & 21 Sertifikat" : "6 Stack Groups & 21 Certs"}
+        label={isId ? "6 Kategori Stack & 22 Sertifikat" : "6 Stack Groups & 22 Certs"}
       />
 
       <BoxNav current="credentials" isId={isId} onChangeView={onChangeView} />
@@ -49,8 +49,8 @@ export function CredentialsView({
       <div className="p-scroll">
         <h2 id="credentials-title">
           {isId
-            ? "Keahlian teknis & 21 sertifikasi resmi."
-            : "Technical arsenal & 21 official credentials."}
+            ? "Keahlian teknis & 22 sertifikasi resmi."
+            : "Technical arsenal & 22 official credentials."}
         </h2>
 
         {/* Categorized Technical Stack Grid with Icons */}
@@ -125,7 +125,7 @@ export function CredentialsView({
 
           <div className="chips">
             {[
-              { id: "all", label: isId ? "Semua (21)" : "All (21)" },
+              { id: "all", label: isId ? "Semua (22)" : "All (22)" },
               { id: "bnsp", label: "BNSP RI" },
               {
                 id: "akademik",

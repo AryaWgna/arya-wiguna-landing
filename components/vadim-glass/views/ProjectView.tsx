@@ -215,7 +215,7 @@ export function ProjectView({
                   style={{ fontSize: "11.5px", padding: "4px 10px" }}
                   onClick={() => onChangeView("credentials")}
                 >
-                  {isId ? "21 Sertifikat →" : "21 Certs →"}
+                  {isId ? "22 Sertifikat →" : "22 Certs →"}
                 </button>
               </div>
 
@@ -355,8 +355,8 @@ export function ProjectView({
                     >
                       <span>
                         {isId
-                          ? "Lihat Semua 21 Sertifikat"
-                          : "Browse All 21 Certificates"}
+                          ? "Lihat Semua 22 Sertifikat"
+                          : "Browse All 22 Certificates"}
                       </span>
                     </button>
                   </div>

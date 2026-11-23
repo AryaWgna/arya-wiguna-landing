@@ -261,6 +261,14 @@ export const messages = {
     "English for community services short class in the 2026 National Productivity Improvement Week (P3N)",
     "Kelas singkat Bahasa Inggris layanan masyarakat dalam Pekan Peningkatan Produktivitas Nasional (P3N) 2026",
   ],
+  "c25-title": [
+    "Mandarin Conversation",
+    "Mandarin Conversation",
+  ],
+  "c25-desc": [
+    "2-hour Amazing Mandarin Conversation Class (certificate of participation)",
+    "Kelas Amazing Mandarin Conversation 2 jam (sertifikat partisipasi)",
+  ],
 
   "ct-tag": ["Contact", "Kontak"],
   "ct-h1": ["Get in touch", "Hubungi saya"],
