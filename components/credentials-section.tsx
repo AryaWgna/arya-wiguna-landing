@@ -13,12 +13,14 @@ function ArchiveRow({
   title,
   lang,
   isId,
+  t,
 }: {
   cert: Certification;
   indexNum: string;
   title: string;
   lang: "en" | "id";
   isId: boolean;
+  t: (key: string) => string;
 }) {
   return (
     <article className="bento-card flex items-start gap-4 p-4">
@@ -40,6 +42,11 @@ function ArchiveRow({
         <p className="mt-1 font-mono text-[11px] text-muted">
           {cert.issuer} · {cert.date[lang]}
         </p>
+        {cert.descKey ? (
+          <p className="mt-1 text-xs leading-relaxed text-muted/85">
+            {t(cert.descKey)}
+          </p>
+        ) : null}
         {cert.note ? (
           <p className="mt-1 text-xs text-muted/85">{cert.note[lang]}</p>
         ) : null}
@@ -271,6 +278,7 @@ export function CredentialsSection() {
                     title={t(cert.titleKey)}
                     lang={lang}
                     isId={isId}
+                    t={t}
                   />
                 ))}
               </div>

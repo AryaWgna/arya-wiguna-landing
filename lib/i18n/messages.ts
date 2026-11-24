@@ -89,185 +89,188 @@ export const messages = {
     "CCNA — Pengenalan Jaringan",
   ],
   "c1-desc": [
-    "Network Architecture & Protocols",
-    "Arsitektur & Protokol Jaringan",
+    "Introductory networking course covering Ethernet, IP addressing, subnetting, routing and switching fundamentals, and basic network security from Cisco Networking Academy.",
+    "Kursus jaringan tingkat dasar yang mencakup Ethernet, pengalamatan IP, subnetting, dasar routing dan switching, serta dasar keamanan jaringan dari Cisco Networking Academy.",
   ],
   "c2-title": ["English for IT 1", "Bahasa Inggris untuk IT 1"],
   "c2-desc": [
-    "IT Terminology & Communication",
-    "Terminologi & Komunikasi IT",
+    "Technical English course focused on IT terminology, workplace communication, and reading comprehension for technology professionals.",
+    "Kursus Bahasa Inggris teknis yang berfokus pada terminologi IT, komunikasi di lingkungan kerja, dan pemahaman bacaan bagi profesional teknologi.",
   ],
   "c3-title": ["Operating Systems Basics", "Dasar Sistem Operasi"],
   "c3-desc": [
-    "OS Fundamentals & Architecture",
-    "Fundamental & Arsitektur OS",
+    "Foundational course on operating system architecture, process and memory management, file systems, and virtualization concepts.",
+    "Kursus dasar arsitektur sistem operasi, manajemen proses dan memori, sistem berkas, serta konsep virtualisasi.",
   ],
   "c4-title": [
     "Internship Certificate — UMMI Hospital",
     "Sertifikat Magang — RS UMMI",
   ],
   "c4-desc": [
-    "Hospital internship · medical asset inspection",
-    "Magang rumah sakit · inspeksi aset medis",
+    "Full-stack mobile engineering internship at RS UMMI Bogor delivering SIMARU, a QR-based medical asset inspection app with FCM push notifications, plus onsite hospital IT operations support.",
+    "Magang rekayasa perangkat lunak mobile di RS UMMI Bogor, membangun SIMARU, aplikasi inspeksi aset medis berbasis QR dengan notifikasi push FCM, serta mendukung operasional IT rumah sakit.",
   ],
   "c5-title": ["Study Completion Letter", "Surat Keterangan Lulus"],
   "c5-desc": [
-    "Completion of study requirements",
-    "Penyelesaian persyaratan studi",
+    "Official SKL confirming completion of the S1 Informatics Engineering program (GPA 3.77) at Universitas Binaniaga Indonesia.",
+    "Surat Keterangan Lulus (SKL) resmi yang menegaskan penyelesaian program S1 Teknik Informatika (IPK 3,77) di Universitas Binaniaga Indonesia.",
   ],
   "c6-title": [
     "Seminar APBN 2024 & Outlook 2025",
     "Seminar APBN 2024 & Outlook 2025",
   ],
   "c6-desc": [
-    "National budget & economic outlook",
-    "Anggaran negara & proyeksi ekonomi",
+    "Seminar hosted by Tax Center Universitas Binaniaga Indonesia & DJP covering the 2024 state budget realization and the 2025 fiscal outlook.",
+    "Seminar oleh Tax Center Universitas Binaniaga Indonesia & DJP mengenai realisasi anggaran pendapatan dan belanja negara 2024 serta proyeksi fiskal 2025.",
   ],
   "c7-title": ["English Conversation", "Percakapan Bahasa Inggris"],
   "c7-desc": [
-    "Conversational English practice",
-    "Latihan percakapan Bahasa Inggris",
+    "Conversational English training sharpening speaking fluency, listening comprehension, and everyday communication confidence.",
+    "Pelatihan percakapan Bahasa Inggris yang mengasah kelancaran berbicara, pemahaman menyimak, dan rasa percaya diri berkomunikasi sehari-hari.",
   ],
   "c8-title": [
     "International Webinar — Smart Decisions for Better Health",
     "Webinar Internasional — Keputusan Cerdas untuk Kesehatan",
   ],
   "c8-desc": [
-    "AI-powered behavioural modelling for NCD",
-    "Pemodelan perilaku berbasis AI untuk PTM",
+    "International webinar on applying AI-powered behavioural modelling to improve health decisions and manage non-communicable diseases (NCDs).",
+    "Webinar internasional tentang penerapan pemodelan perilaku berbasis AI untuk meningkatkan keputusan kesehatan dan penanganan penyakit tidak menular (PTM).",
   ],
   "c9-title": [
     "Webinar — Start with Figma",
     "Webinar — Mulai dengan Figma",
   ],
   "c9-desc": [
-    "Efficient & practical website design solutions",
-    "Solusi desain website yang efisien & praktis",
+    "Hands-on webinar on designing efficient, practical websites with Figma — from layout and reusable components to prototyping and developer handoff.",
+    "Webinar praktik mendesain website yang efisien dan praktis dengan Figma — dari layout dan komponen yang dapat digunakan ulang hingga prototyping dan handoff pengembang.",
   ],
   "c10-title": [
     "Webinar — Server Optimization Strategy",
     "Webinar — Strategi Optimasi Server",
   ],
   "c10-desc": [
-    "Handling huge daily attendance data load",
-    "Menangani beban data absensi harian",
+    "Technical webinar on optimizing server performance and reliably handling high-volume daily attendance data loads.",
+    "Webinar teknis tentang optimasi performa server dan penanganan beban data absensi harian bervolume tinggi secara andal.",
   ],
   "c11-title": [
     "Webinar — Brand as a Valuable Asset",
     "Webinar — Merek sebagai Aset Berharga",
   ],
   "c11-desc": [
-    "Building & securing brands in the digital era",
-    "Membangun & mengamankan merek di era digital",
+    "Webinar on building, protecting, and maintaining brands as valuable business assets in the digital era.",
+    "Webinar tentang membangun, melindungi, dan menjaga merek sebagai aset bisnis yang berharga di era digital.",
   ],
   "c12-title": [
     "Webinar — UI/UX Design Trends 2025",
     "Webinar — Tren Desain UI/UX 2025",
   ],
   "c12-desc": [
-    "UI/UX design fundamentals & trends",
-    "Dasar & tren desain UI/UX",
+    "Design webinar covering UI/UX fundamentals and the key interface and experience trends shaping 2025 product design.",
+    "Webinar desain yang membahas dasar UI/UX serta tren antarmuka dan pengalaman utama yang membentuk desain produk 2025.",
   ],
   "c13-title": [
     "National Seminar — Insurance Industry Trust",
     "Seminar Nasional — Kepercayaan Industri Asuransi",
   ],
   "c13-desc": [
-    "Increasing public trust in national insurance industry",
-    "Meningkatkan kepercayaan masyarakat terhadap industri asuransi",
+    "National seminar organized by OJK Mengajar, SB-IPB, and AAUI on strengthening public trust in Indonesia's insurance industry.",
+    "Seminar nasional oleh OJK Mengajar, SB-IPB, dan AAUI tentang memperkuat kepercayaan masyarakat terhadap industri asuransi Indonesia.",
   ],
   "c14-title": [
     "Webinar — DDoS Mitigation with Cloudflare",
     "Webinar — Mitigasi DDoS dengan Cloudflare",
   ],
   "c14-desc": [
-    "Rules & WAF configuration against DDoS",
-    "Konfigurasi rules & WAF melawan DDoS",
+    "Technical webinar on mitigating DDoS attacks using Cloudflare rules, WAF configuration, and traffic protection strategies.",
+    "Webinar teknis tentang mitigasi serangan DDoS menggunakan Cloudflare rules, konfigurasi WAF, dan strategi perlindungan trafik.",
   ],
   "c15-title": [
     "Intro to Product Management",
     "Pengenalan Manajemen Produk",
   ],
   "c15-desc": [
-    "Product management fundamentals",
-    "Dasar manajemen produk",
+    "Two-week certified mini-course introducing core product management: discovery, prioritization, roadmaps, and stakeholder alignment.",
+    "Kursus singkat bersertifikat dua minggu yang mengenalkan inti manajemen produk: discovery, prioritisasi, peta jalan produk, dan penyelarasan pemangku kepentingan.",
   ],
   "c16-title": [
     "Getting Started with Python",
     "Memulai Pemrograman dengan Python",
   ],
   "c16-desc": [
-    "Python programming fundamentals",
-    "Dasar pemrograman Python",
+    "Beginner-level Python course covering syntax, data types, control flow, functions, and fundamental programming logic.",
+    "Kursus Python tingkat pemula yang mencakup sintaks, tipe data, alur kontrol, fungsi, dan logika pemrograman dasar.",
   ],
   "c17-title": [
     "Cloud & Gen AI Basics on AWS",
     "Belajar Dasar Cloud dan Gen AI di AWS",
   ],
   "c17-desc": [
-    "Cloud computing & generative AI fundamentals",
-    "Dasar cloud computing & AI generatif",
+    "Foundational course on cloud computing concepts and generative AI services on AWS, including core architecture and common use cases.",
+    "Kursus dasar konsep cloud computing dan layanan AI generatif di AWS, termasuk arsitektur inti dan kasus penggunaan umum.",
   ],
   "c18-title": [
     "Building Gen AI Apps with Microsoft Azure",
     "Membangun Aplikasi Gen AI dengan Microsoft Azure",
   ],
   "c18-desc": [
-    "Generative AI application development on Azure",
-    "Pengembangan aplikasi AI generatif di Azure",
+    "Course on developing generative AI applications on Microsoft Azure — prompt engineering, Azure OpenAI integration, and deployment patterns.",
+    "Kursus pengembangan aplikasi AI generatif di Microsoft Azure — prompt engineering, integrasi Azure OpenAI, dan pola deployment.",
   ],
   "c19-title": [
     "Spec-Driven Development with Kiro",
     "Spec-Driven Development dengan Kiro",
   ],
   "c19-desc": [
-    "API specification-driven development workflows",
-    "Alur kerja pengembangan berbasis spesifikasi API",
+    "Course on specification-driven development with Kiro: designing APIs from specifications, generating code, and keeping documentation in sync.",
+    "Kursus pengembangan berbasis spesifikasi dengan Kiro: merancang API dari spesifikasi, menghasilkan kode, dan menjaga dokumentasi tetap sinkron.",
   ],
   "c20-title": [
     "Data Science with Microsoft Fabric",
     "Belajar Penerapan Data Science dengan Microsoft Fabric",
   ],
   "c20-desc": [
-    "Data science implementation on Microsoft Fabric",
-    "Penerapan data science di Microsoft Fabric",
+    "Hands-on course applying data science workflows on Microsoft Fabric — data ingestion, transformation, modeling, and reporting.",
+    "Kursus praktik penerapan alur kerja data science di Microsoft Fabric — ingestion data, transformasi, pemodelan, dan pelaporan.",
   ],
   "c21-title": [
     "SOLID Programming Principles",
     "Belajar Prinsip Pemrograman SOLID",
   ],
   "c21-desc": [
-    "Clean architecture & SOLID principles",
-    "Arsitektur bersih & prinsip SOLID",
+    "Dicoding course on clean architecture and SOLID design principles for writing maintainable, testable software.",
+    "Kursus Dicoding tentang arsitektur bersih dan prinsip desain SOLID untuk menulis perangkat lunak yang mudah dipelihara dan diuji.",
   ],
   "c22-title": [
     "Getting Started with C",
     "Memulai Pemrograman Dengan C",
   ],
-  "c22-desc": ["C programming fundamentals", "Dasar pemrograman C"],
+  "c22-desc": [
+    "Beginner C programming course covering variables, pointers, arrays, functions, and memory fundamentals.",
+    "Kursus pemrograman C tingkat pemula yang mencakup variabel, pointer, array, fungsi, dan fundamental memori.",
+  ],
   "c23-title": [
     "BNSP — Junior Coder (Pemrogram Junior)",
     "BNSP — Pemrogram Junior (Junior Coder)",
   ],
   "c23-desc": [
-    "Software Development – Programming competency certification by the Indonesian Professional Certification Authority (BNSP)",
-    "Sertifikasi kompetensi Pengembangan Perangkat Lunak – Pemrograman oleh Badan Nasional Sertifikasi Profesi (BNSP)",
+    "Professional competency certification in Software Development – Programming by BNSP, the Indonesian Professional Certification Authority, validating national-standard programmer skills.",
+    "Sertifikasi kompetensi profesi Pengembangan Perangkat Lunak – Pemrograman oleh Badan Nasional Sertifikasi Profesi (BNSP), yang memvalidasi keterampilan pemrogram berstandar nasional.",
   ],
   "c24-title": [
     "TMI English Short Classes — English for Community Services",
     "TMI English Short Classes — English for Community Services",
   ],
   "c24-desc": [
-    "English for community services short class in the 2026 National Productivity Improvement Week (P3N)",
-    "Kelas singkat Bahasa Inggris layanan masyarakat dalam Pekan Peningkatan Produktivitas Nasional (P3N) 2026",
+    "English short class focused on community service communication, completed during the 2026 National Productivity Improvement Week (P3N).",
+    "Kelas singkat Bahasa Inggris yang berfokus pada komunikasi layanan masyarakat, diselesaikan dalam Pekan Peningkatan Produktivitas Nasional (P3N) 2026.",
   ],
   "c25-title": [
     "Mandarin Conversation",
     "Mandarin Conversation",
   ],
   "c25-desc": [
-    "2-hour Amazing Mandarin Conversation Class (certificate of participation)",
-    "Kelas Amazing Mandarin Conversation 2 jam (sertifikat partisipasi)",
+    "Certificate of participation in a two-hour Amazing Mandarin Conversation class introducing basic conversational Mandarin.",
+    "Sertifikat partisipasi dalam kelas Amazing Mandarin Conversation dua jam yang memperkenalkan percakapan Mandarin dasar.",
   ],
 
   "ct-tag": ["Contact", "Kontak"],
