@@ -1,5 +1,6 @@
 import { projects, type Project } from "@/lib/data/projects";
 import { certifications, type Certification } from "@/lib/data/certifications";
+import { messages } from "@/lib/i18n/messages";
 
 export type CosmosPiece = {
   id: string;
@@ -139,6 +140,12 @@ export function buildCosmosDataset(): {
       .filter(Boolean)
       .join(" · ");
 
+    const descPair = c.descKey
+      ? (messages as Record<string, readonly [string, string] | undefined>)[ 
+          c.descKey
+        ]
+      : undefined;
+
     items.push({
       id: c.slug,
       kind: "cert",
@@ -149,9 +156,11 @@ export function buildCosmosDataset(): {
       },
       description: {
         en:
+          descPair?.[0] ||
           noteEn ||
           `Official certification issued by ${c.issuer} (${c.date.en}).`,
         id:
+          descPair?.[1] ||
           noteId ||
           `Sertifikasi resmi diterbitkan oleh ${c.issuer} (${c.date.id}).`,
       },
